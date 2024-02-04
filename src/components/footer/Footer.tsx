@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="bg-footer text-white">
       <div className="lg:flex px-4 py-6 lg:place-content-between ">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 place-items-center">
           <p className="text-lg not-italic font-semibold">Subscribe to our news letter</p>
           <div className="flex overflow-hidden justify-center rounded-[5px] bg-white w-[284px] ">
             <input placeholder="example@com.ua" className="w-full text-black p-2" type="text" />
@@ -19,7 +19,7 @@ const Footer = () => {
             </button>
           </div>
           <div className="flex">
-            <input type="checkbox" name="privacy policy" id="privacy policy" />
+            <input className="w-[22px] h-[18px] rounded-[5px]" type="checkbox" name="privacy policy" id="privacy policy" />
             <p className="text-base not-italic font-normal leading-[normal]">
               I agree with the{" "}
               <Link href={"/"} className="text-base not-italic font-normal leading-[normal] underline">
@@ -29,8 +29,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="lg:flex gap-16">
-          <div className="flex flex-col">
+        <div className="flex flex-col place-items-center lg:flex lg:gap-16">
+          <div className="flex flex-col place-items-center">
             <div className="bg-white mt-6 mb-4 h-[1px] w-[184px]" />
             <p className="uppercase">other</p>
             <Link href={"/about"}>About us</Link>
@@ -81,7 +81,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="text-center">
         © 2023 <a href="https://github.com/petrenkodmytro/munko-front">Munko pop</a>
       </div>
     </footer>
