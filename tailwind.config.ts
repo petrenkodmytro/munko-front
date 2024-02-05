@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         footer: "#7C9D96",
+        subscribeBtn: "#161A30",
       },
     },
   },
