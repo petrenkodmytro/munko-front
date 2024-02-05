@@ -16,10 +16,18 @@ const Footer = () => {
             <div className="bg-white mt-6 mb-4 h-[1px] w-[184px] md:hidden" />
             <p className="uppercase mb-2 text-lg not-italic font-normal leading-[normal]">other</p>
             <div className="flex flex-col place-items-center gap-2.5 md:place-items-start">
-              <Link href={"/about"}>About us</Link>
-              <Link href={"/sale"}>Sale</Link>
-              <Link href={"/about"}>OUR store</Link>
-              <Link href={"/about"}>Public Offer</Link>
+              <Link className="duration-200 ease-linear lg:hover:text-[#C3C3C3]" href={"/about"}>
+                About us
+              </Link>
+              <Link className="duration-200 ease-linear lg:hover:text-[#C3C3C3]" href={"/sale"}>
+                Sale
+              </Link>
+              <Link className="duration-200 ease-linear lg:hover:text-[#C3C3C3]" href={"/about"}>
+                OUR store
+              </Link>
+              <Link className="duration-200 ease-linear lg:hover:text-[#C3C3C3]" href={"/about"}>
+                Public Offer
+              </Link>
             </div>
             <div className="bg-white my-4 h-[1px] w-[184px] md:hidden" />
           </div>
@@ -28,19 +36,31 @@ const Footer = () => {
             <div className="hidden md:flex flex-col gap-2">
               <div className="flex gap-2">
                 <Instagram />
-                <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
+                <a
+                  className="duration-200 ease-linear lg:hover:text-[#C3C3C3]"
+                  href="https://www.instagram.com"
+                  target="_blank"
+                  rel="noreferrer">
                   www.instagram.com/munkopop
                 </a>
               </div>
               <div className="flex gap-2">
                 <Youtube />
-                <a href="https://www.youtube.com" target="_blank" rel="noreferrer">
+                <a
+                  className="duration-200 ease-linear lg:hover:text-[#C3C3C3]"
+                  href="https://www.youtube.com"
+                  target="_blank"
+                  rel="noreferrer">
                   www.youtube.com/munkopop
                 </a>
               </div>
               <div className="flex gap-2">
                 <Facebook />
-                <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
+                <a
+                  className="duration-200 ease-linear lg:hover:text-[#C3C3C3]"
+                  href="https://www.facebook.com"
+                  target="_blank"
+                  rel="noreferrer">
                   www.facebook.com/munkopop
                 </a>
               </div>
@@ -65,7 +85,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="text-center pt-6 pb-2 md:pt-2">
+      <div className="duration-200 ease-linear lg:hover:text-[#C3C3C3] text-center pt-6 pb-2 md:pt-2">
         © 2023 <a href="https://github.com/petrenkodmytro/munko-front">Munko Pop</a>
       </div>
     </footer>
