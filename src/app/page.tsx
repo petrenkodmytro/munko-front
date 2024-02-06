@@ -7,7 +7,6 @@ import Catalog from "@/components/sections/catalog";
 export default function Home() {
   return (
     <main>
-      <h1>Munko - home page</h1>
       <Banner />
       <Advantages />
       <Popular />
