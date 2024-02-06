@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={montserrat.className}>
-      <body className="max-w-[360px] mx-auto md:max-w-3xl lg:max-w-[1440px]">
+      <body className="max-w-[390px] mx-auto md:max-w-[720px] lg:max-w-[1440px]">
         <Header />
         {children}
         <Footer />

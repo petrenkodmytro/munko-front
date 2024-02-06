@@ -13,8 +13,8 @@ const Footer = () => {
           <SocialLinks />
         </div>
       </div>
-      <div className="duration-200 ease-linear lg:hover:text-[#C3C3C3] text-center pt-6 pb-2 md:pt-2">
-        © 2023 <a href="https://github.com/petrenkodmytro/munko-front">Munko Pop</a>
+      <div className="text-center pt-6 pb-2 md:pt-2">
+        © 2023 <a className="duration-200 ease-linear lg:hover:text-[#C3C3C3]" href="https://github.com/petrenkodmytro/munko-front">Munko Pop</a>
       </div>
     </footer>
   );
