@@ -19,7 +19,7 @@ const SocialLinks = (props: Props) => {
             www.instagram.com/munkopop
           </a>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 md:text-base">
           <Youtube />
           <a
             className="duration-200 ease-linear lg:hover:text-[#C3C3C3]"

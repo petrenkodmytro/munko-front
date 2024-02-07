@@ -26,14 +26,14 @@ const FooterForm = () => {
           alert(JSON.stringify(values, null, 2));
           actions.resetForm();
         }}>
-        <Form className="flex flex-col place-items-center md:place-items-start">
-          <label className="text-lg not-italic font-semibold mb-3" htmlFor="Email">
+        <Form className="flex flex-col shrink-0">
+          <label className="text-lg not-italic font-semibold mb-3 md:text-base" htmlFor="Email">
             Subscribe to our news letter
           </label>
           <div>
-            <div className="flex overflow-hidden justify-center rounded-[5px] bg-white w-[284px]">
+            <div className="flex overflow-hidden justify-center rounded-[5px] bg-white w-[284px] md:w-[226px] lg:w-[284px]">
               <Field
-                className="w-full text-black p-2 focus:outline-none"
+                className="w-full text-black pl-2 focus:outline-none"
                 id="email"
                 name="email"
                 placeholder="example@com.ua"
@@ -41,7 +41,7 @@ const FooterForm = () => {
               <button
                 type="submit"
                 disabled={!isChecked}
-                className="duration-200 ease-linear disabled:bg-[#B1B1B1] flex w-11 h-10 justify-center items-center gap-2.5 shrink-0 px-2.5 py-3 rounded-[5px] bg-subscribeBtn text-lg not-italic font-semibold leading-[normal] lg:enabled:hover:bg-white lg:enabled:hover:text-subscribeBtn lg:enabled:hover:border-[3px] lg:hover:border-subscribeBtn">
+                className="duration-200 ease-linear disabled:bg-[#B1B1B1] flex w-11 h-10 justify-center items-center gap-2.5 shrink-0 px-2.5 py-3 rounded-[5px] bg-subscribeBtn text-lg not-italic font-semibold leading-[normal] md:w-8 md:h-[25px] lg:enabled:hover:bg-white lg:enabled:hover:text-subscribeBtn lg:enabled:hover:border-[3px] lg:hover:border-subscribeBtn lg:w-11 lg:h-10">
                 OK
               </button>
             </div>
@@ -68,12 +68,12 @@ const FooterForm = () => {
               <path
                 d="M17 7L9.4375 14L6 10.8182"
                 stroke="black"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
-            <p className="text-base not-italic font-normal leading-[normal]">
+            <p className="text-base not-italic font-normal leading-[normal] md:flex md:flex-col lg:block">
               I agree with the{" "}
               <Link
                 href={"/"}

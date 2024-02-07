@@ -6,7 +6,7 @@ import FooterNav from "./footer-nav";
 const Footer = () => {
   return (
     <footer className="bg-footer text-white">
-      <div className="md:flex flex-row-reverse px-4 pt-6 md:place-content-between md:px-5 md:pt-8 lg:px-20">
+      <div className="flex flex-col items-center px-4 pt-6 md:flex-row-reverse md:items-start md:justify-between md:px-5 md:pt-8 lg:px-20 lg:pt-6">
         <FooterForm />
         <div className="flex flex-col place-items-center md:flex md:flex-row md:gap-5 md:place-items-start lg:gap-20">
           <FooterNav />
