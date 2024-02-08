@@ -1,16 +1,116 @@
 "use client";
 
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React, { useState, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper";
+import { Autoplay } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import Image from "next/image";
-import { useState } from "react";
-import Swipe from "react-easy-swipe";
-import ArrR from "../../../../public/icons/arrow-right.svg";
+import Link from "next/link";
+import "swiper/css";
+import "swiper/css/virtual";
+import "swiper/css/navigation";
 import slider1 from "../../../../public/image/collection-1.png";
 import slider2 from "../../../../public/image/collection-2.png";
 import slider3 from "../../../../public/image/collection-3.png";
 import slider4 from "../../../../public/image/collection-4.png";
+
+const CollectionCarousel = () => {
+  const swiperRef = useRef(null);
+  SwiperCore.use([Autoplay, Navigation]);
+
+  const slides = [
+    { url: slider1, title: "lilo and stitch", bg: "#4CB9EC" },
+    { url: slider2, title: "harry potter", bg: "#FEDBBB" },
+    { url: slider3, title: "wednesday", bg: "#B5ADC6" },
+    { url: slider4, title: "how to train you dragon", bg: "#B5E1E5" },
+  ];
+  console.log(slides[0].bg);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const handleNextSlide = () => {
+    let newSlide = currentSlide === slides.length - 1 ? 0 : currentSlide + 1;
+    setCurrentSlide(newSlide);
+  };
+
+  const handlePrevSlide = () => {
+    let newSlide = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
+    setCurrentSlide(newSlide);
+  };
+
+  // const handleSlideChange = (swiper: { isBeginning: any; isEnd: any }) => {
+  //   setCanGoPrev(!swiper.isBeginning);
+  //   setCanGoNext(!swiper.isEnd);
+  // };
+
+  return (
+    <div>
+      <div>
+        <Swiper
+          initialSlide={0}
+          slidesPerView={1}
+          ref={swiperRef}
+          autoplay={false}
+          // autoplay={{ delay: 5000 }}
+          navigation={{
+            prevEl: "#my-prev-button",
+            nextEl: "#my-next-button",
+          }}
+          // onSlideChange={handleSlideChange}
+          modules={[Navigation]}
+          direction={"horizontal"}
+          autoHeight={true}
+          spaceBetween={40}
+          loop={true}
+          // breakpoints={{
+          //   375: {
+          //     slidesPerView: 1,
+          //     slidesPerGroup: 1,
+          //   },
+          //   768: {
+          //     slidesPerView: 1,
+          //     slidesPerGroup: 1,
+          //   },
+          //   1440: {
+          //     slidesPerView: 2,
+          //     slidesPerGroup: 2,
+          //   },
+          // }}
+          simulateTouch={true}
+          touchRatio={0.2}
+          effect="slide">
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index} virtualIndex={index}>
+              <div className={`flex bg-[${slide.bg}]`}>
+                <div className="">
+                  <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mt-[18px] mb-4">{slide.title}</p>
+                  <Link
+                    className="block uppercase w-[226px] h-[42px] px-8 py-3 rounded-[5px] bg-white text-base not-italic font-bold"
+                    href={"/"}>
+                    shop collection
+                  </Link>
+                </div>
+                <div className="w-40">
+                  <Image key={index} src={slide.url} alt={slide.title} />
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+      <div className="flex justify-around">
+        <button id="my-prev-button" onClick={() => handlePrevSlide}>
+          prev
+        </button>
+        <button id="my-next-button" onClick={() => handleNextSlide}>
+          next
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default CollectionCarousel;
 
 // /**
 //  * CollectionCarousel component for nextJS and Tailwind.
@@ -82,31 +182,31 @@ import slider4 from "../../../../public/image/collection-4.png";
 //   );
 // }
 
-const CollectionCarousel = () => {
-  const settings = {
-    dots: false,
-    infinite: true,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    autoplay: false,
-    autoplaySpeed: 3000,
-  };
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const images = [slider1, slider2, slider3, slider4];
-  return (
-    <div className="slider-container h-[230px]">
-      <Slider {...settings}>
-        {images.map((image, index) => {
-          {
-            return (
-              <div className="bg-green-500" key={index}>
-                <Image src={image} objectFit="contain" alt={"image"} className="animate-fadeIn" />
-              </div>
-            );
-          }
-        })}
-      </Slider>
-    </div>
-  );
-};
-export default CollectionCarousel;
+// const CollectionCarousel = () => {
+//   const settings = {
+//     dots: false,
+//     infinite: true,
+//     slidesToShow: 2,
+//     slidesToScroll: 1,
+//     autoplay: false,
+//     autoplaySpeed: 3000,
+//   };
+//   const [currentSlide, setCurrentSlide] = useState(0);
+//   const images = [slider1, slider2, slider3, slider4];
+//   return (
+//     <div className="slider-container h-[230px]">
+//       <Slider {...settings}>
+//         {images.map((image, index) => {
+//           {
+//             return (
+//               <div className="bg-green-500" key={index}>
+//                 <Image src={image} objectFit="contain" alt={"image"} className="animate-fadeIn" />
+//               </div>
+//             );
+//           }
+//         })}
+//       </Slider>
+//     </div>
+//   );
+// };
+// export default CollectionCarousel;
