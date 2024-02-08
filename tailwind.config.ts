@@ -9,9 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        'header': 'rgb(124, 157, 150)',
+        'black': 'rgb(8, 8, 13)',
         footer: "#7C9D96",
         subscribeBtn: "#161A30",
       },
+
     },
   },
   plugins: [],
