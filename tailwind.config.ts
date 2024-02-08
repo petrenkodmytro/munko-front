@@ -9,7 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'header': 'rgb(124, 157, 150)'
+        'header': 'rgb(124, 157, 150)',
+        'black': 'rgb(8, 8, 13)'
       }
     },
   },
