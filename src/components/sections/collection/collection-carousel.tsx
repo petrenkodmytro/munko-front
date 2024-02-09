@@ -1,31 +1,47 @@
-"use client";
+'use client';
 
-import React, { useState, useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
-import { Autoplay } from "swiper/modules";
-import { Navigation } from "swiper/modules";
-import Image from "next/image";
-import Link from "next/link";
-import "swiper/css";
-import "swiper/css/virtual";
-import "swiper/css/navigation";
-import slider1 from "../../../../public/image/collection-1.png";
-import slider2 from "../../../../public/image/collection-2.png";
-import slider3 from "../../../../public/image/collection-3.png";
-import slider4 from "../../../../public/image/collection-4.png";
+import React, { useState, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore from 'swiper';
+import { Autoplay } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
+import Image from 'next/image';
+import Link from 'next/link';
+import 'swiper/css';
+import 'swiper/css/virtual';
+import 'swiper/css/navigation';
+import slider1 from '../../../../public/image/collection-1.png';
+import slider2 from '../../../../public/image/collection-2.png';
+import slider3 from '../../../../public/image/collection-3.png';
+import slider4 from '../../../../public/image/collection-4.png';
 
 const CollectionCarousel = () => {
   const swiperRef = useRef(null);
   SwiperCore.use([Autoplay, Navigation]);
 
   const slides = [
-    { url: slider1, title: "lilo and stitch", bg: "#4CB9EC" },
-    { url: slider2, title: "harry potter", bg: "#FEDBBB" },
-    { url: slider3, title: "wednesday", bg: "#B5ADC6" },
-    { url: slider4, title: "how to train you dragon", bg: "#B5E1E5" },
+    {
+      url: slider1,
+      title: 'lilo and stitch',
+      bg: 'bg-[#4CB9EC]',
+    },
+    {
+      url: slider2,
+      title: 'harry potter',
+      bg: 'bg-[#FEDBBB]',
+    },
+    {
+      url: slider3,
+      title: 'wednesday',
+      bg: 'bg-[#B5ADC6]',
+    },
+    {
+      url: slider4,
+      title: 'how to train you dragon',
+      bg: 'bg-[#B5E1E5]',
+    },
   ];
-  console.log(slides[0].bg);
+
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const handleNextSlide = () => {
@@ -53,40 +69,44 @@ const CollectionCarousel = () => {
           autoplay={false}
           // autoplay={{ delay: 5000 }}
           navigation={{
-            prevEl: "#my-prev-button",
-            nextEl: "#my-next-button",
+            prevEl: '#my-prev-button',
+            nextEl: '#my-next-button',
           }}
           // onSlideChange={handleSlideChange}
           modules={[Navigation]}
-          direction={"horizontal"}
+          direction={'horizontal'}
           autoHeight={true}
           spaceBetween={40}
           loop={true}
-          // breakpoints={{
-          //   375: {
-          //     slidesPerView: 1,
-          //     slidesPerGroup: 1,
-          //   },
-          //   768: {
-          //     slidesPerView: 1,
-          //     slidesPerGroup: 1,
-          //   },
-          //   1440: {
-          //     slidesPerView: 2,
-          //     slidesPerGroup: 2,
-          //   },
-          // }}
+          breakpoints={{
+            375: {
+              slidesPerView: 1,
+              slidesPerGroup: 1,
+            },
+            768: {
+              slidesPerView: 1,
+              slidesPerGroup: 1,
+            },
+            1440: {
+              slidesPerView: 2,
+              slidesPerGroup: 2,
+            },
+          }}
           simulateTouch={true}
           touchRatio={0.2}
-          effect="slide">
+          effect="slide"
+        >
           {slides.map((slide, index) => (
             <SwiperSlide key={index} virtualIndex={index}>
-              <div className={`flex bg-[${slide.bg}]`}>
+              <div className={`flex ${slide.bg}`}>
                 <div className="">
-                  <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mt-[18px] mb-4">{slide.title}</p>
+                  <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mt-[18px] mb-4">
+                    {slide.title}
+                  </p>
                   <Link
                     className="block uppercase w-[226px] h-[42px] px-8 py-3 rounded-[5px] bg-white text-base not-italic font-bold"
-                    href={"/"}>
+                    href={'/'}
+                  >
                     shop collection
                   </Link>
                 </div>

@@ -1,6 +1,6 @@
-"use client";
-import React from "react";
-import logo from "./../../../public/image/Logo.png";
+'use client';
+import React from 'react';
+import logo from './../../../public/image/Logo.png';
 
 const Header = () => {
   return (
@@ -105,11 +105,7 @@ const Header = () => {
         </div>
         <div className="md:mr-auto w-40 lg:w-48 lg:ml-2.5 md:pt-px">
           <a href="#">
-            <img
-              src={logo.src}
-              alt="Logo"
-              className=" md:px-1.5 lg:px-0"
-            />
+            <img src={logo.src} alt="Logo" className=" md:px-1.5 lg:px-0" />
           </a>
         </div>
         <nav className="hidden lg:block mt-5 mr-auto self-center">
@@ -133,7 +129,7 @@ const Header = () => {
             className="rounded w-56 py-1 pl-2 pr-12 font-bold outline-none text-black placeholder:text-black"
             type="text"
             placeholder="SEARCH"
-            id='search'
+            id="search"
           />
           <div className="w-10 align-bottom right-0 top-0 h-6 bg-black rounded absolute">
             <svg

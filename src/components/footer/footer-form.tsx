@@ -1,33 +1,40 @@
-"use client";
+'use client';
 
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import Link from "next/link";
-import { useState } from "react";
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import Link from 'next/link';
+import { useState } from 'react';
 
 const FooterForm = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const emailSchema = Yup.object().shape({
     email: Yup.string()
-      .min(3, "Too Short! min 3")
-      .max(45, "Too Long! max 45")
+      .min(3, 'Too Short! min 3')
+      .max(45, 'Too Long! max 45')
       .email()
-      .matches(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/, "Must be a valid email")
-      .required("Required"),
+      .matches(
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/,
+        'Must be a valid email'
+      )
+      .required('Required'),
   });
 
   return (
     <>
       <Formik
-        initialValues={{ email: "" }}
+        initialValues={{ email: '' }}
         validationSchema={emailSchema}
         onSubmit={(values, actions) => {
           alert(JSON.stringify(values, null, 2));
           actions.resetForm();
-        }}>
+        }}
+      >
         <Form className="flex flex-col shrink-0">
-          <label className="text-lg not-italic font-semibold mb-3 md:text-base" htmlFor="Email">
+          <label
+            className="text-lg not-italic font-semibold mb-3 md:text-base"
+            htmlFor="Email"
+          >
             Subscribe to our news letter
           </label>
           <div>
@@ -41,11 +48,16 @@ const FooterForm = () => {
               <button
                 type="submit"
                 disabled={!isChecked}
-                className="duration-200 ease-linear disabled:bg-[#B1B1B1] flex w-11 h-10 justify-center items-center gap-2.5 shrink-0 px-2.5 py-3 rounded-[5px] bg-subscribeBtn text-lg not-italic font-semibold leading-[normal] md:w-8 md:h-[25px] lg:enabled:hover:bg-white lg:enabled:hover:text-subscribeBtn lg:enabled:hover:border-[3px] lg:hover:border-subscribeBtn lg:w-11 lg:h-10">
+                className="duration-200 ease-linear disabled:bg-[#B1B1B1] flex w-11 h-10 justify-center items-center gap-2.5 shrink-0 px-2.5 py-3 rounded-[5px] bg-subscribeBtn text-lg not-italic font-semibold leading-[normal] md:w-8 md:h-[25px] lg:enabled:hover:bg-white lg:enabled:hover:text-subscribeBtn lg:enabled:hover:border-[3px] lg:hover:border-subscribeBtn lg:w-11 lg:h-10"
+              >
                 OK
               </button>
             </div>
-            <ErrorMessage className="self-start text-xs text-[#D63F3F] font-medium pl-2" component="div" name="email" />
+            <ErrorMessage
+              className="self-start text-xs text-[#D63F3F] font-medium pl-2"
+              component="div"
+              name="email"
+            />
           </div>
 
           <div className="flex mt-3">
@@ -63,7 +75,8 @@ const FooterForm = () => {
               width="23"
               height="20"
               viewBox="0 0 23 20"
-              fill="none">
+              fill="none"
+            >
               <rect y="0" width="22" height="18" rx="5" fill="white" />
               <path
                 d="M17 7L9.4375 14L6 10.8182"
@@ -74,10 +87,11 @@ const FooterForm = () => {
               />
             </svg>
             <p className="text-base not-italic font-normal leading-[normal] md:flex md:flex-col lg:block">
-              I agree with the{" "}
+              I agree with the{' '}
               <Link
-                href={"/"}
-                className="text-base not-italic font-normal leading-[normal] underline duration-200 ease-linear lg:hover:text-[#C3C3C3]">
+                href={'/'}
+                className="text-base not-italic font-normal leading-[normal] underline duration-200 ease-linear lg:hover:text-[#C3C3C3]"
+              >
                 Privacy Policy
               </Link>
             </p>
