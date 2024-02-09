@@ -1,18 +1,18 @@
-import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import "./globals.css";
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
+import type { Metadata } from 'next';
+import { Montserrat } from 'next/font/google';
+import './globals.css';
+import Header from '@/components/header/Header';
+import Footer from '@/components/footer/Footer';
 
 const montserrat = Montserrat({
-  weight: ["400", "600", "700", "800"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Arial", "sans-serif"],
+  weight: ['400', '600', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['Arial', 'sans-serif'],
 });
 
 export const metadata: Metadata = {
-  title: "Munko-PoP",
+  title: 'Munko-PoP',
   description: "We have figures for everyone's taste",
 };
 
