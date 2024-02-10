@@ -43,10 +43,10 @@ const CollectionCarousel = () => {
   return (
     <div>
       <Swiper
+        allowSlideNext={true}
         initialSlide={0}
         slidesPerView={2}
-        autoplay={false}
-        // autoplay={{ delay: 1000 }}
+        autoplay={{ delay: 5000 }}
         pagination={{ clickable: true }}
         modules={[Pagination]}
         direction={'horizontal'}
@@ -54,7 +54,7 @@ const CollectionCarousel = () => {
         // spaceBetween={40}
         loop={true}
         breakpoints={{
-          375: {
+          320: {
             slidesPerView: 1,
             slidesPerGroup: 1,
           },
@@ -88,7 +88,7 @@ const CollectionCarousel = () => {
                 </Link>
               </div>
               <div className="w-40">
-                <Image key={index} src={slide.url} alt={slide.title} />
+                <Image src={slide.url} alt={slide.title} />
               </div>
             </div>
           </SwiperSlide>
