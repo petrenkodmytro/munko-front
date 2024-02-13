@@ -62,7 +62,7 @@ const CollectionCarousel = () => {
             slidesPerView: 1,
             slidesPerGroup: 1,
           },
-          1440: {
+          1024: {
             slidesPerView: 2,
             slidesPerGroup: 1,
           },
