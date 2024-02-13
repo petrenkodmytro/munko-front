@@ -46,7 +46,8 @@ const CollectionCarousel = () => {
         allowSlideNext={true}
         initialSlide={0}
         slidesPerView={2}
-        autoplay={{ delay: 5000 }}
+        // autoplay={{ delay: 5000 }}
+        autoplay={false}
         pagination={{ clickable: true }}
         modules={[Pagination]}
         direction={'horizontal'}
@@ -74,22 +75,21 @@ const CollectionCarousel = () => {
         {slides.map((slide, index) => (
           <SwiperSlide key={index} virtualIndex={index}>
             <div
-              className={`flex justify-center items-center ${slide.bg} h-[260px] px-4`}
+              className={`relative flex justify-center items-center ${slide.bg} h-[268px] pl-4 pr-2 md:h-[404px] md:pl-20 md:pr-10 md:justify-between`}
             >
-              <div className="">
-                <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mt-[18px] mb-4">
+              <div className="absolute left-4 md:relative">
+                <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mt-[18px] mb-4  md:w-full md:mt-[117px] md:text-3xl md:font-semibold md:mb-[42px]">
                   {slide.title}
                 </p>
                 <Link
-                  className="block uppercase w-[226px] h-[42px] px-8 py-3 rounded-[5px] bg-white text-base not-italic font-bold"
+                  className="inline-block uppercase  px-8 py-[11px] rounded-[5px] bg-white text-base not-italic font-bold md:text-xl "
                   href={'/'}
                 >
                   shop collection
                 </Link>
               </div>
-              <div className="w-40">
-                <Image src={slide.url} alt={slide.title} />
-              </div>
+
+              <Image className="ml-auto" src={slide.url} alt={slide.title} />
             </div>
           </SwiperSlide>
         ))}
