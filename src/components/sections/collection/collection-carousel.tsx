@@ -75,10 +75,10 @@ const CollectionCarousel = () => {
         {slides.map((slide, index) => (
           <SwiperSlide key={index} virtualIndex={index}>
             <div
-              className={`relative flex justify-center items-center ${slide.bg} h-[268px] pl-4 pr-2 md:h-[404px] md:pl-20 md:pr-10 md:justify-between`}
+              className={`relative flex justify-center items-center ${slide.bg} h-[268px] pl-4 pr-2 md:h-[404px] md:pl-20 md:pr-10 md:py-11 md:justify-between`}
             >
-              <div className="absolute left-4 md:relative">
-                <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mt-[18px] mb-4  md:w-full md:mt-[117px] md:text-3xl md:font-semibold md:mb-[42px]">
+              <div className="absolute left-4 md:static">
+                <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mb-4  md:w-full  md:text-3xl md:font-semibold md:mb-[42px]">
                   {slide.title}
                 </p>
                 <Link
@@ -88,8 +88,16 @@ const CollectionCarousel = () => {
                   shop collection
                 </Link>
               </div>
-
-              <Image className="ml-auto" src={slide.url} alt={slide.title} />
+              <div className="ml-auto">
+                <Image
+                  src={slide.url}
+                  alt={slide.title}
+                
+                  layout='responsive'
+                  objectFit='cover'
+                 
+                />
+              </div>
             </div>
           </SwiperSlide>
         ))}
