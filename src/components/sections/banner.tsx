@@ -15,6 +15,8 @@ import sliderMob3 from '../../../public/image/banner-mob-3.png';
 import sliderMob4 from '../../../public/image/banner-mob-4.png';
 import ArrowRight from '../../../public/icons/arrow-right.svg';
 import ArrowLeft from '../../../public/icons/arrow-left.svg';
+import ArrowRightHover from '../../../public/icons/arrow-right-hover.svg';
+import ArrowLeftHover from '../../../public/icons/arrow-left-hover.svg';
 
 const Banner = () => {
   SwiperCore.use([Autoplay, Navigation]);
@@ -136,16 +138,26 @@ const Banner = () => {
         </Swiper>
 
         <button
-          className="absolute inset-y-1/4 z-[8] left-5 lg:left-20"
+          className="absolute top-[50%] z-[8] left-5 lg:left-20"
           id="my-prev-button"
         >
-          <ArrowLeft />
+          <div>
+            <div className="absolute duration-200 ease-linear lg:hover:opacity-0">
+              <ArrowLeft />
+            </div>
+          </div>
+          <ArrowLeftHover />
         </button>
         <button
-          className="absolute inset-y-1/4 right-5 lg:right-20 z-[8]"
+          className="absolute top-[50%] right-5 lg:right-20 z-[8]"
           id="my-next-button"
         >
-          <ArrowRight />
+          <div>
+            <div className="absolute duration-200 ease-linear lg:hover:opacity-0">
+              <ArrowRight />
+            </div>
+          </div>
+          <ArrowRightHover />
         </button>
       </div>
     </section>
