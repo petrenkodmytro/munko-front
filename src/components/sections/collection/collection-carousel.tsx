@@ -13,30 +13,42 @@ import slider1 from '../../../../public/image/collection-1.png';
 import slider2 from '../../../../public/image/collection-2.png';
 import slider3 from '../../../../public/image/collection-3.png';
 import slider4 from '../../../../public/image/collection-4.png';
+import slider1Tab from '../../../../public/image/collection-1-tab-2x.png';
+import slider2Tab from '../../../../public/image/collection-2-tab-2x.png';
+import slider3Tab from '../../../../public/image/collection-3-tab-2x.png';
+import slider4Tab from '../../../../public/image/collection-4-tab-2x.png';
 
 const CollectionCarousel = () => {
   SwiperCore.use([Autoplay]);
 
   const slides = [
     {
-      url: slider1,
+      url: { mob: slider1, tab: slider1Tab },
       title: 'lilo and stitch',
       bg: 'bg-[#4CB9EC]',
+      w: { mob: 193, tab: 313 },
+      h: { mob: 199, tab: 311 },
     },
     {
-      url: slider2,
+      url: { mob: slider2, tab: slider2Tab },
       title: 'harry potter',
       bg: 'bg-[#FEDBBB]',
+      w: { mob: 156, tab: 237 },
+      h: { mob: 216, tab: 327 },
     },
     {
-      url: slider3,
+      url: { mob: slider3, tab: slider3Tab },
       title: 'wednesday',
       bg: 'bg-[#B5ADC6]',
+      w: { mob: 156, tab: 214 },
+      h: { mob: 219, tab: 313 },
     },
     {
-      url: slider4,
+      url: { mob: slider4, tab: slider4Tab },
       title: 'how to train you dragon',
       bg: 'bg-[#B5E1E5]',
+      w: { mob: 158, tab: 228 },
+      h: { mob: 235, tab: 340 },
     },
   ];
 
@@ -47,6 +59,7 @@ const CollectionCarousel = () => {
         initialSlide={0}
         slidesPerView={2}
         autoplay={{ delay: 5000 }}
+        // autoplay={false}
         pagination={{ clickable: true }}
         modules={[Pagination]}
         direction={'horizontal'}
@@ -74,21 +87,34 @@ const CollectionCarousel = () => {
         {slides.map((slide, index) => (
           <SwiperSlide key={index} virtualIndex={index}>
             <div
-              className={`flex justify-center items-center ${slide.bg} h-[260px] px-4`}
+              className={`relative flex justify-center items-center ${slide.bg} h-[268px] pl-4 pr-2 md:h-[404px] md:pl-20 md:pr-10  md:justify-between`}
             >
-              <div className="">
-                <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mt-[18px] mb-4">
+              <div className="absolute left-4 md:static">
+                <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mb-4  md:w-[325px]  md:text-3xl md:font-semibold md:mb-[42px] lg:text-[40px] lg:w-full">
                   {slide.title}
                 </p>
                 <Link
-                  className="block uppercase w-[226px] h-[42px] px-8 py-3 rounded-[5px] bg-white text-base not-italic font-bold"
+                  className="inline-block uppercase  px-8 py-[11px] rounded-[5px] bg-white text-base not-italic font-bold md:text-xl lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear"
                   href={'/'}
                 >
                   shop collection
                 </Link>
               </div>
-              <div className="w-40">
-                <Image src={slide.url} alt={slide.title} />
+              <div className="ml-auto md:hidden">
+                <Image
+                  src={slide.url.mob}
+                  alt={slide.title}
+                  width={slide.w.mob}
+                  height={slide.h.mob}
+                />
+              </div>
+              <div className="hidden  md:block">
+                <Image className='max-w-min'
+                  src={slide.url.tab}
+                  alt={slide.title}
+                  width={slide.w.tab}
+                  height={slide.h.tab}
+                />
               </div>
             </div>
           </SwiperSlide>
