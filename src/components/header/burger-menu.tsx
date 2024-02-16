@@ -40,7 +40,7 @@ const BurgerMenu = () => {
 
   return (
     <>
-      <div className="w-16 z-20 md:w-7 pb-6 self-end md:self-center md:pb-0 md:mt-5">
+      <div className="w-16 z-30 md:w-7 pb-6 self-end md:self-center md:pb-0 md:mt-5">
         {isOpen ? (
           <button onClick={handleMenu}>
             <svg
@@ -193,7 +193,7 @@ const BurgerMenu = () => {
       {isOpen ? <BackDrop handleMenu={handleMenu} /> : null}
       <div
         style={hideOrShow}
-        className="absolute md:rounded md:shadow-[5px_5px_20px_0px_rgb(124,157,150)] z-10 pt-24 md:pt-28 flex-col top-28 md:top-0 w-[390px] md:w-[353px] h-[616px] md:h-[461px] items-center -ml-4 md:-ml-5 bg-header"
+        className="absolute md:rounded md:shadow-[5px_5px_20px_0px_rgb(124,157,150)] z-20 pt-24 md:pt-28 flex-col top-28 md:top-0 w-[390px] md:w-[353px] h-[616px] md:h-[461px] items-center -ml-4 md:-ml-5 bg-header"
       >
         <Link
           href={'/'}
