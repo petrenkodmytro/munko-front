@@ -42,7 +42,7 @@ const BurgerMenu = () => {
     <>
       <div className="w-16 z-30 md:w-7 pb-6 self-end md:self-center md:pb-0 md:mt-5">
         {isOpen ? (
-          <button onClick={handleMenu}>
+          <button onClick={handleMenu} className="cursor-pointer z-40">
             <svg
               width="24.000000"
               height="24.000000"

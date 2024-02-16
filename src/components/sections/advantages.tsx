@@ -7,7 +7,7 @@ const Advantages = () => {
   return (
     <section className="text-center md:bg-[#F5F5F5] px-4 py-8 md:mx-5 md:rounded md:relative z-10 md:-mt-5 lg:-mt-6 lg:px-20 lg:py-14">
       <div className="text-2xl font-bold md:text-3xl lg:text-4xl md:font-semibold">
-        We have figures for everyones's taste
+        We have figures for everyones&apos;s taste
       </div>
       <div className="text-xs font-semibold py-8 px-2 md:px-0 flex justify-evenly md:py-6 md:text-base lg:text-lg md:justify-center">
         <div className='w-[110px] md:w-auto md:pr-2.5 lg:pr-0'>
