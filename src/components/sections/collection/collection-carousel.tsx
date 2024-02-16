@@ -58,8 +58,8 @@ const CollectionCarousel = () => {
         allowSlideNext={true}
         initialSlide={0}
         slidesPerView={2}
-        // autoplay={{ delay: 5000 }}
-        autoplay={false}
+        autoplay={{ delay: 5000 }}
+        // autoplay={false}
         pagination={{ clickable: true }}
         modules={[Pagination]}
         direction={'horizontal'}
@@ -90,11 +90,11 @@ const CollectionCarousel = () => {
               className={`relative flex justify-center items-center ${slide.bg} h-[268px] pl-4 pr-2 md:h-[404px] md:pl-20 md:pr-10  md:justify-between`}
             >
               <div className="absolute left-4 md:static">
-                <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mb-4  md:w-[325px]  md:text-3xl md:font-semibold md:mb-[42px]">
+                <p className="uppercase w-[230px] text-2xl not-italic font-extrabold mb-4  md:w-[325px]  md:text-3xl md:font-semibold md:mb-[42px] lg:text-[40px] lg:w-full">
                   {slide.title}
                 </p>
                 <Link
-                  className="inline-block uppercase  px-8 py-[11px] rounded-[5px] bg-white text-base not-italic font-bold md:text-xl "
+                  className="inline-block uppercase  px-8 py-[11px] rounded-[5px] bg-white text-base not-italic font-bold md:text-xl lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear"
                   href={'/'}
                 >
                   shop collection
@@ -109,8 +109,8 @@ const CollectionCarousel = () => {
                 />
               </div>
               <div className="hidden  md:block">
-                <Image 
-                  src={slide.url.mob}
+                <Image className='max-w-min'
+                  src={slide.url.tab}
                   alt={slide.title}
                   width={slide.w.tab}
                   height={slide.h.tab}
