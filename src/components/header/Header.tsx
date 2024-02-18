@@ -7,6 +7,7 @@ import UserShoppingCart from './user-shopping-cart';
 import SearchForm from './search-form';
 import Navigation from './header-nav';
 import BurgerMenu from './burger-menu';
+import Image from 'next/image';
 
 const Header = () => {
   return (
@@ -15,7 +16,7 @@ const Header = () => {
         <BurgerMenu />
         <div className="md:mr-auto w-40 md:w-28 md:px-0.5 lg:w-48 md:pt-px">
           <Link href={'/'}>
-            <img src={logo.src} alt="Logo" className=" md:px-1 lg:px-0" />
+            <Image src={logo.src} alt="Logo" width={160} height={93} className=" md:px-1 lg:px-0" />
           </Link>
         </div>
         <nav className="lg:block hidden mt-5 bg-header mr-auto w-3/4 absolute top-52 self-center lg:w-auto lg:static">

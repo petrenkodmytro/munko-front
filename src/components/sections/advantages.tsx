@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import original from './../../../public/image/advantages-original.png';
 import clock from './../../../public/image/advantages-clock.png';
 import price from './../../../public/image/advantages-price.png';
@@ -11,15 +12,15 @@ const Advantages = () => {
       </h3>
       <div className="text-xs text-black font-semibold py-8 px-2 md:px-0 flex justify-evenly md:py-6 md:text-base lg:text-lg md:justify-center">
         <div className='w-[110px] md:w-auto md:pr-2.5 lg:pr-0'>
-          <img src={original.src} alt="original" className="w-10 md:w-16 lg:w-20 m-auto" />
+          <Image src={original.src} alt="original" width={40} height={40} className="w-10 md:w-16 lg:w-20 m-auto" />
           <p className='mt-1.5 pt-1 md:pt-0'>Only Originals</p>
         </div>
         <div className='w-[105px] md:w-auto md:mx-5 lg:mx-20'>
-          <img src={clock.src} alt="speed" className="w-10 md:w-16 lg:w-20 m-auto" />
+          <Image src={clock.src} alt="speed" width={40} height={40} className="w-10 md:w-16 lg:w-20 m-auto" />
           <p className='mt-1.5'>Fast Worldwide Shipping</p>
         </div>
         <div className='w-[110px] md:w-auto'>
-          <img src={price.src} alt="price" className="w-10 md:w-16 lg:w-20 m-auto" />
+          <Image src={price.src} alt="price" width={40} height={40} className="w-10 md:w-16 lg:w-20 m-auto" />
           <p className='mt-1.5 pt-1 md:pt-0'>Affordable Prices</p>
         </div>
       </div>
