@@ -24,7 +24,14 @@ const Navigation: React.FC<NavProps> = ({ handleMenu }) => {
     },
   ];
   return (
-    <ul className="text-base text-white items-center font-bold flex flex-col lg:flex-row lg:justify-between list-none">
+    <ul className="sm:w-44 md:w-auto text-base text-white items-start md:items-center font-semibold flex flex-col lg:flex-row lg:justify-between list-none">
+      <Link
+        href={'/'}
+        onClick={handleMenu}
+        className="font-normal pb-4 lg:hidden"
+      >
+        HOME
+      </Link>
       {pagesList.map((page, index) => {
         return (
           <li key={index} className="pb-2.5 lg:pb-0 lg:ml-6 xl:ml-12">

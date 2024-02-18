@@ -25,7 +25,7 @@ const SearchForm = () => {
             placeholder="SEARCH"
             id="search"
             name="search"
-            className={`rounded lg:w-40 xl:w-56 py-1 pl-2 pr-11 font-bold outline-none ${
+            className={`rounded lg:w-44 xl:w-56 py-1 pl-2 pr-11 font-bold outline-none ${
               !errors.search
                 ? 'border-none text-black placeholder:text-black'
                 : errors.search === "You've reached the limit of the input"
