@@ -35,7 +35,7 @@ const SearchForm = () => {
           ></Field>
           <button
             type="submit"
-            className="w-10 align-bottom right-0 top-0 h-6 bg-black rounded absolute"
+            className="w-10 align-bottom right-0 top-0 h-6 bg-subscribeBtn rounded absolute"
           >
             <svg
               className="py-0.5 px-2"
