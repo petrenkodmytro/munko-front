@@ -7,7 +7,7 @@ import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
 
 const UserShoppingCart = () => {
   return (
-    <div className="w-16 pb-6 pr-1 md:pr-0 md:ml-2 xl:ml-5 self-end md:w-auto md:self-center md:pb-0 sm:mt-5">
+    <div className="w-16 pb-6 pr-1 md:pr-0 md:ml-2 xl:ml-5 self-end md:w-auto md:self-center md:pb-0 md:mt-5">
       <button>
         <div className="inline-block md:hidden align-bottom">
           <UserIconMobile />
