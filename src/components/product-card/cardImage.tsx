@@ -1,91 +1,66 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useState } from 'react';
+import Image from 'next/image';
 
-// Import Swiper styles
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Navigation, Thumbs, Pagination } from 'swiper/modules';
+
+const images = [1, 2, 3, 4, 5];
+
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
-import slider1 from '../../../public/image/collection-1.png';
-import slider2 from '../../../public/image/collection-2.png';
-import slider3 from '../../../public/image/collection-3.png';
-import slider4 from '../../../public/image/collection-4.png';
-
-// import './styles.css';
-
-// import required modules
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import img from 'next/image';
-
-export default function CardImage() {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+export default function Page() {
+  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
   return (
-    <>
-      <Swiper
-        // style={{
-        //   '--swiper-navigation-color': '#fff',
-        //   '--swiper-pagination-color': '#fff',
-        // }}
-        loop={true}
-        spaceBetween={10}
-        navigation={true}
-        thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper2"
-      >
-        <SwiperSlide>
-          <img src={slider1.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider2.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider3.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider4.src} alt="" />
-        </SwiperSlide>
-      </Swiper>
-      <Swiper
-        onSwiper={() => setThumbsSwiper}
-        loop={true}
-        spaceBetween={10}
-        slidesPerView={4}
-        freeMode={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper"
-      >
-        <SwiperSlide>
-          <img src={slider1.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider2.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider3.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider4.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider1.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider2.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider3.src} alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={slider4.src} alt="" />
-        </SwiperSlide>
-      </Swiper>
-    </>
+    <section className="bg-gray-300 py-5">
+      <div className="container">
+        <Swiper
+          loop={true}
+          spaceBetween={10}
+          // navigation={true}
+          pagination={{ clickable: true }}
+          direction={'horizontal'}
+          // autoHeight={false}
+          thumbs={{
+            swiper: thumbsSwiper ? thumbsSwiper : null,
+          }}
+          modules={[FreeMode, Navigation, Thumbs, Pagination]}
+          className="h-40 w-full rounded-lg"
+        >
+          {images.map((image, index) => (
+            <SwiperSlide key={index}>
+              <div className="">
+                <p className='h-20'>{image}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* Thumbnail */}
+        <Swiper
+          onSwiper={setThumbsSwiper}
+          loop={true}
+          spaceBetween={12}
+          slidesPerView={4}
+          freeMode={true}
+          watchSlidesProgress={true}
+          modules={[FreeMode, Navigation, Thumbs]}
+          className="thumbs mt-3 h-32 w-full rounded-lg"
+        >
+          {images.map((image, index) => (
+            <SwiperSlide key={index}>
+              <button className="flex h-full w-full items-center justify-center">
+                <p>{image}</p>
+              </button>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </section>
   );
 }

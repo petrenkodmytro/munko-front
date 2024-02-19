@@ -13,8 +13,8 @@ const ProductCard = (props: Props) => {
         <h5>Funko Nick Wilde POP Disney: Zootopia Figure</h5>
         <p>29,88$</p>
         <div>
-          <button type='button'>ADD TO CART</button>
-          <button type='button'>Fast order</button>
+          <button type='button' className='uppercase px-[49px] py-[6px] rounded-[5px] border-2 border-current text-white bg-[#31304D] text-base not-italic font-bold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear'>add to cart</button>
+          <button type='button' className='uppercase px-[49px] py-[6px] rounded-[5px] border-2 border-current text-[#31304D] bg-white text-base not-italic font-bold  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear'>Fast order</button>
         </div>
       </div>
       <div>
