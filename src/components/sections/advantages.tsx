@@ -3,14 +3,15 @@ import Image from 'next/image';
 import original from './../../../public/image/advantages-original.png';
 import clock from './../../../public/image/advantages-clock.png';
 import price from './../../../public/image/advantages-price.png';
+import Popular from './popular';
 
 const Advantages = () => {
   return (
-    <section className="text-center md:bg-[#F5F5F5] px-4 py-8 md:mx-5 md:rounded md:relative z-10 md:-mt-5 lg:-mt-6 lg:px-20 lg:py-14">
-      <h3 className="text-2xl text-black font-bold md:text-3xl lg:text-4xl md:font-semibold">
+    <section className="md:bg-[#F5F5F5] md:shadow-[0px_0px_30px_0px_rgb(0,0,0,0.15)] px-4 py-8 md:mx-5 md:rounded md:px-[60px] md:relative z-10 md:-mt-5 md:mb-12 lg:-mt-6 lg:px-[84px] lg:py-14 lg:mx-20 lg:mb-20">
+      <h3 className="text-2xl text-center text-black font-bold md:text-3xl lg:text-4xl md:text-nowrap md:font-semibold">
         We have figures for everyones&apos;s taste
       </h3>
-      <div className="text-xs text-black font-semibold py-8 px-2 md:px-0 flex justify-evenly md:py-6 md:text-base lg:text-lg md:justify-center">
+      <div className="text-xs text-center text-black font-semibold py-8 px-2 md:px-0 flex justify-evenly md:py-6 md:text-base lg:text-lg md:justify-center md:pb-12">
         <div className='w-[110px] md:w-auto md:pr-2.5 lg:pr-0'>
           <Image src={original.src} alt="original" width={40} height={40} className="w-10 md:w-16 lg:w-20 m-auto" />
           <p className='mt-1.5 pt-1 md:pt-0'>Only Originals</p>
@@ -24,6 +25,7 @@ const Advantages = () => {
           <p className='mt-1.5 pt-1 md:pt-0'>Affordable Prices</p>
         </div>
       </div>
+      <Popular />
     </section>
   );
 };

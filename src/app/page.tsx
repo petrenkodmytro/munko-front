@@ -9,7 +9,6 @@ export default function Home() {
     <main>
       <Banner />
       <Advantages />
-      <Popular />
       <Catalog />
       <Collection />
     </main>
