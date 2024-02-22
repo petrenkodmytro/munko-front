@@ -30,12 +30,12 @@ export default function Page() {
             swiper: thumbsSwiper ? thumbsSwiper : null,
           }}
           modules={[FreeMode, Navigation, Thumbs, Pagination]}
-          className="h-40 w-full rounded-lg"
+          className="h-10 w-full"
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
-              <div className="">
-                <p className='h-20'>{image}</p>
+              <div className="flex h-full w-full items-center justify-center">
+                <p className='h-10'>{image}</p>
               </div>
             </SwiperSlide>
           ))}
@@ -50,7 +50,7 @@ export default function Page() {
           freeMode={true}
           watchSlidesProgress={true}
           modules={[FreeMode, Navigation, Thumbs]}
-          className="thumbs mt-3 h-32 w-full rounded-lg"
+          className="mt-3 h-10 w-full"
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
