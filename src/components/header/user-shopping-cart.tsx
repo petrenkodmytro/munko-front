@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import ModalWnd from '../modal/modal-window';
 import UserIconMobile from './../../../public/icons/user-icon-mobile.svg';
 import BasketIconMobile from './../../../public/icons/basket-icon-mobile.svg';
 import BasketIcon from './../../../public/icons/basket-icon.svg';
@@ -6,9 +8,13 @@ import UserIconHover from './../../../public/icons/user-hover-icon.svg';
 import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
 
 const UserShoppingCart = () => {
+
+  const [modalState, setModalState] = useState(false)
+
   return (
     <div className="w-16 pb-6 pr-1 md:pr-0 md:ml-2 xl:ml-5 self-end md:w-auto md:self-center md:pb-0 md:mt-5">
-      <button>
+      <ModalWnd call={modalState} onDestroy={()=> setModalState(false)} />
+      <button onClick={()=> setModalState(true)}>
         <div className="inline-block md:hidden align-bottom">
           <UserIconMobile />
         </div>

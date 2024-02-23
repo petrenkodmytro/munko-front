@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage, FormikValues } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 const SearchForm = () => {
@@ -27,7 +27,7 @@ const SearchForm = () => {
             name="search"
             className={`rounded lg:w-44 xl:w-56 py-1 pl-2 pr-11 font-bold outline-none ${
               !errors.search
-                ? 'border-none text-black placeholder:text-black'
+                ? 'border-none text-black placeholder:text-blackCustom'
                 : errors.search === "You've reached the limit of the input"
                   ? ''
                   : 'border border-red-500 leading-none text-red-500 placeholder:text-red-500'

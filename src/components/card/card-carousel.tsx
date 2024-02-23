@@ -3,32 +3,32 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Card from './Card';
-import './card-carousel.css'
+import './card-carousel.css';
 
 const CardsCarousel = () => {
-
   const slides = [<Card />, <Card />, <Card />];
 
   return (
-    <div>
+    <>
       <Swiper
         allowSlideNext={true}
         initialSlide={0}
-        slidesPerView={1.3}
+        slidesPerView={1.33}
+        autoplay={{ delay: 3000 }}
         direction={'horizontal'}
         loop={true}
         simulateTouch={true}
         touchRatio={1}
         effect="slide"
-        slideNextClass='swiper-slide-cards-next'
+        slideNextClass="swiper-slide-cards-next"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} virtualIndex={index}>
-                <Card />
+            {slide}
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </>
   );
 };
 
