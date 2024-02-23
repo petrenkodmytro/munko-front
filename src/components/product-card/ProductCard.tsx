@@ -1,6 +1,6 @@
 import React from 'react';
 import CardImage from './cardImage';
-import CardReviews from './cardReviews';
+import CardReviews from './reviewList';
 
 type Props = {};
 
