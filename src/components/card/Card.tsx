@@ -6,7 +6,7 @@ type Props = {};
 
 export default function Card(params: Props) {
   return (
-    <div className="w-[242px] h-[384px] mr-8 md:mr-0 last:scale-y-90 md:last:scale-100 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
+    <div className="w-[242px] h-[384px] mr-8 md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
       <Link href={'./'}>
         <div className="w-44 h-36 m-auto">
           <Image src={icon.src} width={150} height={138} alt="card-picture" />
