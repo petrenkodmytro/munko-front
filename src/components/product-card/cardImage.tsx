@@ -2,65 +2,69 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-
+import { sliderCard } from '../../../public/images';
+import FavoritIcon from '../../../public/icons/favorite-icon.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation, Thumbs, Pagination } from 'swiper/modules';
-
-const images = [1, 2, 3, 4, 5];
+import { FreeMode, Thumbs, Pagination } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 
 export default function Page() {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  const images = sliderCard;
 
   return (
-    <section className="bg-gray-300 py-5">
-      <div className="container">
-        <Swiper
-          loop={true}
-          spaceBetween={10}
-          // navigation={true}
-          pagination={{ clickable: true }}
-          direction={'horizontal'}
-          // autoHeight={false}
-          thumbs={{
-            swiper: thumbsSwiper ? thumbsSwiper : null,
-          }}
-          modules={[FreeMode, Navigation, Thumbs, Pagination]}
-          className="h-10 w-full"
-        >
-          {images.map((image, index) => (
-            <SwiperSlide key={index}>
-              <div className="flex h-full w-full items-center justify-center">
-                <p className='h-10'>{image}</p>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+    <div className="relative bg-[#F5F5F5]">
+      <button
+        onClick={() => setIsFavorite(!isFavorite)}
+        type="button"
+        className="absolute right-4 top-4 z-10"
+      >
+        <FavoritIcon fill={isFavorite ? '#31304D' : 'white'} />
+      </button>
+      <Swiper
+        loop={true}
+        spaceBetween={10}
+        pagination={{ clickable: true }}
+        thumbs={{
+          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+        }}
+        modules={[FreeMode, Pagination, Thumbs]}
+        className="h-96 w-full rounded-lg"
+      >
+        {images.map((image, index) => (
+          <SwiperSlide key={index}>
+            <div className="flex h-full w-full items-center justify-center">
+              <Image src={image} alt="" className=" object-contain" />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-        {/* Thumbnail */}
-        <Swiper
-          onSwiper={setThumbsSwiper}
-          loop={true}
-          spaceBetween={12}
-          slidesPerView={4}
-          freeMode={true}
-          watchSlidesProgress={true}
-          modules={[FreeMode, Navigation, Thumbs]}
-          className="mt-3 h-10 w-full"
-        >
-          {images.map((image, index) => (
-            <SwiperSlide key={index}>
-              <button className="flex h-full w-full items-center justify-center">
-                <p>{image}</p>
-              </button>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </section>
+      {/* Thumbnail */}
+      <Swiper
+        onSwiper={setThumbsSwiper}
+        loop={true}
+        spaceBetween={15}
+        slidesPerView={4}
+        // freeMode={true}
+        watchSlidesProgress={true}
+        modules={[FreeMode, Pagination, Thumbs]}
+        className="swiper-thumb w-full"
+      >
+        {images.map((image, index) => (
+          <SwiperSlide key={index} className='flex justify-center items-center'>
+            
+              <Image src={image} alt="" className="" />
+           
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 }

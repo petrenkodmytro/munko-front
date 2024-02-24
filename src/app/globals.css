@@ -11,3 +11,14 @@
   padding: 0;
   margin: 0;
 }
+
+.swiper-thumbs .swiper-slide {
+  display: flex;
+  width: 98px;
+  height: 92px;
+  background-color: #FFF;
+}
+
+.swiper-thumbs .swiper-slide-thumb-active{
+  background-color: #B6BBC4;
+}

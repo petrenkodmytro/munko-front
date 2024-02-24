@@ -3,9 +3,15 @@ import Link from 'next/link';
 import React from 'react';
 
 const Catalog = () => {
-  return <Link href={`/catalog/1`}>Link to ProductCard</Link>;
+  return (
+    <Link href={`/catalog/1`}>
+      <Card />
+    </Link>
+  );
 };
 
 export default Catalog;
 
-{/* <Link href={`/catalog/${card.id}`}> */}
+{
+  /* <Link href={`/catalog/${card.id}`}> */
+}

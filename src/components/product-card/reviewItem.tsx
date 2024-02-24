@@ -17,7 +17,7 @@ const ReviewItem = ({ item }: Props) => {
     setIsShowMore(!isShowMore);
   };
   return (
-    <li className="flex gap-4">
+    <>
       <div className="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-[50%] bg-[#D9D9D9]">
         <ReviewIcon />{' '}
       </div>
@@ -29,7 +29,7 @@ const ReviewItem = ({ item }: Props) => {
             name="rating-read"
             emptyIcon={<IconStarEmpty />}
             icon={<IconStar />}
-            value={4}
+            value={3}
           />
         </div>
         <div className="w-[284px]">
@@ -45,7 +45,7 @@ const ReviewItem = ({ item }: Props) => {
           </button>
         </div>
       </div>
-    </li>
+    </>
   );
 };
 
