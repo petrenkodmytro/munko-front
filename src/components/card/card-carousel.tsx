@@ -6,7 +6,8 @@ import Card from './Card';
 import './card-carousel.css';
 
 const CardsCarousel = () => {
-  const slides = [<Card />, <Card />, <Card />];
+
+  const slides = [1, 2, 3];
 
   return (
     <>
