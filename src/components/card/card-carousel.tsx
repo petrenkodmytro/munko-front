@@ -24,7 +24,7 @@ const CardsCarousel = () => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} virtualIndex={index}>
-            {slide}
+            <Card key={index}/>
           </SwiperSlide>
         ))}
       </Swiper>
