@@ -40,7 +40,7 @@ const BurgerMenu = () => {
 
   return (
     <>
-      <div className="w-16 z-30 md:w-7 pb-5 self-end md:self-center md:pb-0 md:mt-4">
+      <div className="w-16 z-30 md:w-7 pb-5 self-end md:self-center md:pb-0 md:mt-4 lg:hidden">
         {isOpen ? (
           <button onClick={handleMenu} className="cursor-pointer z-40">
             <svg
@@ -93,7 +93,7 @@ const BurgerMenu = () => {
             </svg>
           </button>
         ) : (
-          <button onClick={handleMenu} className="cursor-pointer lg:hidden">
+          <button onClick={handleMenu} className="cursor-pointer">
             <svg
               className="hidden md:block"
               width="29.000000"
@@ -195,13 +195,6 @@ const BurgerMenu = () => {
         style={hideOrShow}
         className="absolute md:rounded md:shadow-[5px_5px_20px_0px_rgb(124,157,150)] z-20 pt-24 md:pt-28 flex-col top-28 md:top-0 w-[390px] md:w-[353px] h-[616px] md:h-[461px] items-center -ml-4 md:-ml-5 bg-header"
       >
-        <Link
-          href={'/'}
-          onClick={handleMenu}
-          className="text-base text-white pb-4"
-        >
-          HOME
-        </Link>
         <Navigation handleMenu={handleMenu} />
         <Formik
           initialValues={{ search: '' }}
@@ -212,9 +205,10 @@ const BurgerMenu = () => {
           }}
         >
           {({ errors }) => (
-            <Form className="relative md:block text-xs self-center mt-14">
+            <Form className="relative font-semibold md:hidden text-xs self-center mt-14">
               <Field
-                className="w-50 py-1 pl-2 pr-8 font-bold outline-none text-black bg-header border-b"
+                placeholder="Find the item you need"
+                className="w-50 py-1 pl-2 pr-8 outline-none text-white bg-header border-b placeholder:text-white placeholder:font-normal placeholder:opacity-60"
                 id="search-burger"
                 name="search"
               ></Field>
