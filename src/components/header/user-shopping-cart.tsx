@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ModalWnd from '../modal/modal-window';
 import UserIconMobile from './../../../public/icons/user-icon-mobile.svg';
 import BasketIconMobile from './../../../public/icons/basket-icon-mobile.svg';
@@ -10,6 +10,14 @@ import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
 const UserShoppingCart = () => {
 
   const [modalState, setModalState] = useState(false)
+
+  useEffect(() => {
+    if (modalState) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [modalState]);
 
   return (
     <div className="w-16 pb-6 pr-1 md:pr-0 md:ml-2 xl:ml-5 self-end md:w-auto md:self-center md:pb-0 md:mt-5">

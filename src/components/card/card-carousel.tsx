@@ -6,7 +6,6 @@ import Card from './Card';
 import './card-carousel.css';
 
 const CardsCarousel = () => {
-
   const slides = [1, 2, 3];
 
   return (
@@ -23,11 +22,13 @@ const CardsCarousel = () => {
         effect="slide"
         slideNextClass="swiper-slide-cards-next"
       >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index} virtualIndex={index}>
-            <Card />
-          </SwiperSlide>
-        ))}
+        <div className='pl-4'>
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index} virtualIndex={index}>
+              <Card />
+            </SwiperSlide>
+          ))}
+        </div>
       </Swiper>
     </>
   );
