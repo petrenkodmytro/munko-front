@@ -33,7 +33,7 @@ const CardReviews = (props: Props) => {
   const [ratingValue, setRatingValue] = useState<number | null>(0);
 
   return (
-    <div className="flex flex-col gap-5 px-[16px] py-5 rounded-[5px] bg-[#F5F5F5]">
+    <div className="flex flex-col gap-5 px-[16px] py-5 rounded-[5px] bg-[#F5F5F5]" >
       <h6 className="text-xl font-semibold">Reviews</h6>
       <div className="h-[1px] bg-[#B6BBC4]"></div>
       <Formik
@@ -85,6 +85,9 @@ const CardReviews = (props: Props) => {
           </li>
         ))}
       </ul>
+      <div className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 h-32 overflow-y-scroll">
+    <div className="h-64 bg-slate-400"></div>
+</div>
     </div>
   );
 };
