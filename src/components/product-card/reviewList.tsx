@@ -78,15 +78,15 @@ const CardReviews = (props: Props) => {
           </button>
         </Form>
       </Formik>
-      <ul className="flex flex-col gap-5  overflow-auto h-[292px]">
+    
+      <div className="h-[292px] scrollbar-thin scrollbar-thumb-rounded-2 scrollbar-thumb-[#31304D] scrollbar-track-[#B6BBC4] overflow-y-scroll">
+      <ul className="flex flex-col gap-5 ">
         {reviews.map((item, index) => (
           <li key={index} className="flex gap-4">
             <ReviewItem item={item} />
           </li>
         ))}
       </ul>
-      <div className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 h-32 overflow-y-scroll">
-    <div className="h-64 bg-slate-400"></div>
 </div>
     </div>
   );

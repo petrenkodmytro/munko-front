@@ -19,7 +19,7 @@ interface CatalogProps {
 const CatalogPage = async () => {
   // const [catalog, setCatalog] = useState(cards);
   // const cardsCatalog: Card[] = [];
- const cardsCatalog = await getCatalog();
+  const cardsCatalog = await getCatalog();
   console.log(cardsCatalog);
   // const cardsCatalog = [
   //   {
@@ -43,7 +43,9 @@ const CatalogPage = async () => {
   // ];
 
   // console.log(cardsCatalog);
-
+  if (cardsCatalog.length === 0) {
+    return <div>Сервер не відповідає</div>;
+  }
   return (
     <>
       {cardsCatalog.map(card => (

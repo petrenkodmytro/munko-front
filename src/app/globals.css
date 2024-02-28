@@ -22,3 +22,8 @@
 .swiper-thumbs .swiper-slide-thumb-active{
   background-color: #B6BBC4;
 }
+
+* {
+  /* scrollbar-width: thin; */
+  /* scrollbar-color: var(--secondary) var(--primary); */
+}

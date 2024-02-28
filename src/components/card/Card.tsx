@@ -17,7 +17,7 @@ type CardProps = {
 const Card: FC<CardProps> = ({card}) => {
   return (
     <div className="w-[242px] h-[384px] mr-8 md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
-      <Link href={`/catalog/${card.id}`} prefetch={false}>
+      <Link href={`/catalog/1`} prefetch={false}>
         <div className="w-44 h-36 m-auto">
           <Image
             // src={card.images[0]}
@@ -29,8 +29,8 @@ const Card: FC<CardProps> = ({card}) => {
         </div>
         <div className="text-base text-black my-5">
           <span className="">POP!</span>
-          <p className="font-bold mb-5">{card.name}</p>
-          <p className="font-bold">{card.price}</p>
+          <p className="font-bold mb-5">{'card.name'}</p>
+          <p className="font-bold">{'card.price'}</p>
         </div>
       </Link>
       <button className="m-auto rounded text-base font-bold py-1.5 hover:py-1 w-full bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2">
