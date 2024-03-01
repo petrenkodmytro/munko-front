@@ -33,8 +33,8 @@ const CardReviews = (props: Props) => {
   const [ratingValue, setRatingValue] = useState<number | null>(0);
 
   return (
-    <div className="flex flex-col gap-5 px-[16px] py-5 rounded-[5px] bg-[#F5F5F5]" >
-      <h6 className="text-xl font-semibold">Reviews</h6>
+    <div className="flex flex-col gap-5 px-[16px] py-5 rounded-[5px] bg-[#F5F5F5] md:pl-8 md:pr-[84px] md:py-[22px]">
+      <h6 className="text-xl font-semibold md:text-[26px]">Reviews</h6>
       <div className="h-[1px] bg-[#B6BBC4]"></div>
       <Formik
         initialValues={{
@@ -78,16 +78,16 @@ const CardReviews = (props: Props) => {
           </button>
         </Form>
       </Formik>
-    
-      <div className="h-[292px] scrollbar-thin scrollbar-thumb-rounded-2 scrollbar-thumb-[#31304D] scrollbar-track-[#B6BBC4] overflow-y-scroll">
-      <ul className="flex flex-col gap-5 ">
-        {reviews.map((item, index) => (
-          <li key={index} className="flex gap-4">
-            <ReviewItem item={item} />
-          </li>
-        ))}
-      </ul>
-</div>
+
+      <div className="h-[292px] custom overflow-y-scroll">
+        <ul className="flex flex-col gap-5 ">
+          {reviews.map((item, index) => (
+            <li key={index} className="flex gap-4">
+              <ReviewItem item={item} />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

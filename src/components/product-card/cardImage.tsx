@@ -19,11 +19,11 @@ export default function Page() {
   const images = sliderCard;
 
   return (
-    <div className="relative bg-[#F5F5F5]">
+    <div className="relative md:flex md:flex-row-reverse bg-[#F5F5F5] pb-5">
       <button
         onClick={() => setIsFavorite(!isFavorite)}
         type="button"
-        className="absolute right-4 top-4 z-10"
+        className="absolute right-4 md:right-5 top-4 md:top-5 z-10"
       >
         <FavoritIcon fill={isFavorite ? '#31304D' : 'white'} />
       </button>
@@ -52,13 +52,21 @@ export default function Page() {
         loop={true}
         spaceBetween={15}
         slidesPerView={4}
-        // freeMode={true}
+        breakpoints={{
+          0: {
+            direction: "horizontal"
+          },
+          768: {
+            direction: "vertical"
+          }
+        }}
+        freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Pagination, Thumbs]}
-        className="swiper-thumb w-full"
+        className="swiper-thumb w-full md:h-[537px] md:w-[120px]"
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index} className='flex justify-center items-center'>
+          <SwiperSlide key={index} className='w-[90px] flex justify-center items-center'>
             
               <Image src={image} alt="" className="" />
            

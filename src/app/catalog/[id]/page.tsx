@@ -7,7 +7,8 @@ const page = (props: Props) => {
   return (
     <>
       <ProductCard />
-      <Popular />
+      <div className='md:hidden'><Popular /></div>
+      
     </>
   );
 };

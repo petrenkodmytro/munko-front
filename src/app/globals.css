@@ -16,14 +16,23 @@
   display: flex;
   width: 98px;
   height: 92px;
-  background-color: #FFF;
+  background-color: #fff;
 }
 
-.swiper-thumbs .swiper-slide-thumb-active{
-  background-color: #B6BBC4;
+.swiper-thumbs .swiper-slide-thumb-active {
+  background-color: #b6bbc4;
 }
 
-* {
-  /* scrollbar-width: thin; */
-  /* scrollbar-color: var(--secondary) var(--primary); */
+.custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 8px #b6bbc4;
+  border-radius: 10px;
+}
+
+.custom::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 20px #31304d;
 }
