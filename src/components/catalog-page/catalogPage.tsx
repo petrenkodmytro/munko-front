@@ -2,23 +2,17 @@
 
 import { getCatalog } from '@/api/api';
 import Card from '@/components/card/Card';
+import { ICard } from '@/types/types';
 import { FC } from 'react';
-// import React, { useState } from 'react';
+// import { useState } from 'react';
 
-interface ICard {
-  id: number;
-  name: string;
-  images: string[];
-  price: number;
-}
-
-interface CatalogProps {
-  cards: ICard[];
-}
+// interface CatalogProps {
+//   cards: ICard[];
+// }
 
 const CatalogPage = async () => {
   // const [catalog, setCatalog] = useState(cards);
-  // const cardsCatalog: Card[] = [];
+
   const cardsCatalog = await getCatalog();
   console.log(cardsCatalog);
   // const cardsCatalog = [
@@ -44,7 +38,7 @@ const CatalogPage = async () => {
 
   // console.log(cardsCatalog);
   if (cardsCatalog.length === 0) {
-    return <div>Сервер не відповідає</div>;
+    return <div>ERROR!!! Сервер не відповідає</div>;
   }
   return (
     <>
@@ -56,5 +50,3 @@ const CatalogPage = async () => {
 };
 
 export default CatalogPage;
-
-/* <Link href={`/catalog/${card.id}`}> */

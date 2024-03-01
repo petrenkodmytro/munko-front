@@ -1,20 +1,13 @@
+import { ICard } from '@/types/types';
 import icon from './../../../public/image/pinterest-marentorri.png';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FC } from 'react';
-
-interface ICard {
-  id: number;
-  name: string;
-  images: string[];
-  price: number;
-}
 
 type CardProps = {
   card: ICard;
 };
 
-const Card: FC<CardProps> = ({card}) => {
+const Card = ({ card }: CardProps) => {
   return (
     <div className="w-[242px] h-[384px] mr-8 md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
       <Link href={`/catalog/1`} prefetch={false}>

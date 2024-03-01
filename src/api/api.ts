@@ -1,15 +1,9 @@
+import { Card } from '@/types/types';
 import { GraphQLClient, request, gql } from 'graphql-request';
 
 const endpoint = 'https://funkopop.onrender.com/graphql';
 
 const graphQLClient = new GraphQLClient(endpoint);
-
-interface Card {
-  id: number;
-  name: string;
-  images: string[];
-  price: number;
-}
 
 interface Data {
   getAllItems: Card[];
