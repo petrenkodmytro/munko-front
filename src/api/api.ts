@@ -1,4 +1,4 @@
-import { Card } from '@/types/types';
+import { ICard } from '@/types/types';
 import { GraphQLClient, request, gql } from 'graphql-request';
 
 const endpoint = 'https://funkopop.onrender.com/graphql';
@@ -6,7 +6,7 @@ const endpoint = 'https://funkopop.onrender.com/graphql';
 const graphQLClient = new GraphQLClient(endpoint);
 
 interface Data {
-  getAllItems: Card[];
+  getAllItems: ICard[];
 }
 
 export const getCatalog = async () => {
