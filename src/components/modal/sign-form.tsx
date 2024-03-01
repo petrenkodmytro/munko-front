@@ -6,99 +6,130 @@ import BtnLogin from './btn-login';
 import Link from 'next/link';
 import InstagramImage from './../../../public/icons/instagram-login-icon.svg';
 import GoogleImage from './../../../public/icons/google-login-icon.svg';
+import ShowPasswordIcon from './../../../public/icons/show-password.svg';
+import HidePassword from './../../../public/icons/hide-password.svg';
 
 interface SignForm {
   handleToogleChange: () => void;
-  toogleLogin: boolean;
 }
 
-const SignForm: React.FC<SignForm> = ({ handleToogleChange, toogleLogin }) => {
+const SignForm: React.FC<SignForm> = ({ handleToogleChange }) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isShowConfirmPassword, setIsShowConfrimPassword] = useState(false);
 
-  const emailSchema = Yup.object().shape({
-    email: Yup.string()
+  const SignUpSchema = Yup.object().shape({
+    emailSign: Yup.string()
       .min(3, 'Too Short! min 3')
       .max(45, 'Too Long! max 45')
-      .email()
       .matches(
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/,
         'Must be a valid email'
       )
       .required('Required'),
+    password: Yup.string()
+      .min(6, 'Too Short! min 6')
+      .max(18, 'Too Long! max 18')
+      .matches(/^[A-Za-z0-9 ]*$/, 'Use latin letters and numbers')
+      .required('Required'),
+    confirmPass: Yup.string().oneOf(
+      [Yup.ref('password')],
+      'Passwords does not match'
+    ),
+    name: Yup.string()
+      .min(3, 'Too Short! min 3')
+      .max(45, 'Too Long! max 45')
+      .matches(/^[A-Za-z0-9 ]*$/, 'Use latin letters and numbers')
+      .required('Required'),
   });
+
+  const showPassword = function (event: React.SyntheticEvent<EventTarget>) {
+    setIsShowPassword(!isShowPassword);
+  };
 
   return (
     <Formik
-      initialValues={{ email: '' }}
-      validationSchema={emailSchema}
+      initialValues={{ emailSign: '', name: '', password: '', confirmPass: '' }}
+      validationSchema={SignUpSchema}
       onSubmit={(values, actions) => {
         alert(JSON.stringify(values, null, 2));
         actions.resetForm();
       }}
     >
-      <Form className="flex flex-col shrink-0">
+      <Form>
         <div className="flex mb-[18px] items-start">
-          <BtnLogin handleToogleChange={handleToogleChange} tooglelogin/>
+          <BtnLogin handleToogleChange={handleToogleChange} tooglelogin />
           <BtnSignUp />
         </div>
         <div>
-          <div className="flex flex-col overflow-hidden justify-center rounded mb-[14px]">
+          <div className="flex flex-col overflow-hidden justify-center mb-[14px]">
             <Field
-              className="w-full p-2 border-grayBorder text-black/60 text-xs focus:outline-none border"
+              className="w-full p-2 border-grayBorder rounded text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
               id="name"
               name="name"
               placeholder="Name"
             />
             <ErrorMessage
-              className="self-start text-xs text-[#D63F3F] font-medium pl-2"
+              className="self-start text-[8px] text-[#D63F3F] font-medium pl-2"
               component="div"
               name="name"
             />
           </div>
-          <div className="flex flex-col overflow-hidden justify-center rounded mb-[14px]">
+          <div className="flex flex-col overflow-hidden justify-center mb-[14px]">
             <Field
-              className="w-full p-2 border-grayBorder text-black/60 text-xs focus:outline-none border"
-              id="email"
-              name="email"
+              className="w-full p-2 border-grayBorder rounded text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
+              id="emailSign"
+              name="emailSign"
               placeholder="Email"
             />
             <ErrorMessage
-              className="self-start text-xs text-[#D63F3F] font-medium pl-2"
+              className="self-start text-[8px] text-[#D63F3F] font-medium pl-2"
               component="div"
-              name="email"
+              name="emailSign"
             />
           </div>
-          <div className="flex flex-col overflow-hidden justify-center rounded mb-5">
+          <div className="flex flex-col relative overflow-hidden justify-center mb-5">
             <Field
-              className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border"
+              type={isShowPassword ? 'text' : 'password'}
+              className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
               id="password"
               name="password"
               placeholder="Password"
             />
             <ErrorMessage
-              className="self-start text-xs text-[#D63F3F] font-medium pl-2"
+              className="self-start text-[8px] text-[#D63F3F] font-medium pl-2"
               component="div"
               name="password"
             />
+            <div
+              className="absolute right-2 top-2 cursor-pointer"
+              onClick={showPassword}
+            >
+              {isShowPassword ? <ShowPasswordIcon /> : <HidePassword />}
+            </div>
           </div>
-          <div className="flex flex-col overflow-hidden justify-center rounded mb-5">
+          <div className="flex flex-col relative overflow-hidden justify-center mb-5">
             <Field
-              className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border"
-              id="password"
-              name="password"
+              type={isShowConfirmPassword ? 'text' : 'password'}
+              className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
+              id="confirmPass"
+              name="confirmPass"
               placeholder="Confirm the password"
             />
             <ErrorMessage
-              className="self-start text-xs text-[#D63F3F] font-medium pl-2"
+              className="self-start text-[8px] text-[#D63F3F] font-medium pl-2"
               component="div"
-              name="password"
+              name="confirmPass"
             />
+            <div className="absolute right-2 top-2 cursor-pointer" onClick={()=> setIsShowConfrimPassword(!isShowConfirmPassword)}>
+            {isShowConfirmPassword ? <ShowPasswordIcon /> : <HidePassword />}
+            </div>
           </div>
         </div>
         <div className="mb-4">
           <button
             type="submit"
-            className="bg-footer rounded font-semibold text-sm text-white w-full py-2 hover:bg-grayBG transition-colors duration-200 ease-linear"
+            className="bg-footer rounded font-semibold text-sm text-white w-full py-2 hover:bg-grayBG duration-200 ease-linear"
           >
             SIGN UP
           </button>
@@ -133,7 +164,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, toogleLogin }) => {
                 I agree with the{' '}
                 <Link
                   href={'/'}
-                  className="text-[10px] not-italic font-normal leading-[normal] underline duration-200 ease-linear"
+                  className="text-[10px] not-italic font-normal leading-[normal] underline"
                 >
                   Privacy Policy
                 </Link>
@@ -141,8 +172,10 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, toogleLogin }) => {
             </label>
           </div>
         </div>
-        <p className="font-medium text-[8px] m-auto pb-3">or sign up with</p>
-        <div className="mt-0.5 border border-[#31304D]"></div>
+        <p className="font-medium text-center text-[8px] m-auto pb-3">
+          or sign up with
+        </p>
+        <div className="mt-0.5 border border-blueBorder"></div>
         <div className="mt-3 flex justify-center items-center gap-[18px]">
           <Link href={'/'}>
             <GoogleImage />

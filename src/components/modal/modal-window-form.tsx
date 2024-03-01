@@ -7,7 +7,6 @@ import SignForm from './sign-form';
 const ModalWndForm = () => {
 
   const [toogleLogin, setToogleLogin] = useState(false);
-  const border = ' border-b border-black'
 
   const handleToogleChange = () => {
     setToogleLogin(!toogleLogin);
@@ -16,9 +15,9 @@ const ModalWndForm = () => {
   return (
     <>
       {toogleLogin ? (
-        <SignForm handleToogleChange={handleToogleChange} toogleLogin={toogleLogin} />
+        <SignForm handleToogleChange={handleToogleChange} />
       ) : (
-        <LoginForm handleToogleChange={handleToogleChange} toogleLogin={toogleLogin} />
+        <LoginForm handleToogleChange={handleToogleChange} />
       )}
     </>
   );

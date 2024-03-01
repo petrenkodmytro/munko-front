@@ -8,7 +8,7 @@ const BtnSignUp: React.FC<BtnSignUp> = ({
   toogleLogin,
 }) => {
   const classList1 = 'text-center text-lg font-bold pb-3';
-  const classList2 = classList1 + ' border-b border-black';
+  const classList2 = classList1 + ' border-b border-blueBorder';
 
   return (
     <button

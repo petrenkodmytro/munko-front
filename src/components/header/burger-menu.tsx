@@ -207,7 +207,7 @@ const BurgerMenu = () => {
             <Form className="relative font-semibold md:hidden text-xs self-center mt-14">
               <Field
                 placeholder="Find the item you need"
-                className="w-50 py-1 pl-2 pr-8 outline-none text-white bg-footer border-b placeholder:text-white placeholder:font-normal placeholder:opacity-60"
+                className="w-50 py-1 pl-2 pr-8 outline-none text-white bg-footer border-b placeholder:text-white placeholder:font-normal placeholder:opacity-60 focus:placeholder:text-transparent"
                 id="search-burger"
                 name="search"
               ></Field>

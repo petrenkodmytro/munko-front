@@ -5,6 +5,8 @@ import Link from 'next/link';
 type Props = {};
 
 export default function Card(params: Props) {
+
+  
   return (
     <div className="w-[242px] h-[384px] mr-8 md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105">
       <Link href={'./'}>
@@ -17,7 +19,7 @@ export default function Card(params: Props) {
           <p className="font-bold">12$</p>
         </div>
       </Link>
-      <button className="m-auto rounded text-base font-bold py-1.5 hover:py-1 w-full bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2">
+      <button className="m-auto rounded text-base h-9 font-bold w-full bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear">
         ADD TO CART
       </button>
     </div>

@@ -5,7 +5,7 @@ interface BtnLogin {
 
 const BtnLogin: React.FC<BtnLogin> = ({ handleToogleChange, tooglelogin }) => {
   const classList1 = 'text-center text-lg font-bold mr-6 pb-3';
-  const classList2 = classList1 + ' border-b border-black';
+  const classList2 = classList1 + ' border-b border-blueBorder';
 
   return (
     <button
