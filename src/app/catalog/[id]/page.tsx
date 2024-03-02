@@ -7,7 +7,7 @@ const page = (props: Props) => {
   return (
     <>
       <ProductCard />
-      <div className='md:hidden'><Popular /></div>
+      <div className='md:hidden xl:block xl:px-20'><Popular /></div>
       
     </>
   );

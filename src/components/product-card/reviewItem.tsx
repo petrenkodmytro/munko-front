@@ -32,7 +32,7 @@ const ReviewItem = ({ item }: Props) => {
             value={3}
           />
         </div>
-        <div className="w-[284px]">
+        <div className="">
           {!isShowMore && (
             <p className="text-xs font-medium">{item.slice(0, 230)}...</p>
           )}

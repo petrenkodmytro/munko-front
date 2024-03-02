@@ -19,7 +19,7 @@ export default function Page() {
   const images = sliderCard;
 
   return (
-    <div className="relative md:flex md:flex-row-reverse bg-[#F5F5F5] pb-5">
+    <div className="relative md:flex md:flex-row-reverse bg-[#F5F5F5] pb-5 xl:w-[737px]">
       <button
         onClick={() => setIsFavorite(!isFavorite)}
         type="button"

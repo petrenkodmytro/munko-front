@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 type CardProps = {
-  card: ICard;
+  card?: ICard;
 };
 
 const Card = ({ card }: CardProps) => {
