@@ -48,7 +48,7 @@ const FooterForm = () => {
               <button
                 type="submit"
                 disabled={!isChecked}
-                className="duration-200 ease-linear disabled:bg-[#B1B1B1] flex w-11 h-10 justify-center items-center gap-2.5 shrink-0 px-2.5 py-3 rounded-[5px] bg-subscribeBtn text-lg not-italic font-semibold leading-[normal] md:w-8 md:h-[25px] lg:enabled:hover:bg-white lg:enabled:hover:text-subscribeBtn lg:enabled:hover:border-[3px] lg:hover:border-subscribeBtn lg:w-11 lg:h-10"
+                className="duration-200 ease-linear disabled:bg-[#B1B1B1] flex w-11 h-10 justify-center items-center shrink-0 px-2.5 py-3 rounded-[5px] bg-subscribeBtn text-lg not-italic font-semibold leading-[normal] md:w-8 md:h-[25px] lg:enabled:hover:bg-white lg:enabled:hover:text-subscribeBtn lg:enabled:hover:border-[3px] lg:hover:border-subscribeBtn lg:w-11 lg:h-10"
               >
                 OK
               </button>

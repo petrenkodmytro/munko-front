@@ -1,7 +1,9 @@
-import React from "react";
+import CatalogPage from '@/components/catalog-page/catalogPage';
 
-const Catalog = () => {
-  return <div>Catalog</div>;
+const Catalog = async () => {
+  return <CatalogPage />;
 };
 
 export default Catalog;
+
+/* <Link href={`/catalog/${card.id}`}> */

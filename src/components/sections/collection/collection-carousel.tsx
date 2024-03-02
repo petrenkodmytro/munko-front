@@ -9,17 +9,21 @@ import 'swiper/css';
 import 'swiper/css/virtual';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import slider1 from '../../../../public/image/collection-1.png';
-import slider2 from '../../../../public/image/collection-2.png';
-import slider3 from '../../../../public/image/collection-3.png';
-import slider4 from '../../../../public/image/collection-4.png';
-import slider1Tab from '../../../../public/image/collection-1-tab-2x.png';
-import slider2Tab from '../../../../public/image/collection-2-tab-2x.png';
-import slider3Tab from '../../../../public/image/collection-3-tab-2x.png';
-import slider4Tab from '../../../../public/image/collection-4-tab-2x.png';
+import { sliderCollection } from '../../../../public/images';
 
 const CollectionCarousel = () => {
   SwiperCore.use([Autoplay]);
+
+  const [
+    slider1,
+    slider2,
+    slider3,
+    slider4,
+    slider1Tab,
+    slider2Tab,
+    slider3Tab,
+    slider4Tab,
+  ] = sliderCollection;
 
   const slides = [
     {
@@ -109,7 +113,8 @@ const CollectionCarousel = () => {
                 />
               </div>
               <div className="hidden  md:block">
-                <Image className='max-w-min'
+                <Image
+                  className="max-w-min"
                   src={slide.url.tab}
                   alt={slide.title}
                   width={slide.w.tab}
