@@ -3,7 +3,7 @@
 import { getCatalog } from '@/api/api';
 import Card from '@/components/card/Card';
 import { ICard } from '@/types/types';
-import { FC } from 'react';
+// import { FC } from 'react';
 // import { useState } from 'react';
 
 // interface CatalogProps {
@@ -11,7 +11,7 @@ import { FC } from 'react';
 // }
 
 const CatalogPage = async () => {
-  // const [catalog, setCatalog] = useState(cards);
+  // const [catalog, setCatalog] = useState([]);
 
   const cardsCatalog = await getCatalog();
   console.log(cardsCatalog);

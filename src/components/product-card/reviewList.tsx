@@ -19,7 +19,7 @@ my Funko Nick Wilde POP Disney figure! The attention to detail
 is fantastic, capturing Nick's mischievous grin and personality
 perfectly. The colors are vibrant, and the size is just right
 for displaying on my shelf`,
-  `I absolutely adore my Funko Nick Wilde POP Disney figure! The
+  `Love this APP. I absolutely adore my Funko Nick Wilde POP Disney figure! The
 attention to detail is fantastic, capturing Nick's mischievous
 grin and personality perfectly. The colors are vibrant, and the
 size is just right for displaying on my shelf I absolutely adore

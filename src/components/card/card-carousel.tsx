@@ -4,10 +4,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Card from './Card';
 import './card-carousel.css';
+import { ICard } from '@/types/types';
 
-const CardsCarousel = () => {
+type CatalogProps = {
+  slides: ICard[];
+};
 
-  const slides = [1, 2, 3];
+const CardsCarousel = ({ slides }: CatalogProps) => {
+  // const slides = [1, 2, 3];
 
   return (
     <>
@@ -25,7 +29,7 @@ const CardsCarousel = () => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} virtualIndex={index}>
-            <Card />
+            <Card card={slide} />
           </SwiperSlide>
         ))}
       </Swiper>
