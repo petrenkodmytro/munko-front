@@ -25,7 +25,7 @@ const Card = ({ card }: CardProps) => {
         <div className="text-base text-black my-5">
           <span className="">POP!</span>
           <p className="font-bold mb-5">{card.name}</p>
-          <p className="font-bold">{card.price}</p>
+          <p className="font-bold">{card.price}$</p>
         </div>
       </Link>
       <button className="m-auto rounded text-base font-bold py-1.5 hover:py-1 w-full bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2">

@@ -36,3 +36,7 @@
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 20px #31304d;
 }
+
+.swiper-slide-cards-next.swiper-slide {
+  transform: scaleY(0.9);
+}

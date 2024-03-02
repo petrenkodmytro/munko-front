@@ -5,5 +5,3 @@ const Catalog = async () => {
 };
 
 export default Catalog;
-
-/* <Link href={`/catalog/${card.id}`}> */
