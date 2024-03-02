@@ -10,7 +10,7 @@ interface DataCatalog {
 }
 
 interface DataItem {
-  getItems: ICard;
+  getItem: ICard;
 }
 
 export const getCatalog = async () => {
@@ -38,7 +38,7 @@ export const getCatalog = async () => {
 export const getItem = async (id: string) => {
   const query = gql`
     query GetItem {
-      getItem(${id}) {
+      getItem(id:${id}) {
         id
         name
         images
@@ -55,13 +55,8 @@ export const getItem = async (id: string) => {
       }
     }
   `;
-
-  try {
-    const data: DataItem = await graphQLClient.request(query);
-    let dataCard = data.getItems;
-    return dataCard;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
+  const data: DataItem = await graphQLClient.request(query);
+  let dataCard = data.getItem;
+  // console.log(dataCard);
+  return dataCard;
 };

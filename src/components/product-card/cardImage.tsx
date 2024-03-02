@@ -54,11 +54,11 @@ export default function Page() {
         slidesPerView={4}
         breakpoints={{
           0: {
-            direction: "horizontal"
+            direction: 'horizontal',
           },
           768: {
-            direction: "vertical"
-          }
+            direction: 'vertical',
+          },
         }}
         freeMode={true}
         watchSlidesProgress={true}
@@ -66,10 +66,11 @@ export default function Page() {
         className="swiper-thumb w-full md:h-[537px] md:w-[120px]"
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index} className='w-[90px] flex justify-center items-center'>
-            
-              <Image src={image} alt="" className="" />
-           
+          <SwiperSlide
+            key={index}
+            className="w-[90px] flex justify-center items-center"
+          >
+            <Image src={image} alt="" className="" />
           </SwiperSlide>
         ))}
       </Swiper>

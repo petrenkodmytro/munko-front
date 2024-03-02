@@ -1,13 +1,7 @@
 import ProductCard from '@/components/product-card/ProductCard';
 import Popular from '@/components/sections/popular';
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
-const page = ({ params: { id } }: Props) => {
+const page = () => {
   return (
     <>
       <ProductCard />

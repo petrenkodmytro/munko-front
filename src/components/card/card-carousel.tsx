@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Card from './Card';
-import './card-carousel.css';
+// import './card-carousel.css';
 import { ICard } from '@/types/types';
 
 type CatalogProps = {
@@ -11,7 +11,6 @@ type CatalogProps = {
 };
 
 const CardsCarousel = ({ slides }: CatalogProps) => {
-  // const slides = [1, 2, 3];
 
   return (
     <>
