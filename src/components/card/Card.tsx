@@ -15,12 +15,13 @@ const Card = ({ card }: CardProps) => {
       <Link href={`/catalog/${card.id}`}>
         <div className="w-44 h-36 m-auto">
           <Image
-            // src={card.images[0]}
+            // src={"https://drive.google.com/uc?id=1IB73I_QgDacliiPsVlkIfbEBTAwdjxav"}
             src={icon}
             width={150}
             height={138}
             alt="card-picture"
           />
+          {/* <img src={card.images[0]} alt='acds'/> */}
         </div>
         <div className="text-base text-black my-5">
           <span className="">POP!</span>
