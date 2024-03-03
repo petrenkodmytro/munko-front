@@ -15,6 +15,8 @@ import sliderMob3 from '../../../public/image/banner-mob-3.png';
 import sliderMob4 from '../../../public/image/banner-mob-4.png';
 import ArrowRight from '../../../public/icons/arrow-right.svg';
 import ArrowLeft from '../../../public/icons/arrow-left.svg';
+import ArrowRightHover from '../../../public/icons/arrow-right-hover.svg';
+import ArrowLeftHover from '../../../public/icons/arrow-left-hover.svg';
 
 const Banner = () => {
   SwiperCore.use([Autoplay, Navigation]);
@@ -53,7 +55,7 @@ const Banner = () => {
   return (
     <section>
       <div className="relative h-[316px] md:hidden">
-        <Swiper 
+        <Swiper
           initialSlide={0}
           slidesPerView={1}
           autoplay={{ delay: 15000 }}
@@ -85,30 +87,15 @@ const Banner = () => {
           effect="slide"
         >
           {slides.mobile.map((slide, index) => (
-            <SwiperSlide  key={slide.title} virtualIndex={index}>
-              <Image className='md:hidden' src={slide.url} alt={slide.title} />
+            <SwiperSlide key={slide.title} virtualIndex={index}>
+              <Image className="md:hidden" src={slide.url} alt={slide.title} />
             </SwiperSlide>
           ))}
         </Swiper>
-
-        <button
-          className="hidden md:inline-block absolute inset-y-1/4 z-10"
-          id="my-prev-button"
-          // onClick={() => handlePrevSlide}
-        >
-          <ArrowLeft />
-        </button>
-        <button
-          className="hidden md:inline-block absolute inset-y-1/4 right-0 z-10"
-          id="my-next-button"
-          // onClick={() => handleNextSlide}
-        >
-          <ArrowRight />
-        </button>
       </div>
 
       <div className="relative hidden md:block">
-        <Swiper 
+        <Swiper
           initialSlide={0}
           slidesPerView={1}
           autoplay={{ delay: 15000 }}
@@ -139,7 +126,7 @@ const Banner = () => {
           touchRatio={1}
           effect="slide"
         >
-                  {slides.tablet.map((slide, index) => (
+          {slides.tablet.map((slide, index) => (
             <SwiperSlide
               className="hidden"
               key={slide.title}
@@ -151,18 +138,26 @@ const Banner = () => {
         </Swiper>
 
         <button
-          className="hidden md:inline-block absolute inset-y-1/4 z-10"
+          className="absolute top-[50%] z-[8] left-5 lg:left-20"
           id="my-prev-button"
-          // onClick={() => handlePrevSlide}
         >
-          <ArrowLeft />
+          <div>
+            <div className="absolute duration-200 ease-linear lg:hover:opacity-0">
+              <ArrowLeft />
+            </div>
+          </div>
+          <ArrowLeftHover />
         </button>
         <button
-          className="hidden md:inline-block absolute inset-y-1/4 right-0 z-10"
+          className="absolute top-[50%] right-5 lg:right-20 z-[8]"
           id="my-next-button"
-          // onClick={() => handleNextSlide}
         >
-          <ArrowRight />
+          <div>
+            <div className="absolute duration-200 ease-linear lg:hover:opacity-0">
+              <ArrowRight />
+            </div>
+          </div>
+          <ArrowRightHover />
         </button>
       </div>
     </section>

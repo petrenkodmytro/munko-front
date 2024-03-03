@@ -2,8 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --swiper-theme-color: rgba(49, 48, 77, 1) !important;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+.swiper-thumbs .swiper-slide {
+  display: flex;
+  width: 98px;
+  height: 92px;
+  background-color: #fff;
+}
+
+.swiper-thumbs .swiper-slide-thumb-active {
+  background-color: #b6bbc4;
+}
+
+.custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 8px #b6bbc4;
+  border-radius: 10px;
+}
+
+.custom::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 20px #31304d;
+}
+
+.swiper-slide-cards-next.swiper-slide {
+  transform: scaleY(0.9);
 }

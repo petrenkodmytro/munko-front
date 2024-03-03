@@ -12,17 +12,35 @@ const Advantages = () => {
         We have figures for everyones&apos;s taste
       </h3>
       <div className="text-xs text-center text-black font-semibold py-8 px-6 md:px-0 flex justify-evenly md:py-6 md:text-base lg:text-lg md:justify-center md:pb-12">
-        <div className='w-[110px] md:w-auto md:pr-2.5 lg:pr-0'>
-          <Image src={original.src} alt="original" width={40} height={40} className="w-10 md:w-16 lg:w-20 m-auto" />
-          <p className='mt-1.5 pt-1 md:pt-0'>Only Originals</p>
+        <div className="w-[110px] md:w-auto md:pr-2.5 lg:pr-0">
+          <Image
+            src={original.src}
+            alt="original"
+            width={40}
+            height={40}
+            className="w-10 md:w-16 lg:w-20 m-auto"
+          />
+          <p className="mt-1.5 pt-1 md:pt-0">Only Originals</p>
         </div>
-        <div className='w-[105px] md:w-auto md:mx-5 lg:mx-20'>
-          <Image src={clock.src} alt="speed" width={40} height={40} className="w-10 md:w-16 lg:w-20 m-auto" />
-          <p className='mt-1.5'>Fast Worldwide Shipping</p>
+        <div className="w-[105px] md:w-auto md:mx-5 lg:mx-20">
+          <Image
+            src={clock.src}
+            alt="speed"
+            width={40}
+            height={40}
+            className="w-10 md:w-16 lg:w-20 m-auto"
+          />
+          <p className="mt-1.5">Fast Worldwide Shipping</p>
         </div>
-        <div className='w-[110px] md:w-auto'>
-          <Image src={price.src} alt="price" width={40} height={40} className="w-10 md:w-16 lg:w-20 m-auto" />
-          <p className='mt-1.5 pt-1 md:pt-0'>Affordable Prices</p>
+        <div className="w-[110px] md:w-auto">
+          <Image
+            src={price.src}
+            alt="price"
+            width={40}
+            height={40}
+            className="w-10 md:w-16 lg:w-20 m-auto"
+          />
+          <p className="mt-1.5 pt-1 md:pt-0">Affordable Prices</p>
         </div>
       </div>
       <Popular />

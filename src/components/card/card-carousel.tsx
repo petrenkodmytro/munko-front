@@ -3,10 +3,13 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Card from './Card';
-import './card-carousel.css';
+import { ICard } from '@/types/types';
 
-const CardsCarousel = () => {
-  const slides = [1, 2, 3];
+type CatalogProps = {
+  slides: ICard[];
+};
+
+const CardsCarousel = ({ slides }: CatalogProps) => {
 
   return (
     <>
@@ -22,13 +25,11 @@ const CardsCarousel = () => {
         effect="slide"
         slideNextClass="swiper-slide-cards-next"
       >
-        <div className='pl-4'>
-          {slides.map((slide, index) => (
-            <SwiperSlide key={index} virtualIndex={index}>
-              <Card />
-            </SwiperSlide>
-          ))}
-        </div>
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index} virtualIndex={index}>
+            <Card card={slide} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );
