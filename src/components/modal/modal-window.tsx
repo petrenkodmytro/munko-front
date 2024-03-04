@@ -1,4 +1,3 @@
-import { Formik, Form, Field } from "formik";
 import ModalWndForm from "./modal-window-form";
 
 type ModalWndProps = {

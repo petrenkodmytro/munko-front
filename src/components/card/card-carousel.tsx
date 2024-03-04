@@ -3,7 +3,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Card from './Card';
-// import './card-carousel.css';
 import { ICard } from '@/types/types';
 
 type CatalogProps = {

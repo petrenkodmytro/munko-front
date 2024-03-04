@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 type CardCatalog = Pick<ICard, 'id' | 'name' | 'images' | 'price'>;
-
 type CardProps = {
   card: CardCatalog;
 };
@@ -29,7 +28,7 @@ const Card = ({ card }: CardProps) => {
           <p className="font-bold">{card.price}$</p>
         </div>
       </Link>
-      <button className="m-auto rounded text-base font-bold py-1.5 hover:py-1 w-full bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2">
+      <button className="m-auto rounded text-base h-9 font-bold w-full bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear">
         ADD TO CART
       </button>
     </div>

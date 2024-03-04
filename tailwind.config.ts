@@ -9,11 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        header: 'rgb(124, 157, 150)',
-        blackCustom: 'rgb(8, 8, 13)',
+        blackCustom: '#08080D',
         footer: '#7C9D96',
         subscribeBtn: '#161A30',
-        grayBorder: '#b6bbc4',
+        grayBorder: '#B6BBC4',
+        grayBG: '#B1B1B1',
+        blueBorder: '#31304D',
+        redError: '#D63F3F'
       },
     },
   },

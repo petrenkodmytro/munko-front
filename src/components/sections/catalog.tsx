@@ -21,7 +21,7 @@ const Catalog = async () => {
       <div className="md:hidden mb-5 ml-4">
         <CardsCarousel slides={cardsCatalog} />
       </div>
-      <button className="mx-14 rounded px-8 text-xl h-11 font-semibold py-2.5 hover:py-2 bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 md:block md:m-auto">
+      <button className="mx-14 h-[46px] rounded px-8 text-xl font-semibold bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 md:block md:m-auto duration-200 ease-linear">
         <Link href={'/catalog'}>SEE MORE FIGURES</Link>
       </button>
     </section>

@@ -1,0 +1,18 @@
+<svg width="41.000000" height="30.000000" viewBox="0 0 41 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<clipPath id="clip28_477">
+			<rect id="search icon" rx="5.000000" width="23.937984" height="23.570248" transform="translate(8.531006 3.214844)" fill="white" fill-opacity="0"/>
+		</clipPath>
+		<clipPath id="clip28_478">
+			<rect id="search button" rx="5.000000" width="41.000000" height="30.000000" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<rect id="search button" rx="5.000000" width="41.000000" height="30.000000" fill="#31304D" fill-opacity="1.000000"/>
+	<g clip-path="url(#clip28_478)">
+		<rect id="search icon" rx="5.000000" width="23.937984" height="23.570248" transform="translate(8.531006 3.214844)" fill="#FFFFFF" fill-opacity="0"/>
+		<g clip-path="url(#clip28_477)">
+			<path id="Vector" d="M19.5024 21.8745C15.0957 21.8745 11.5232 18.3569 11.5232 14.0178C11.5232 9.67871 15.0957 6.16113 19.5024 6.16113C23.9094 6.16113 27.4819 9.67871 27.4819 14.0178C27.4819 18.3569 23.9094 21.8745 19.5024 21.8745Z" stroke="#FFFFFF" stroke-opacity="1.000000" stroke-width="2.000000" stroke-linejoin="round"/>
+			<path id="Vector" d="M29.4768 23.8389L25.1379 19.5667" stroke="#FFFFFF" stroke-opacity="1.000000" stroke-width="2.000000" stroke-linejoin="round" stroke-linecap="round"/>
+		</g>
+	</g>
+</svg>
