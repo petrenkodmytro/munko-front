@@ -52,7 +52,7 @@ const ProductCard = () => {
         Catalog/Disney/Cartoons
       </p>
       <div className="xl:flex gap-6">
-        <CardImage />
+        <CardImage images={product.images}/>
         <div className="px-[16px] py-[30px] md:px-0 md:pb-10">
           <h5 className="text-2xl font-bold mb-5 md:text-[32px]">
             {product.name}

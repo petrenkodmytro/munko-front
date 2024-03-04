@@ -12,14 +12,14 @@
   margin: 0;
 }
 
-.swiper-thumbs .swiper-slide {
-  display: flex;
-  width: 98px;
-  height: 92px;
+.swiper-thumbs .swiper-slide.card{
+  /* display: flex; */
+  width: 98px !important;
+  height: 92px !important;
   background-color: #fff;
 }
 
-.swiper-thumbs .swiper-slide-thumb-active {
+.swiper-thumbs .swiper-slide-thumb-active.card {
   background-color: #b6bbc4;
 }
 

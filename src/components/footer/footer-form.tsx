@@ -89,7 +89,7 @@ const FooterForm = () => {
             <p className="text-base not-italic font-normal leading-[normal] md:flex md:flex-col lg:block">
               I agree with the{' '}
               <Link
-                href={'/'}
+                href={'/privancy-policy'}
                 className="text-base not-italic font-normal leading-[normal] underline duration-200 ease-linear lg:hover:text-[#C3C3C3]"
               >
                 Privacy Policy
