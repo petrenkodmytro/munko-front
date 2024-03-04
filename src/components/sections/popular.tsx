@@ -19,7 +19,7 @@ const Popular = async () => {
       <div className="md:hidden">
         <CardsCarousel slides={cardsCatalog} />
       </div>
-    </>
+    </div>
   );
 };
 
