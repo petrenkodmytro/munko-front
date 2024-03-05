@@ -5,10 +5,9 @@ import Image from 'next/image';
 import { sliderCard } from '../../../public/images';
 import FavoritIcon from '../../../public/icons/favorite-icon.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Thumbs, Pagination } from 'swiper/modules';
+import { Thumbs, Pagination } from 'swiper/modules';
 
 import 'swiper/css';
-import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 
@@ -26,7 +25,7 @@ const CardImage = ({ images }: CardImgProps) => {
   });
   // console.log(newImgs)
   return (
-    <div className="relative md:flex md:flex-row-reverse bg-[#F5F5F5] pb-5 md:pb-0 xl:w-[737px]">
+    <div className="relative md:flex md:flex-row-reverse bg-[#F5F5F5] pb-5 md:p-5 xl:w-[737px]">
       <button
         onClick={() => setIsFavorite(!isFavorite)}
         type="button"
@@ -36,13 +35,12 @@ const CardImage = ({ images }: CardImgProps) => {
       </button>
       <Swiper
         loop={true}
-        spaceBetween={0}
         pagination={{ clickable: true }}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
-        modules={[FreeMode, Pagination, Thumbs]}
-        className="h-96 md:h-[460px] w-full"
+        modules={[Pagination, Thumbs]}
+        className="main-slider h-96 md:h-[460px] md:w-[498px]"
       >
         {newImgs.map((image, index) => (
           <SwiperSlide key={index}>
@@ -57,22 +55,21 @@ const CardImage = ({ images }: CardImgProps) => {
       <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
-        spaceBetween={15}
-        slidesPerView={3.33}
         breakpoints={{
           0: {
             slidesPerView: 3.33,
+            spaceBetween: 15,
             direction: 'horizontal',
           },
           768: {
             slidesPerView: 5,
+            spaceBetween: 10,
             direction: 'vertical',
           },
         }}
-        // freeMode={true}
         watchSlidesProgress={true}
-        modules={[FreeMode, Pagination, Thumbs]}
-        className="swiper-thumb w-full md:h-[537px] md:w-[120px]"
+        modules={[Pagination, Thumbs]}
+        className="swiper-thumb w-full md:h-[497px] md:w-[120px]"
       >
         {newImgs.map((image, index) => (
           <SwiperSlide key={index} className="card">

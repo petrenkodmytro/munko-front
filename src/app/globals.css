@@ -12,8 +12,7 @@
   margin: 0;
 }
 
-.swiper-thumbs .swiper-slide.card{
-  /* display: flex; */
+.swiper-thumbs .swiper-slide.card {
   width: 98px !important;
   height: 92px !important;
   background-color: #fff;
@@ -21,6 +20,15 @@
 
 .swiper-thumbs .swiper-slide-thumb-active.card {
   background-color: #b6bbc4;
+}
+
+.main-slider .swiper-pagination-horizontal.swiper-pagination-horizontal {
+  @media screen and (min-width: 768px) {
+    bottom: 0px;
+    /* position: relative; */
+    /* margin-top: 120px; */
+    /* z-index: 200; */
+  }
 }
 
 .custom::-webkit-scrollbar {
