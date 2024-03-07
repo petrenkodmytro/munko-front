@@ -1,8 +1,10 @@
 import React from 'react';
-import FAQ from '@/components/sections/faq';
+import FaqPage from '@/components/faq-page/faq-page';
 
-const FaqPage = () => {
-  return <FAQ />;
+const FaqShowPage = () => {
+  return (
+    <FaqPage />
+  );
 };
 
-export default FaqPage;
+export default FaqShowPage;
