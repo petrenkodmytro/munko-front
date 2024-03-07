@@ -65,7 +65,7 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange }) => {
 
   useEffect(() => {
     setIsValidFrom(LoginSchema.isValidSync(values));
-  });
+  },[LoginSchema, values]);
 
   return (
     <Formik

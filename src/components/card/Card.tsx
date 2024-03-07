@@ -14,8 +14,8 @@ const Card = ({ card }: CardProps) => {
       <Link href={`/catalog/${card.id}`}>
         <div className="w-44 h-36 m-auto">
           <Image
-            // src={"https://drive.google.com/uc?id=1IB73I_QgDacliiPsVlkIfbEBTAwdjxav"}
-            src={icon}
+            src={card.images[0].slice(0,25)+'uc?id='+card.images[0].slice(32,65)}
+            // src={icon}
             width={150}
             height={138}
             alt="card-picture"

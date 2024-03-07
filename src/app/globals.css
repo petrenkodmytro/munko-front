@@ -12,15 +12,27 @@
   margin: 0;
 }
 
-.swiper-thumbs .swiper-slide {
-  display: flex;
-  width: 98px;
-  height: 92px;
+.swiper-thumbs .swiper-slide.card {
+  width: 98px !important;
+  height: 92px !important;
   background-color: #fff;
 }
 
-.swiper-thumbs .swiper-slide-thumb-active {
+.swiper-thumbs .swiper-slide-thumb-active.card {
   background-color: #b6bbc4;
+}
+
+.main-slider .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-clickable {
+  @media screen and (min-width: 768px) {
+    /* bottom: -20px; */
+    /* position: relative; */
+    /* margin-top: 10px; */
+    /* z-index: 99999; */
+    /* background-color: yellow; */
+    /* height: 40px; */
+    /* display: flex; */
+    /* padding-top: 10px; */
+  }
 }
 
 .custom::-webkit-scrollbar {

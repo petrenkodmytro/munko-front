@@ -30,7 +30,7 @@ const FooterNav = (props: Props) => {
         </Link>
         <Link
           className="duration-200 ease-linear lg:hover:text-[#C3C3C3]"
-          href={'/about'}
+          href={'/public-offer'}
         >
           Public Offer
         </Link>
