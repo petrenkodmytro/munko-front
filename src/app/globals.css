@@ -22,12 +22,16 @@
   background-color: #b6bbc4;
 }
 
-.main-slider .swiper-pagination-horizontal.swiper-pagination-horizontal {
+.main-slider .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-clickable {
   @media screen and (min-width: 768px) {
-    bottom: 0px;
+    /* bottom: -20px; */
     /* position: relative; */
-    /* margin-top: 120px; */
-    /* z-index: 200; */
+    /* margin-top: 10px; */
+    /* z-index: 99999; */
+    /* background-color: yellow; */
+    /* height: 40px; */
+    /* display: flex; */
+    /* padding-top: 10px; */
   }
 }
 

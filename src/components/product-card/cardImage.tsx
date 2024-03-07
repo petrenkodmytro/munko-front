@@ -25,7 +25,7 @@ const CardImage = ({ images }: CardImgProps) => {
   });
   // console.log(newImgs)
   return (
-    <div className="relative md:flex md:flex-row-reverse bg-[#F5F5F5] pb-5 md:p-5 xl:w-[737px]">
+    <div className="relative md:flex md:flex-row-reverse bg-[#F5F5F5] pb-5 md:p-5 xl:w-[737px] xl:py-6 xl:px-8 xl:gap-16">
       <button
         onClick={() => setIsFavorite(!isFavorite)}
         type="button"
@@ -35,12 +35,13 @@ const CardImage = ({ images }: CardImgProps) => {
       </button>
       <Swiper
         loop={true}
+        spaceBetween={5}
         pagination={{ clickable: true }}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
         modules={[Pagination, Thumbs]}
-        className="main-slider h-96 md:h-[460px] md:w-[498px]"
+        className="main-slider h-96 md:h-auto md:w-[498px]"
       >
         {newImgs.map((image, index) => (
           <SwiperSlide key={index}>
@@ -69,7 +70,7 @@ const CardImage = ({ images }: CardImgProps) => {
         }}
         watchSlidesProgress={true}
         modules={[Pagination, Thumbs]}
-        className="swiper-thumb w-full md:h-[497px] md:w-[120px]"
+        className="swiper-thumb w-full md:h-[497px] md:w-[100px]"
       >
         {newImgs.map((image, index) => (
           <SwiperSlide key={index} className="card">
