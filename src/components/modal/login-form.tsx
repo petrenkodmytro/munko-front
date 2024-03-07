@@ -8,6 +8,7 @@ import GoogleImage from './../../../public/icons/google-login-icon.svg';
 import ShowPasswordIcon from './../../../public/icons/show-password.svg';
 import HidePassword from './../../../public/icons/hide-password.svg';
 import { useState, useEffect } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
 
 interface LoginForm {
   handleToogleChange: () => void;
@@ -19,6 +20,10 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange }) => {
   const [values, setValuesObj] = useState({
     password: '',
     emailLogin: '',
+  });
+
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => console.log(tokenResponse),
   });
 
   const classList =
@@ -132,9 +137,9 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange }) => {
         </p>
         <div className="mt-0.5 border border-blueBorder"></div>
         <div className="mt-3 flex justify-center items-center gap-[18px]">
-          <Link href={'/'}>
+          <button onClick={() => login()}>
             <GoogleImage />
-          </Link>
+          </button>
           <Link href={'/'} className="h-[34px]">
             <InstagramImage />
           </Link>
