@@ -10,8 +10,8 @@ const FooterForm = () => {
 
   const emailSchema = Yup.object().shape({
     email: Yup.string()
-      .min(3, 'Too Short! min 3')
-      .max(45, 'Too Long! max 45')
+      .min(3)
+      .max(45)
       .email()
       .matches(
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/,
@@ -35,16 +35,19 @@ const FooterForm = () => {
             className="text-lg not-italic font-semibold mb-3 md:text-base"
             htmlFor="Email"
           >
-            Subscribe to our news letter
+            Subscribe to our newsletter
           </label>
           <div>
             <div className="flex overflow-hidden justify-center rounded-[5px] bg-white w-[284px] md:w-[226px] lg:w-[284px]">
               <Field
-                className="w-full text-black pl-2 focus:outline-none"
+                className="w-full text-black pl-2 focus:outline-none invalid:border-pink-500 invalid:text-pink-600
+                focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                 id="email"
                 name="email"
                 placeholder="example@com.ua"
+                
               />
+              
               <button
                 type="submit"
                 disabled={!isChecked}
@@ -96,6 +99,12 @@ const FooterForm = () => {
               </Link>
             </p>
           </div>
+         <input type='email' className='text-black "mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+      disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+    "'/>
         </Form>
       </Formik>
     </>

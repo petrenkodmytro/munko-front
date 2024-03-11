@@ -49,7 +49,7 @@ const CollectionCarousel = () => {
     },
     {
       url: { mob: slider4, tab: slider4Tab },
-      title: 'how to train you dragon',
+      title: 'how to train your dragon',
       bg: 'bg-[#B5E1E5]',
       w: { mob: 158, tab: 228 },
       h: { mob: 235, tab: 340 },
