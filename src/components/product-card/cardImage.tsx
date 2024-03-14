@@ -45,8 +45,8 @@ const CardImage = ({ images }: CardImgProps) => {
       >
         {newImgs.map((image, index) => (
           <SwiperSlide key={index}>
-            <div className="flex h-full w-full items-center justify-center">
-              <Image src={image} fill alt={image} className=" object-contain" />
+            <div className="relative h-[461px]">
+              <Image src={image} fill alt={image} className="object-contain" />
             </div>
           </SwiperSlide>
         ))}
@@ -80,7 +80,7 @@ const CardImage = ({ images }: CardImgProps) => {
                 fill
                 sizes="100vw"
                 style={{
-                  objectFit: 'contain',
+                  objectFit: 'none',
                 }}
                 alt=""
                 className=""

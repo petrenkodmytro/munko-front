@@ -1,4 +1,4 @@
-import { ICard } from '@/types/types';
+import { ICard, IReview } from '@/types/types';
 import { GraphQLClient, request, gql } from 'graphql-request';
 
 const endpoint = 'https://funkopop.onrender.com/graphql';
@@ -11,6 +11,10 @@ interface DataCatalog {
 
 interface DataItem {
   getItem: ICard;
+}
+
+interface DataReviewById {
+  getFunkoReviews: IReview[];
 }
 
 export const getCatalog = async () => {
@@ -59,4 +63,22 @@ export const getItem = async (id: string) => {
   let dataCard = data.getItem;
   // console.log(dataCard);
   return dataCard;
+};
+
+export const getReviewsById = async (id: string) => {
+  const query = gql`
+   query GetFunkoReviews {
+        getFunkoReviews(funkoId:${id}) {
+            id
+            userId
+            funkoId
+            review
+            star
+        }
+    }
+  `;
+  const data: DataReviewById = await graphQLClient.request(query);
+  let dataReview = data.getFunkoReviews;
+  // console.log(dataReview);
+  return dataReview;
 };
