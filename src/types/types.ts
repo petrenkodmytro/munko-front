@@ -13,3 +13,12 @@ export interface ICard {
   productType: string;
   date: string;
 }
+
+export interface IReview {
+  id: number;
+  username: string;
+  funkoId: number;
+  userId: number;
+  star: number;
+  review: string;
+}

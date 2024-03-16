@@ -41,12 +41,18 @@ const CardImage = ({ images }: CardImgProps) => {
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
         modules={[Pagination, Thumbs]}
-        className="main-slider h-96 md:h-auto md:w-[498px]"
+        className="main-slider md:h-auto md:w-[498px]"
       >
         {newImgs.map((image, index) => (
           <SwiperSlide key={index}>
-            <div className="flex h-full w-full items-center justify-center">
-              <Image src={image} fill alt={image} className=" object-contain" />
+            <div className="relative w-[390px] h-[360px] md:w-full md:h-full">
+              <Image
+                src={image}
+                fill
+                alt={image}
+                sizes="100vw"
+                className="p-4 md:py-6 object-contain"
+              />
             </div>
           </SwiperSlide>
         ))}
@@ -79,11 +85,8 @@ const CardImage = ({ images }: CardImgProps) => {
                 src={image}
                 fill
                 sizes="100vw"
-                style={{
-                  objectFit: 'contain',
-                }}
                 alt=""
-                className=""
+                className="object-contain p-2"
               />
             </div>
           </SwiperSlide>

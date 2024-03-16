@@ -10,8 +10,8 @@ const FooterForm = () => {
 
   const emailSchema = Yup.object().shape({
     email: Yup.string()
-      .min(3, 'Too Short! min 3')
-      .max(45, 'Too Long! max 45')
+      .min(3)
+      .max(45)
       .email()
       .matches(
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/,
@@ -35,7 +35,7 @@ const FooterForm = () => {
             className="text-lg not-italic font-semibold mb-3 md:text-base"
             htmlFor="Email"
           >
-            Subscribe to our news letter
+            Subscribe to our newsletter
           </label>
           <div>
             <div className="flex overflow-hidden justify-center rounded-[5px] bg-white w-[284px] md:w-[226px] lg:w-[284px]">
@@ -45,6 +45,7 @@ const FooterForm = () => {
                 name="email"
                 placeholder="example@com.ua"
               />
+
               <button
                 type="submit"
                 disabled={!isChecked}

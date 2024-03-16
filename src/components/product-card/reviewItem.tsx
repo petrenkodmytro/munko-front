@@ -5,12 +5,13 @@ import Rating from '@mui/material/Rating';
 import ReviewIcon from './../../../public/icons/reviews-icon.svg';
 import IconStar from './../../../public/icons/rating-icon.svg';
 import IconStarEmpty from './../../../public/icons/rating-empty-icon.svg';
+import { IReview } from '@/types/types';
 
 type Props = {
-  item: string;
+  reviwe: IReview;
 };
 
-const ReviewItem = ({ item }: Props) => {
+const ReviewItem = ({ reviwe }: Props) => {
   const [isShowMore, setIsShowMore] = useState(false);
 
   const toggleReadMoreLess = () => {
@@ -23,20 +24,20 @@ const ReviewItem = ({ item }: Props) => {
       </div>
       <div>
         <div className="flex justify-between">
-          <p className="text-base font-semibold">Alison</p>
+          <p className="text-base font-semibold">{reviwe.id}</p>
           <Rating
             readOnly={true}
             name="rating-read"
             emptyIcon={<IconStarEmpty />}
             icon={<IconStar />}
-            value={3}
+            value={reviwe.star}
           />
         </div>
         <div className="">
           {!isShowMore && (
-            <p className="text-xs font-medium">{item.slice(0, 230)}...</p>
+            <p className="text-xs font-medium">{reviwe.review.slice(0, 230)}...</p>
           )}
-          {isShowMore && <p className="text-xs font-medium">{item}</p>}
+          {isShowMore && <p className="text-xs font-medium">{reviwe.review}</p>}
           <button
             onClick={toggleReadMoreLess}
             className="underline text-xs font-semibold"

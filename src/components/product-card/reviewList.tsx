@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -7,29 +8,13 @@ import ReviewItem from './reviewItem';
 import Rating from '@mui/material/Rating';
 import IconStar from './../../../public/icons/rating-icon.svg';
 import IconStarEmpty from './../../../public/icons/rating-empty-icon.svg';
+import { IReview } from '@/types/types';
 
-type Props = {};
+type Props = {
+  reviews: IReview[]
+};
 
-const reviews = [
-  `I absolutely adore my Funko Nick Wilde POP Disney figure! The
-attention to detail is fantastic, capturing Nick's mischievous
-grin and personality perfectly. The colors are vibrant, and the
-size is just right for displaying on my shelf I absolutely adore
-my Funko Nick Wilde POP Disney figure! The attention to detail
-is fantastic, capturing Nick's mischievous grin and personality
-perfectly. The colors are vibrant, and the size is just right
-for displaying on my shelf`,
-  `Love this APP. I absolutely adore my Funko Nick Wilde POP Disney figure! The
-attention to detail is fantastic, capturing Nick's mischievous
-grin and personality perfectly. The colors are vibrant, and the
-size is just right for displaying on my shelf I absolutely adore
-my Funko Nick Wilde POP Disney figure! The attention to detail
-is fantastic, capturing Nick's mischievous grin and personality
-perfectly. The colors are vibrant, and the size is just right
-for displaying on my shelf`,
-];
-
-const CardReviews = (props: Props) => {
+const CardReviews = ({reviews}: Props) => {
   const [ratingValue, setRatingValue] = useState<number | null>(0);
 
   return (
@@ -59,7 +44,7 @@ const CardReviews = (props: Props) => {
             className="w-full text-black pl-3 py-[5px] focus:outline-none font-semibold text-[10px]"
             id="feedbacText"
             name="feedbacText"
-            placeholder="Write a review or rate your purchase  "
+            placeholder="Write a review or rate your purchase"
           />
           <Rating
             name="rating"
@@ -81,9 +66,9 @@ const CardReviews = (props: Props) => {
 
       <div className="h-[292px] custom overflow-y-scroll md:h-[200px]">
         <ul className="flex flex-col gap-5 pr-3 md:pr-5">
-          {reviews.map((item, index) => (
+          {reviews.map((reviwe, index) => (
             <li key={index} className="flex gap-4">
-              <ReviewItem item={item} />
+              <ReviewItem reviwe={reviwe} />
             </li>
           ))}
         </ul>

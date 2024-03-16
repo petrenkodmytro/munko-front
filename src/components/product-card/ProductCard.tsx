@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import CardImage from './cardImage';
 import CardReviews from './reviewList';
-import { getItem } from '@/api/api';
+import { getItem, getReviewsById } from '@/api/api';
 import { useParams } from 'next/navigation';
-import { ICard } from '@/types/types';
+import { ICard, IReview } from '@/types/types';
 
 const initialValue = {
   id: 0,
@@ -32,13 +32,17 @@ const ProductCard = () => {
 
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
   const [product, setProduct] = useState<ICard>(initialValue);
+  const [reviews, setReviews] = useState<IReview[]>([]);
 
   useEffect(() => {
     async function fetchProduct() {
       try {
         const card = await getItem(id);
-        // console.log(card);
+        const reviews = await getReviewsById(id);
+        // console.log(reviews);
         setProduct(card);
+        setReviews(reviews);
+
       } catch (error) {
         console.log(error);
       }
@@ -112,13 +116,7 @@ const ProductCard = () => {
           <h6 className="text-xl font-semibold md:text-[26px]">Description</h6>
           <div className="h-[1px] bg-[#B6BBC4]"></div>
           <p className="text-xs font-medium text-justify md:text-sm">
-            The Funko Nick Wilde POP Disney: Zootopia Figure is a 3.75-inch
-            vinyl collectible that perfectly captures the witty charm of Nick
-            Wilde from the beloved animated film. With vibrant colors and
-            intricate detailing, this figure is a must-have for fans of Zootopia
-            and Funko POP collectors alike. Display it proudly on shelves or
-            desks to showcase your love for this iconic character and the world
-            of Zootopia.
+            {product.description}
           </p>
           <ul className="flex flex-col gap-[2px] text-sm font-semibold">
             <li>
@@ -150,7 +148,7 @@ const ProductCard = () => {
             </li>
           </ul>
         </div>
-        <CardReviews />
+        <CardReviews reviews={reviews}/>
       </div>
     </div>
   );
