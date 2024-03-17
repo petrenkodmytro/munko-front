@@ -24,7 +24,7 @@ const ReviewItem = ({ reviwe }: Props) => {
       </div>
       <div>
         <div className="flex justify-between">
-          <p className="text-base font-semibold">{reviwe.id}</p>
+          <p className="text-base font-semibold">{reviwe.username}</p>
           <Rating
             readOnly={true}
             name="rating-read"

@@ -69,11 +69,12 @@ export const getReviewsById = async (id: string) => {
   const query = gql`
    query GetFunkoReviews {
         getFunkoReviews(funkoId:${id}) {
-            id
-            userId
-            funkoId
-            review
-            star
+          id
+          userId
+          funkoId
+          review
+          star
+          username
         }
     }
   `;
