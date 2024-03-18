@@ -4,6 +4,16 @@ import { SetStateAction, useState } from 'react';
 
 type Props = {};
 
+const sortByOptions = [
+  'Best selling',
+  'Price, low to high',
+  'Price, high to low',
+  'Date, old to new',
+  'Date, new to old',
+];
+const seriesOptions = ['A bug’s life', 'Bambi', 'Black Panther', 'Captain America', 'Frozen', 'Maleficent', 'Spiderman', 'IronMan'];
+const categoryOptions = ['Movies', 'Comics', 'Anime', 'Games', 'Cartoons'];
+
 const CatalogFilter = (props: Props) => {
   const [sortBy, setSortBy] = useState('Best selling');
   const [priceFrom, setPriceFrom] = useState('');
@@ -11,15 +21,7 @@ const CatalogFilter = (props: Props) => {
   const [stock, setStock] = useState(false);
   const [sale, setSale] = useState(false);
 
-  const sortByOptions = [
-    'Best selling',
-    'Price, low to high',
-    'Price, high to low',
-    'Date, old to new',
-    'Date, new to old',
-  ];
-
-  const handleChange = (event: {
+  const handleChangeSort = (event: {
     target: { value: SetStateAction<string> };
   }) => {
     setSortBy(event.target.value);
@@ -28,11 +30,11 @@ const CatalogFilter = (props: Props) => {
 
   return (
     <div>
-      {/* sort */}
+      {/* sort by */}
       <div>
         <label>
           Sort by:
-          <select value={sortBy} onChange={handleChange}>
+          <select value={sortBy} onChange={handleChangeSort}>
             {sortByOptions.map((value, i) => (
               <option value={value} key={i}>
                 {value}
@@ -64,9 +66,9 @@ const CatalogFilter = (props: Props) => {
       </div>
       {/* in stock */}
       <div className="p-3">
-        <div className="flex ">
+        <div className="flex items-center gap-[10px]">
           <input
-            className="appearance-none relative peer shrink-0 bg-[#F5F5F5] w-[22px] h-[18px] rounded-[5px] mr-1"
+            className="appearance-none relative peer shrink-0 bg-[#F5F5F5] w-[23px] h-[18px] rounded-[5px]"
             type="checkbox"
             name="In stock"
             id="In stock"
@@ -123,6 +125,22 @@ const CatalogFilter = (props: Props) => {
           </svg>
           Sale
         </div>
+      </div>
+      {/* Category */}
+      <div>
+        {categoryOptions.map((el, index) => (
+          <div key={index}>
+            <input
+              type="checkbox"
+              key={index}
+              onClick={() => console.log(el)}
+              name="filter"
+              id={el}
+              value={el}
+            />
+            <label>{el}</label>
+          </div>
+        ))}
       </div>
     </div>
   );
