@@ -1,7 +1,5 @@
 import ProductCard from '@/components/product-card/ProductCard';
 import Popular from '@/components/sections/popular';
-import { Suspense } from 'react';
-import Loading from '../../loading';
 
 const page = () => {
   return (

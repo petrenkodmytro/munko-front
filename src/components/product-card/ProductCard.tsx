@@ -39,7 +39,7 @@ const ProductCard = () => {
       try {
         const card = await getItem(id);
         const reviews = await getReviewsById(id);
-        // console.log(reviews);
+       
         setProduct(card);
         setReviews(reviews);
 
