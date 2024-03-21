@@ -4,8 +4,12 @@ import { SetStateAction, useState } from 'react';
 import FilterArrUp from './../../../public/icons/filter-arrow-up.svg';
 import FilterArrDown from './../../../public/icons/filter-arrow-down.svg';
 import CatalogSortBy from './catalogSortBy';
+import Card from '../card/Card';
+import { ICard } from '@/types/types';
 
-type Props = {};
+type Props = {
+  cardsCatalog: ICard[];
+};
 
 const sortByOptions = [
   'Best selling',
@@ -36,7 +40,7 @@ const seriesOptions = [
 ];
 const categoryOptions = ['Movies', 'Comics', 'Anime', 'Games', 'Cartoons'];
 
-const CatalogFilter = (props: Props) => {
+const CatalogFilter = ({ cardsCatalog }: Props) => {
   const [sortBy, setSortBy] = useState('Best selling');
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
@@ -55,109 +59,110 @@ const CatalogFilter = (props: Props) => {
   };
 
   return (
-    <div>
+    <section className=''>
       <CatalogSortBy
         sortByOptions={sortByOptions}
         sortBy={sortBy}
         handleChangeSort={handleChangeSort}
       />
-      {/* price */}
-      <div className="">
-        <div className="inline-flex gap-2 px-1 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
-          Price
-          <button
-            className=""
-            onClick={() => setOpenPrice(!openPrice)}
-            type="button"
-          >
-            {openPrice ? <FilterArrUp /> : <FilterArrDown />}
-          </button>
-        </div>
-        {openPrice && (
-          <div className="mt-5">
-            {' '}
-            <input
-              value={priceFrom}
-              type="number"
-              onChange={event => setPriceFrom(event.target.value)}
-              placeholder="From"
-              className="px-2 w-[148px]  outline"
-            />
-            <input
-              value={priceTo}
-              type="number"
-              onChange={event => setPriceTo(event.target.value)}
-              placeholder="To"
-              className="px-2 w-[148px]  outline"
-            />
+      {/* filter */}
+      <div className="w-[303px] p-[30px] flex flex-col gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+        {/* price */}
+        <div className="">
+          <div className="inline-flex gap-2 px-2 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+            Price
+            <button
+              className=""
+              onClick={() => setOpenPrice(!openPrice)}
+              type="button"
+            >
+              {openPrice ? <FilterArrUp /> : <FilterArrDown />}
+            </button>
           </div>
-        )}
-      </div>
-      {/* Collection */}
-      <div className="">
-        <div className="inline-flex gap-2 px-1 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
-          Collection
-          <button
-            className=""
-            onClick={() => setOpenCollection(!openCollection)}
-            type="button"
-          >
-            {openCollection ? <FilterArrUp /> : <FilterArrDown />}
-          </button>
+          {openPrice && (
+            <div className="mt-4 flex gap-[30px]">
+              {' '}
+              <input
+                value={priceFrom}
+                type="number"
+                onChange={event => setPriceFrom(event.target.value)}
+                placeholder="From"
+                className="pl-1 py-1 w-[100px]  text-2xl bg-[#F5F5F5] rounded"
+              />
+              <input
+                value={priceTo}
+                type="number"
+                onChange={event => setPriceTo(event.target.value)}
+                placeholder="To"
+                className="pl-1 py-1 w-[100px]  text-2xl bg-[#F5F5F5] rounded"
+              />
+            </div>
+          )}
         </div>
-        {openCollection && (
-          <ul className="flex flex-col gap-[30px] p-[30px] mt-5 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
-            {collectionOptions.map((el, index) => (
-              <li key={index} className="flex gap-5">
-                <input
-                  type="checkbox"
-                  key={index}
-                  onClick={() => console.log(el)}
-                  name="filter"
-                  id={el}
-                  value={el}
-                  className="w-[35px] h-[35px]"
-                />
-                <label className="text-2xl">{el}</label>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      {/* Series */}
-      <div className="">
-        <div className="inline-flex gap-2 px-1 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
-          Series
-          <button
-            className=""
-            onClick={() => setOpenSeries(!openSeries)}
-            type="button"
-          >
-            {openSeries ? <FilterArrUp /> : <FilterArrDown />}
-          </button>
+        {/* Collection */}
+        <div className="">
+          <div className="inline-flex gap-2 px-2 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+            Collection
+            <button
+              className=""
+              onClick={() => setOpenCollection(!openCollection)}
+              type="button"
+            >
+              {openCollection ? <FilterArrUp /> : <FilterArrDown />}
+            </button>
+          </div>
+          {openCollection && (
+            <ul className="flex flex-col gap-[30px] mt-4">
+              {collectionOptions.map((el, index) => (
+                <li key={index} className="flex items-center gap-5">
+                  <input
+                    type="checkbox"
+                    key={index}
+                    onClick={() => console.log(el)}
+                    name="filter"
+                    id={el}
+                    value={el}
+                    className="flex-shrink-0 w-[35px] h-[35px]"
+                  />
+                  <label className="text-2xl">{el}</label>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-        {openSeries && (
-          <ul className="flex flex-col gap-[30px] p-[30px] mt-5 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
-            {seriesOptions.map((el, index) => (
-              <li key={index} className="flex gap-5">
-                <input
-                  type="checkbox"
-                  key={index}
-                  onClick={() => console.log(el)}
-                  name="filter"
-                  id={el}
-                  value={el}
-                  className="w-[35px] h-[35px]"
-                />
-                <label className="text-2xl">{el}</label>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      {/* in stock */}
-      <div className="p-3">
-        <div className="flex items-center gap-[10px]">
+        {/* Series */}
+        <div className="">
+          <div className="inline-flex gap-2 px-2 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+            Series
+            <button
+              className=""
+              onClick={() => setOpenSeries(!openSeries)}
+              type="button"
+            >
+              {openSeries ? <FilterArrUp /> : <FilterArrDown />}
+            </button>
+          </div>
+          {openSeries && (
+            <ul className="flex flex-col gap-[30px] mt-4">
+              {seriesOptions.map((el, index) => (
+                <li key={index} className="flex items-center gap-5">
+                  <input
+                    type="checkbox"
+                    key={index}
+                    onClick={() => console.log(el)}
+                    name="filter"
+                    id={el}
+                    value={el}
+                    className="flex-shrink-0 w-[35px] h-[35px]"
+                  />
+                  <label className="text-2xl">{el}</label>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        {/* in stock */}
+        <div className="flex items-center gap-[10px] text-2xl">
           <input
             className="appearance-none relative peer shrink-0 bg-[#F5F5F5] w-[23px] h-[18px] rounded-[5px]"
             type="checkbox"
@@ -185,10 +190,8 @@ const CatalogFilter = (props: Props) => {
           </svg>
           In stock
         </div>
-      </div>
-      {/* sale */}
-      <div className="p-3">
-        <div className="flex ">
+        {/* sale */}
+        <div className="flex items-center gap-[10px] text-2xl">
           <input
             className="appearance-none relative peer shrink-0 bg-[#F5F5F5] w-[22px] h-[18px] rounded-[5px] mr-1"
             type="checkbox"
@@ -216,39 +219,44 @@ const CatalogFilter = (props: Props) => {
           </svg>
           Sale
         </div>
-      </div>
-      {/* Category */}
-      <div className="">
-        <div className="inline-flex gap-2 px-1 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
-          Category
-          <button
-            className=""
-            onClick={() => setOpenCategory(!openCategory)}
-            type="button"
-          >
-            {openCategory ? <FilterArrUp /> : <FilterArrDown />}
-          </button>
+        {/* Category */}
+        <div className="">
+          <div className="inline-flex gap-2 px-2 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+            Category
+            <button
+              className=""
+              onClick={() => setOpenCategory(!openCategory)}
+              type="button"
+            >
+              {openCategory ? <FilterArrUp /> : <FilterArrDown />}
+            </button>
+          </div>
+          {openCategory && (
+            <ul className="flex flex-col gap-[30px] mt-4">
+              {categoryOptions.map((el, index) => (
+                <li key={index} className="flex gap-5">
+                  <input
+                    type="checkbox"
+                    key={index}
+                    onClick={() => console.log(el)}
+                    name="filter"
+                    id={el}
+                    value={el}
+                    className="w-[35px] h-[35px]"
+                  />
+                  <label className="text-2xl">{el}</label>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-        {openCategory && (
-          <ul className="flex flex-col gap-[30px] p-[30px] mt-5 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
-            {categoryOptions.map((el, index) => (
-              <li key={index} className="flex gap-5">
-                <input
-                  type="checkbox"
-                  key={index}
-                  onClick={() => console.log(el)}
-                  name="filter"
-                  id={el}
-                  value={el}
-                  className="w-[35px] h-[35px]"
-                />
-                <label className="text-2xl">{el}</label>
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
-    </div>
+      <div className="flex items-center flex-col  my-5 md:my-9 md:px-20 md:flex-row md:flex-wrap justify-between lg:justify-evenly xl:justify-between md:gap-[76px] lg:gap-5 lg:px-[164px]">
+        {cardsCatalog.map(card => (
+          <Card key={card.id} card={card} />
+        ))}
+      </div>
+    </section>
   );
 };
 

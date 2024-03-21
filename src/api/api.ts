@@ -6,7 +6,9 @@ const endpoint = 'https://funkopop.onrender.com/graphql';
 const graphQLClient = new GraphQLClient(endpoint);
 
 interface DataCatalog {
-  getAllItems: ICard[];
+  getAllItems: {
+    items: ICard[];
+  };
 }
 
 interface DataItem {
@@ -21,17 +23,28 @@ export const getCatalog = async () => {
   const query = gql`
     query GetAllItems {
       getAllItems {
-        id
-        name
-        images
-        price
+        items {
+          id
+          name
+          images
+          price
+          amount
+          description
+          sale
+          license
+          sublicense
+          series
+          category
+          productType
+          date
+        }
       }
     }
   `;
 
   try {
     const data: DataCatalog = await graphQLClient.request(query);
-    let dataCards = data.getAllItems;
+    let dataCards = data.getAllItems.items;
     return dataCards;
   } catch (error) {
     console.log(error);
