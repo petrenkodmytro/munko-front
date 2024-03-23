@@ -3,6 +3,8 @@
 import { SetStateAction, useState } from 'react';
 import FilterArrUp from './../../../public/icons/filter-arrow-up.svg';
 import FilterArrDown from './../../../public/icons/filter-arrow-down.svg';
+import CheckFilter from './../../../public/icons/check-filter.svg';
+import FilterIcon from './../../../public/icons/filter-icon.svg';
 import CatalogSortBy from './catalogSortBy';
 import Card from '../card/Card';
 import { ICard } from '@/types/types';
@@ -59,14 +61,26 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
   };
 
   return (
-    <section className=''>
-      <CatalogSortBy
-        sortByOptions={sortByOptions}
-        sortBy={sortBy}
-        handleChangeSort={handleChangeSort}
-      />
-      {/* filter */}
-      <div className="w-[303px] p-[30px] flex flex-col gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+    <section className="px-4 pt-7 pb-10">
+      <div>Catalog/Disney/Cartoons</div>
+      <div className="flex justify-between">
+        <button
+          type="button"
+          className="xl:hidden inline-flex gap-[10px] justify-center items-center text-lg font-medium "
+        >
+          <FilterIcon />
+          Filter
+        </button>
+        <CatalogSortBy
+          sortByOptions={sortByOptions}
+          sortBy={sortBy}
+          handleChangeSort={handleChangeSort}
+        />
+      </div>
+
+      <div className="hidden md:block">Showing 1-14 of 28 products</div>
+      {/* Filter */}
+      <div className="hidden w-[303px] p-[30px] xl:flex flex-col gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
         {/* price */}
         <div className="">
           <div className="inline-flex gap-2 px-2 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
@@ -114,7 +128,7 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
           {openCollection && (
             <ul className="flex flex-col gap-[30px] mt-4">
               {collectionOptions.map((el, index) => (
-                <li key={index} className="flex items-center gap-5">
+                <li key={index} className="relative flex items-center gap-5">
                   <input
                     type="checkbox"
                     key={index}
@@ -122,8 +136,9 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
                     name="filter"
                     id={el}
                     value={el}
-                    className="flex-shrink-0 w-[35px] h-[35px]"
+                    className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px]  rounded-[5px]"
                   />
+                  <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
                   <label className="text-2xl">{el}</label>
                 </li>
               ))}
@@ -145,7 +160,7 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
           {openSeries && (
             <ul className="flex flex-col gap-[30px] mt-4">
               {seriesOptions.map((el, index) => (
-                <li key={index} className="flex items-center gap-5">
+                <li key={index} className="relative flex items-center gap-5">
                   <input
                     type="checkbox"
                     key={index}
@@ -153,8 +168,9 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
                     name="filter"
                     id={el}
                     value={el}
-                    className="flex-shrink-0 w-[35px] h-[35px]"
+                    className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
                   />
+                  <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
                   <label className="text-2xl">{el}</label>
                 </li>
               ))}
@@ -162,61 +178,29 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
           )}
         </div>
         {/* in stock */}
-        <div className="flex items-center gap-[10px] text-2xl">
+        <div className="relative flex items-center gap-[10px] text-2xl">
           <input
-            className="appearance-none relative peer shrink-0 bg-[#F5F5F5] w-[23px] h-[18px] rounded-[5px]"
+            className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px]  rounded-[5px]"
             type="checkbox"
             name="In stock"
             id="In stock"
             defaultChecked={stock}
             onClick={() => setStock(!stock)}
           />
-          <svg
-            className="absolute  hidden peer-checked:block pointer-events-none"
-            xmlns="http://www.w3.org/2000/svg"
-            width="23"
-            height="20"
-            viewBox="0 0 23 20"
-            fill="none"
-          >
-            <rect y="0" width="22" height="18" rx="5" fill="white" />
-            <path
-              d="M17 7L9.4375 14L6 10.8182"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
           In stock
         </div>
         {/* sale */}
-        <div className="flex items-center gap-[10px] text-2xl">
+        <div className="relative flex items-center gap-5 text-2xl">
           <input
-            className="appearance-none relative peer shrink-0 bg-[#F5F5F5] w-[22px] h-[18px] rounded-[5px] mr-1"
+            className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
             type="checkbox"
             name="sale"
             id="sale"
             defaultChecked={sale}
             onClick={() => setSale(!sale)}
           />
-          <svg
-            className="absolute  hidden peer-checked:block pointer-events-none"
-            xmlns="http://www.w3.org/2000/svg"
-            width="23"
-            height="20"
-            viewBox="0 0 23 20"
-            fill="none"
-          >
-            <rect y="0" width="22" height="18" rx="5" fill="white" />
-            <path
-              d="M17 7L9.4375 14L6 10.8182"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
           Sale
         </div>
         {/* Category */}
@@ -234,7 +218,7 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
           {openCategory && (
             <ul className="flex flex-col gap-[30px] mt-4">
               {categoryOptions.map((el, index) => (
-                <li key={index} className="flex gap-5">
+                <li key={index} className="relative flex items-center gap-5">
                   <input
                     type="checkbox"
                     key={index}
@@ -242,8 +226,9 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
                     name="filter"
                     id={el}
                     value={el}
-                    className="w-[35px] h-[35px]"
+                    className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
                   />
+                  <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
                   <label className="text-2xl">{el}</label>
                 </li>
               ))}
@@ -251,6 +236,7 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
           )}
         </div>
       </div>
+      {/* Catalog */}
       <div className="flex items-center flex-col  my-5 md:my-9 md:px-20 md:flex-row md:flex-wrap justify-between lg:justify-evenly xl:justify-between md:gap-[76px] lg:gap-5 lg:px-[164px]">
         {cardsCatalog.map(card => (
           <Card key={card.id} card={card} />

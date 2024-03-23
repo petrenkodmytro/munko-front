@@ -12,20 +12,17 @@ type Props = {
 
 const CatalogSortBy = ({ sortByOptions, sortBy, handleChangeSort }: Props) => {
   return (
-    <div>
-      {/* sort by */}
-      <div>
-        <label>
-          Sort by:
-          <select value={sortBy} onChange={handleChangeSort}>
-            {sortByOptions.map((value, i) => (
-              <option value={value} key={i}>
-                {value}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+    <div className='text-lg'>
+      <label>
+        Sort by:
+        <select value={sortBy} onChange={handleChangeSort}>
+          {sortByOptions.map((value, i) => (
+            <option value={value} key={i}>
+              {value}
+            </option>
+          ))}
+        </select>
+      </label>
     </div>
   );
 };
