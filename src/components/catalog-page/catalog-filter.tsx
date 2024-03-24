@@ -5,7 +5,7 @@ import FilterArrUp from './../../../public/icons/filter-arrow-up.svg';
 import FilterArrDown from './../../../public/icons/filter-arrow-down.svg';
 import CheckFilter from './../../../public/icons/check-filter.svg';
 import FilterIcon from './../../../public/icons/filter-icon.svg';
-import CatalogSortBy from './catalogSortBy';
+import CatalogSortBy from './catalog-sortBy';
 import Card from '../card/Card';
 import { ICard } from '@/types/types';
 
@@ -40,7 +40,15 @@ const seriesOptions = [
   'Spiderman',
   'IronMan',
 ];
-const categoryOptions = ['Movies', 'Comics', 'Anime', 'Games', 'Cartoons'];
+const categoryOptions = [
+  'Movies',
+  'Comics',
+  'Anime',
+  'Games',
+  'Cartoons',
+  'Animals',
+  'Action',
+];
 
 const CatalogFilter = ({ cardsCatalog }: Props) => {
   const [sortBy, setSortBy] = useState('Best selling');

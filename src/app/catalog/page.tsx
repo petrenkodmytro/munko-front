@@ -1,4 +1,4 @@
-import CatalogPage from '@/components/catalog-page/catalogPage';
+import CatalogPage from '@/components/catalog-page/catalog-page';
 
 const Catalog = async () => {
   return <CatalogPage />;
