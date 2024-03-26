@@ -31,7 +31,7 @@ export const getCatalog = async () => {
           amount
           description
           sale
-          license
+          collection
           sublicense
           series
           category
@@ -63,7 +63,7 @@ export const getItem = async (id: string) => {
         amount
         description
         sale
-        license
+        collection
         sublicense
         series
         category

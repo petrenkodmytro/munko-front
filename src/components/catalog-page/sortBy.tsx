@@ -1,7 +1,6 @@
 import React, { SetStateAction } from 'react';
 
 type Props = {
-  sortByOptions: string[];
   sortBy: string;
   handleChangeSort: (event: {
     target: {
@@ -10,9 +9,16 @@ type Props = {
   }) => void;
 };
 
-const CatalogSortBy = ({ sortByOptions, sortBy, handleChangeSort }: Props) => {
+const SortBy = ({ sortBy, handleChangeSort }: Props) => {
+  const sortByOptions = [
+    'Best selling',
+    'Price, low to high',
+    'Price, high to low',
+    'Date, old to new',
+    'Date, new to old',
+  ];
   return (
-    <div className='text-lg'>
+    <div className="text-lg">
       <label>
         Sort by:
         <select value={sortBy} onChange={handleChangeSort}>
@@ -27,4 +33,4 @@ const CatalogSortBy = ({ sortByOptions, sortBy, handleChangeSort }: Props) => {
   );
 };
 
-export default CatalogSortBy;
+export default SortBy;

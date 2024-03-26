@@ -1,11 +1,11 @@
-"use cluent"
+'use cluent';
 
 import { useState, useEffect } from 'react';
 import { BackDrop } from '../header/back-drop';
+import FilterIcon from './../../../public/icons/filter-icon.svg';
+import Filter from './filter';
 
 const FilterMobile = () => {
-  
-
   const [isOpen, setIsOpen] = useState(false);
   const [hideOrShow, setHideOrShow] = useState({ display: 'none' });
 
@@ -31,27 +31,27 @@ const FilterMobile = () => {
   }, [isOpen]);
 
   return (
-    <>
-      <div className="w-16 z-30 md:w-7 pb-5 self-end md:self-center md:pb-0 md:mt-4 lg:hidden">
-        {isOpen ? (
-          <button onClick={handleMenu} className="cursor-pointer z-40">
-            close
-          </button>
-        ) : (
-          <button onClick={handleMenu} className="cursor-pointer">
-           open
-          </button>
-        )}
-      </div>
+    <div className="relative">
+      <button
+        type="button"
+        onClick={handleMenu}
+        className="xl:hidden inline-flex gap-[10px] justify-center items-center text-lg font-medium "
+      >
+        <FilterIcon />
+        Filter
+      </button>
+
       {isOpen ? <BackDrop handleMenu={handleMenu} /> : null}
       <div
         style={hideOrShow}
-        className="absolute md:rounded md:shadow-[5px_5px_20px_0px_rgb(124,157,150)] z-20 pt-24 md:pt-28 flex-col top-28 md:top-0 w-[390px] md:w-[353px] h-[616px] md:h-[461px] items-center -ml-4 md:-ml-5 bg-footer"
+        className="absolute md:rounded md:shadow-[5px_5px_20px_0px_rgb(124,157,150)] z-20 pt-24 md:pt-28 flex-col top-0 w-[390px] md:w-[353px] h-[616px] md:h-[461px] items-center -ml-4 md:-ml-5 bg-footer"
       >
-       filter
-
+        <button onClick={handleMenu} className="cursor-pointer z-40">
+          close
+        </button>
+        {/* <Filter/> */}
       </div>
-    </>
+    </div>
   );
 };
 

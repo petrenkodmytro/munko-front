@@ -15,7 +15,7 @@ const initialValue = {
   amount: 0,
   description: '',
   sale: false,
-  license: '',
+  collection: '',
   sublicense: '',
   series: '',
   category: '',
@@ -91,7 +91,7 @@ const ProductCard = () => {
             <li>
               License:{' '}
               <span className="font-medium">
-                {product.license ?? 'Unknown'}
+                {product.collection ?? 'Unknown'}
               </span>
             </li>
             <li>
@@ -131,7 +131,7 @@ const ProductCard = () => {
             <li>
               License:{' '}
               <span className="font-medium">
-                {product.license ?? 'Unknown'}
+                {product.collection ?? 'Unknown'}
               </span>
             </li>
             <li>
