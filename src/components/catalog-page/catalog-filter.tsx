@@ -12,11 +12,28 @@ type Props = {
 };
 
 const CatalogFilter = ({ cardsCatalog }: Props) => {
+  // search parameters
   const [sortBy, setSortBy] = useState('Best selling');
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
   const [stock, setStock] = useState(false);
   const [sale, setSale] = useState(false);
+  const [collection, setCollection] = useState('');
+  const [series, setSeries] = useState('');
+  const [category, setCategory] = useState('');
+  // data
+  const [allCards, setAllCards] = useState(cardsCatalog);
+  console.log(allCards);
+  console.log(collection);
+  const changeFilterParams = () => {
+    let params = {
+      priceFrom: '',
+      priceTo: '',
+      stock: null,
+      sale: null,
+      collection: [],
+    };
+  };
 
   const handleChangeSort = (event: {
     target: { value: SetStateAction<string> };
@@ -53,11 +70,12 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
         setStock={setStock}
         sale={sale}
         setSale={setSale}
+        setCollection={setCollection}
       />
 
       <div className="hidden md:block">Showing 1-14 of 28 products</div>
       {/* filter desktop */}
-      <div className='hidden xl:block'>
+      <div className="hidden xl:block">
         {' '}
         <Filter
           priceFrom={priceFrom}
@@ -68,6 +86,7 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
           setStock={setStock}
           sale={sale}
           setSale={setSale}
+          setCollection={setCollection}
         />
       </div>
 

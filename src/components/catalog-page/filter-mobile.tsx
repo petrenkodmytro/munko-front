@@ -22,6 +22,7 @@ type FilterProps = {
   setStock: (stock: boolean) => void;
   sale: boolean;
   setSale: (sale: boolean) => void;
+  setCollection: (collection: string) => void;
 };
 
 const FilterMobile = ({
@@ -32,7 +33,7 @@ const FilterMobile = ({
   stock,
   setStock,
   sale,
-  setSale,
+  setSale, setCollection,
 }: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -65,6 +66,7 @@ const FilterMobile = ({
               setStock={setStock}
               sale={sale}
               setSale={setSale}
+              setCollection={setCollection}
             />
           </div>
         </div>

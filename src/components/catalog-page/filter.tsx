@@ -22,6 +22,7 @@ type FilterProps = {
   setStock: (stock: boolean) => void;
   sale: boolean;
   setSale: (sale: boolean) => void;
+  setCollection: (collection: string) => void;
 };
 
 const collectionOptions = [
@@ -63,6 +64,7 @@ const Filter = ({
   setStock,
   sale,
   setSale,
+  setCollection,
 }: FilterProps) => {
   const [openPrice, setOpenPrice] = useState(false);
   const [openCollection, setOpenCollection] = useState(false);
@@ -121,7 +123,7 @@ const Filter = ({
                 <input
                   type="checkbox"
                   key={index}
-                  onClick={() => console.log(el)}
+                  onClick={() => setCollection(el)}
                   name="filter"
                   id={el}
                   value={el}
