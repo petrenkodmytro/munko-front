@@ -22,7 +22,8 @@ type FilterProps = {
   setStock: (stock: boolean) => void;
   sale: boolean;
   setSale: (sale: boolean) => void;
-  setCollection: (collection: string) => void;
+  toggleSelectedFilter: (filterName: string, value: string) => void;
+  colectionSearchParams: string[];
 };
 
 const FilterMobile = ({
@@ -33,7 +34,9 @@ const FilterMobile = ({
   stock,
   setStock,
   sale,
-  setSale, setCollection,
+  setSale,
+  toggleSelectedFilter,
+  colectionSearchParams,
 }: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -66,7 +69,8 @@ const FilterMobile = ({
               setStock={setStock}
               sale={sale}
               setSale={setSale}
-              setCollection={setCollection}
+              toggleSelectedFilter={toggleSelectedFilter}
+              colectionSearchParams={colectionSearchParams}
             />
           </div>
         </div>
