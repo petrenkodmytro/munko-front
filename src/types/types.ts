@@ -1,3 +1,5 @@
+import { SetStateAction } from 'react';
+
 export interface ICard {
   id: number;
   name: string;
@@ -6,7 +8,7 @@ export interface ICard {
   amount: number;
   description: string;
   sale: boolean;
-  license: string | null;
+  collection: string | null;
   sublicense: string | null;
   series: string;
   category: string;
@@ -21,4 +23,19 @@ export interface IReview {
   userId: number;
   star: number;
   review: string;
+}
+
+export interface IPropsFilter {
+  priceFrom: string;
+  handleSetPriceFrom: (event: {
+    target: {
+      value: SetStateAction<string>;
+    };
+  }) => void;
+  priceTo: string;
+  handleSetPriceTo: (event: {
+    target: {
+      value: SetStateAction<string>;
+    };
+  }) => void;
 }

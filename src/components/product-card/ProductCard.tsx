@@ -15,7 +15,7 @@ const initialValue = {
   amount: 0,
   description: '',
   sale: false,
-  license: '',
+  collection: '',
   sublicense: '',
   series: '',
   category: '',
@@ -39,10 +39,9 @@ const ProductCard = () => {
       try {
         const card = await getItem(id);
         const reviews = await getReviewsById(id);
-        // console.log(reviews);
+
         setProduct(card);
         setReviews(reviews);
-
       } catch (error) {
         console.log(error);
       }
@@ -56,7 +55,7 @@ const ProductCard = () => {
         Catalog/Disney/Cartoons
       </p>
       <div className="xl:flex gap-6">
-        <CardImage images={product.images}/>
+        <CardImage images={product.images} />
         <div className="px-[16px] py-[30px] md:px-0 md:pb-10">
           <h5 className="text-2xl font-bold mb-5 md:text-[32px]">
             {product.name}
@@ -89,9 +88,9 @@ const ProductCard = () => {
               </span>
             </li>
             <li>
-              License:{' '}
+              Colection:{' '}
               <span className="font-medium">
-                {product.license ?? 'Unknown'}
+                {product.collection ?? 'Unknown'}
               </span>
             </li>
             <li>
@@ -129,9 +128,9 @@ const ProductCard = () => {
               </span>
             </li>
             <li>
-              License:{' '}
+              Colection:{' '}
               <span className="font-medium">
-                {product.license ?? 'Unknown'}
+                {product.collection ?? 'Unknown'}
               </span>
             </li>
             <li>
@@ -148,7 +147,7 @@ const ProductCard = () => {
             </li>
           </ul>
         </div>
-        <CardReviews reviews={reviews}/>
+        <CardReviews reviews={reviews} />
       </div>
     </div>
   );
