@@ -96,3 +96,30 @@ export const getReviewsById = async (id: string) => {
   // console.log(dataReview);
   return dataReview;
 };
+
+export const getFilteredByPrice = async (from: string, to: string) => {
+  const query = gql`
+    query GetAllItems {
+    getAllItems(searchCriteria: { price: { from: ${from}, to: ${to} } }) {
+        items {
+            id
+            name
+            images
+            price
+            amount
+            description
+            sale
+            collection
+            sublicense
+            series
+            category
+            productType
+            date
+          }
+        }
+      }
+    `;
+  const data: DataCatalog = await graphQLClient.request(query);
+  let dataCards = data.getAllItems.items;
+  return dataCards;
+};

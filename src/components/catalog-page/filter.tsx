@@ -1,29 +1,22 @@
 'use client';
 
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import FilterArrUp from './../../../public/icons/filter-arrow-up.svg';
 import FilterArrDown from './../../../public/icons/filter-arrow-down.svg';
 import CheckFilter from './../../../public/icons/check-filter.svg';
 
 type FilterProps = {
   priceFrom: string;
-  handleSetPriceFrom: (event: {
-    target: {
-      value: SetStateAction<string>;
-    };
-  }) => void;
+  setPriceFrom: (priceFrom:string) => void;
   priceTo: string;
-  handleSetPriceTo: (event: {
-    target: {
-      value: SetStateAction<string>;
-    };
-  }) => void;
+  setPriceTo: (priceFrom:string) => void;
   stock: boolean;
   setStock: (stock: boolean) => void;
   sale: boolean;
   setSale: (sale: boolean) => void;
   toggleSelectedFilter: (filterName: string, value: string) => void;
   colectionSearchParams: string[];
+  search: () => void;
 };
 
 const collectionOptions = [
@@ -58,15 +51,16 @@ const categoryOptions = [
 
 const Filter = ({
   priceFrom,
-  handleSetPriceFrom,
+  setPriceFrom,
   priceTo,
-  handleSetPriceTo,
+  setPriceTo,
   stock,
   setStock,
   sale,
   setSale,
   toggleSelectedFilter,
   colectionSearchParams,
+  search,
 }: FilterProps) => {
   const [openPrice, setOpenPrice] = useState(false);
   const [openCollection, setOpenCollection] = useState(false);
@@ -87,22 +81,29 @@ const Filter = ({
           </button>
         </div>
         {openPrice && (
-          <div className="mt-4 flex gap-[30px]">
+          <div className="mt-4 flex">
             {' '}
             <input
               value={priceFrom}
               type="number"
-              onChange={handleSetPriceFrom}
+              onChange={event  => setPriceFrom(event.target.value)}
               placeholder="From"
-              className="pl-1 py-1 w-[100px]  text-2xl bg-[#F5F5F5] rounded"
+              className="pl-1 py-1 mr-[25px] w-[100px]  text-2xl bg-[#F5F5F5] rounded"
             />
             <input
               value={priceTo}
               type="number"
-              onChange={handleSetPriceTo}
+              onChange={event  => setPriceTo(event.target.value)}
               placeholder="To"
               className="pl-1 py-1 w-[100px]  text-2xl bg-[#F5F5F5] rounded"
             />
+            <button
+              onClick={() => search()}
+              className="text-white ml-2 px-2 rounded bg-footer"
+              type="button"
+            >
+              ok
+            </button>
           </div>
         )}
       </div>

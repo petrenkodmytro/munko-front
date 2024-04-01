@@ -6,6 +6,7 @@ import Card from '../card/Card';
 import { ICard } from '@/types/types';
 import FilterMobile from './filter-mobile';
 import Filter from './filter';
+import { getFilteredByPrice } from '@/api/api';
 
 type Props = {
   cardsCatalog: ICard[];
@@ -26,22 +27,36 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
   const [seriesSearchParams, setSeriesSearchParams] = useState('');
   const [categorySearchParams, setCategorySearchParams] = useState('');
 
-  const search = () => {
-    let filteredCardsCatalog: ICard[] = [];
-    console.log('search');
-    if (colectionSearchParams.length !== 0) {
-      for (let i = 0; i < colectionSearchParams.length; i++) {
-        const searchValue = colectionSearchParams[i];
-        let currentFilteredCardsCatalog: ICard[] = cardsCatalog.filter(
-          card => card.collection === searchValue
-        );
-        filteredCardsCatalog = [
-          ...filteredCardsCatalog,
-          ...currentFilteredCardsCatalog,
-        ];
-      }
+  // const search = () => {
+  //   let currentfilteredCatalog: ICard[] = [];
+  //   console.log('search');
+  //   if (colectionSearchParams.length !== 0) {
+  //     for (let i = 0; i < colectionSearchParams.length; i++) {
+  //       const searchValue = colectionSearchParams[i];
+  //       let currentFilteredCardsCatalog: ICard[] = cardsCatalog.filter(
+  //         card => card.collection === searchValue
+  //       );
+  //       currentfilteredCatalog = [
+  //         ...filteredCardsCatalog,
+  //         ...currentFilteredCardsCatalog,
+  //       ];
+  //     }
+  //   }
+  //   setFilteredCardsCatalog(currentfilteredCatalog);
+  // };
+
+  const search = async () => {
+    console.log('priceFrom', priceFrom)
+    console.log('priceTo', priceTo)
+    let currentfilteredCatalog: ICard[] = [];
+    try {
+      currentfilteredCatalog = await getFilteredByPrice(priceFrom, priceTo)
+      console.log('currentfilteredCatalog', currentfilteredCatalog);
+    } catch (error) {
+      console.log(error)
     }
-    setFilteredCardsCatalog(filteredCardsCatalog);
+    setFilteredCardsCatalog(currentfilteredCatalog);
+    // console.log('filteredCardsCatalog', filteredCardsCatalog);
   };
 
   const toggleSelectedFilter = (filterName: string, value: string) => {
@@ -57,7 +72,7 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
         });
       }
     }
-    search();
+    // search();
     console.log('colectionSearchParams', colectionSearchParams);
     console.log('filteredCardsCatalog', filteredCardsCatalog);
   };
@@ -90,15 +105,16 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
       {/* filter mobile */}
       <FilterMobile
         priceFrom={priceFrom}
-        handleSetPriceFrom={handleSetPriceFrom}
+        setPriceFrom={setPriceFrom}
         priceTo={priceTo}
-        handleSetPriceTo={handleSetPriceTo}
+        setPriceTo={setPriceTo}
         stock={stock}
         setStock={setStock}
         sale={sale}
         setSale={setSale}
         toggleSelectedFilter={toggleSelectedFilter}
         colectionSearchParams={colectionSearchParams}
+        search={search}
       />
 
       <div className="hidden md:block">Showing 1-14 of 28 products</div>
@@ -108,15 +124,16 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
           {' '}
           <Filter
             priceFrom={priceFrom}
-            handleSetPriceFrom={handleSetPriceFrom}
+            setPriceFrom={setPriceFrom}
             priceTo={priceTo}
-            handleSetPriceTo={handleSetPriceTo}
+            setPriceTo={setPriceTo}
             stock={stock}
             setStock={setStock}
             sale={sale}
             setSale={setSale}
             toggleSelectedFilter={toggleSelectedFilter}
             colectionSearchParams={colectionSearchParams}
+            search={search}
           />
         </div>
 

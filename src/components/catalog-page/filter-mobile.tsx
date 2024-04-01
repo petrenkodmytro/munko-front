@@ -7,36 +7,30 @@ import Filter from './filter';
 
 type FilterProps = {
   priceFrom: string;
-  handleSetPriceFrom: (event: {
-    target: {
-      value: SetStateAction<string>;
-    };
-  }) => void;
+  setPriceFrom: (priceFrom:string) => void;
   priceTo: string;
-  handleSetPriceTo: (event: {
-    target: {
-      value: SetStateAction<string>;
-    };
-  }) => void;
+  setPriceTo: (priceFrom:string) => void;
   stock: boolean;
   setStock: (stock: boolean) => void;
   sale: boolean;
   setSale: (sale: boolean) => void;
   toggleSelectedFilter: (filterName: string, value: string) => void;
   colectionSearchParams: string[];
+  search:()=>void
 };
 
 const FilterMobile = ({
   priceFrom,
-  handleSetPriceFrom,
+  setPriceFrom,
   priceTo,
-  handleSetPriceTo,
+  setPriceTo,
   stock,
   setStock,
   sale,
   setSale,
   toggleSelectedFilter,
   colectionSearchParams,
+  search,
 }: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -62,15 +56,17 @@ const FilterMobile = ({
           <div className="bg-white w-[303px]">
             <Filter
               priceFrom={priceFrom}
-              handleSetPriceFrom={handleSetPriceFrom}
+              setPriceFrom={setPriceFrom}
               priceTo={priceTo}
-              handleSetPriceTo={handleSetPriceTo}
+              setPriceTo={setPriceTo}
               stock={stock}
               setStock={setStock}
               sale={sale}
               setSale={setSale}
               toggleSelectedFilter={toggleSelectedFilter}
               colectionSearchParams={colectionSearchParams}
+              search={search}
+
             />
           </div>
         </div>
