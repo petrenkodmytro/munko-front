@@ -1,5 +1,3 @@
-import { SetStateAction } from 'react';
-
 export interface ICard {
   id: number;
   name: string;
@@ -27,15 +25,25 @@ export interface IReview {
 
 export interface IPropsFilter {
   priceFrom: string;
-  handleSetPriceFrom: (event: {
-    target: {
-      value: SetStateAction<string>;
-    };
-  }) => void;
+  setPriceFrom: (priceFrom: string) => void;
   priceTo: string;
-  handleSetPriceTo: (event: {
-    target: {
-      value: SetStateAction<string>;
-    };
-  }) => void;
+  setPriceTo: (priceFrom: string) => void;
+  stock: boolean;
+  setStock: (stock: boolean) => void;
+  sale: boolean;
+  setSale: (sale: boolean) => void;
+  toggleSelectedFilter: (filterName: string, value: string) => void;
+  colectionSearchParams: string[];
+  seriesSearchParams: string[];
+  categorySearchParams: string[];
+}
+
+export interface IFilteredParams {
+  category: string | null;
+  collection: string | null;
+  series: string | null;
+  priceFrom: string | null;
+  priceTo: string | null;
+  sale: boolean | null;
+  inStock: boolean | null;
 }

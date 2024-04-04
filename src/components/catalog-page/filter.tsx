@@ -4,20 +4,7 @@ import { useState } from 'react';
 import FilterArrUp from './../../../public/icons/filter-arrow-up.svg';
 import FilterArrDown from './../../../public/icons/filter-arrow-down.svg';
 import CheckFilter from './../../../public/icons/check-filter.svg';
-
-type FilterProps = {
-  priceFrom: string;
-  setPriceFrom: (priceFrom:string) => void;
-  priceTo: string;
-  setPriceTo: (priceFrom:string) => void;
-  stock: boolean;
-  setStock: (stock: boolean) => void;
-  sale: boolean;
-  setSale: (sale: boolean) => void;
-  toggleSelectedFilter: (filterName: string, value: string) => void;
-  colectionSearchParams: string[];
-  search: () => void;
-};
+import { IPropsFilter } from '@/types/types';
 
 const collectionOptions = [
   'Marvel',
@@ -60,8 +47,9 @@ const Filter = ({
   setSale,
   toggleSelectedFilter,
   colectionSearchParams,
-  search,
-}: FilterProps) => {
+  seriesSearchParams,
+  categorySearchParams
+}: IPropsFilter) => {
   const [openPrice, setOpenPrice] = useState(false);
   const [openCollection, setOpenCollection] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
@@ -88,18 +76,18 @@ const Filter = ({
               type="number"
               onChange={event  => setPriceFrom(event.target.value)}
               placeholder="From"
-              className="pl-1 py-1 mr-[25px] w-[100px]  text-2xl bg-[#F5F5F5] rounded"
+              className="pl-1 py-1 mr-[25px] w-[90px]  text-2xl bg-[#F5F5F5] rounded"
             />
             <input
               value={priceTo}
               type="number"
               onChange={event  => setPriceTo(event.target.value)}
               placeholder="To"
-              className="pl-1 py-1 w-[100px]  text-2xl bg-[#F5F5F5] rounded"
+              className="pl-1 py-1 w-[90px]  text-2xl bg-[#F5F5F5] rounded"
             />
             <button
-              onClick={() => search()}
-              className="text-white ml-2 px-2 rounded bg-footer"
+              // onClick={() => search()}
+              className="text-2xl text-white ml-2 px-2 rounded bg-footer"
               type="button"
             >
               ok
@@ -159,7 +147,8 @@ const Filter = ({
                 <input
                   type="checkbox"
                   key={index}
-                  onClick={() => console.log(el)}
+                  defaultChecked={seriesSearchParams.includes(el)}
+                  onClick={() => toggleSelectedFilter('series', el)}
                   name="filter"
                   id={el}
                   value={el}
@@ -217,7 +206,8 @@ const Filter = ({
                 <input
                   type="checkbox"
                   key={index}
-                  onClick={() => console.log(el)}
+                  defaultChecked={categorySearchParams.includes(el)}
+                  onClick={() => toggleSelectedFilter('category', el)}
                   name="filter"
                   id={el}
                   value={el}

@@ -4,20 +4,21 @@ import { useState, useEffect, SetStateAction } from 'react';
 import FilterIcon from './../../../public/icons/filter-icon.svg';
 import IconClose from './../../../public/icons/icon-close.svg';
 import Filter from './filter';
+import { IPropsFilter } from '@/types/types';
 
-type FilterProps = {
-  priceFrom: string;
-  setPriceFrom: (priceFrom:string) => void;
-  priceTo: string;
-  setPriceTo: (priceFrom:string) => void;
-  stock: boolean;
-  setStock: (stock: boolean) => void;
-  sale: boolean;
-  setSale: (sale: boolean) => void;
-  toggleSelectedFilter: (filterName: string, value: string) => void;
-  colectionSearchParams: string[];
-  search:()=>void
-};
+// type FilterProps = {
+//   priceFrom: string;
+//   setPriceFrom: (priceFrom:string) => void;
+//   priceTo: string;
+//   setPriceTo: (priceFrom:string) => void;
+//   stock: boolean;
+//   setStock: (stock: boolean) => void;
+//   sale: boolean;
+//   setSale: (sale: boolean) => void;
+//   toggleSelectedFilter: (filterName: string, value: string) => void;
+//   colectionSearchParams: string[];
+//   search:()=>void
+// };
 
 const FilterMobile = ({
   priceFrom,
@@ -30,8 +31,9 @@ const FilterMobile = ({
   setSale,
   toggleSelectedFilter,
   colectionSearchParams,
-  search,
-}: FilterProps) => {
+  seriesSearchParams,
+  categorySearchParams
+}: IPropsFilter) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -65,7 +67,8 @@ const FilterMobile = ({
               setSale={setSale}
               toggleSelectedFilter={toggleSelectedFilter}
               colectionSearchParams={colectionSearchParams}
-              search={search}
+              seriesSearchParams={seriesSearchParams}
+              categorySearchParams={categorySearchParams}
 
             />
           </div>
