@@ -1,29 +1,13 @@
 'use cluent';
 
-import { useState, useEffect, SetStateAction } from 'react';
+import { useState } from 'react';
 import FilterIcon from './../../../public/icons/filter-icon.svg';
 import IconClose from './../../../public/icons/icon-close.svg';
 import Filter from './filter';
 import { IPropsFilter } from '@/types/types';
 
-// type FilterProps = {
-//   priceFrom: string;
-//   setPriceFrom: (priceFrom:string) => void;
-//   priceTo: string;
-//   setPriceTo: (priceFrom:string) => void;
-//   stock: boolean;
-//   setStock: (stock: boolean) => void;
-//   sale: boolean;
-//   setSale: (sale: boolean) => void;
-//   toggleSelectedFilter: (filterName: string, value: string) => void;
-//   colectionSearchParams: string[];
-//   search:()=>void
-// };
-
 const FilterMobile = ({
-  priceFrom,
   setPriceFrom,
-  priceTo,
   setPriceTo,
   stock,
   setStock,
@@ -32,7 +16,8 @@ const FilterMobile = ({
   toggleSelectedFilter,
   colectionSearchParams,
   seriesSearchParams,
-  categorySearchParams
+  categorySearchParams,
+  filterAttributes,
 }: IPropsFilter) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -57,9 +42,7 @@ const FilterMobile = ({
           </button>
           <div className="bg-white w-[303px]">
             <Filter
-              priceFrom={priceFrom}
               setPriceFrom={setPriceFrom}
-              priceTo={priceTo}
               setPriceTo={setPriceTo}
               stock={stock}
               setStock={setStock}
@@ -69,7 +52,7 @@ const FilterMobile = ({
               colectionSearchParams={colectionSearchParams}
               seriesSearchParams={seriesSearchParams}
               categorySearchParams={categorySearchParams}
-
+              filterAttributes={filterAttributes}
             />
           </div>
         </div>

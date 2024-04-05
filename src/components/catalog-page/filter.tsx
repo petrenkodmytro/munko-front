@@ -6,40 +6,8 @@ import FilterArrDown from './../../../public/icons/filter-arrow-down.svg';
 import CheckFilter from './../../../public/icons/check-filter.svg';
 import { IPropsFilter } from '@/types/types';
 
-const collectionOptions = [
-  'Marvel',
-  'DC',
-  'Disney',
-  'Starwars',
-  'The Simpsons',
-  'Who framed Roger Rabbit?',
-  'Harry Potter',
-  'Avatar',
-];
-const seriesOptions = [
-  'A bug’s life',
-  'Bambi',
-  'Black Panther',
-  'Captain America',
-  'Frozen',
-  'Maleficent',
-  'Spiderman',
-  'IronMan',
-];
-const categoryOptions = [
-  'Movies',
-  'Comics',
-  'Anime',
-  'Games',
-  'Cartoons',
-  'Animals',
-  'Action',
-];
-
 const Filter = ({
-  priceFrom,
   setPriceFrom,
-  priceTo,
   setPriceTo,
   stock,
   setStock,
@@ -48,12 +16,17 @@ const Filter = ({
   toggleSelectedFilter,
   colectionSearchParams,
   seriesSearchParams,
-  categorySearchParams
+  categorySearchParams,
+  filterAttributes,
 }: IPropsFilter) => {
   const [openPrice, setOpenPrice] = useState(false);
   const [openCollection, setOpenCollection] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
   const [openSeries, setOpenSeries] = useState(false);
+  const [localPriceFrom, setLocalPriceFrom] = useState('');
+  const [localPriceTo, setLocalPriceTo] = useState('');
+  const [showMoreCollection, setShowMoreCollection] = useState(false);
+  const [showMoreSeries, setShowMoreSeries] = useState(false);
   return (
     <div className=" w-[303px] p-[30px] flex flex-col gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
       {/* price */}
@@ -72,21 +45,24 @@ const Filter = ({
           <div className="mt-4 flex">
             {' '}
             <input
-              value={priceFrom}
+              value={localPriceFrom}
               type="number"
-              onChange={event  => setPriceFrom(event.target.value)}
+              onChange={event => setLocalPriceFrom(event.target.value)}
               placeholder="From"
               className="pl-1 py-1 mr-[25px] w-[90px]  text-2xl bg-[#F5F5F5] rounded"
             />
             <input
-              value={priceTo}
+              value={localPriceTo}
               type="number"
-              onChange={event  => setPriceTo(event.target.value)}
+              onChange={event => setLocalPriceTo(event.target.value)}
               placeholder="To"
               className="pl-1 py-1 w-[90px]  text-2xl bg-[#F5F5F5] rounded"
             />
             <button
-              // onClick={() => search()}
+              onClick={() => {
+                setPriceFrom(localPriceFrom);
+                setPriceTo(localPriceTo);
+              }}
               className="text-2xl text-white ml-2 px-2 rounded bg-footer"
               type="button"
             >
@@ -101,15 +77,20 @@ const Filter = ({
           Collection
           <button
             className=""
-            onClick={() => setOpenCollection(!openCollection)}
+            onClick={() => {
+              setOpenCollection(!openCollection);
+              if (openCollection === false) {
+                setShowMoreCollection(false);
+              }
+            }}
             type="button"
           >
             {openCollection ? <FilterArrUp /> : <FilterArrDown />}
           </button>
         </div>
-        {openCollection && (
+        {openCollection && !showMoreCollection && (
           <ul className="flex flex-col gap-[30px] mt-4">
-            {collectionOptions.map((el, index) => (
+            {filterAttributes.collections.slice(0, 6).map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
                 <input
                   type="checkbox"
@@ -127,6 +108,35 @@ const Filter = ({
             ))}
           </ul>
         )}
+        {openCollection && showMoreCollection && (
+          <ul className="flex flex-col gap-[30px] mt-4">
+            {filterAttributes.collections.map((el, index) => (
+              <li key={index} className="relative flex items-center gap-5">
+                <input
+                  type="checkbox"
+                  key={index}
+                  defaultChecked={colectionSearchParams.includes(el)}
+                  onClick={() => toggleSelectedFilter('collection', el)}
+                  name="filter"
+                  id={el}
+                  value={el}
+                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px]  rounded-[5px]"
+                />
+                <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+                <label className="text-2xl">{el}</label>
+              </li>
+            ))}
+          </ul>
+        )}
+        {openCollection && !showMoreCollection && (
+          <button
+            onClick={() => setShowMoreCollection(!showMoreCollection)}
+            className="mt-[30px] text-2xl underline"
+            type="button"
+          >
+            Others
+          </button>
+        )}
       </div>
       {/* Series */}
       <div className="">
@@ -140,9 +150,9 @@ const Filter = ({
             {openSeries ? <FilterArrUp /> : <FilterArrDown />}
           </button>
         </div>
-        {openSeries && (
+        {openSeries && !showMoreSeries && (
           <ul className="flex flex-col gap-[30px] mt-4">
-            {seriesOptions.map((el, index) => (
+            {filterAttributes.series.slice(0, 6).map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
                 <input
                   type="checkbox"
@@ -159,6 +169,35 @@ const Filter = ({
               </li>
             ))}
           </ul>
+        )}
+        {openSeries && showMoreSeries && (
+          <ul className="flex flex-col gap-[30px] mt-4">
+            {filterAttributes.series.map((el, index) => (
+              <li key={index} className="relative flex items-center gap-5">
+                <input
+                  type="checkbox"
+                  key={index}
+                  defaultChecked={seriesSearchParams.includes(el)}
+                  onClick={() => toggleSelectedFilter('series', el)}
+                  name="filter"
+                  id={el}
+                  value={el}
+                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
+                />
+                <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+                <label className="text-2xl">{el}</label>
+              </li>
+            ))}
+          </ul>
+        )}
+        {openSeries && !showMoreSeries && (
+          <button
+            onClick={() => setShowMoreSeries(!showMoreSeries)}
+            className="mt-[30px] text-2xl underline"
+            type="button"
+          >
+            Others
+          </button>
         )}
       </div>
       {/* in stock */}
@@ -201,7 +240,7 @@ const Filter = ({
         </div>
         {openCategory && (
           <ul className="flex flex-col gap-[30px] mt-4">
-            {categoryOptions.map((el, index) => (
+            {filterAttributes.categories.map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
                 <input
                   type="checkbox"

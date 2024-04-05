@@ -1,4 +1,4 @@
-import { ICard, IFilteredParams, IReview } from '@/types/types';
+import { ICard, IFilterAttributes, IFilteredParams, IReview } from '@/types/types';
 import { GraphQLClient, gql } from 'graphql-request';
 
 const endpoint = 'https://funkopop.onrender.com/graphql';
@@ -12,17 +12,17 @@ const graphQLClient = new GraphQLClient(endpoint);
 //   },
 // })
 
-interface DataCatalog {
+interface IDataCatalog {
   getAllItems: {
     items: ICard[];
   };
 }
 
-interface DataItem {
+interface IDataItem {
   getItem: ICard;
 }
 
-interface DataReviewById {
+interface IDataReviewById {
   getFunkoReviews: IReview[];
 }
 
@@ -49,7 +49,7 @@ export const getCatalog = async () => {
     }
   `;
   try {
-    const data: DataCatalog = await graphQLClient.request(query);
+    const data: IDataCatalog = await graphQLClient.request(query);
     let dataCards = data.getAllItems.items;
     return dataCards;
   } catch (error) {
@@ -78,7 +78,7 @@ export const getItem = async (id: string) => {
       }
     }
   `;
-  const data: DataItem = await graphQLClient.request(query);
+  const data: IDataItem = await graphQLClient.request(query);
   let dataCard = data.getItem;
   return dataCard;
 };
@@ -96,7 +96,7 @@ export const getReviewsById = async (id: string) => {
         }
     }
   `;
-  const data: DataReviewById = await graphQLClient.request(query);
+  const data: IDataReviewById = await graphQLClient.request(query);
   let dataReview = data.getFunkoReviews;
   return dataReview;
 };
@@ -133,7 +133,22 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
       }
     }
   `;
-  const data: DataCatalog = await graphQLClient.request(query);
+  const data: IDataCatalog = await graphQLClient.request(query);
   let dataCards = data.getAllItems.items;
   return dataCards;
+};
+
+export const getFilterAttributes = async () => {
+  const query = gql`
+    query GetAllAttributes {
+      getAllAttributes {
+        categories
+        collections
+        series
+      }
+    }
+  `;
+  const filterAttributes: IFilterAttributes =
+    await graphQLClient.request(query);
+  return filterAttributes.getAllAttributes;
 };

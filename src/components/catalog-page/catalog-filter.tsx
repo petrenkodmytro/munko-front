@@ -10,13 +10,18 @@ import { getFilteredCatalog } from '@/api/api';
 
 type Props = {
   cardsCatalog: ICard[];
+  filterAttributes: {
+    categories: string[];
+    collections: string[];
+    series: string[];
+  };
 };
 
-const CatalogFilter = ({ cardsCatalog }: Props) => {
+const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
   // search parameters
   const [filteredCardsCatalog, setFilteredCardsCatalog] =
     useState(cardsCatalog);
-    
+
   const [sortBy, setSortBy] = useState('Best selling');
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
@@ -41,6 +46,12 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
         sale: null,
         inStock: null,
       };
+      if (stock) {
+        filteredParams.inStock = true;
+      }
+      if (sale) {
+        filteredParams.sale = true;
+      }
       if (colectionSearchParams.length !== 0) {
         const stringified = `[${colectionSearchParams.map(v => `"${v}"`).join(', ')}]`;
         filteredParams.collection = stringified;
@@ -76,6 +87,8 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
     seriesSearchParams,
     priceFrom,
     priceTo,
+    stock,
+    sale,
   ]);
 
   const toggleSelectedFilter = (filterName: string, value: string) => {
@@ -97,7 +110,7 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
 
     // series
     if (filterName === 'series') {
-      console.log('series')
+      console.log('series');
       let currentSeriesSearchParams = [...seriesSearchParams];
       const indexOfColectionParams = currentSeriesSearchParams.indexOf(value);
       if (indexOfColectionParams === -1) {
@@ -111,9 +124,9 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
       }
     }
 
-     // category
-     if (filterName === 'category') {
-      console.log('category')
+    // category
+    if (filterName === 'category') {
+      console.log('category');
       let currentCategorySearchParams = [...categorySearchParams];
       const indexOfColectionParams = currentCategorySearchParams.indexOf(value);
       if (indexOfColectionParams === -1) {
@@ -126,8 +139,6 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
         setCategorySearchParams(currentCategorySearchParams);
       }
     }
-
-
   };
 
   const handleChangeSort = (event: {
@@ -139,35 +150,35 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
 
   return (
     <section className="px-4 pt-7 pb-10 xl:px-20">
-      <div>Catalog/Disney/Cartoons</div>
-      <div className="flex justify-between">
-        <SortBy sortBy={sortBy} handleChangeSort={handleChangeSort} />
+      <div className="xl:flex gap-[190px]">
+        <p>Catalog/Disney/Cartoons</p>
+        <div className="xl:flex xl:flex-row-reverse xl:justify-between">
+          <div className="flex justify-between">
+            {/* filter mobile */}
+            <FilterMobile
+              setPriceFrom={setPriceFrom}
+              setPriceTo={setPriceTo}
+              stock={stock}
+              setStock={setStock}
+              sale={sale}
+              setSale={setSale}
+              toggleSelectedFilter={toggleSelectedFilter}
+              colectionSearchParams={colectionSearchParams}
+              seriesSearchParams={seriesSearchParams}
+              categorySearchParams={categorySearchParams}
+              filterAttributes={filterAttributes}
+            />
+            <SortBy sortBy={sortBy} handleChangeSort={handleChangeSort} />
+          </div>
+          <p className="hidden md:block">Showing 1-14 of 28 products</p>
+        </div>
       </div>
-      {/* filter mobile */}
-      <FilterMobile
-        priceFrom={priceFrom}
-        setPriceFrom={setPriceFrom}
-        priceTo={priceTo}
-        setPriceTo={setPriceTo}
-        stock={stock}
-        setStock={setStock}
-        sale={sale}
-        setSale={setSale}
-        toggleSelectedFilter={toggleSelectedFilter}
-        colectionSearchParams={colectionSearchParams}
-        seriesSearchParams={seriesSearchParams}
-        categorySearchParams={categorySearchParams}
-      />
 
-      <div className="hidden md:block">Showing 1-14 of 28 products</div>
       <div className="xl:flex justify-between">
         {/* filter desktop */}
         <div className="hidden xl:block">
-          {' '}
           <Filter
-            priceFrom={priceFrom}
             setPriceFrom={setPriceFrom}
-            priceTo={priceTo}
             setPriceTo={setPriceTo}
             stock={stock}
             setStock={setStock}
@@ -177,14 +188,17 @@ const CatalogFilter = ({ cardsCatalog }: Props) => {
             colectionSearchParams={colectionSearchParams}
             seriesSearchParams={seriesSearchParams}
             categorySearchParams={categorySearchParams}
+            filterAttributes={filterAttributes}
           />
         </div>
 
         {/* Catalog */}
         {filteredCardsCatalog.length === 0 ? (
-          <div>no results</div>
+          <div className="text-2xl flex items-center flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap justify-center lg:justify-evenly md:gap-[70px] xl:w-[894px] xl:px-0 xl:mt-0 xl:gap-[84px]">
+            За данними критеріями пошуку результатів не знайдено
+          </div>
         ) : (
-          <div className="flex items-center flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap justify-between lg:justify-evenly md:gap-[70px] xl:w-[894px] xl:px-0 xl:mt-0 xl:gap-[84px]">
+          <div className="flex items-center flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap md:justify-between md:gap-[70px]  xl:w-[894px] xl:px-0 xl:my-0 xl:gap-[84px] xl:justify-start">
             {filteredCardsCatalog.map(card => (
               <Card key={card.id} card={card} />
             ))}

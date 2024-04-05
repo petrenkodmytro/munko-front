@@ -24,9 +24,7 @@ export interface IReview {
 }
 
 export interface IPropsFilter {
-  priceFrom: string;
   setPriceFrom: (priceFrom: string) => void;
-  priceTo: string;
   setPriceTo: (priceFrom: string) => void;
   stock: boolean;
   setStock: (stock: boolean) => void;
@@ -36,6 +34,11 @@ export interface IPropsFilter {
   colectionSearchParams: string[];
   seriesSearchParams: string[];
   categorySearchParams: string[];
+  filterAttributes: {
+    categories: string[];
+    collections: string[];
+    series: string[];
+  };
 }
 
 export interface IFilteredParams {
@@ -46,4 +49,12 @@ export interface IFilteredParams {
   priceTo: string | null;
   sale: boolean | null;
   inStock: boolean | null;
+}
+
+export interface IFilterAttributes {
+  getAllAttributes: {
+    categories: string[];
+    collections: string[];
+    series: string[];
+  };
 }
