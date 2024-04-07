@@ -27,6 +27,7 @@ const Filter = ({
   const [localPriceTo, setLocalPriceTo] = useState('');
   const [showMoreCollection, setShowMoreCollection] = useState(false);
   const [showMoreSeries, setShowMoreSeries] = useState(false);
+  const [showMoreCategory, setShowMoreCategory] = useState(false);
   return (
     <div className=" w-[303px] p-[30px] flex flex-col gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
       {/* price */}
@@ -79,9 +80,9 @@ const Filter = ({
             className=""
             onClick={() => {
               setOpenCollection(!openCollection);
-              if (openCollection === false) {
-                setShowMoreCollection(false);
-              }
+              // if (openCollection === false) {
+              //   setShowMoreCollection(false);
+              // }
             }}
             type="button"
           >
@@ -238,7 +239,27 @@ const Filter = ({
             {openCategory ? <FilterArrUp /> : <FilterArrDown />}
           </button>
         </div>
-        {openCategory && (
+        {openCategory && !showMoreCategory && (
+          <ul className="flex flex-col gap-[30px] mt-4">
+            {filterAttributes.categories.slice(0, 6).map((el, index) => (
+              <li key={index} className="relative flex items-center gap-5">
+                <input
+                  type="checkbox"
+                  key={index}
+                  defaultChecked={categorySearchParams.includes(el)}
+                  onClick={() => toggleSelectedFilter('category', el)}
+                  name="filter"
+                  id={el}
+                  value={el}
+                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
+                />
+                <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+                <label className="text-2xl">{el}</label>
+              </li>
+            ))}
+          </ul>
+        )}
+        {openCategory && showMoreCategory && (
           <ul className="flex flex-col gap-[30px] mt-4">
             {filterAttributes.categories.map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
@@ -257,6 +278,15 @@ const Filter = ({
               </li>
             ))}
           </ul>
+        )}
+        {openCategory && !showMoreCategory && (
+          <button
+            onClick={() => setShowMoreCategory(!showMoreCategory)}
+            className="mt-[30px] text-2xl underline"
+            type="button"
+          >
+            Others
+          </button>
         )}
       </div>
     </div>

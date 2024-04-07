@@ -1,4 +1,9 @@
-import { ICard, IFilterAttributes, IFilteredParams, IReview } from '@/types/types';
+import {
+  ICard,
+  IFilterAttributes,
+  IFilteredParams,
+  IReview,
+} from '@/types/types';
 import { GraphQLClient, gql } from 'graphql-request';
 
 const endpoint = 'https://funkopop.onrender.com/graphql';
@@ -148,7 +153,17 @@ export const getFilterAttributes = async () => {
       }
     }
   `;
-  const filterAttributes: IFilterAttributes =
-    await graphQLClient.request(query);
-  return filterAttributes.getAllAttributes;
+
+  try {
+    const filterAttributes: IFilterAttributes =
+      await graphQLClient.request(query);
+    return filterAttributes.getAllAttributes;
+  } catch (error) {
+    console.log(error);
+    return {
+      categories: [],
+      collections: [],
+      series: [],
+    };
+  }
 };

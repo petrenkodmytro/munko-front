@@ -7,6 +7,7 @@ import { ICard, IFilteredParams } from '@/types/types';
 import FilterMobile from './filter-mobile';
 import Filter from './filter';
 import { getFilteredCatalog } from '@/api/api';
+import Link from 'next/link';
 
 type Props = {
   cardsCatalog: ICard[];
@@ -150,9 +151,14 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
 
   return (
     <section className="px-4 pt-7 pb-10 xl:px-20">
-      <div className="xl:flex gap-[190px]">
-        <p>Catalog/Disney/Cartoons</p>
-        <div className="xl:flex xl:flex-row-reverse xl:justify-between">
+      <div className="xl:flex gap-[200px] xl:mb-[35px]">
+        <div className="mb-[25px] xl:mb-0 xl:text-lg">
+          <Link className="underline" href={'/'}>
+            Home page
+          </Link>
+          /Catalog
+        </div>
+        <div className="xl:flex grow flex-row-reverse justify-between">
           <div className="flex justify-between">
             {/* filter mobile */}
             <FilterMobile
@@ -168,9 +174,10 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
               categorySearchParams={categorySearchParams}
               filterAttributes={filterAttributes}
             />
+
             <SortBy sortBy={sortBy} handleChangeSort={handleChangeSort} />
           </div>
-          <p className="hidden md:block">Showing 1-14 of 28 products</p>
+          <p className="hidden md:block">Showing 1-12 of all products</p>
         </div>
       </div>
 
@@ -204,6 +211,14 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
             ))}
           </div>
         )}
+      </div>
+      <div className="flex xl:mt-12">
+        <button
+          type="button"
+          className="ml-auto mr-auto uppercase px-8 py-3 rounded-[5px] border-2 border-current text-white bg-[#31304D] text-xl not-italic font-semibold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
+        >
+          load more
+        </button>
       </div>
     </section>
   );
