@@ -1,5 +1,6 @@
 import {
   ICard,
+  IDataFilteredCatalog,
   IFilterAttributes,
   IFilteredParams,
   IReview,
@@ -56,6 +57,7 @@ export const getCatalog = async () => {
   try {
     const data: IDataCatalog = await graphQLClient.request(query);
     let dataCards = data.getAllItems.items;
+    // console.log(dataCards)
     return dataCards;
   } catch (error) {
     console.log(error);
@@ -119,6 +121,7 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
           price: { from: ${filteredParams.priceFrom}, to: ${filteredParams.priceTo} }
           inStock: ${filteredParams.inStock}
         }
+        paging: { page: 0, perPage: 12 }
       ) {
         items {
           id
@@ -135,11 +138,18 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
           productType
           date
         }
+        paging {
+          page
+          perPage
+          pageCount
+          totalCount
+      }
       }
     }
   `;
-  const data: IDataCatalog = await graphQLClient.request(query);
-  let dataCards = data.getAllItems.items;
+  const data: IDataFilteredCatalog = await graphQLClient.request(query);
+  let dataCards = data.getAllItems;
+  // console.log(dataCards)
   return dataCards;
 };
 

@@ -3,7 +3,7 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import SortBy from './sortBy';
 import Card from '../card/Card';
-import { ICard, IFilteredParams } from '@/types/types';
+import { ICard, IDataFilteredCatalog, IFilteredParams } from '@/types/types';
 import FilterMobile from './filter-mobile';
 import Filter from './filter';
 import { getFilteredCatalog } from '@/api/api';
@@ -74,7 +74,9 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
 
       let currentfilteredCatalog: ICard[] = [];
       try {
-        currentfilteredCatalog = await getFilteredCatalog(filteredParams);
+        const dataFilteredCatalog =
+          await getFilteredCatalog(filteredParams);
+          currentfilteredCatalog = dataFilteredCatalog.items
         console.log('currentfilteredCatalog', currentfilteredCatalog);
       } catch (error) {
         console.log(error);

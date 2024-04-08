@@ -58,3 +58,15 @@ export interface IFilterAttributes {
     series: string[];
   };
 }
+
+export interface IDataFilteredCatalog {
+  getAllItems: {
+    items: ICard[];
+    paging: {
+      page: number;
+      perPage: number;
+      pageCount: number;
+      totalCount: number;
+    };
+  };
+}
