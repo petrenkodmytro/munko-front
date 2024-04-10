@@ -114,14 +114,14 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
     query GetAllItems {
       getAllItems(
         searchCriteria: {
-          category: ${filteredParams.category}
-          collection: ${filteredParams.collection}
-          series: ${filteredParams.series}
-          sale: ${filteredParams.sale}
-          price: { from: ${filteredParams.priceFrom}, to: ${filteredParams.priceTo} }
-          inStock: ${filteredParams.inStock}
+          category: ${filteredParams.searchCriteria.category}
+          collection: ${filteredParams.searchCriteria.collection}
+          series: ${filteredParams.searchCriteria.series}
+          sale: ${filteredParams.searchCriteria.sale}
+          price: { from: ${filteredParams.searchCriteria.priceFrom}, to: ${filteredParams.searchCriteria.priceTo} }
+          inStock: ${filteredParams.searchCriteria.inStock}
         }
-        paging: { page: 0, perPage: 12 }
+        paging: { page: ${filteredParams.paging.page}, perPage: 12 }
       ) {
         items {
           id

@@ -8,6 +8,7 @@ import FilterMobile from './filter-mobile';
 import Filter from './filter';
 import { getFilteredCatalog } from '@/api/api';
 import Link from 'next/link';
+import { SimplePagination } from './pagination';
 
 type Props = {
   cardsCatalog: ICard[];
@@ -35,48 +36,52 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
   const [categorySearchParams, setCategorySearchParams] = useState<string[]>(
     []
   );
+  const [pageCatalog, setPageCatalog] = useState(0);
 
   useEffect(() => {
     const search = async () => {
       let filteredParams: IFilteredParams = {
-        category: null,
-        collection: null,
-        series: null,
-        priceFrom: null,
-        priceTo: null,
-        sale: null,
-        inStock: null,
+        searchCriteria: {
+          category: null,
+          collection: null,
+          series: null,
+          priceFrom: null,
+          priceTo: null,
+          sale: null,
+          inStock: null,
+        },
+        paging: { page: pageCatalog, perPage: 12 },
       };
+
       if (stock) {
-        filteredParams.inStock = true;
+        filteredParams.searchCriteria.inStock = true;
       }
       if (sale) {
-        filteredParams.sale = true;
+        filteredParams.searchCriteria.sale = true;
       }
       if (colectionSearchParams.length !== 0) {
         const stringified = `[${colectionSearchParams.map(v => `"${v}"`).join(', ')}]`;
-        filteredParams.collection = stringified;
+        filteredParams.searchCriteria.collection = stringified;
       }
       if (seriesSearchParams.length !== 0) {
         const stringified = `[${seriesSearchParams.map(v => `"${v}"`).join(', ')}]`;
-        filteredParams.series = stringified;
+        filteredParams.searchCriteria.series = stringified;
       }
       if (categorySearchParams.length !== 0) {
         const stringified = `[${categorySearchParams.map(v => `"${v}"`).join(', ')}]`;
-        filteredParams.category = stringified;
+        filteredParams.searchCriteria.category = stringified;
       }
       if (priceFrom !== '') {
-        filteredParams.priceFrom = priceFrom;
+        filteredParams.searchCriteria.priceFrom = priceFrom;
       }
       if (priceTo !== '') {
-        filteredParams.priceTo = priceTo;
+        filteredParams.searchCriteria.priceTo = priceTo;
       }
 
       let currentfilteredCatalog: ICard[] = [];
       try {
-        const dataFilteredCatalog =
-          await getFilteredCatalog(filteredParams);
-          currentfilteredCatalog = dataFilteredCatalog.items
+        const dataFilteredCatalog = await getFilteredCatalog(filteredParams);
+        currentfilteredCatalog = dataFilteredCatalog.items;
         console.log('currentfilteredCatalog', currentfilteredCatalog);
       } catch (error) {
         console.log(error);
@@ -84,15 +89,8 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
       setFilteredCardsCatalog(currentfilteredCatalog);
     };
     search();
-  }, [
-    categorySearchParams,
-    colectionSearchParams,
-    seriesSearchParams,
-    priceFrom,
-    priceTo,
-    stock,
-    sale,
-  ]);
+  }, [categorySearchParams, colectionSearchParams, seriesSearchParams, priceFrom, priceTo, stock, sale, pageCatalog]);
+  
 
   const toggleSelectedFilter = (filterName: string, value: string) => {
     // collection
@@ -215,12 +213,16 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
         )}
       </div>
       <div className="flex xl:mt-12">
-        <button
+        {/* <button
+          onClick={() => {
+            setPageCatalog(prev => prev + 1);
+          }}
           type="button"
           className="ml-auto mr-auto uppercase px-8 py-3 rounded-[5px] border-2 border-current text-white bg-[#31304D] text-xl not-italic font-semibold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
         >
           load more
-        </button>
+        </button> */}
+        <SimplePagination/>
       </div>
     </section>
   );

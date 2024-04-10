@@ -42,13 +42,16 @@ export interface IPropsFilter {
 }
 
 export interface IFilteredParams {
-  category: string | null;
-  collection: string | null;
-  series: string | null;
-  priceFrom: string | null;
-  priceTo: string | null;
-  sale: boolean | null;
-  inStock: boolean | null;
+  searchCriteria: {
+    category: string | null;
+    collection: string | null;
+    series: string | null;
+    priceFrom: string | null;
+    priceTo: string | null;
+    sale: boolean | null;
+    inStock: boolean | null;
+  };
+  paging: { page: number; perPage: number };
 }
 
 export interface IFilterAttributes {
