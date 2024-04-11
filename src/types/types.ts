@@ -39,6 +39,7 @@ export interface IPropsFilter {
     collections: string[];
     series: string[];
   };
+  setPageCatalog: (arg: number) => void;
 }
 
 export interface IFilteredParams {
@@ -72,4 +73,11 @@ export interface IDataFilteredCatalog {
       totalCount: number;
     };
   };
+}
+
+export interface IPagination {
+  page: number;
+  perPage: number;
+  pageCount: number;
+  totalCount: number;
 }

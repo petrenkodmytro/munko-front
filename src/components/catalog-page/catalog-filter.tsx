@@ -3,12 +3,17 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import SortBy from './sortBy';
 import Card from '../card/Card';
-import { ICard, IDataFilteredCatalog, IFilteredParams } from '@/types/types';
+import {
+  ICard,
+  IDataFilteredCatalog,
+  IFilteredParams,
+  IPagination,
+} from '@/types/types';
 import FilterMobile from './filter-mobile';
 import Filter from './filter';
 import { getFilteredCatalog } from '@/api/api';
 import Link from 'next/link';
-import { SimplePagination } from './pagination';
+import SimplePagination from './pagination';
 
 type Props = {
   cardsCatalog: ICard[];
@@ -37,6 +42,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     []
   );
   const [pageCatalog, setPageCatalog] = useState(0);
+  const [paginationValue, setPaginationValue] = useState<IPagination | any>({});
 
   useEffect(() => {
     const search = async () => {
@@ -50,7 +56,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
           sale: null,
           inStock: null,
         },
-        paging: { page: pageCatalog, perPage: 12 },
+        paging: { page: pageCatalog, perPage: 5 },
       };
 
       if (stock) {
@@ -79,20 +85,40 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
       }
 
       let currentfilteredCatalog: ICard[] = [];
+      let pagination: IPagination = {
+        page: 0,
+        perPage: 0,
+        pageCount: 0,
+        totalCount: 0,
+      };
       try {
         const dataFilteredCatalog = await getFilteredCatalog(filteredParams);
         currentfilteredCatalog = dataFilteredCatalog.items;
+        pagination = dataFilteredCatalog.paging;
         console.log('currentfilteredCatalog', currentfilteredCatalog);
+        console.log('pagination', pagination);
       } catch (error) {
         console.log(error);
       }
       setFilteredCardsCatalog(currentfilteredCatalog);
+      setPaginationValue(pagination);
     };
     search();
-  }, [categorySearchParams, colectionSearchParams, seriesSearchParams, priceFrom, priceTo, stock, sale, pageCatalog]);
-  
+  }, [
+    categorySearchParams,
+    colectionSearchParams,
+    seriesSearchParams,
+    priceFrom,
+    priceTo,
+    stock,
+    sale,
+    pageCatalog,
+  ]);
 
   const toggleSelectedFilter = (filterName: string, value: string) => {
+    // ------------
+    setPageCatalog(0);
+    // --------------
     // collection
     if (filterName === 'collection') {
       let currentColectionSearchParams = [...colectionSearchParams];
@@ -173,6 +199,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
               seriesSearchParams={seriesSearchParams}
               categorySearchParams={categorySearchParams}
               filterAttributes={filterAttributes}
+              setPageCatalog={setPageCatalog}
             />
 
             <SortBy sortBy={sortBy} handleChangeSort={handleChangeSort} />
@@ -196,6 +223,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
             seriesSearchParams={seriesSearchParams}
             categorySearchParams={categorySearchParams}
             filterAttributes={filterAttributes}
+            setPageCatalog={setPageCatalog}
           />
         </div>
 
@@ -213,7 +241,16 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
         )}
       </div>
       <div className="flex xl:mt-12">
-        {/* <button
+        <SimplePagination paginationValue={paginationValue} />
+      </div>
+    </section>
+  );
+};
+
+export default CatalogFilter;
+
+{
+  /* <button
           onClick={() => {
             setPageCatalog(prev => prev + 1);
           }}
@@ -221,11 +258,5 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
           className="ml-auto mr-auto uppercase px-8 py-3 rounded-[5px] border-2 border-current text-white bg-[#31304D] text-xl not-italic font-semibold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
         >
           load more
-        </button> */}
-        <SimplePagination/>
-      </div>
-    </section>
-  );
-};
-
-export default CatalogFilter;
+        </button> */
+}

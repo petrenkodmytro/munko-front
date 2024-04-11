@@ -121,7 +121,7 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
           price: { from: ${filteredParams.searchCriteria.priceFrom}, to: ${filteredParams.searchCriteria.priceTo} }
           inStock: ${filteredParams.searchCriteria.inStock}
         }
-        paging: { page: ${filteredParams.paging.page}, perPage: 12 }
+        paging: { page: ${filteredParams.paging.page}, perPage: ${filteredParams.paging.perPage} }
       ) {
         items {
           id

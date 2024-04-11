@@ -18,6 +18,7 @@ const Filter = ({
   seriesSearchParams,
   categorySearchParams,
   filterAttributes,
+  setPageCatalog,
 }: IPropsFilter) => {
   const [openPrice, setOpenPrice] = useState(false);
   const [openCollection, setOpenCollection] = useState(false);
@@ -63,6 +64,7 @@ const Filter = ({
               onClick={() => {
                 setPriceFrom(localPriceFrom);
                 setPriceTo(localPriceTo);
+                setPageCatalog(0);
               }}
               className="text-2xl text-white ml-2 px-2 rounded bg-footer"
               type="button"
@@ -209,7 +211,10 @@ const Filter = ({
           name="In stock"
           id="In stock"
           defaultChecked={stock}
-          onClick={() => setStock(!stock)}
+          onClick={() => {
+            setStock(!stock);
+            setPageCatalog(0);
+          }}
         />
         <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
         In stock
@@ -222,7 +227,10 @@ const Filter = ({
           name="sale"
           id="sale"
           defaultChecked={sale}
-          onClick={() => setSale(!sale)}
+          onClick={() => {
+            setSale(!sale);
+            setPageCatalog(0);
+          }}
         />
         <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
         Sale
