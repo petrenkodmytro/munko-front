@@ -3,12 +3,7 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import SortBy from './sortBy';
 import Card from '../card/Card';
-import {
-  ICard,
-  IDataFilteredCatalog,
-  IFilteredParams,
-  IPagination,
-} from '@/types/types';
+import { ICard, IFilteredParams, IPagination } from '@/types/types';
 import FilterMobile from './filter-mobile';
 import Filter from './filter';
 import { getFilteredCatalog } from '@/api/api';
@@ -42,9 +37,15 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     []
   );
   const [pageCatalog, setPageCatalog] = useState(0);
-  const [paginationValue, setPaginationValue] = useState<IPagination | any>({});
+  const [paginationValue, setPaginationValue] = useState<IPagination>({
+    page: 0,
+    perPage: 0,
+    pageCount: 0,
+    totalCount: 0,
+  });
 
   useEffect(() => {
+    // console.log('useEffect');
     const search = async () => {
       let filteredParams: IFilteredParams = {
         searchCriteria: {
@@ -56,7 +57,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
           sale: null,
           inStock: null,
         },
-        paging: { page: pageCatalog, perPage: 5 },
+        paging: { page: pageCatalog, perPage: 6 },
       };
 
       if (stock) {
@@ -175,6 +176,43 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     console.log(sortBy);
   };
 
+  // const loadMore = async () => {
+  //   console.log('loadMore');
+  //   let filteredParams: IFilteredParams = {
+  //     searchCriteria: {
+  //       category: `[${categorySearchParams.map(v => `"${v}"`).join(', ')}]`,
+  //       collection: `[${colectionSearchParams.map(v => `"${v}"`).join(', ')}]`,
+  //       series: `[${seriesSearchParams.map(v => `"${v}"`).join(', ')}]`,
+  //       priceFrom: priceFrom,
+  //       priceTo: priceTo,
+  //       sale: null,
+  //       inStock: null,
+  //     },
+  //     paging: { page: pageCatalog, perPage: 5 },
+  //   };
+  //   let currentfilteredCatalog: ICard[] = [...filteredCardsCatalog];
+  //   let pagination: IPagination = {
+  //     page: 0,
+  //     perPage: 0,
+  //     pageCount: 0,
+  //     totalCount: 0,
+  //   };
+  //   try {
+  //     const dataFilteredCatalog = await getFilteredCatalog(filteredParams);
+  //     currentfilteredCatalog = [
+  //       ...filteredCardsCatalog,
+  //       ...dataFilteredCatalog.items,
+  //     ];
+  //     pagination = dataFilteredCatalog.paging;
+  //     console.log('currentfilteredCatalog', currentfilteredCatalog);
+  //     console.log('pagination', pagination);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   setFilteredCardsCatalog(currentfilteredCatalog);
+  //   setPaginationValue(pagination);
+  // };
+
   return (
     <section className="px-4 pt-7 pb-10 xl:px-20">
       <div className="xl:flex gap-[200px] xl:mb-[35px]">
@@ -204,7 +242,14 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
 
             <SortBy sortBy={sortBy} handleChangeSort={handleChangeSort} />
           </div>
-          <p className="hidden md:block">Showing 1-12 of all products</p>
+          <p className="hidden md:block">
+            Showing {paginationValue.perPage * paginationValue.page + 1}-
+            {paginationValue.perPage * (paginationValue.page + 1) <
+            paginationValue.totalCount
+              ? paginationValue.perPage * (paginationValue.page + 1)
+              : paginationValue.totalCount}{' '}
+            of {paginationValue.totalCount} products
+          </p>
         </div>
       </div>
 
@@ -233,7 +278,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
             За данними критеріями пошуку результатів не знайдено
           </div>
         ) : (
-          <div className="flex items-center flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap md:justify-between md:gap-[70px]  xl:w-[894px] xl:px-0 xl:my-0 xl:gap-[84px] xl:justify-start">
+          <div className="flex items-start flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap md:justify-between md:gap-[70px]  xl:w-[894px] xl:px-0 xl:my-0 xl:gap-[84px] xl:justify-start">
             {filteredCardsCatalog.map(card => (
               <Card key={card.id} card={card} />
             ))}
@@ -241,7 +286,12 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
         )}
       </div>
       <div className="flex xl:mt-12">
-        <SimplePagination paginationValue={paginationValue} />
+        {filteredCardsCatalog.length > 0 && (
+          <SimplePagination
+            paginationValue={paginationValue}
+            setPageCatalog={setPageCatalog}
+          />
+        )}
       </div>
     </section>
   );
@@ -249,14 +299,15 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
 
 export default CatalogFilter;
 
-{
-  /* <button
-          onClick={() => {
-            setPageCatalog(prev => prev + 1);
-          }}
-          type="button"
-          className="ml-auto mr-auto uppercase px-8 py-3 rounded-[5px] border-2 border-current text-white bg-[#31304D] text-xl not-italic font-semibold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
-        >
-          load more
-        </button> */
-}
+// {
+//   <button
+//     onClick={() => {
+//       setPageCatalog(prev => prev + 1);
+//       loadMore();
+//     }}
+//     type="button"
+//     className="ml-auto mr-auto uppercase px-8 py-3 rounded-[5px] border-2 border-current text-white bg-[#31304D] text-xl not-italic font-semibold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
+//   >
+//     load more
+//   </button>
+// }

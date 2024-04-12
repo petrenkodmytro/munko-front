@@ -66,7 +66,7 @@ const Filter = ({
                 setPriceTo(localPriceTo);
                 setPageCatalog(0);
               }}
-              className="text-2xl text-white ml-2 px-2 rounded bg-footer"
+              className="text-2xl font-semibold ml-2 px-2  flex justify-center items-center rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-10 h-10  py-2 shrink-0  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[3px] lg:hover:border-subscribeBtn "
               type="button"
             >
               ok

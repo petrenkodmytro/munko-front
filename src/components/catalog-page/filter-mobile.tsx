@@ -18,6 +18,7 @@ const FilterMobile = ({
   seriesSearchParams,
   categorySearchParams,
   filterAttributes,
+  setPageCatalog,
 }: IPropsFilter) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,6 +54,7 @@ const FilterMobile = ({
               seriesSearchParams={seriesSearchParams}
               categorySearchParams={categorySearchParams}
               filterAttributes={filterAttributes}
+              setPageCatalog={setPageCatalog}
             />
           </div>
         </div>
