@@ -7,7 +7,7 @@ const CatalogPage = async () => {
 
   if (cardsCatalog.length === 0 && filterAttributes.categories.length === 0) {
     return (
-      <div>
+      <div className='h-20 flex justify-center items-center'>
         Вибачте трапилась помилка. Спробуйте пізніше. Сервер не відповідає
       </div>
     );

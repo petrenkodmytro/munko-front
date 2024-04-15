@@ -57,7 +57,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
           sale: null,
           inStock: null,
         },
-        paging: { page: pageCatalog, perPage: 6 },
+        paging: { page: pageCatalog, perPage: 12 },
       };
 
       if (stock) {
@@ -101,6 +101,12 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
       } catch (error) {
         console.log(error);
       }
+      // if (pageCatalog > 0) {
+      //   currentfilteredCatalog = [
+      //     ...filteredCardsCatalog,
+      //     ...currentfilteredCatalog,
+      //   ];
+      // }
       setFilteredCardsCatalog(currentfilteredCatalog);
       setPaginationValue(pagination);
     };
@@ -278,7 +284,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
             За данними критеріями пошуку результатів не знайдено
           </div>
         ) : (
-          <div className="flex items-start flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap md:justify-between md:gap-[70px]  xl:w-[894px] xl:px-0 xl:my-0 xl:gap-[84px] xl:justify-start">
+          <div className="flex items-center flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap md:justify-between md:gap-[70px]  xl:w-[894px] xl:px-0 xl:my-0 xl:gap-[84px] xl:justify-start">
             {filteredCardsCatalog.map(card => (
               <Card key={card.id} card={card} />
             ))}
@@ -292,6 +298,17 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
             setPageCatalog={setPageCatalog}
           />
         )}
+        {/* {
+          <button
+            onClick={() => {
+              setPageCatalog(prev => prev + 1);
+            }}
+            type="button"
+            className="ml-auto mr-auto uppercase px-8 py-3 rounded-[5px] border-2 border-current text-white bg-[#31304D] text-xl not-italic font-semibold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
+          >
+            load more
+          </button>
+        } */}
       </div>
     </section>
   );

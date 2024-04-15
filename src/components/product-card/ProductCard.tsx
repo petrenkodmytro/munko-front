@@ -6,6 +6,7 @@ import CardReviews from './reviewList';
 import { getItem, getReviewsById } from '@/api/api';
 import { useParams } from 'next/navigation';
 import { ICard, IReview } from '@/types/types';
+import Link from 'next/link';
 
 const initialValue = {
   id: 0,
@@ -51,9 +52,12 @@ const ProductCard = () => {
 
   return (
     <div className="md:px-5 md:pb-[72px] xl:px-20 xl:pb-[35px]">
-      <p className="hidden md:block py-[25px] text-xs font-medium">
-        Catalog/Disney/Cartoons
-      </p>
+      <div className="hidden md:block py-[25px] text-xs font-medium">
+        <Link className="underline" href={'/catalog'}>
+          Catalog
+        </Link>
+        /{product.category ?? 'Unknown'}/{product.collection ?? 'Unknown'}
+      </div>
       <div className="xl:flex gap-6">
         <CardImage images={product.images} />
         <div className="px-[16px] py-[30px] md:px-0 md:pb-10">

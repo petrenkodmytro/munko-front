@@ -35,7 +35,7 @@ interface IDataReviewById {
 export const getCatalog = async () => {
   const query = gql`
     query GetAllItems {
-      getAllItems {
+      getAllItems(paging: { perPage: 12 }) {
         items {
           id
           name

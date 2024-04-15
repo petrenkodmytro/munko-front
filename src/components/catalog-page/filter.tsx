@@ -30,10 +30,10 @@ const Filter = ({
   const [showMoreSeries, setShowMoreSeries] = useState(false);
   const [showMoreCategory, setShowMoreCategory] = useState(false);
   return (
-    <div className=" w-[303px] p-[30px] flex flex-col gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+    <div className=" p-[20px] w-[303px] xl:p-[30px] flex flex-col gap-4 xl:gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)] text-lg xl:text-2xl">
       {/* price */}
       <div className="">
-        <div className="inline-flex gap-2 px-2 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+        <div className="inline-flex gap-2 px-2 py-2  rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
           Price
           <button
             className=""
@@ -51,14 +51,14 @@ const Filter = ({
               type="number"
               onChange={event => setLocalPriceFrom(event.target.value)}
               placeholder="From"
-              className="pl-1 py-1 mr-[25px] w-[90px]  text-2xl bg-[#F5F5F5] rounded"
+              className="pl-1 py-1 mr-[25px] w-[90px]  xl:text-2xl bg-[#F5F5F5] rounded"
             />
             <input
               value={localPriceTo}
               type="number"
               onChange={event => setLocalPriceTo(event.target.value)}
               placeholder="To"
-              className="pl-1 py-1 w-[90px]  text-2xl bg-[#F5F5F5] rounded"
+              className="pl-1 py-1 w-[90px]  xl:text-2xl bg-[#F5F5F5] rounded"
             />
             <button
               onClick={() => {
@@ -66,7 +66,7 @@ const Filter = ({
                 setPriceTo(localPriceTo);
                 setPageCatalog(0);
               }}
-              className="text-2xl font-semibold ml-2 px-2  flex justify-center items-center rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-10 h-10  py-2 shrink-0  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[3px] lg:hover:border-subscribeBtn "
+              className="text-lg xl:text-2xl font-semibold ml-2 px-2  flex justify-center items-center rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-10 h-10  py-2 shrink-0  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[3px] lg:hover:border-subscribeBtn "
               type="button"
             >
               ok
@@ -76,7 +76,7 @@ const Filter = ({
       </div>
       {/* Collection */}
       <div className="">
-        <div className="inline-flex gap-2 px-2 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+        <div className="inline-flex gap-2 px-2 py-2  rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
           Collection
           <button
             className=""
@@ -92,7 +92,7 @@ const Filter = ({
           </button>
         </div>
         {openCollection && !showMoreCollection && (
-          <ul className="flex flex-col gap-[30px] mt-4">
+          <ul className="flex flex-col gap-4 xl:gap-[30px] mt-4">
             {filterAttributes.collections.slice(0, 6).map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
                 <input
@@ -103,16 +103,16 @@ const Filter = ({
                   name="filter"
                   id={el}
                   value={el}
-                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px]  rounded-[5px]"
+                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px]  rounded-[5px]"
                 />
                 <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-                <label className="text-2xl">{el}</label>
+                <label className="">{el}</label>
               </li>
             ))}
           </ul>
         )}
         {openCollection && showMoreCollection && (
-          <ul className="flex flex-col gap-[30px] mt-4">
+          <ul className="flex flex-col gap-4 xl:gap-[30px] mt-4">
             {filterAttributes.collections.map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
                 <input
@@ -123,10 +123,10 @@ const Filter = ({
                   name="filter"
                   id={el}
                   value={el}
-                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px]  rounded-[5px]"
+                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px]  rounded-[5px]"
                 />
                 <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-                <label className="text-2xl">{el}</label>
+                <label className="">{el}</label>
               </li>
             ))}
           </ul>
@@ -134,7 +134,7 @@ const Filter = ({
         {openCollection && !showMoreCollection && (
           <button
             onClick={() => setShowMoreCollection(!showMoreCollection)}
-            className="mt-[30px] text-2xl underline"
+            className="mt-[30px] xl:text-2xl underline"
             type="button"
           >
             Others
@@ -143,7 +143,7 @@ const Filter = ({
       </div>
       {/* Series */}
       <div className="">
-        <div className="inline-flex gap-2 px-2 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+        <div className="inline-flex gap-2 px-2 py-2  rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
           Series
           <button
             className=""
@@ -154,7 +154,7 @@ const Filter = ({
           </button>
         </div>
         {openSeries && !showMoreSeries && (
-          <ul className="flex flex-col gap-[30px] mt-4">
+          <ul className="flex flex-col gap-4 xl:gap-[30px] mt-4">
             {filterAttributes.series.slice(0, 6).map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
                 <input
@@ -165,16 +165,16 @@ const Filter = ({
                   name="filter"
                   id={el}
                   value={el}
-                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
+                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
                 />
                 <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-                <label className="text-2xl">{el}</label>
+                <label className="">{el}</label>
               </li>
             ))}
           </ul>
         )}
         {openSeries && showMoreSeries && (
-          <ul className="flex flex-col gap-[30px] mt-4">
+          <ul className="flex flex-col gap-4 xl:gap-[30px] mt-4">
             {filterAttributes.series.map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
                 <input
@@ -185,10 +185,10 @@ const Filter = ({
                   name="filter"
                   id={el}
                   value={el}
-                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
+                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
                 />
                 <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-                <label className="text-2xl">{el}</label>
+                <label className="">{el}</label>
               </li>
             ))}
           </ul>
@@ -196,7 +196,7 @@ const Filter = ({
         {openSeries && !showMoreSeries && (
           <button
             onClick={() => setShowMoreSeries(!showMoreSeries)}
-            className="mt-[30px] text-2xl underline"
+            className="mt-[30px] xl:text-2xl underline"
             type="button"
           >
             Others
@@ -204,9 +204,9 @@ const Filter = ({
         )}
       </div>
       {/* in stock */}
-      <div className="relative flex items-center gap-[10px] text-2xl">
+      <div className="relative flex items-center gap-[10px] xl:text-2xl">
         <input
-          className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px]  rounded-[5px]"
+          className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px]  rounded-[5px]"
           type="checkbox"
           name="In stock"
           id="In stock"
@@ -220,9 +220,9 @@ const Filter = ({
         In stock
       </div>
       {/* sale */}
-      <div className="relative flex items-center gap-5 text-2xl">
+      <div className="relative flex items-center gap-5 xl:text-2xl">
         <input
-          className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
+          className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
           type="checkbox"
           name="sale"
           id="sale"
@@ -237,7 +237,7 @@ const Filter = ({
       </div>
       {/* Category */}
       <div className="">
-        <div className="inline-flex gap-2 px-2 py-2 text-2xl rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
+        <div className="inline-flex gap-2 px-2 py-2  rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
           Category
           <button
             className=""
@@ -248,7 +248,7 @@ const Filter = ({
           </button>
         </div>
         {openCategory && !showMoreCategory && (
-          <ul className="flex flex-col gap-[30px] mt-4">
+          <ul className="flex flex-col gap-4 xl:gap-[30px] mt-4">
             {filterAttributes.categories.slice(0, 6).map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
                 <input
@@ -259,16 +259,16 @@ const Filter = ({
                   name="filter"
                   id={el}
                   value={el}
-                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
+                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
                 />
                 <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-                <label className="text-2xl">{el}</label>
+                <label className="">{el}</label>
               </li>
             ))}
           </ul>
         )}
         {openCategory && showMoreCategory && (
-          <ul className="flex flex-col gap-[30px] mt-4">
+          <ul className="flex flex-col gap-4 xl:gap-[30px] mt-4">
             {filterAttributes.categories.map((el, index) => (
               <li key={index} className="relative flex items-center gap-5">
                 <input
@@ -279,10 +279,10 @@ const Filter = ({
                   name="filter"
                   id={el}
                   value={el}
-                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[35px] h-[35px] rounded-[5px]"
+                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
                 />
                 <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-                <label className="text-2xl">{el}</label>
+                <label className="">{el}</label>
               </li>
             ))}
           </ul>
@@ -290,7 +290,7 @@ const Filter = ({
         {openCategory && !showMoreCategory && (
           <button
             onClick={() => setShowMoreCategory(!showMoreCategory)}
-            className="mt-[30px] text-2xl underline"
+            className="mt-[30px] xl:text-2xl underline"
             type="button"
           >
             Others
