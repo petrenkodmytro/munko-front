@@ -14,7 +14,7 @@ const Catalog = async () => {
         CATALOG
       </div>
       <div className="md:ml-0 mb-5 md:mb-9 md:px-20 hidden md:flex md:flex-wrap justify-between lg:justify-evenly xl:justify-between md:gap-[76px] lg:gap-5 lg:px-[164px]">
-        {cardsCatalog.map(card => (
+        {cardsCatalog.slice(0, 8).map(card => (
           <Card key={card.id} card={card} />
         ))}
       </div>

@@ -1,28 +1,41 @@
-import { ICard, IReview } from '@/types/types';
-import { GraphQLClient, request, gql } from 'graphql-request';
+import {
+  ICard,
+  IDataFilteredCatalog,
+  IFilterAttributes,
+  IFilteredParams,
+  IReview,
+} from '@/types/types';
+import { GraphQLClient, gql } from 'graphql-request';
 
 const endpoint = 'https://funkopop.onrender.com/graphql';
 
 const graphQLClient = new GraphQLClient(endpoint);
+// const graphQLClient = new GraphQLClient(endpoint, {
+//   method: `GET`,
+//   jsonSerializer: {
+//     parse: JSON.parse,
+//     stringify: JSON.stringify,
+//   },
+// })
 
-interface DataCatalog {
+interface IDataCatalog {
   getAllItems: {
     items: ICard[];
   };
 }
 
-interface DataItem {
+interface IDataItem {
   getItem: ICard;
 }
 
-interface DataReviewById {
+interface IDataReviewById {
   getFunkoReviews: IReview[];
 }
 
 export const getCatalog = async () => {
   const query = gql`
     query GetAllItems {
-      getAllItems {
+      getAllItems(paging: { perPage: 12 }) {
         items {
           id
           name
@@ -41,10 +54,10 @@ export const getCatalog = async () => {
       }
     }
   `;
-
   try {
-    const data: DataCatalog = await graphQLClient.request(query);
+    const data: IDataCatalog = await graphQLClient.request(query);
     let dataCards = data.getAllItems.items;
+    // console.log(dataCards)
     return dataCards;
   } catch (error) {
     console.log(error);
@@ -72,9 +85,8 @@ export const getItem = async (id: string) => {
       }
     }
   `;
-  const data: DataItem = await graphQLClient.request(query);
+  const data: IDataItem = await graphQLClient.request(query);
   let dataCard = data.getItem;
-  // console.log(dataCard);
   return dataCard;
 };
 
@@ -91,8 +103,77 @@ export const getReviewsById = async (id: string) => {
         }
     }
   `;
-  const data: DataReviewById = await graphQLClient.request(query);
+  const data: IDataReviewById = await graphQLClient.request(query);
   let dataReview = data.getFunkoReviews;
-  // console.log(dataReview);
   return dataReview;
+};
+
+export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
+  // const stringified = `[${filteredParams.category .map(b => `"${b}"`).join(', ')}]`;
+  const query = gql`
+    query GetAllItems {
+      getAllItems(
+        searchCriteria: {
+          category: ${filteredParams.searchCriteria.category}
+          collection: ${filteredParams.searchCriteria.collection}
+          series: ${filteredParams.searchCriteria.series}
+          sale: ${filteredParams.searchCriteria.sale}
+          price: { from: ${filteredParams.searchCriteria.priceFrom}, to: ${filteredParams.searchCriteria.priceTo} }
+          inStock: ${filteredParams.searchCriteria.inStock}
+        }
+        paging: { page: ${filteredParams.paging.page}, perPage: ${filteredParams.paging.perPage} }
+      ) {
+        items {
+          id
+          name
+          images
+          price
+          amount
+          description
+          sale
+          collection
+          sublicense
+          series
+          category
+          productType
+          date
+        }
+        paging {
+          page
+          perPage
+          pageCount
+          totalCount
+      }
+      }
+    }
+  `;
+  const data: IDataFilteredCatalog = await graphQLClient.request(query);
+  let dataCards = data.getAllItems;
+  // console.log(dataCards)
+  return dataCards;
+};
+
+export const getFilterAttributes = async () => {
+  const query = gql`
+    query GetAllAttributes {
+      getAllAttributes {
+        categories
+        collections
+        series
+      }
+    }
+  `;
+
+  try {
+    const filterAttributes: IFilterAttributes =
+      await graphQLClient.request(query);
+    return filterAttributes.getAllAttributes;
+  } catch (error) {
+    console.log(error);
+    return {
+      categories: [],
+      collections: [],
+      series: [],
+    };
+  }
 };

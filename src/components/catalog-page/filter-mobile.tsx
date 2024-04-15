@@ -1,43 +1,25 @@
 'use cluent';
 
-import { useState, useEffect, SetStateAction } from 'react';
+import { useState } from 'react';
 import FilterIcon from './../../../public/icons/filter-icon.svg';
 import IconClose from './../../../public/icons/icon-close.svg';
 import Filter from './filter';
-
-type FilterProps = {
-  priceFrom: string;
-  handleSetPriceFrom: (event: {
-    target: {
-      value: SetStateAction<string>;
-    };
-  }) => void;
-  priceTo: string;
-  handleSetPriceTo: (event: {
-    target: {
-      value: SetStateAction<string>;
-    };
-  }) => void;
-  stock: boolean;
-  setStock: (stock: boolean) => void;
-  sale: boolean;
-  setSale: (sale: boolean) => void;
-  toggleSelectedFilter: (filterName: string, value: string) => void;
-  colectionSearchParams: string[];
-};
+import { IPropsFilter } from '@/types/types';
 
 const FilterMobile = ({
-  priceFrom,
-  handleSetPriceFrom,
-  priceTo,
-  handleSetPriceTo,
+  setPriceFrom,
+  setPriceTo,
   stock,
   setStock,
   sale,
   setSale,
   toggleSelectedFilter,
   colectionSearchParams,
-}: FilterProps) => {
+  seriesSearchParams,
+  categorySearchParams,
+  filterAttributes,
+  setPageCatalog,
+}: IPropsFilter) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -61,16 +43,18 @@ const FilterMobile = ({
           </button>
           <div className="bg-white w-[303px]">
             <Filter
-              priceFrom={priceFrom}
-              handleSetPriceFrom={handleSetPriceFrom}
-              priceTo={priceTo}
-              handleSetPriceTo={handleSetPriceTo}
+              setPriceFrom={setPriceFrom}
+              setPriceTo={setPriceTo}
               stock={stock}
               setStock={setStock}
               sale={sale}
               setSale={setSale}
               toggleSelectedFilter={toggleSelectedFilter}
               colectionSearchParams={colectionSearchParams}
+              seriesSearchParams={seriesSearchParams}
+              categorySearchParams={categorySearchParams}
+              filterAttributes={filterAttributes}
+              setPageCatalog={setPageCatalog}
             />
           </div>
         </div>
