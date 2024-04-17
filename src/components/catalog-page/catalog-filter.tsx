@@ -24,7 +24,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
   const [filteredCardsCatalog, setFilteredCardsCatalog] =
     useState(cardsCatalog);
 
-  const [sortBy, setSortBy] = useState('Best selling');
+  const [sortBy, setSortBy] = useState('IdAsc');
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
   const [stock, setStock] = useState(false);
@@ -57,6 +57,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
           sale: null,
           inStock: null,
         },
+        orderBy: sortBy,
         paging: { page: pageCatalog, perPage: 12 },
       };
 
@@ -97,7 +98,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
         currentfilteredCatalog = dataFilteredCatalog.items;
         pagination = dataFilteredCatalog.paging;
         console.log('currentfilteredCatalog', currentfilteredCatalog);
-        console.log('pagination', pagination);
+        // console.log('pagination', pagination);
       } catch (error) {
         console.log(error);
       }
@@ -120,6 +121,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     stock,
     sale,
     pageCatalog,
+    sortBy,
   ]);
 
   const toggleSelectedFilter = (filterName: string, value: string) => {
@@ -178,46 +180,24 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
   const handleChangeSort = (event: {
     target: { value: SetStateAction<string> };
   }) => {
-    setSortBy(event.target.value);
+    let valueSortBy = event.target.value;
+    if (valueSortBy === 'Best selling') {
+      setSortBy('IdAsc');
+    }
+    if (valueSortBy === 'Price, low to high') {
+      setSortBy('PriceAsc');
+    }
+    if (valueSortBy === 'Price, high to low') {
+      setSortBy('PriceDesc');
+    }
+    if (valueSortBy === 'Date, old to new') {
+      setSortBy('DateDesc');
+    }
+    if (valueSortBy === 'Date, new to old') {
+      setSortBy('DateAsc');
+    }
     console.log(sortBy);
   };
-
-  // const loadMore = async () => {
-  //   console.log('loadMore');
-  //   let filteredParams: IFilteredParams = {
-  //     searchCriteria: {
-  //       category: `[${categorySearchParams.map(v => `"${v}"`).join(', ')}]`,
-  //       collection: `[${colectionSearchParams.map(v => `"${v}"`).join(', ')}]`,
-  //       series: `[${seriesSearchParams.map(v => `"${v}"`).join(', ')}]`,
-  //       priceFrom: priceFrom,
-  //       priceTo: priceTo,
-  //       sale: null,
-  //       inStock: null,
-  //     },
-  //     paging: { page: pageCatalog, perPage: 5 },
-  //   };
-  //   let currentfilteredCatalog: ICard[] = [...filteredCardsCatalog];
-  //   let pagination: IPagination = {
-  //     page: 0,
-  //     perPage: 0,
-  //     pageCount: 0,
-  //     totalCount: 0,
-  //   };
-  //   try {
-  //     const dataFilteredCatalog = await getFilteredCatalog(filteredParams);
-  //     currentfilteredCatalog = [
-  //       ...filteredCardsCatalog,
-  //       ...dataFilteredCatalog.items,
-  //     ];
-  //     pagination = dataFilteredCatalog.paging;
-  //     console.log('currentfilteredCatalog', currentfilteredCatalog);
-  //     console.log('pagination', pagination);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setFilteredCardsCatalog(currentfilteredCatalog);
-  //   setPaginationValue(pagination);
-  // };
 
   return (
     <section className="px-4 pt-7 pb-10 xl:px-20">
@@ -298,17 +278,6 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
             setPageCatalog={setPageCatalog}
           />
         )}
-        {/* {
-          <button
-            onClick={() => {
-              setPageCatalog(prev => prev + 1);
-            }}
-            type="button"
-            className="ml-auto mr-auto uppercase px-8 py-3 rounded-[5px] border-2 border-current text-white bg-[#31304D] text-xl not-italic font-semibold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
-          >
-            load more
-          </button>
-        } */}
       </div>
     </section>
   );
@@ -328,3 +297,40 @@ export default CatalogFilter;
 //     load more
 //   </button>
 // }
+
+// const loadMore = async () => {
+//   console.log('loadMore');
+//   let filteredParams: IFilteredParams = {
+//     searchCriteria: {
+//       category: `[${categorySearchParams.map(v => `"${v}"`).join(', ')}]`,
+//       collection: `[${colectionSearchParams.map(v => `"${v}"`).join(', ')}]`,
+//       series: `[${seriesSearchParams.map(v => `"${v}"`).join(', ')}]`,
+//       priceFrom: priceFrom,
+//       priceTo: priceTo,
+//       sale: null,
+//       inStock: null,
+//     },
+//     paging: { page: pageCatalog, perPage: 5 },
+//   };
+//   let currentfilteredCatalog: ICard[] = [...filteredCardsCatalog];
+//   let pagination: IPagination = {
+//     page: 0,
+//     perPage: 0,
+//     pageCount: 0,
+//     totalCount: 0,
+//   };
+//   try {
+//     const dataFilteredCatalog = await getFilteredCatalog(filteredParams);
+//     currentfilteredCatalog = [
+//       ...filteredCardsCatalog,
+//       ...dataFilteredCatalog.items,
+//     ];
+//     pagination = dataFilteredCatalog.paging;
+//     console.log('currentfilteredCatalog', currentfilteredCatalog);
+//     console.log('pagination', pagination);
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   setFilteredCardsCatalog(currentfilteredCatalog);
+//   setPaginationValue(pagination);
+// };

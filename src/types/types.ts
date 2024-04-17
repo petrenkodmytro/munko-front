@@ -52,6 +52,7 @@ export interface IFilteredParams {
     sale: boolean | null;
     inStock: boolean | null;
   };
+  orderBy: string;
   paging: { page: number; perPage: number };
 }
 
