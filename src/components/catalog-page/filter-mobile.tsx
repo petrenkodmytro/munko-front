@@ -23,7 +23,7 @@ const FilterMobile = ({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="relative xl:hidden">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}

@@ -17,7 +17,7 @@ const SortBy = ({ sortBy, handleChangeSort }: Props) => {
     'Date, old to new',
     'Date, new to old',
   ];
-  let currentSortValue: string;
+  let currentSortValue: string = 'Best selling';
   if (sortBy === 'IdAsc') {
     currentSortValue = 'Best selling';
   }

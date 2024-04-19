@@ -9,6 +9,9 @@ import Filter from './filter';
 import { getFilteredCatalog } from '@/api/api';
 import Link from 'next/link';
 import SimplePagination from './pagination';
+import useWindowSize from '@/app/useWindowSize';
+import { useRouter } from 'next/navigation';
+
 
 type Props = {
   cardsCatalog: ICard[];
@@ -20,6 +23,10 @@ type Props = {
 };
 
 const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
+  // const [windowSize, setWindowSize] = useState()
+  const { width } = useWindowSize();
+  console.log(width)
+
   // search parameters
   const [filteredCardsCatalog, setFilteredCardsCatalog] =
     useState(cardsCatalog);
@@ -43,9 +50,11 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     pageCount: 0,
     totalCount: 0,
   });
-
+  // const router = useRouter()
   useEffect(() => {
-    // console.log('useEffect');
+    
+    // router.refresh()
+    console.log('useEffect');
     const search = async () => {
       let filteredParams: IFilteredParams = {
         searchCriteria: {
@@ -122,6 +131,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     sale,
     pageCatalog,
     sortBy,
+    width,
   ]);
 
   const toggleSelectedFilter = (filterName: string, value: string) => {
@@ -196,7 +206,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     if (valueSortBy === 'Date, new to old') {
       setSortBy('DateAsc');
     }
-    console.log(sortBy);
+    // console.log(sortBy);
   };
 
   return (
@@ -209,7 +219,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
           /Catalog
         </div>
         <div className="xl:flex grow flex-row-reverse justify-between">
-          <div className="flex justify-between">
+          <div className="flex justify-between xl:hidden">
             {/* filter mobile */}
             <FilterMobile
               setPriceFrom={setPriceFrom}
@@ -239,9 +249,9 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
         </div>
       </div>
 
-      <div className="xl:flex justify-between">
+      <div className="hidden xl:flex justify-between">
         {/* filter desktop */}
-        <div className="hidden xl:block">
+        <div className=" xl:block">
           <Filter
             setPriceFrom={setPriceFrom}
             setPriceTo={setPriceTo}
