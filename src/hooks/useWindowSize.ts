@@ -1,6 +1,5 @@
-'use client'
+'use client';
 import { useState } from 'react';
-
 import { useEventListener, useIsomorphicLayoutEffect } from 'usehooks-ts';
 
 interface WindowSize {
@@ -45,16 +44,17 @@ function useWindowSize(): WindowSize {
   useEventListener('resize', handleSize);
 
   useIsomorphicLayoutEffect(() => {
-   
     handleSize();
-    console.log('Using isomorphic layout effect');
+    return () => {
+      window.removeEventListener('resize', handleSize);
+    };
+    // console.log('Using isomorphic layout effect');
   }, []);
 
   return windowSize;
 }
 
 export default useWindowSize;
-
 
 // import { useIsomorphicLayoutEffect } from 'usehooks-ts'
 

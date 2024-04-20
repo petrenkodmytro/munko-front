@@ -9,9 +9,8 @@ import Filter from './filter';
 import { getFilteredCatalog } from '@/api/api';
 import Link from 'next/link';
 import SimplePagination from './pagination';
-import useWindowSize from '@/app/useWindowSize';
+import useWindowSize from '@/hooks/useWindowSize';
 import { useRouter } from 'next/navigation';
-
 
 type Props = {
   cardsCatalog: ICard[];
@@ -23,9 +22,8 @@ type Props = {
 };
 
 const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
-  // const [windowSize, setWindowSize] = useState()
   const { width } = useWindowSize();
-  console.log(width)
+  // console.log(width);
 
   // search parameters
   const [filteredCardsCatalog, setFilteredCardsCatalog] =
@@ -50,10 +48,8 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     pageCount: 0,
     totalCount: 0,
   });
-  // const router = useRouter()
+
   useEffect(() => {
-    
-    // router.refresh()
     console.log('useEffect');
     const search = async () => {
       let filteredParams: IFilteredParams = {
@@ -131,7 +127,6 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     sale,
     pageCatalog,
     sortBy,
-    width,
   ]);
 
   const toggleSelectedFilter = (filterName: string, value: string) => {
@@ -209,6 +204,19 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
     // console.log(sortBy);
   };
 
+  const resetFilter = () => {
+    setSortBy('IdAsc');
+    setPriceFrom('');
+    setPriceTo('');
+    setStock(false);
+    setSale(false);
+    setColectionSearchParams([]);
+    setSeriesSearchParams([]);
+    setCategorySearchParams([]);
+    setPageCatalog(0);
+  };
+  console.log('sale', sale)
+
   return (
     <section className="px-4 pt-7 pb-10 xl:px-20">
       <div className="xl:flex gap-[200px] xl:mb-[35px]">
@@ -216,25 +224,30 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
           <Link className="underline" href={'/'}>
             Home page
           </Link>
-          /Catalog
+          / Catalog
         </div>
         <div className="xl:flex grow flex-row-reverse justify-between">
-          <div className="flex justify-between xl:hidden">
+          <div className="flex justify-between">
             {/* filter mobile */}
-            <FilterMobile
-              setPriceFrom={setPriceFrom}
-              setPriceTo={setPriceTo}
-              stock={stock}
-              setStock={setStock}
-              sale={sale}
-              setSale={setSale}
-              toggleSelectedFilter={toggleSelectedFilter}
-              colectionSearchParams={colectionSearchParams}
-              seriesSearchParams={seriesSearchParams}
-              categorySearchParams={categorySearchParams}
-              filterAttributes={filterAttributes}
-              setPageCatalog={setPageCatalog}
-            />
+            {width < 1280 && (
+              <FilterMobile
+                priceFrom={priceFrom}
+                priceTo={priceTo}
+                setPriceFrom={setPriceFrom}
+                setPriceTo={setPriceTo}
+                stock={stock}
+                setStock={setStock}
+                sale={sale}
+                setSale={setSale}
+                toggleSelectedFilter={toggleSelectedFilter}
+                colectionSearchParams={colectionSearchParams}
+                seriesSearchParams={seriesSearchParams}
+                categorySearchParams={categorySearchParams}
+                filterAttributes={filterAttributes}
+                setPageCatalog={setPageCatalog}
+                resetFilter={resetFilter}
+              />
+            )}
 
             <SortBy sortBy={sortBy} handleChangeSort={handleChangeSort} />
           </div>
@@ -249,24 +262,29 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
         </div>
       </div>
 
-      <div className="hidden xl:flex justify-between">
+      <div className="xl:flex justify-between">
         {/* filter desktop */}
-        <div className=" xl:block">
-          <Filter
-            setPriceFrom={setPriceFrom}
-            setPriceTo={setPriceTo}
-            stock={stock}
-            setStock={setStock}
-            sale={sale}
-            setSale={setSale}
-            toggleSelectedFilter={toggleSelectedFilter}
-            colectionSearchParams={colectionSearchParams}
-            seriesSearchParams={seriesSearchParams}
-            categorySearchParams={categorySearchParams}
-            filterAttributes={filterAttributes}
-            setPageCatalog={setPageCatalog}
-          />
-        </div>
+        {width >= 1280 && (
+          <div className="hidden xl:block w-[320px] max-h-[1788px] overflow-y-auto custom bg-transparent m-[-8px] p-2">
+            <Filter
+              priceFrom={priceFrom}
+              priceTo={priceTo}
+              setPriceFrom={setPriceFrom}
+              setPriceTo={setPriceTo}
+              stock={stock}
+              setStock={setStock}
+              sale={sale}
+              setSale={setSale}
+              toggleSelectedFilter={toggleSelectedFilter}
+              colectionSearchParams={colectionSearchParams}
+              seriesSearchParams={seriesSearchParams}
+              categorySearchParams={categorySearchParams}
+              filterAttributes={filterAttributes}
+              setPageCatalog={setPageCatalog}
+              resetFilter={resetFilter}
+            />
+          </div>
+        )}
 
         {/* Catalog */}
         {filteredCardsCatalog.length === 0 ? (
@@ -274,7 +292,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
             За данними критеріями пошуку результатів не знайдено
           </div>
         ) : (
-          <div className="flex items-center flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap md:justify-between md:gap-[70px]  xl:w-[894px] xl:px-0 xl:my-0 xl:gap-[84px] xl:justify-start">
+          <div className="flex items-center flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap md:justify-between md:gap-[70px]  xl:w-[894px] xl:px-0 xl:my-0 xl:gap-[84px] xl:justify-start xl:items-start">
             {filteredCardsCatalog.map(card => (
               <Card key={card.id} card={card} />
             ))}
