@@ -7,6 +7,8 @@ import CheckFilter from './../../../public/icons/check-filter.svg';
 import { IPropsFilter } from '@/types/types';
 
 const Filter = ({
+  priceFrom,
+  priceTo,
   setPriceFrom,
   setPriceTo,
   stock,
@@ -19,18 +21,20 @@ const Filter = ({
   categorySearchParams,
   filterAttributes,
   setPageCatalog,
+  resetFilter,
 }: IPropsFilter) => {
   const [openPrice, setOpenPrice] = useState(false);
   const [openCollection, setOpenCollection] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
   const [openSeries, setOpenSeries] = useState(false);
-  const [localPriceFrom, setLocalPriceFrom] = useState('');
-  const [localPriceTo, setLocalPriceTo] = useState('');
+  const [localPriceFrom, setLocalPriceFrom] = useState(priceFrom);
+  const [localPriceTo, setLocalPriceTo] = useState(priceTo);
   const [showMoreCollection, setShowMoreCollection] = useState(false);
   const [showMoreSeries, setShowMoreSeries] = useState(false);
   const [showMoreCategory, setShowMoreCategory] = useState(false);
+  // console.log('sale', sale)
   return (
-    <div className=" p-[20px] w-[303px] xl:p-[30px] flex flex-col gap-4 xl:gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)] text-lg xl:text-2xl">
+    <div className=" p-[20px] w-[303px] rounded xl:p-[30px] flex flex-col gap-4 xl:gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)] text-lg xl:text-2xl">
       {/* price */}
       <div className="">
         <div className="inline-flex gap-2 px-2 py-2  rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
@@ -43,6 +47,13 @@ const Filter = ({
             {openPrice ? <FilterArrUp /> : <FilterArrDown />}
           </button>
         </div>
+        {/* <button
+          onClick={resetFilter}
+          className="ml-8 p-2 rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]"
+          type="button"
+        >
+          RESET
+        </button> */}
         {openPrice && (
           <div className="mt-4 flex">
             {' '}

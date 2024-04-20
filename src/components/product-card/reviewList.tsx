@@ -64,7 +64,7 @@ const CardReviews = ({reviews}: Props) => {
         </Form>
       </Formik>
 
-      <div className="h-[292px] custom overflow-y-scroll md:h-[200px]">
+      <div className="max-h-[292px] custom overflow-y-scroll md:h-[200px]">
         <ul className="flex flex-col gap-5 pr-3 md:pr-5">
           {reviews.map((reviwe, index) => (
             <li key={index} className="flex gap-4">

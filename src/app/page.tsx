@@ -5,6 +5,7 @@ import Catalog from '@/components/sections/catalog';
 import FAQ from '@/components/sections/faq';
 
 export default function Home() {
+
   return (
     <main>
       <Banner />

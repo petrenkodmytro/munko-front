@@ -17,13 +17,29 @@ const SortBy = ({ sortBy, handleChangeSort }: Props) => {
     'Date, old to new',
     'Date, new to old',
   ];
+  let currentSortValue: string = 'Best selling';
+  if (sortBy === 'IdAsc') {
+    currentSortValue = 'Best selling';
+  }
+  if (sortBy === 'PriceAsc') {
+    currentSortValue = 'Price, low to high';
+  }
+  if (sortBy === 'PriceDesc') {
+    currentSortValue = 'Price, high to low';
+  }
+  if (sortBy === 'DateDesc') {
+    currentSortValue = 'Date, old to new';
+  }
+  if (sortBy === 'DateAsc') {
+    currentSortValue = 'Date, new to old';
+  }
   return (
     <div className="text-lg">
       <label>
         Sort by:
-        <select value={sortBy} onChange={handleChangeSort}>
+        <select value={currentSortValue} onChange={handleChangeSort}>
           {sortByOptions.map((value, i) => (
-            <option value={value} key={i}>
+            <option value={value} key={i} className='text-lg'>
               {value}
             </option>
           ))}
