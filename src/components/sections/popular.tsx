@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import Card from '../card/Card';
 import CardsCarousel from '../card/card-carousel';

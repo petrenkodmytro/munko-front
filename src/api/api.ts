@@ -1,5 +1,5 @@
 import {
-  ICard,
+  ICard, User,
   IDataFilteredCatalog,
   IFilterAttributes,
   IFilteredParams,
@@ -89,6 +89,44 @@ export const getItem = async (id: string) => {
   let dataCard = data.getItem;
   return dataCard;
 };
+
+export const loginUser = async (email: string | undefined, password:string | undefined) => {
+  const loginUserMutation = gql`
+  query Authenticate($email: String!, $password: String!) {
+    authenticate(email: $email, password: $password)
+}
+`;
+
+try {
+  const loggedUser = await graphQLClient.request(loginUserMutation, {email, password});
+  console.log('User logged:', loggedUser);
+  return loggedUser;
+} catch (error) {
+  console.error('Error login user:', error);
+}
+};
+
+export const createNewUser = async (newUser: User) => {
+  const createUserMutation = gql`
+  mutation Registration ($newUser: UserInput!) {
+    registration(user: $newUser) {
+      id
+      firstName
+      email
+      password
+    }
+  }
+`;
+
+try {
+  const createdUser = await graphQLClient.request(createUserMutation, {newUser});
+  console.log('User created:', createdUser);
+  return createdUser
+} catch (error) {
+  console.error('Error creating user:', error);
+}
+};
+
 
 export const getReviewsById = async (id: string) => {
   const query = gql`

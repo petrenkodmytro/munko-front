@@ -26,12 +26,10 @@ const SearchForm = () => {
             placeholder="SEARCH"
             id="search"
             name="search"
-            className={`rounded lg:w-44 xl:w-56 pl-2 pr-11 leading-[30px] font-bold outline-none focus:placeholder:text-transparent ${
+            className={`text-black placeholder:text-blackCustom rounded lg:w-44 xl:w-56 pl-2 pr-11 leading-[30px] font-bold outline-none focus:placeholder:text-transparent ${
               !errors.search
-                ? 'border-none text-black placeholder:text-blackCustom'
-                : errors.search === "You've reached the limit of the input"
-                  ? ''
-                  : 'border h-[30px] border-redError text-redError placeholder:text-redError'
+                ? ''
+                : 'border h-[30px] border-redError text-redError placeholder:text-redError'
             }`}
           ></Field>
           <button
@@ -42,10 +40,8 @@ const SearchForm = () => {
           </button>
           {errors.search ? (
             <div
-              className={`absolute text-xs font-medium pl-2 ${
-                errors.search === "You've reached the limit of the input"
-                  ? 'text-black'
-                  : 'text-redError'
+              className={`absolute text-[10px] font-medium pl-2 ${
+                errors ? 'text-redError' : null
               }`}
             >
               {errors.search}

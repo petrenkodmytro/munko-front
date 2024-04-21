@@ -5,11 +5,15 @@ import BasketIconMobile from './../../../public/icons/basket-icon-mobile.svg';
 import BasketIcon from './../../../public/icons/basket-icon.svg';
 import UserIcon from './../../../public/icons/user-icon.svg';
 import UserIconHover from './../../../public/icons/user-hover-icon.svg';
+import LogoutMobile from './../../../public/icons/logout_icon_mobile.svg';
+import LogoutIcon from './../../../public/icons/logout_icon.svg';
+import LogoutIconHover from './../../../public/icons/logout_icon hover.svg';
 import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
+import { useSession, signOut } from 'next-auth/react';
 
 const UserShoppingCart = () => {
-
-  const [modalState, setModalState] = useState(false)
+  const [modalState, setModalState] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (modalState) {
@@ -20,20 +24,37 @@ const UserShoppingCart = () => {
   }, [modalState]);
 
   return (
-    <div className="w-16 pb-6 pr-1 md:pr-0 md:ml-2 xl:ml-5 self-end md:w-auto md:self-center md:pb-0 md:mt-5">
-      <ModalWnd call={modalState} onDestroy={()=> setModalState(false)} />
-      <button onClick={()=> setModalState(true)}>
-        <div className="inline-block md:hidden align-bottom">
-          <UserIconMobile />
-        </div>
-        <div className="hidden md:inline-block">
-          <div className="absolute duration-200 ease-linear hover:opacity-0">
-            <UserIcon />
+    <div className="w-16 pb-6 pr-1 md:pr-0 md:ml-4 xl:ml-5 self-end md:w-auto md:self-center md:pb-0 md:mt-5">
+      <ModalWnd call={modalState} onDestroy={() => setModalState(false)} />
+      {session ? (
+        <button
+          onClick={() => signOut()}
+          // className="bg-slate-950 text-white rounded text-lg w-auto px-6 py-3 uppercase"
+        >
+          <div className="inline-block mr-1.5 md:hidden align-bottom">
+            <UserIconMobile />
           </div>
-          <UserIconHover />
-        </div>
-      </button>
-      <button className="ml-1.5 md:ml-2 xl:ml-4">
+          <div className="hidden md:inline-block md:mr-4">
+            <div className="absolute duration-200 ease-linear hover:opacity-20">
+              <UserIcon />
+            </div>
+            <UserIconHover />
+          </div>
+        </button>
+      ) : (
+        <button onClick={() => setModalState(true)}>
+          <div className="mr-2.5 inline-block md:hidden align-bottom">
+            <LogoutMobile />
+          </div>
+          <div className="hidden md:inline-block md:mr-6">
+            <div className="absolute duration-200 ease-linear hover:opacity-20">
+              <LogoutIcon />
+            </div>
+            <LogoutIconHover />
+          </div>
+        </button>
+      )}
+      <button>
         <div className="inline-block md:hidden align-bottom">
           <BasketIconMobile />
         </div>

@@ -8,7 +8,7 @@ type Props = {};
 export default function FAQ(props: Props) {
   return (
     <section className="flex flex-col px-4 mt-8 text-xl text-blackCustom font-semibold md:px-5 md:text-2xl">
-      <h3 className="hidden text-center text-[40px] mt-[46px] mb-[56px] md:block">
+      <h3 className="text-center text-[30px] mb-5 md:mt-[46px] md:mb-[56px]">
         FAQ
       </h3>
       <FaqList index={3}/>

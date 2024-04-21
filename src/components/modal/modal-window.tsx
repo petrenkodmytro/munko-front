@@ -1,5 +1,6 @@
 import ModalWndForm from "./modal-window-form";
 
+
 type ModalWndProps = {
   call: boolean;
   onDestroy: () => void;
@@ -76,7 +77,7 @@ const ModalWnd: React.FC<ModalWndProps> = ({ call, onDestroy }) => {
             </g>
           </svg>
         </button>
-        <ModalWndForm />
+        <ModalWndForm onDestroy={onDestroy}/>
       </div>
     </div>
   );

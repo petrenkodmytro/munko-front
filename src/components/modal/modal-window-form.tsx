@@ -4,7 +4,11 @@ import { useState } from 'react';
 import LoginForm from './login-form';
 import SignForm from './sign-form';
 
-const ModalWndForm = () => {
+type ModalWndFormProps = {
+  onDestroy: () => void;
+};
+
+const ModalWndForm: React.FC<ModalWndFormProps> = ({onDestroy}) => {
 
   const [toogleLogin, setToogleLogin] = useState(false);
 
@@ -15,9 +19,9 @@ const ModalWndForm = () => {
   return (
     <>
       {toogleLogin ? (
-        <SignForm handleToogleChange={handleToogleChange} />
+        <SignForm handleToogleChange={handleToogleChange} onDestroy={onDestroy} />
       ) : (
-        <LoginForm handleToogleChange={handleToogleChange} />
+        <LoginForm handleToogleChange={handleToogleChange} onDestroy={onDestroy}/>
       )}
     </>
   );
