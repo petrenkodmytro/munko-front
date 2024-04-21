@@ -67,3 +67,27 @@ export default useWindowSize;
 //   // console.log('Using isomorphic layout effect');
 //   // return <p>Hello, world</p>
 // }
+
+
+
+// import { useState, useEffect } from "react";
+
+// export default function WindowSize() {
+//   const [windowSize, setWindowSize] = useState({
+//     width: undefined
+//   });
+
+//   useEffect(() => {
+//     if (typeof window !== "undefined") {
+//       function handleResize() {
+//         setWindowSize({
+//           width: window.innerWidth
+//         });
+//       }
+//       window.addEventListener("resize", handleResize);
+//       handleResize();
+//       return () => window.removeEventListener("resize", handleResize);
+//     }
+//   }, []);
+//   return windowSize;
+// }

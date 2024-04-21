@@ -19,9 +19,10 @@ type Props = {
     collections: string[];
     series: string[];
   };
+  saleProps: boolean
 };
 
-const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
+const CatalogFilter = ({ cardsCatalog, filterAttributes, saleProps }: Props) => {
   const { width } = useWindowSize();
   // console.log(width);
 
@@ -33,7 +34,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes }: Props) => {
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
   const [stock, setStock] = useState(false);
-  const [sale, setSale] = useState(false);
+  const [sale, setSale] = useState(saleProps);
   const [colectionSearchParams, setColectionSearchParams] = useState<string[]>(
     []
   );

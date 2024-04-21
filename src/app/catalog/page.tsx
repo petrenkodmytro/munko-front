@@ -1,7 +1,7 @@
 import CatalogPage from '@/components/catalog-page/catalog-page';
 
 const Catalog = async () => {
-  return <CatalogPage />;
+  return <CatalogPage sale={false}/>;
 };
 
 export default Catalog;
