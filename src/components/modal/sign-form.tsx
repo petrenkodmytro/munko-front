@@ -92,7 +92,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
 
   useEffect(() => {
     setIsValidFrom(SignUpSchema.isValidSync(values) && isChecked);
-  });
+  }, [SignUpSchema, values, isChecked]);
 
   return (
     <Formik
