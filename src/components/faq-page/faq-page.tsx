@@ -1,6 +1,5 @@
 'use client';
 
-import FAQ from '../sections/faq';
 import FaqList from '../sections/faq-list';
 
 type Props = {};

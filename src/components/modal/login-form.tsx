@@ -1,5 +1,6 @@
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+'use client';
+
+import { Formik, Field, Form } from 'formik';
 import BtnSignUp from './btn-sign';
 import BtnLogin from './btn-login';
 import Link from 'next/link';
@@ -7,43 +8,25 @@ import InstagramImage from './../../../public/icons/instagram-login-icon.svg';
 import GoogleImage from './../../../public/icons/google-login-icon.svg';
 import ShowPasswordIcon from './../../../public/icons/show-password.svg';
 import HidePassword from './../../../public/icons/hide-password.svg';
-import { useState, useEffect } from 'react';
-import { useGoogleLogin } from '@react-oauth/google';
+import { useState } from 'react';
+import {getCsrfToken, signIn } from 'next-auth/react';
+import { GetServerSideProps } from 'next';
 
 interface LoginForm {
   handleToogleChange: () => void;
+  onDestroy: () => void;
+  csrfToken?: string,
 }
 
-const LoginForm: React.FC<LoginForm> = ({ handleToogleChange }) => {
+const LoginForm: React.FC<LoginForm> = ({ handleToogleChange, onDestroy, csrfToken }) => {
+  
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const [isValidForm, setIsValidFrom] = useState(false);
   const [values, setValuesObj] = useState({
     password: '',
     emailLogin: '',
   });
 
-  const login = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
-  });
-
-  const classList =
-    'rounded font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear';
-
-  const LoginSchema = Yup.object().shape({
-    emailLogin: Yup.string()
-      .min(3, 'Too Short! min 3')
-      .max(45, 'Too Long! max 45')
-      .matches(
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/,
-        'Must be a valid email'
-      )
-      .required('Required'),
-    password: Yup.string()
-      .min(6, 'Too Short! min 6')
-      .max(18, 'Too Long! max 18')
-      .matches(/^[A-Za-z0-9 ]*$/, 'Use latin letters and numbers')
-      .required('Required'),
-  });
+  const [error, setError] = useState(false);
 
   const showPassword = function (event: React.SyntheticEvent<EventTarget>) {
     setIsShowPassword(!isShowPassword);
@@ -63,20 +46,33 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange }) => {
     });
   };
 
-  useEffect(() => {
-    setIsValidFrom(LoginSchema.isValidSync(values));
-  },[LoginSchema, values]);
+  const handleSubmit = async (e: React.SyntheticEvent<EventTarget>) => {
+    e.preventDefault();
+
+    const res = await signIn('credentials', {
+      redirect: false,
+      email: values.emailLogin,
+      password: values.password,
+      callbackUrl: `${window.location.origin}`,
+    });
+
+    if (res?.error) {
+      setError(true);
+    } else {
+      onDestroy();
+    }
+  };
 
   return (
     <Formik
       initialValues={{ emailLogin: '', password: '' }}
-      validationSchema={LoginSchema}
-      onSubmit={(values, actions) => {
-        alert(JSON.stringify(values, null, 2));
+      onSubmit={async (values, actions) => {
+        actions.setSubmitting(false);
         actions.resetForm();
       }}
     >
-      <Form onChange={handleChange}>
+      <Form onChange={handleChange} onSubmit={handleSubmit}>
+      <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
         <div className="flex mb-[18px] items-start">
           <BtnLogin />
           <BtnSignUp handleToogleChange={handleToogleChange} toogleLogin />
@@ -89,11 +85,11 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange }) => {
               name="emailLogin"
               placeholder="Email"
             />
-            <ErrorMessage
-              className="self-start text-[8px] text-[#D63F3F] pl-2"
-              component="div"
-              name="emailLogin"
-            />
+            {error && (
+              <div className="self-start text-[8px] text-[#D63F3F] pl-2">
+                <span>Login or password is invalid</span>
+              </div>
+            )}
           </div>
           <div className="flex flex-col overflow-hidden justify-center mb-5 relative">
             <Field
@@ -103,11 +99,11 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange }) => {
               name="password"
               placeholder="Password"
             />
-            <ErrorMessage
-              className="self-start text-[8px] text-[#D63F3F] pl-2"
-              component="div"
-              name="password"
-            />
+            {error && (
+              <div className="self-start text-[8px] text-[#D63F3F] pl-2">
+                <span>Login or password is invalid</span>
+              </div>
+            )}
             <div
               className="absolute right-2 top-2 cursor-pointer"
               onClick={showPassword}
@@ -120,7 +116,7 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange }) => {
           <button
             type="submit"
             className={
-              isValidForm ? classList + ' bg-footer' : classList + ' bg-grayBG'
+              'rounded font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear bg-footer'
             }
           >
             LOGIN
@@ -137,16 +133,24 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange }) => {
         </p>
         <div className="mt-0.5 border border-blueBorder"></div>
         <div className="mt-3 flex justify-center items-center gap-[18px]">
-          <button onClick={() => login()}>
+          <button onClick={()=>signIn('google')}>
             <GoogleImage />
           </button>
-          <Link href={'/'} className="h-[34px]">
+          {/* <Link href={'/'} className="h-[34px]">
             <InstagramImage />
-          </Link>
+          </Link> */}
         </div>
       </Form>
     </Formik>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  };
+}
 
 export default LoginForm;

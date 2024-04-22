@@ -9,7 +9,7 @@ const faqContent: Content[] = [
   {
     question: 'What is a Funko Pop figures?',
     answer:
-      'The payment methods for purchasing Funko Pop figures in our store are as follows: Credit/Debit Cards: Most online and physical stores accept major credit cards (Visa, MasterCard, American Express) and debit cards. PayPal: Many online stores offer PayPal as a payment method. This provides a secure way to make purchases without directly sharing your financial information. Bank Transfers: Some online platforms may allow you to make payments via direct bank transfers. This method may not be as common for smaller transactions',
+      'Funko Pop figures are collectible vinyl toys produced by the company Funko. They are characterized by their distinctive design, featuring oversized heads and small bodies, with a wide range of characters from various pop culture franchises. These figures cover a diverse array of genres, including movies, TV shows, video games, comics, and more. Funko Pop figures have become popular among collectors and fans due to their affordable price, wide variety, and the appeal of having stylized versions of beloved characters.',
   },
   {
     question: 'How can I pay for the purchase?',
@@ -19,7 +19,7 @@ const faqContent: Content[] = [
   {
     question: 'What Delivery methods do you have?',
     answer:
-      'We have next Delivery methods: Standard Shipping: This is the regular shipping option, and it often takes a few business days to deliver the product. The cost and delivery time may vary depending on your location. Express Shipping: For a faster delivery option, express shipping is available at an additional cost. This method is ideal for those who want to receive their Funko Pop figures quickly. International Shipping: If you are purchasing from a store located in a different country, they may offer international shipping. Be aware of potential customs duties or taxes associated with international deliveries. In-Store Pickup: If your physical locations allow you to pick up the items at a nearby store. This option can save on shipping costs and time.',
+      'We have next Delivery methods: Standard Shipping: This is the regular shipping option, and it often takes a few business days to deliver the product. The cost and delivery time may vary depending on your location. Express Shipping: Express shipping is available at an additional cost for a faster delivery option. This method is ideal for those who want to receive their Funko Pop figures quickly. International Shipping: If you purchase from a store in a different country, they may offer international shipping. Be aware of potential customs duties or taxes associated with international deliveries. In-Store Pickup: If your physical locations allow you to pick up the items at a nearby store. This option can save on shipping costs and time.',
   },
   {
     question:

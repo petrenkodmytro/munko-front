@@ -1,4 +1,5 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { signIn } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import BtnSignUp from './btn-sign';
@@ -8,12 +9,17 @@ import InstagramImage from './../../../public/icons/instagram-login-icon.svg';
 import GoogleImage from './../../../public/icons/google-login-icon.svg';
 import ShowPasswordIcon from './../../../public/icons/show-password.svg';
 import HidePassword from './../../../public/icons/hide-password.svg';
+import { useRouter } from 'next/navigation';
+import { createNewUser } from '@/api/api';
 
 interface SignForm {
   handleToogleChange: () => void;
+  onDestroy: () => void;
 }
 
-const SignForm: React.FC<SignForm> = ({ handleToogleChange }) => {
+const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
+  const router = useRouter();
+  const [error, setError] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfrimPassword] = useState(false);
@@ -23,6 +29,11 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange }) => {
     emailSign: '',
     password: '',
     confirmPass: '',
+  });
+  const [newUser, setNewUser] = useState({
+    firstName: '',
+    email: '',
+    password: '',
   });
 
   const classList =
@@ -72,28 +83,61 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange }) => {
       }
       return prevName;
     });
+    setNewUser({
+      firstName: values.name,
+      email: values.emailSign,
+      password: values.password,
+    });
   };
 
   useEffect(() => {
-    setIsValidFrom(SignUpSchema.isValidSync(values));
-  });
+    setIsValidFrom(SignUpSchema.isValidSync(values) && isChecked);
+  }, [SignUpSchema, values, isChecked]);
 
   return (
     <Formik
-      initialValues={{ emailSign: '', name: '', password: '', confirmPass: '' }}
+      initialValues={{
+        emailSign: '',
+        name: '',
+        password: '',
+        confirmPass: '',
+        tenantKey: '',
+      }}
       validationSchema={SignUpSchema}
-      onSubmit={(values, actions) => {
-        alert(JSON.stringify(values, null, 2));
+      onSubmit={async (values, actions) => {
+        const res = await createNewUser(newUser);
+        if (res) {
+          // onDestroy();
+          alert(`The email ${values.emailSign} is successfully registered`)
+          const login = await signIn('credentials', {
+            redirect: false,
+            email: values.emailSign,
+            password: values.password,
+            callbackUrl: `${window.location.origin}`,
+          });
+      
+          if (login?.error) {
+            setError(true);
+          } else {
+            onDestroy();
+          }
+        } else {
+          setError(true);
+          alert(`The email ${values.emailSign} is already registered`)
+        }
+
+        actions.setSubmitting(false);
         actions.resetForm();
       }}
     >
-      {({ errors, values }) => (
+      {formik => (
         <Form onChange={handleChange}>
           <div className="flex mb-[18px] items-start">
             <BtnLogin handleToogleChange={handleToogleChange} tooglelogin />
             <BtnSignUp />
           </div>
           <div>
+            {/* <input name="csrfToken" type="hidden" defaultValue={csrfToken} /> */}
             <div className="flex flex-col overflow-hidden justify-center mb-[14px]">
               <Field
                 className="w-full p-2 border-grayBorder rounded text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
@@ -167,6 +211,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange }) => {
           </div>
           <div className="mb-4">
             <button
+              disabled={!isChecked}
               type="submit"
               className={
                 isValidForm
@@ -174,7 +219,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange }) => {
                   : classList + ' bg-grayBG'
               }
             >
-              SIGN UP
+              {formik.isSubmitting ? 'Please wait...' : 'SIGN UP'}
             </button>
             <div className="flex mt-3">
               <input
@@ -216,16 +261,16 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange }) => {
             </div>
           </div>
           <p className="font-medium text-center text-[8px] m-auto pb-3">
-            or sign up with
+            or sign in with
           </p>
           <div className="mt-0.5 border border-blueBorder"></div>
           <div className="mt-3 flex justify-center items-center gap-[18px]">
-            <Link href={'/'}>
+          <button onClick={()=>signIn('google')}>
               <GoogleImage />
-            </Link>
-            <Link href={'/'} className="h-[34px]">
+            </button>
+            {/* <Link href={'/'} className="h-[34px]">
               <InstagramImage />
-            </Link>
+            </Link> */}
           </div>
         </Form>
       )}

@@ -1,9 +1,15 @@
-import type { Metadata } from 'next';
-import { Montserrat } from 'next/font/google';
-import './globals.css';
 import Header from '@/components/header/Header';
+import './globals.css';
+import 'tailwindcss/tailwind.css';
 import Footer from '@/components/footer/Footer';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Montserrat } from 'next/font/google';
+import AuthProvider from '@/components/providers/SessionProvider';
+import { SessionProvider } from 'next-auth/react';
+
+export const metadata = {
+  title: 'Munko-PoP',
+  description: "We have figures for everyone's taste",
+};
 
 
 const montserrat = Montserrat({
@@ -13,11 +19,6 @@ const montserrat = Montserrat({
   fallback: ['Arial', 'sans-serif'],
 });
 
-export const metadata: Metadata = {
-  title: 'Munko-PoP',
-  description: "We have figures for everyone's taste",
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -25,14 +26,18 @@ export default function RootLayout({
 }) {
 
   return (
-    <GoogleOAuthProvider clientId="867594703313-4bdf0hh9h146916in4t3s0skd2anir1f.apps.googleusercontent.com">
+    <AuthProvider>
       <html lang="en" className={montserrat.className}>
-        <body className="max-w-[390px] mx-auto md:max-w-[720px] lg:max-w-[1440px]">
+        <body
+          suppressContentEditableWarning
+          suppressHydrationWarning
+          className="max-w-[390px] mx-auto md:max-w-[720px] lg:max-w-[1440px]"
+        >
           <Header />
           {children}
           <Footer />
         </body>
       </html>
-    </GoogleOAuthProvider>
+    </AuthProvider>
   );
 }

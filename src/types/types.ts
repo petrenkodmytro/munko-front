@@ -14,6 +14,18 @@ export interface ICard {
   date: string;
 }
 
+export interface User {
+  id?: number;
+  firstName: string;
+  lastName?: string | null;
+  email: string;
+  phone?: number | null;
+  password: string;
+  address?: {id:number, userId:number, locality: string, postOffice: string} | null;
+  orders?: string[] | null;
+  role?: string;
+}
+
 export interface IReview {
   id: number;
   username: string;

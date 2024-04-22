@@ -10,6 +10,7 @@ import BurgerMenu from './burger-menu';
 import Image from 'next/image';
 
 const Header = () => {
+  
   return (
     <>
       <header className="pt-4 pb-2 px-4 md:px-5 lg:px-20 md:pb-4 md:pt-0 bg-footer flex justify-between">
