@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { User } from "next-auth";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -32,10 +33,10 @@ const authOptions: NextAuthOptions = {
                          
 
             if (data && data.authenticate !== null) {
-              const token = data.authenticate;
+              const user: User = data.authenticate;
       
               // Return the user object with the JWT token
-              return { token, email };
+              return user;
             } else {
               return null; // Return null if authentication fails
             }

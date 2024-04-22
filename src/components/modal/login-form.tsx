@@ -15,7 +15,7 @@ import { GetServerSideProps } from 'next';
 interface LoginForm {
   handleToogleChange: () => void;
   onDestroy: () => void;
-  csrfToken: string,
+  csrfToken?: string,
 }
 
 const LoginForm: React.FC<LoginForm> = ({ handleToogleChange, onDestroy, csrfToken }) => {
