@@ -32,7 +32,7 @@ const Filter = ({
   const [showMoreCollection, setShowMoreCollection] = useState(false);
   const [showMoreSeries, setShowMoreSeries] = useState(false);
   const [showMoreCategory, setShowMoreCategory] = useState(false);
-  // console.log('sale', sale)
+  console.log('sale', sale)
   return (
     <div className=" p-[20px] w-[303px] rounded xl:p-[30px] flex flex-col gap-4 xl:gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)] text-lg xl:text-2xl">
       {/* price */}
@@ -47,13 +47,13 @@ const Filter = ({
             {openPrice ? <FilterArrUp /> : <FilterArrDown />}
           </button>
         </div>
-        {/* <button
+        <button
           onClick={resetFilter}
           className="ml-8 p-2 rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]"
           type="button"
         >
           RESET
-        </button> */}
+        </button>
         {openPrice && (
           <div className="mt-4 flex">
             {' '}

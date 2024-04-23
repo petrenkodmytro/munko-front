@@ -216,7 +216,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes, saleProps }: Props) => 
     setCategorySearchParams([]);
     setPageCatalog(0);
   };
-  console.log('sale', sale)
+  console.log('colectionSearchParams', colectionSearchParams)
 
   return (
     <section className="px-4 pt-7 pb-10 xl:px-20">
@@ -261,6 +261,13 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes, saleProps }: Props) => 
             of {paginationValue.totalCount} products
           </p>
         </div>
+        <button
+          onClick={resetFilter}
+          className="ml-8 p-2 rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]"
+          type="button"
+        >
+          RESET
+        </button>
       </div>
 
       <div className="xl:flex justify-between">
