@@ -32,7 +32,32 @@ const Filter = ({
   const [showMoreCollection, setShowMoreCollection] = useState(false);
   const [showMoreSeries, setShowMoreSeries] = useState(false);
   const [showMoreCategory, setShowMoreCategory] = useState(false);
-  // console.log('sale', sale)
+
+  let isVisibleBtnReset = false;
+  if (
+    priceFrom !== '' ||
+    priceTo !== '' ||
+    colectionSearchParams.length > 0 ||
+    seriesSearchParams.length > 0 ||
+    categorySearchParams.length > 0 ||
+    sale === true ||
+    stock === true
+  ) {
+    isVisibleBtnReset = true;
+  }
+
+  const resetLocalStateFilter = () => {
+    setOpenPrice(false);
+    setOpenCollection(false);
+    setOpenCategory(false);
+    setOpenSeries(false);
+    setLocalPriceFrom('');
+    setLocalPriceTo('');
+    setShowMoreCollection(false);
+    setShowMoreSeries(false);
+    setShowMoreCategory(false);
+  };
+
   return (
     <div className=" p-[20px] w-[303px] rounded xl:p-[30px] flex flex-col gap-4 xl:gap-[30px] shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)] text-lg xl:text-2xl">
       {/* price */}
@@ -47,13 +72,18 @@ const Filter = ({
             {openPrice ? <FilterArrUp /> : <FilterArrDown />}
           </button>
         </div>
-        {/* <button
-          onClick={resetFilter}
-          className="ml-8 p-2 rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]"
-          type="button"
-        >
-          RESET
-        </button> */}
+        {/* {isVisibleBtnReset && (
+          <button
+            onClick={() => {
+              resetFilter();
+              resetLocalStateFilter();
+            }}
+            className=" inline-flex justify-center items-center text-lg xl:text-2xl font-semibold ml-8 p-2   rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-30 h-12  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[2px] lg:hover:border-subscribeBtn"
+            type="button"
+          >
+            RESET
+          </button>
+        )} */}
         {openPrice && (
           <div className="mt-4 flex">
             {' '}
@@ -77,7 +107,7 @@ const Filter = ({
                 setPriceTo(localPriceTo);
                 setPageCatalog(0);
               }}
-              className="text-lg xl:text-2xl font-semibold ml-2 px-2  flex justify-center items-center rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-10 h-10  py-2 shrink-0  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[3px] lg:hover:border-subscribeBtn "
+              className="text-lg xl:text-2xl font-semibold ml-2 px-2  flex justify-center items-center rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-10 h-10  py-2 shrink-0  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[3px] lg:hover:border-subscribeBtn"
               type="button"
             >
               ok
@@ -109,8 +139,8 @@ const Filter = ({
                 <input
                   type="checkbox"
                   key={index}
-                  defaultChecked={colectionSearchParams.includes(el)}
-                  onClick={() => toggleSelectedFilter('collection', el)}
+                  checked={colectionSearchParams.includes(el)}
+                  onChange={() => toggleSelectedFilter('collection', el)}
                   name="filter"
                   id={el}
                   value={el}
@@ -129,8 +159,8 @@ const Filter = ({
                 <input
                   type="checkbox"
                   key={index}
-                  defaultChecked={colectionSearchParams.includes(el)}
-                  onClick={() => toggleSelectedFilter('collection', el)}
+                  checked={colectionSearchParams.includes(el)}
+                  onChange={() => toggleSelectedFilter('collection', el)}
                   name="filter"
                   id={el}
                   value={el}
@@ -171,8 +201,8 @@ const Filter = ({
                 <input
                   type="checkbox"
                   key={index}
-                  defaultChecked={seriesSearchParams.includes(el)}
-                  onClick={() => toggleSelectedFilter('series', el)}
+                  checked={seriesSearchParams.includes(el)}
+                  onChange={() => toggleSelectedFilter('series', el)}
                   name="filter"
                   id={el}
                   value={el}
@@ -191,8 +221,8 @@ const Filter = ({
                 <input
                   type="checkbox"
                   key={index}
-                  defaultChecked={seriesSearchParams.includes(el)}
-                  onClick={() => toggleSelectedFilter('series', el)}
+                  checked={seriesSearchParams.includes(el)}
+                  onChange={() => toggleSelectedFilter('series', el)}
                   name="filter"
                   id={el}
                   value={el}
@@ -221,8 +251,8 @@ const Filter = ({
           type="checkbox"
           name="In stock"
           id="In stock"
-          defaultChecked={stock}
-          onClick={() => {
+          checked={stock}
+          onChange={() => {
             setStock(!stock);
             setPageCatalog(0);
           }}
@@ -237,8 +267,8 @@ const Filter = ({
           type="checkbox"
           name="sale"
           id="sale"
-          defaultChecked={sale}
-          onClick={() => {
+          checked={sale}
+          onChange={() => {
             setSale(!sale);
             setPageCatalog(0);
           }}
@@ -265,8 +295,8 @@ const Filter = ({
                 <input
                   type="checkbox"
                   key={index}
-                  defaultChecked={categorySearchParams.includes(el)}
-                  onClick={() => toggleSelectedFilter('category', el)}
+                  checked={categorySearchParams.includes(el)}
+                  onChange={() => toggleSelectedFilter('category', el)}
                   name="filter"
                   id={el}
                   value={el}
@@ -285,8 +315,8 @@ const Filter = ({
                 <input
                   type="checkbox"
                   key={index}
-                  defaultChecked={categorySearchParams.includes(el)}
-                  onClick={() => toggleSelectedFilter('category', el)}
+                  checked={categorySearchParams.includes(el)}
+                  onChange={() => toggleSelectedFilter('category', el)}
                   name="filter"
                   id={el}
                   value={el}
@@ -308,6 +338,18 @@ const Filter = ({
           </button>
         )}
       </div>
+      {isVisibleBtnReset && (
+          <button
+            onClick={() => {
+              resetFilter();
+              resetLocalStateFilter();
+            }}
+            className=" inline-flex justify-center items-center text-lg xl:text-2xl font-semibold  p-2   rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-30 h-12  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[2px] lg:hover:border-subscribeBtn"
+            type="button"
+          >
+            RESET FIFTERS
+          </button>
+        )}
     </div>
   );
 };

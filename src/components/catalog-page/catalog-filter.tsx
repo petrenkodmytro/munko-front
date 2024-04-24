@@ -19,10 +19,14 @@ type Props = {
     collections: string[];
     series: string[];
   };
-  saleProps: boolean
+  saleProps: boolean;
 };
 
-const CatalogFilter = ({ cardsCatalog, filterAttributes, saleProps }: Props) => {
+const CatalogFilter = ({
+  cardsCatalog,
+  filterAttributes,
+  saleProps,
+}: Props) => {
   const { width } = useWindowSize();
   // console.log(width);
 
@@ -51,7 +55,6 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes, saleProps }: Props) => 
   });
 
   useEffect(() => {
-    console.log('useEffect');
     const search = async () => {
       let filteredParams: IFilteredParams = {
         searchCriteria: {
@@ -216,7 +219,6 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes, saleProps }: Props) => 
     setCategorySearchParams([]);
     setPageCatalog(0);
   };
-  console.log('sale', sale)
 
   return (
     <section className="px-4 pt-7 pb-10 xl:px-20">
@@ -266,7 +268,7 @@ const CatalogFilter = ({ cardsCatalog, filterAttributes, saleProps }: Props) => 
       <div className="xl:flex justify-between">
         {/* filter desktop */}
         {width >= 1280 && (
-          <div className="hidden xl:block w-[320px] max-h-[1788px] overflow-y-auto custom bg-transparent m-[-8px] p-2">
+          <div className="hidden xl:block w-[320px] max-h-[1788px] overflow-y-auto custom overflow-x-hidden bg-transparent m-[-8px] p-2">
             <Filter
               priceFrom={priceFrom}
               priceTo={priceTo}
