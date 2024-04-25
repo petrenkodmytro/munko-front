@@ -344,10 +344,10 @@ const Filter = ({
               resetFilter();
               resetLocalStateFilter();
             }}
-            className=" inline-flex justify-center items-center text-lg xl:text-2xl font-semibold  p-2   rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-30 h-12  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[2px] lg:hover:border-subscribeBtn"
+            className="inline-flex justify-center items-center text-lg uppercase xl:text-xl font-semibold p-1 rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-[229px] h-[46px]  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[2px] lg:hover:border-subscribeBtn"
             type="button"
           >
-            RESET FIFTERS
+            reset filters
           </button>
         )}
     </div>
