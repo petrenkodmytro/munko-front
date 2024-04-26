@@ -106,7 +106,7 @@ const CatalogFilter = ({
         const dataFilteredCatalog = await getFilteredCatalog(filteredParams);
         currentfilteredCatalog = dataFilteredCatalog.items;
         pagination = dataFilteredCatalog.paging;
-        console.log('currentfilteredCatalog', currentfilteredCatalog);
+        // console.log('currentfilteredCatalog', currentfilteredCatalog);
         // console.log('pagination', pagination);
       } catch (error) {
         console.log(error);
