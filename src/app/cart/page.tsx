@@ -10,7 +10,7 @@ const Cart = (props: Props) => {
         <Link className="underline" href={'/'}>
           Home page
         </Link>
-        / Public Offer
+        /
       </div>
       <p>Your cart</p>
     </section>
