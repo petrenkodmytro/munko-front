@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation';
 import { ICard, IReview } from '@/types/types';
 import Link from 'next/link';
 
+
 const initialValue = {
   id: 0,
   name: '',
@@ -45,6 +46,7 @@ const ProductCard = () => {
         setReviews(reviews);
       } catch (error) {
         console.log(error);
+        
       }
     }
     fetchProduct();
