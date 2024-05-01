@@ -12,7 +12,27 @@ const Cart = (props: Props) => {
         </Link>
         /
       </div>
-      <p>Your cart</p>
+      <h3>Your cart</h3>
+      <div>
+        {/* your cart */}
+        <div>cards</div>
+        <div>
+          <p>Have a coupon? Enter your code.</p>
+          <input type="text" />
+          <button type="button">Apply</button>
+        </div>
+        {/* cart totals */}
+        <div>
+          <h4 className="uppercase">Cart totals</h4>
+          <p>Total</p>
+          <div>
+            <Link className="" href={'/catalog'}>
+              Continue shopping
+            </Link>
+            <button type="button">PROCEED TO CHACKOUT</button>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
