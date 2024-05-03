@@ -5,7 +5,7 @@ import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
 const orders = [
   {
     id: 9,
-    name: 'Deluxe Albus Dumbledore',
+    name: 'Deluxe Albus Dumbledore and Magic Albus Dumbledore',
     images: [
       'https://drive.google.com/file/d/1yDwPmF30DZYaKOoDrkz9o4GhIeOJ0Ows/view',
       'https://drive.google.com/file/d/1LDdW-IBK3bLTYBu4oES7CYg60Dd1AdKu/view',
@@ -63,7 +63,7 @@ const orders = [
     name: 'Homer Simpson',
     images: [],
     price: 23,
-    amount: 12,
+    amount: 0,
     description: 'Homer Pop!',
     sale: false,
     collection: 'The Simpsons',
@@ -93,21 +93,21 @@ type Props = {};
 
 const Cart = (props: Props) => {
   return (
-    <section>
-      <div className="mb-4 text-xs md:mb-6 md:text-base">
+    <section className='px-4 pt-6 pb-10'>
+      <div className="mb-4 text-xs font-medium md:mb-6 md:text-base">
         <Link className="underline" href={'/'}>
           Home page
         </Link>
         /
       </div>
-      <h3>Your cart</h3>
+      <h3 className='mb-4 uppercase text-2xl font-bold'>Your cart</h3>
       <div>
         {/* your cart */}
-        <div>
+        <ul className='flex flex-col gap-4'>
           {orders.map((card, index) => (
-            <div key={index}>
-              <input type="checkbox" name="" id="" />
-              <div className="w-[173px] h-[153px] flex justify-center items-center bg-[#F5F5F5] m-auto">
+            <li key={index} className='flex gap-6'>
+              <input type="checkbox" name={card.name} id={card.name} />
+              <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0">
                 {card.images.length === 0 ? (
                   <Image
                     src={ImgPlaceholder}
@@ -130,14 +130,32 @@ const Cart = (props: Props) => {
                   />
                 )}
               </div>
-            </div>
+              <div className='grow'>
+                <p className='mb-[6px] text-xs font-bold'>{card.name}</p>
+                <div>
+                  <div className='flex justify-between'>
+                  <p className='text-xs font-semibold'>{card.price}$</p>
+                    <div className='flex items-center gap-[10px] mb-[6px]'>
+                      <button type="button" className='flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold'>-</button>
+                      <p className='text-xs font-bold'>1</p>
+                      <button type="button" className='flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold'>+</button>
+                    </div>
+                  </div>
+                </div>
+                {card.amount > 0 ? (
+                  <p className="text-xs font-bold text-[#34A853]">In stock</p>
+                ) : (
+                  <p className="text-xs font-bold text-[#B1B1B1]">Out of stock</p>
+                )}
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <div>
-          <p>Have a coupon? Enter your code.</p>
-          <input type="text" />
-          <button type="button">Apply</button>
+        <div className='mt-7'>
+          <p className='text-xs font-semibold'>Have a coupon? Enter your code.</p>
+          <input type="text" placeholder='Coupon code' className='border-b-2'/>
+          <button type="button" className='w-[128px] h-10 ml-6 uppercase border rounded'>Apply</button>
         </div>
         {/* cart totals */}
         <div>
