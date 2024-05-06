@@ -93,19 +93,19 @@ type Props = {};
 
 const Cart = (props: Props) => {
   return (
-    <section className='px-4 pt-6 pb-10'>
+    <section className="px-4 pt-6 pb-10">
       <div className="mb-4 text-xs font-medium md:mb-6 md:text-base">
         <Link className="underline" href={'/'}>
           Home page
         </Link>
         /
       </div>
-      <h3 className='mb-4 uppercase text-2xl font-bold'>Your cart</h3>
+      <h3 className="mb-4 uppercase text-2xl font-bold">Your cart</h3>
       <div>
         {/* your cart */}
-        <ul className='flex flex-col gap-4'>
-          {orders.map((card, index) => (
-            <li key={index} className='flex gap-6'>
+        <ul className="flex flex-col gap-4">
+          {orders.map(card => (
+            <li key={card.id} className="flex gap-6">
               <input type="checkbox" name={card.name} id={card.name} />
               <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0">
                 {card.images.length === 0 ? (
@@ -130,42 +130,80 @@ const Cart = (props: Props) => {
                   />
                 )}
               </div>
-              <div className='grow'>
-                <p className='mb-[6px] text-xs font-bold'>{card.name}</p>
+              <div className="grow">
+                <p className="mb-[6px] text-xs font-bold">{card.name}</p>
                 <div>
-                  <div className='flex justify-between'>
-                  <p className='text-xs font-semibold'>{card.price}$</p>
-                    <div className='flex items-center gap-[10px] mb-[6px]'>
-                      <button type="button" className='flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold'>-</button>
-                      <p className='text-xs font-bold'>1</p>
-                      <button type="button" className='flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold'>+</button>
+                  <div className="flex justify-between">
+                    <p className="text-xs font-semibold">{card.price}$</p>
+                    <div className="flex items-center gap-[10px] mb-[6px]">
+                      <button
+                        type="button"
+                        className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
+                      >
+                        -
+                      </button>
+                      <p className="text-xs font-bold">1</p>
+                      <button
+                        type="button"
+                        className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                 </div>
                 {card.amount > 0 ? (
                   <p className="text-xs font-bold text-[#34A853]">In stock</p>
                 ) : (
-                  <p className="text-xs font-bold text-[#B1B1B1]">Out of stock</p>
+                  <p className="text-xs font-bold text-[#B1B1B1]">
+                    Out of stock
+                  </p>
                 )}
               </div>
             </li>
           ))}
         </ul>
 
-        <div className='mt-7'>
-          <p className='text-xs font-semibold'>Have a coupon? Enter your code.</p>
-          <input type="text" placeholder='Coupon code' className='border-b-2'/>
-          <button type="button" className='w-[128px] h-10 ml-6 uppercase border rounded'>Apply</button>
+        <div className="mt-7">
+          <p className="text-xs font-semibold">
+            Have a coupon? Enter your code.
+          </p>
+          <div className="flex gap-6">
+            <input
+              type="text"
+              placeholder="Coupon code"
+              className="text-sm border-black border-b-[1px] focus:outline-none grow"
+            />
+            <button
+              type="button"
+              className="px-10 py-2  uppercase text-sm font-bold border-[2px] border-[#31304D] rounded"
+            >
+              Apply
+            </button>
+          </div>
         </div>
         {/* cart totals */}
-        <div>
-          <h4 className="uppercase">Cart totals</h4>
-          <p>Total</p>
-          <div>
-            <Link className="" href={'/catalog'}>
+        <div className="mt-10">
+          <h4 className="uppercase text-2xl font-semibold">Cart totals</h4>
+          <div className="w-full h-[1px] bg-black my-5"></div>
+          <ul className="flex flex-col gap-4">
+            {orders.map(card => (
+              <li key={card.id} className="flex justify-between">
+                
+                  <p className="text-xs font-bold">{card.name}</p>
+                  <p className="text-xs font-semibold">{card.price}$</p>
+                
+              </li>
+            ))}
+          </ul>
+          <p className='flex justify-between mt-4 text-xs font-bold'>Delivery<span>$</span></p>
+          <div className="w-full h-[1px] bg-black my-5"></div>
+          <p className='flex justify-between text-lg font-bold'>Total<span>$</span></p>
+          <div className='mt-9 flex items-center'>
+            <button type="button" className='w-[170px] px-5 py-2 text-xs font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear'>PROCEED TO CHACKOUT</button>
+            <Link className="uppercase text-xs font-bold" href={'/catalog'}>
               Continue shopping
             </Link>
-            <button type="button">PROCEED TO CHACKOUT</button>
           </div>
         </div>
       </div>
