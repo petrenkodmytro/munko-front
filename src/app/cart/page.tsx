@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
+import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
+import CheckOrder from './../../../public/icons/check-cart.svg';
 
 const orders = [
   {
@@ -106,16 +108,21 @@ const Cart = (props: Props) => {
         <ul className="flex flex-col gap-4">
           {orders.map(card => (
             <li key={card.id} className="flex gap-6">
-              <input type="checkbox" name={card.name} id={card.name} />
+              <input
+                type="checkbox"
+                
+                // checked={orders.includes(card.id)}
+                // onChange={() => toggleSelectedOrder(card.id)}
+                name={card.name}
+                id={card.name}
+                // hidden={card.amount === 0}
+                disabled={card.amount === 0}
+                className=' self-center appearance-none peer shrink-0  w-[24px] h-[24px] rounded-full shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]'
+              />
+              <CheckOrder className="self-center  absolute left-10 hidden peer-checked:block pointer-events-none" />
               <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0">
                 {card.images.length === 0 ? (
-                  <Image
-                    src={ImgPlaceholder}
-                    // src={icon}
-                    // width={150}
-                    // height={138}
-                    alt="card-picture"
-                  />
+                  <Image src={ImgPlaceholder} alt="card-picture" />
                 ) : (
                   <Image
                     src={
@@ -128,6 +135,7 @@ const Cart = (props: Props) => {
                     height={138}
                     alt="card-picture"
                   />
+                  
                 )}
               </div>
               <div className="grow">
@@ -135,25 +143,32 @@ const Cart = (props: Props) => {
                 <div>
                   <div className="flex justify-between">
                     <p className="text-xs font-semibold">{card.price}$</p>
-                    <div className="flex items-center gap-[10px] mb-[6px]">
-                      <button
-                        type="button"
-                        className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
-                      >
-                        -
-                      </button>
-                      <p className="text-xs font-bold">1</p>
-                      <button
-                        type="button"
-                        className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
-                      >
-                        +
-                      </button>
-                    </div>
+                    {card.amount > 0 && (
+                      <div className="flex items-center gap-[10px] mb-[6px]">
+                        <button
+                          type="button"
+                          className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
+                        >
+                          -
+                        </button>
+                        <p className="text-xs font-bold">1</p>
+                        <button
+                          type="button"
+                          className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
                 {card.amount > 0 ? (
-                  <p className="text-xs font-bold text-[#34A853]">In stock</p>
+                  <p className="text-xs font-bold text-[#34A853]">
+                    In stock{' '}
+                    <span className="text-[#B1B1B1] text-[10px]">
+                      ({card.amount})
+                    </span>
+                  </p>
                 ) : (
                   <p className="text-xs font-bold text-[#B1B1B1]">
                     Out of stock
@@ -176,7 +191,7 @@ const Cart = (props: Props) => {
             />
             <button
               type="button"
-              className="px-10 py-2  uppercase text-sm font-bold border-[2px] border-[#31304D] rounded"
+              className="px-10 py-2  uppercase text-sm font-bold border-2 border-[#31304D] rounded   border-current text-[#31304D] bg-white not-italic  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear"
             >
               Apply
             </button>
@@ -189,19 +204,30 @@ const Cart = (props: Props) => {
           <ul className="flex flex-col gap-4">
             {orders.map(card => (
               <li key={card.id} className="flex justify-between">
-                
-                  <p className="text-xs font-bold">{card.name}</p>
-                  <p className="text-xs font-semibold">{card.price}$</p>
-                
+                <p className="text-xs font-bold">{card.name}</p>
+                <p className="text-xs font-semibold">{card.price}$</p>
               </li>
             ))}
           </ul>
-          <p className='flex justify-between mt-4 text-xs font-bold'>Delivery<span>$</span></p>
+          <p className="flex justify-between mt-4 text-xs font-bold">
+            Delivery<span>$</span>
+          </p>
           <div className="w-full h-[1px] bg-black my-5"></div>
-          <p className='flex justify-between text-lg font-bold'>Total<span>$</span></p>
-          <div className='mt-9 flex items-center'>
-            <button type="button" className='w-[170px] px-5 py-2 text-xs font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear'>PROCEED TO CHACKOUT</button>
-            <Link className="uppercase text-xs font-bold" href={'/catalog'}>
+          <p className="flex justify-between text-lg font-bold">
+            Total<span>$</span>
+          </p>
+          <div className="mt-9 flex items-center justify-between">
+            <button
+              type="button"
+              className="w-[170px] px-5 py-2 text-xs font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
+            >
+              PROCEED TO CHACKOUT
+            </button>
+            <Link
+              className="flex items-center uppercase text-xs font-bold"
+              href={'/catalog'}
+            >
+              <IconBack />
               Continue shopping
             </Link>
           </div>
