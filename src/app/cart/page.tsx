@@ -249,8 +249,8 @@ const Cart = (props: Props) => {
           )}
           <div className="mt-9 flex items-center justify-between">
             <button
-            onClick={()=>alert(JSON.stringify(orders))}
-            disabled={orders.length===0}
+              onClick={() => alert(JSON.stringify(orders))}
+              disabled={orders.length === 0}
               type="button"
               className="w-[170px] px-5 py-2 text-xs font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:enabled:hover:text-[#31304D] lg:enabled:hover:bg-white duration-200 ease-linear disabled:bg-[#B1B1B1]"
             >
