@@ -1,10 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
 import CheckOrder from './../../../public/icons/check-cart.svg';
+import { useState } from 'react';
+import { ICard } from '@/types/types';
 
-const orders = [
+const allOrders = [
   {
     id: 9,
     name: 'Deluxe Albus Dumbledore and Magic Albus Dumbledore',
@@ -94,6 +98,21 @@ const orders = [
 type Props = {};
 
 const Cart = (props: Props) => {
+  const delivery = 1;
+  const [orders, setOrders] = useState<ICard[]>([]);
+
+  const toggleSelectedOrder = (newOrder: ICard) => {
+    console.log(newOrder);
+    let currentOrders = [...orders];
+    if (!orders.map(order => order.id).includes(newOrder.id)) {
+      currentOrders = [...currentOrders, newOrder];
+    } else {
+      currentOrders = currentOrders.filter(order => order.id !== newOrder.id);
+    }
+    setOrders(currentOrders);
+  };
+  // console.log(orders);
+
   return (
     <section className="px-4 pt-6 pb-10">
       <div className="mb-4 text-xs font-medium md:mb-6 md:text-base">
@@ -106,18 +125,17 @@ const Cart = (props: Props) => {
       <div>
         {/* your cart */}
         <ul className="flex flex-col gap-4">
-          {orders.map(card => (
+          {allOrders.map(card => (
             <li key={card.id} className="flex gap-6">
               <input
                 type="checkbox"
-                
                 // checked={orders.includes(card.id)}
-                // onChange={() => toggleSelectedOrder(card.id)}
+                onChange={() => toggleSelectedOrder(card)}
                 name={card.name}
                 id={card.name}
                 // hidden={card.amount === 0}
                 disabled={card.amount === 0}
-                className=' self-center appearance-none peer shrink-0  w-[24px] h-[24px] rounded-full shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]'
+                className=" self-center appearance-none peer shrink-0  w-[24px] h-[24px] rounded-full shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
               />
               <CheckOrder className="self-center  absolute left-10 hidden peer-checked:block pointer-events-none" />
               <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0">
@@ -135,7 +153,6 @@ const Cart = (props: Props) => {
                     height={138}
                     alt="card-picture"
                   />
-                  
                 )}
               </div>
               <div className="grow">
@@ -209,17 +226,33 @@ const Cart = (props: Props) => {
               </li>
             ))}
           </ul>
-          <p className="flex justify-between mt-4 text-xs font-bold">
-            Delivery<span>$</span>
-          </p>
+          {orders.length > 0 ? (
+            <p className="flex justify-between mt-4 text-xs font-bold">
+              Delivery<span>{delivery}$</span>
+            </p>
+          ) : (
+            <p className="flex justify-between  text-xs font-bold">
+              Please checked your orders
+            </p>
+          )}
           <div className="w-full h-[1px] bg-black my-5"></div>
-          <p className="flex justify-between text-lg font-bold">
-            Total<span>$</span>
-          </p>
+          {orders.length > 0 && (
+            <p className="flex justify-between text-lg font-bold">
+              Total
+              <span>
+                {[...orders].reduce((total, order) => {
+                  return total + order.price;
+                }, delivery)}
+                $
+              </span>
+            </p>
+          )}
           <div className="mt-9 flex items-center justify-between">
             <button
+            onClick={()=>alert(JSON.stringify(orders))}
+            disabled={orders.length===0}
               type="button"
-              className="w-[170px] px-5 py-2 text-xs font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
+              className="w-[170px] px-5 py-2 text-xs font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:enabled:hover:text-[#31304D] lg:enabled:hover:bg-white duration-200 ease-linear disabled:bg-[#B1B1B1]"
             >
               PROCEED TO CHACKOUT
             </button>
