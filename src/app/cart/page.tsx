@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
+import IconCloseCart from './../../../public/icons/icon-x-cart.svg';
 import CheckOrder from './../../../public/icons/check-cart.svg';
 import { useState } from 'react';
 import { ICard } from '@/types/types';
@@ -99,6 +100,7 @@ type Props = {};
 
 const Cart = (props: Props) => {
   const delivery = 1;
+  const [cart, setCart] = useState<ICard[]>(allOrders);
   const [orders, setOrders] = useState<ICard[]>([]);
 
   const toggleSelectedOrder = (newOrder: ICard) => {
@@ -113,6 +115,15 @@ const Cart = (props: Props) => {
   };
   // console.log(orders);
 
+  const removeItem = (card: ICard) => {
+    let currentCart = [...cart];
+    currentCart = currentCart.filter(cartItem => cartItem.id !== card.id);
+    setCart(currentCart);
+    let currentOrders = [...orders];
+    currentOrders = currentOrders.filter(order => order.id !== card.id);
+    setOrders(currentOrders);
+  };
+
   return (
     <section className="px-4 pt-6 pb-10">
       <div className="mb-4 text-xs font-medium md:mb-6 md:text-base">
@@ -125,19 +136,29 @@ const Cart = (props: Props) => {
       <div>
         {/* your cart */}
         <ul className="flex flex-col gap-4">
-          {allOrders.map(card => (
+          {cart.map(card => (
             <li key={card.id} className="flex gap-6">
-              <input
-                type="checkbox"
-                // checked={orders.includes(card.id)}
-                onChange={() => toggleSelectedOrder(card)}
-                name={card.name}
-                id={card.name}
-                // hidden={card.amount === 0}
-                disabled={card.amount === 0}
-                className=" self-center appearance-none peer shrink-0  w-[24px] h-[24px] rounded-full shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
-              />
-              <CheckOrder className="self-center  absolute left-10 hidden peer-checked:block pointer-events-none" />
+              <button
+                onClick={() => removeItem(card)}
+                type="button"
+                className="hidden md:block"
+              >
+                <IconCloseCart />
+              </button>
+              <div className="relative self-center flex items-center">
+                <input
+                  type="checkbox"
+                  // checked={orders.includes(card.id)}
+                  onChange={() => toggleSelectedOrder(card)}
+                  name={card.name}
+                  id={card.name}
+                  // hidden={card.amount === 0}
+                  disabled={card.amount === 0}
+                  className="  appearance-none peer shrink-0  w-[24px] h-[24px] rounded-full shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
+                />
+                <CheckOrder className="  absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+              </div>
+
               <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0">
                 {card.images.length === 0 ? (
                   <Image src={ImgPlaceholder} alt="card-picture" />
