@@ -71,6 +71,7 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange, onDestroy, csrfTok
         actions.resetForm();
       }}
     >
+      {formik => (
       <Form onChange={handleChange} onSubmit={handleSubmit}>
       <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
         <div className="flex mb-[18px] items-start">
@@ -119,7 +120,7 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange, onDestroy, csrfTok
               'rounded font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear bg-footer'
             }
           >
-            LOGIN
+            {formik.isSubmitting ? 'Please wait...' : 'LOGIN'}
           </button>
           <Link
             href={'/'}
@@ -141,6 +142,7 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange, onDestroy, csrfTok
           </Link> */}
         </div>
       </Form>
+      )}
     </Formik>
   );
 };
