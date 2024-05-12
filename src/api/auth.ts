@@ -22,7 +22,16 @@ const authOptions: NextAuthOptions = {
                 body: JSON.stringify({
                   query: `
                   query Authenticate($email: String!, $password: String!) {
-                    authenticate(email: $email, password: $password)
+                    authenticate(email: $email, password: $password) {
+                      token
+                      user {
+                        id
+                        firstName
+                        lastName
+                        email
+                        phone
+                      }
+                    }
                 }
                   `,
                   variables: {email, password}
