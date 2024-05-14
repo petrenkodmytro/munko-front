@@ -125,14 +125,14 @@ const Cart = (props: Props) => {
   };
 
   return (
-    <section className="px-4 pt-6 pb-10">
+    <section className="px-4 pt-6 pb-10 md:px-5  md:pb-[74px]">
       <div className="mb-4 text-xs font-medium md:mb-6 md:text-base">
         <Link className="underline" href={'/'}>
           Home page
         </Link>
         /
       </div>
-      <h3 className="mb-4 uppercase text-2xl font-bold">Your cart</h3>
+      <h3 className="mb-4 uppercase text-2xl font-bold md:text-4xl">Your cart</h3>
       <div>
         {/* your cart */}
         <ul className="flex flex-col gap-4">
@@ -159,7 +159,7 @@ const Cart = (props: Props) => {
                 <CheckOrder className="  absolute left-[5px] hidden peer-checked:block pointer-events-none" />
               </div>
 
-              <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0">
+              <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
                 {card.images.length === 0 ? (
                   <Image src={ImgPlaceholder} alt="card-picture" />
                 ) : (
@@ -177,29 +177,36 @@ const Cart = (props: Props) => {
                 )}
               </div>
               <div className="grow">
-                <p className="mb-[6px] text-xs font-bold">{card.name}</p>
-                <div>
-                  <div className="flex justify-between">
-                    <p className="text-xs font-semibold">{card.price}$</p>
-                    {card.amount > 0 && (
-                      <div className="flex items-center gap-[10px] mb-[6px]">
-                        <button
-                          type="button"
-                          className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
-                        >
-                          -
-                        </button>
-                        <p className="text-xs font-bold">1</p>
-                        <button
-                          type="button"
-                          className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
-                        >
-                          +
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                <div className='md:flex md:items-center'>
+                  <p className="mb-[6px] text-xs font-bold md:text-base ">
+                    {card.name}
+                  </p>
+                  
+                    <div className="flex justify-between md:flex-row-reverse md:gap-6 md:justify-start md:items-center md:ml-auto">
+                      <p className="text-xs font-semibold md:text-base">
+                        {card.price}$
+                      </p>
+                      {card.amount > 0 && (
+                        <div className="flex items-center gap-[10px] mb-[6px] md:mb-0">
+                          <button
+                            type="button"
+                            className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
+                          >
+                            -
+                          </button>
+                          <p className="text-xs font-bold">1</p>
+                          <button
+                            type="button"
+                            className="flex justify-center items-center w-5 h-5 rounded-full bg-[#F5F5F5] text-[17px] font-bold"
+                          >
+                            +
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  
                 </div>
+
                 {card.amount > 0 ? (
                   <p className="text-xs font-bold text-[#34A853]">
                     In stock{' '}
@@ -217,7 +224,7 @@ const Cart = (props: Props) => {
           ))}
         </ul>
 
-        <div className="mt-7">
+        <div className="mt-7 max-w-[586px] md:ml-12">
           <p className="text-xs font-semibold">
             Have a coupon? Enter your code.
           </p>
@@ -237,28 +244,28 @@ const Cart = (props: Props) => {
         </div>
         {/* cart totals */}
         <div className="mt-10">
-          <h4 className="uppercase text-2xl font-semibold">Cart totals</h4>
+          <h4 className="uppercase text-2xl font-semibold md:text-3xl">Cart totals</h4>
           <div className="w-full h-[1px] bg-black my-5"></div>
           <ul className="flex flex-col gap-4">
             {orders.map(card => (
               <li key={card.id} className="flex justify-between">
-                <p className="text-xs font-bold">{card.name}</p>
-                <p className="text-xs font-semibold">{card.price}$</p>
+                <p className="text-xs font-bold md:text-sm">{card.name}</p>
+                <p className="text-xs font-semibold md:text-sm">{card.price}$</p>
               </li>
             ))}
           </ul>
           {orders.length > 0 ? (
-            <p className="flex justify-between mt-4 text-xs font-bold">
+            <p className="flex justify-between mt-4 text-xs font-bold md:text-sm">
               Delivery<span>{delivery}$</span>
             </p>
           ) : (
-            <p className="flex justify-between  text-xs font-bold">
+            <p className="flex justify-between  text-xs font-bold md:text-sm">
               Please checked your orders
             </p>
           )}
           <div className="w-full h-[1px] bg-black my-5"></div>
           {orders.length > 0 && (
-            <p className="flex justify-between text-lg font-bold">
+            <p className="flex justify-between text-lg font-bold md:text-xl">
               Total
               <span>
                 {[...orders].reduce((total, order) => {
@@ -268,17 +275,17 @@ const Cart = (props: Props) => {
               </span>
             </p>
           )}
-          <div className="mt-9 flex items-center justify-between">
+          <div className="mt-9 flex items-center justify-between md:flex-row-reverse">
             <button
               onClick={() => alert(JSON.stringify(orders))}
               disabled={orders.length === 0}
               type="button"
-              className="w-[170px] px-5 py-2 text-xs font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:enabled:hover:text-[#31304D] lg:enabled:hover:bg-white duration-200 ease-linear disabled:bg-[#B1B1B1]"
+              className="w-[170px] md:w-[331px] px-5 py-2 md:py-2.5 text-xs md:text-base font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:enabled:hover:text-[#31304D] lg:enabled:hover:bg-white duration-200 ease-linear disabled:bg-[#B1B1B1]"
             >
               PROCEED TO CHACKOUT
             </button>
             <Link
-              className="flex items-center uppercase text-xs font-bold"
+              className="flex items-center uppercase text-xs font-bold md:text-base"
               href={'/catalog'}
             >
               <IconBack />
