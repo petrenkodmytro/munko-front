@@ -93,7 +93,16 @@ export const getItem = async (id: string) => {
 export const loginUser = async (email: string | undefined, password:string | undefined) => {
   const loginUserMutation = gql`
   query Authenticate($email: String!, $password: String!) {
-    authenticate(email: $email, password: $password)
+    authenticate(email: $email, password: $password) {
+      token
+      user {
+            id
+            firstName
+            lastName
+            email
+            phone
+        }
+    }
 }
 `;
 

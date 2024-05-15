@@ -55,7 +55,7 @@ const LoginForm: React.FC<LoginForm> = ({ handleToogleChange, onDestroy, csrfTok
       password: values.password,
       callbackUrl: `${window.location.origin}`,
     });
-
+    
     if (res?.error) {
       setError(true);
     } else {

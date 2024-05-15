@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { User } from "next-auth";
+import { createNewUser } from "./api";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -42,7 +43,7 @@ const authOptions: NextAuthOptions = {
                          
 
             if (data && data.authenticate !== null) {
-              const user: User = data.authenticate;
+              const user: User = data.authenticate.user;                     
       
               // Return the user object with the JWT token
               return user;
@@ -68,11 +69,22 @@ const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
+    // async signIn({ user, account }: { user: any; account: any }) {
+    //   console.log(account);
+      
+    //   if (account.provider === "google") {
+    //       const res = await createNewUser(user);
+    //   }
+    //   return user;
+    // },
     
     async jwt({ token, user }) {
       if (user) {
         token.email = user.email;
-        token.name = user.name;
+        token.firstName = user.firstName;
+        token.id = user.id;
+        token.lastName = user.lastName;
+        token.phone = user.phone;
       }
       return token;
     },
@@ -80,7 +92,10 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }: { session: any; token: any }) {
       if (session.user) {
         session.user.email = token.email;
-        session.user.name = token.name;
+        session.user.firstName = token.firstName;
+        session.user.id = token.id;
+        session.user.lastName = token.lastName;
+        session.user.phone = token.phone;
       }
       return session;
     },
