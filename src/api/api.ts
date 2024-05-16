@@ -1,5 +1,5 @@
 import {
-  ICard, User,
+  ICard, NewUser,
   IDataFilteredCatalog,
   IFilterAttributes,
   IFilteredParams,
@@ -93,7 +93,16 @@ export const getItem = async (id: string) => {
 export const loginUser = async (email: string | undefined, password:string | undefined) => {
   const loginUserMutation = gql`
   query Authenticate($email: String!, $password: String!) {
-    authenticate(email: $email, password: $password)
+    authenticate(email: $email, password: $password) {
+      token
+      user {
+            id
+            firstName
+            lastName
+            email
+            phone
+        }
+    }
 }
 `;
 
@@ -106,7 +115,7 @@ try {
 }
 };
 
-export const createNewUser = async (newUser: User) => {
+export const createNewUser = async (newUser: NewUser) => {
   const createUserMutation = gql`
   mutation Registration ($newUser: UserInput!) {
     registration(user: $newUser) {

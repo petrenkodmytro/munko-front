@@ -1,4 +1,3 @@
-// 'use client'
 import React from 'react';
 import Card from '../card/Card';
 import CardsCarousel from '../card/card-carousel';
@@ -13,7 +12,7 @@ const Popular = async () => {
         HOT RIGHT NOW
       </div>
       <div className="hidden md:flex md:flex-wrap md:gap-[76px] lg:gap-5 justify-between lg:justify-evenly xl:justify-between md:ml-0">
-        {cardsCatalog.slice(0,4).map(card => (
+        {cardsCatalog.slice(0, 4).map(card => (
           <Card key={card.id} card={card} />
         ))}
       </div>
