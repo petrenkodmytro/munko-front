@@ -80,7 +80,7 @@ export default function FaqList({ index=3 }: List) {
       {arrForShow.map((el, indx) => (
         <div
           key={indx}
-          className="px-4 mb-5 flex flex-col shadow-[0px_4px_20px_0px_rgb(0,0,0,0.15)] md:min-h-[99px] md:mb-6 md:py-2.5 md:px-[30px]"
+          className="px-4 mb-5 flex flex-col shadow-[0px_4px_20px_0px_rgb(0,0,0,0.15)] md:min-h-[54px] md:mb-6 md:py-0 md:px-[30px]"
         >
           <Questions element={el} />
         </div>

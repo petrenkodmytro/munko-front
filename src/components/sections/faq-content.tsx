@@ -14,7 +14,7 @@ export default function Questions({ element }: Props) {
     const buttonHide = parent.childNodes[2] as Element;
     if (elem.className === 'hidden') {
       elem.className =
-        'text-blackCustom pb-8 font-normal mt-[27px] leading-[35px] md:mt-[4px]';
+        'text-blackCustom pb-8 font-normal mt-[27px] leading-[25px] md:mt-[4px] md:leading-[35px]';
       buttonShow.className = 'hidden';
       buttonHide.className =
         'text-[65px] font-normal pb-2.5 absolute right-2 top-2/4 -translate-y-2/4';
@@ -29,7 +29,7 @@ export default function Questions({ element }: Props) {
   return (
     <>
       <article className="relative">
-        <h4 className="max-w-[249px] leading-[20px] min-h-[79px] py-4 md:leading-[30px] md:max-w-[548px] lg:max-w-full md:h-full md:py-6">
+        <h4 className="max-w-[271px] leading-[20px] py-3 md:leading-[30px] md:max-w-[548px] lg:max-w-full md:h-full">
           {element.question}
         </h4>
         <button
