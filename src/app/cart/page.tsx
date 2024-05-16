@@ -7,7 +7,7 @@ import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
 import IconCloseCart from './../../../public/icons/icon-x-cart.svg';
 import CheckOrder from './../../../public/icons/check-cart.svg';
 import { useState } from 'react';
-import { ICard } from '@/types/types';
+import { ICartCard } from '@/types/types';
 
 const allOrders = [
   {
@@ -99,11 +99,15 @@ const allOrders = [
 type Props = {};
 
 const Cart = (props: Props) => {
+  const modifyOrders = allOrders.map(order => {
+    return { ...order, count: 1 };
+  });
+  // console.log(modifyOrders)
   const delivery = 1;
-  const [cart, setCart] = useState<ICard[]>(allOrders);
-  const [orders, setOrders] = useState<ICard[]>([]);
+  const [cart, setCart] = useState<ICartCard[]>(modifyOrders);
+  const [orders, setOrders] = useState<ICartCard[]>([]);
 
-  const toggleSelectedOrder = (newOrder: ICard) => {
+  const toggleSelectedOrder = (newOrder: ICartCard) => {
     console.log(newOrder);
     let currentOrders = [...orders];
     if (!orders.map(order => order.id).includes(newOrder.id)) {
@@ -115,7 +119,7 @@ const Cart = (props: Props) => {
   };
   // console.log(orders);
 
-  const removeItem = (card: ICard) => {
+  const removeItem = (card: ICartCard) => {
     let currentCart = [...cart];
     currentCart = currentCart.filter(cartItem => cartItem.id !== card.id);
     setCart(currentCart);
@@ -125,63 +129,66 @@ const Cart = (props: Props) => {
   };
 
   return (
-    <section className="px-4 pt-6 pb-10 md:px-5  md:pb-[74px]">
-      <div className="mb-4 text-xs font-medium md:mb-6 md:text-base">
+    <section className="px-4 pt-6 pb-10 md:px-5  md:pb-[74px] xl:px-20 xl:pt-9">
+      <div className="mb-6 text-xs font-medium md:mb-10 md:text-base">
         <Link className="underline" href={'/'}>
           Home page
         </Link>
         /
       </div>
-      <h3 className="mb-4 uppercase text-2xl font-bold md:text-4xl">Your cart</h3>
-      <div>
+      <h3 className="mb-4 uppercase text-2xl font-bold md:text-4xl md:mb-8">
+        Your cart
+      </h3>
+      <div className="xl:flex gap-28">
         {/* your cart */}
-        <ul className="flex flex-col gap-4">
-          {cart.map(card => (
-            <li key={card.id} className="flex gap-6">
-              <button
-                onClick={() => removeItem(card)}
-                type="button"
-                className="hidden md:block"
-              >
-                <IconCloseCart />
-              </button>
-              <div className="relative self-center flex items-center">
-                <input
-                  type="checkbox"
-                  // checked={orders.includes(card.id)}
-                  onChange={() => toggleSelectedOrder(card)}
-                  name={card.name}
-                  id={card.name}
-                  // hidden={card.amount === 0}
-                  disabled={card.amount === 0}
-                  className="  appearance-none peer shrink-0  w-[24px] h-[24px] rounded-full shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
-                />
-                <CheckOrder className="  absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-              </div>
-
-              <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
-                {card.images.length === 0 ? (
-                  <Image src={ImgPlaceholder} alt="card-picture" />
-                ) : (
-                  <Image
-                    src={
-                      card.images[0].slice(0, 25) +
-                      'uc?id=' +
-                      card.images[0].slice(32, 65)
-                    }
-                    // src={icon}
-                    width={150}
-                    height={138}
-                    alt="card-picture"
+        <div>
+          <ul className="flex flex-col gap-4">
+            {cart.map(card => (
+              <li key={card.id} className="flex gap-6">
+                <button
+                  onClick={() => removeItem(card)}
+                  type="button"
+                  className="hidden md:block"
+                >
+                  <IconCloseCart />
+                </button>
+                <div className="relative self-center flex items-center">
+                  <input
+                    type="checkbox"
+                    // checked={orders.includes(card.id)}
+                    onChange={() => toggleSelectedOrder(card)}
+                    name={card.name}
+                    id={card.name}
+                    // hidden={card.amount === 0}
+                    disabled={card.amount === 0}
+                    className="  appearance-none peer shrink-0  w-[24px] h-[24px] rounded-full shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
                   />
-                )}
-              </div>
-              <div className="grow">
-                <div className='md:flex md:items-center'>
-                  <p className="mb-[6px] text-xs font-bold md:text-base ">
-                    {card.name}
-                  </p>
-                  
+                  <CheckOrder className="  absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+                </div>
+
+                <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
+                  {card.images.length === 0 ? (
+                    <Image src={ImgPlaceholder} alt="card-picture" />
+                  ) : (
+                    <Image
+                      src={
+                        card.images[0].slice(0, 25) +
+                        'uc?id=' +
+                        card.images[0].slice(32, 65)
+                      }
+                      // src={icon}
+                      width={150}
+                      height={138}
+                      alt="card-picture"
+                    />
+                  )}
+                </div>
+                <div className="grow">
+                  <div className="md:flex md:items-center">
+                    <p className="mb-[6px] text-xs font-bold md:text-base ">
+                      {card.name}
+                    </p>
+
                     <div className="flex justify-between md:flex-row-reverse md:gap-6 md:justify-start md:items-center md:ml-auto">
                       <p className="text-xs font-semibold md:text-base">
                         {card.price}$
@@ -204,53 +211,58 @@ const Cart = (props: Props) => {
                         </div>
                       )}
                     </div>
-                  
+                  </div>
+
+                  {card.amount > 0 ? (
+                    <p className="text-xs font-bold text-[#34A853]">
+                      In stock{' '}
+                      <span className="text-[#B1B1B1] text-[10px]">
+                        ({card.amount})
+                      </span>
+                    </p>
+                  ) : (
+                    <p className="text-xs font-bold text-[#B1B1B1]">
+                      Out of stock
+                    </p>
+                  )}
                 </div>
+              </li>
+            ))}
+          </ul>
 
-                {card.amount > 0 ? (
-                  <p className="text-xs font-bold text-[#34A853]">
-                    In stock{' '}
-                    <span className="text-[#B1B1B1] text-[10px]">
-                      ({card.amount})
-                    </span>
-                  </p>
-                ) : (
-                  <p className="text-xs font-bold text-[#B1B1B1]">
-                    Out of stock
-                  </p>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-7 max-w-[586px] md:ml-12">
-          <p className="text-xs font-semibold">
-            Have a coupon? Enter your code.
-          </p>
-          <div className="flex gap-6">
-            <input
-              type="text"
-              placeholder="Coupon code"
-              className="text-sm border-black border-b-[1px] focus:outline-none grow"
-            />
-            <button
-              type="button"
-              className="px-10 py-2  uppercase text-sm font-bold border-2 border-[#31304D] rounded   border-current text-[#31304D] bg-white not-italic  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear"
-            >
-              Apply
-            </button>
+          <div className="mt-7 max-w-[586px] md:ml-12 xl:ml-[90px]">
+            <p className="text-xs font-semibold">
+              Have a coupon? Enter your code.
+            </p>
+            <div className="flex gap-6">
+              <input
+                type="text"
+                placeholder="Coupon code"
+                className="text-sm border-black border-b-[1px] focus:outline-none grow"
+              />
+              <button
+                type="button"
+                className="px-10 py-2  uppercase text-sm font-bold border-2 border-[#31304D] rounded   border-current text-[#31304D] bg-white not-italic  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear"
+              >
+                Apply
+              </button>
+            </div>
           </div>
         </div>
+
         {/* cart totals */}
-        <div className="mt-10">
-          <h4 className="uppercase text-2xl font-semibold md:text-3xl">Cart totals</h4>
+        <div className="mt-10 xl:mt-0 xl:border-l-[1px] xl:border-black xl:pl-10 xl:pr-5">
+          <h4 className="uppercase text-2xl font-semibold md:text-3xl">
+            Cart totals
+          </h4>
           <div className="w-full h-[1px] bg-black my-5"></div>
           <ul className="flex flex-col gap-4">
             {orders.map(card => (
               <li key={card.id} className="flex justify-between">
                 <p className="text-xs font-bold md:text-sm">{card.name}</p>
-                <p className="text-xs font-semibold md:text-sm">{card.price}$</p>
+                <p className="text-xs font-semibold md:text-sm">
+                  {card.price}$
+                </p>
               </li>
             ))}
           </ul>
@@ -275,12 +287,12 @@ const Cart = (props: Props) => {
               </span>
             </p>
           )}
-          <div className="mt-9 flex items-center justify-between md:flex-row-reverse">
+          <div className="mt-9 flex items-center justify-between md:flex-row-reverse xl:flex-col xl:mt-14 xl:gap-6">
             <button
               onClick={() => alert(JSON.stringify(orders))}
               disabled={orders.length === 0}
               type="button"
-              className="w-[170px] md:w-[331px] px-5 py-2 md:py-2.5 text-xs md:text-base font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:enabled:hover:text-[#31304D] lg:enabled:hover:bg-white duration-200 ease-linear disabled:bg-[#B1B1B1]"
+              className="w-[170px] md:w-[331px] xl:w-full px-5 py-2 md:py-2.5 text-xs md:text-base font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:enabled:hover:text-[#31304D] lg:enabled:hover:bg-white duration-200 ease-linear disabled:bg-[#B1B1B1]"
             >
               PROCEED TO CHACKOUT
             </button>
