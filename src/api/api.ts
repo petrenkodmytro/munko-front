@@ -1,5 +1,5 @@
 import {
-  ICard, User,
+  ICard, NewUser,
   IDataFilteredCatalog,
   IFilterAttributes,
   IFilteredParams,
@@ -115,7 +115,7 @@ try {
 }
 };
 
-export const createNewUser = async (newUser: User) => {
+export const createNewUser = async (newUser: NewUser) => {
   const createUserMutation = gql`
   mutation Registration ($newUser: UserInput!) {
     registration(user: $newUser) {
