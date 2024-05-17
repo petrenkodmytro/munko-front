@@ -113,5 +113,5 @@ export interface IPagination {
 }
 
 export interface ICartCard extends ICard {
-  count?: number;
+  count: number;
 }
