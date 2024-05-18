@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { sliderCard } from '../../../public/images';
 import FavoritIcon from '../../../public/icons/favorite-icon.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs, Pagination } from 'swiper/modules';
