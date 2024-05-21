@@ -160,7 +160,7 @@ const ProductCard = () => {
             </li>
           </ul>
         </div>
-        <CardReviews reviews={reviews} />
+        <CardReviews reviews={reviews} cardId={id} />
       </div>
     </div>
   );

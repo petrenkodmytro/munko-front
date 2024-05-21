@@ -1,5 +1,6 @@
 import {
-  ICard, NewUser,
+  ICard,
+  NewUser,
   IDataFilteredCatalog,
   IFilterAttributes,
   IFilteredParams,
@@ -90,52 +91,59 @@ export const getItem = async (id: string) => {
   return dataCard;
 };
 
-export const loginUser = async (email: string | undefined, password:string | undefined) => {
+export const loginUser = async (
+  email: string | undefined,
+  password: string | undefined
+) => {
   const loginUserMutation = gql`
-  query Authenticate($email: String!, $password: String!) {
-    authenticate(email: $email, password: $password) {
-      token
-      user {
-            id
-            firstName
-            lastName
-            email
-            phone
+    query Authenticate($email: String!, $password: String!) {
+      authenticate(email: $email, password: $password) {
+        token
+        user {
+          id
+          firstName
+          lastName
+          email
+          phone
         }
+      }
     }
-}
-`;
+  `;
 
-try {
-  const loggedUser = await graphQLClient.request(loginUserMutation, {email, password});
-  console.log('User logged:', loggedUser);
-  return loggedUser;
-} catch (error) {
-  console.error('Error login user:', error);
-}
+  try {
+    const loggedUser = await graphQLClient.request(loginUserMutation, {
+      email,
+      password,
+    });
+    console.log('User logged:', loggedUser);
+    return loggedUser;
+  } catch (error) {
+    console.error('Error login user:', error);
+  }
 };
 
 export const createNewUser = async (newUser: NewUser) => {
   const createUserMutation = gql`
-  mutation Registration ($newUser: UserInput!) {
-    registration(user: $newUser) {
-      id
-      firstName
-      email
-      password
+    mutation Registration($newUser: UserInput!) {
+      registration(user: $newUser) {
+        id
+        firstName
+        email
+        password
+      }
     }
+  `;
+
+  try {
+    const createdUser = await graphQLClient.request(createUserMutation, {
+      newUser,
+    });
+    console.log('User created:', createdUser);
+    return createdUser;
+  } catch (error) {
+    console.error('Error creating user:', error);
   }
-`;
-
-try {
-  const createdUser = await graphQLClient.request(createUserMutation, {newUser});
-  console.log('User created:', createdUser);
-  return createdUser
-} catch (error) {
-  console.error('Error creating user:', error);
-}
 };
-
 
 export const getReviewsById = async (id: string) => {
   const query = gql`
@@ -153,6 +161,37 @@ export const getReviewsById = async (id: string) => {
   const data: IDataReviewById = await graphQLClient.request(query);
   let dataReview = data.getFunkoReviews;
   return dataReview;
+};
+
+export const addReview = async (
+  newReview: Omit<IReview, 'id'>,
+  token: string
+) => {
+  console.log(newReview);
+  const mutation = gql`
+    mutation Save($newReview: ReviewInput!) {
+      save(entity: $newReview) {
+        id
+        userId
+        funkoId
+        review
+        star
+        username
+      }
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data: IReview = await graphQLClient.request(
+    mutation,
+    { newReview },
+    requestHeaders
+  );
+  // let dataReview = data;
+  console.log(data);
+  return data;
 };
 
 export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {

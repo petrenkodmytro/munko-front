@@ -9,13 +9,42 @@ import Rating from '@mui/material/Rating';
 import IconStar from './../../../public/icons/rating-icon.svg';
 import IconStarEmpty from './../../../public/icons/rating-empty-icon.svg';
 import { IReview } from '@/types/types';
+import { useSession } from 'next-auth/react';
+import { addReview } from '@/api/api';
 
 type Props = {
-  reviews: IReview[]
+  reviews: IReview[];
+  cardId: string;
+};
+type Review = {
+  rating: number | null;
+  review: string;
 };
 
-const CardReviews = ({reviews}: Props) => {
+const CardReviews = ({ reviews, cardId }: Props) => {
   const [ratingValue, setRatingValue] = useState<number | null>(0);
+  const { data: session } = useSession();
+  const token: string = session?.user?.token;
+  console.log(session?.user);
+
+  const createReview = (review: Review) => {
+    if (session === null) {
+      console.log('No session');
+      return;
+    }
+    const newReview = {
+      userId: session?.user?.id,
+      funkoId: cardId,
+      review: review.review,
+      star: ratingValue,
+      username: session.user?.firstName,
+    };
+    // console.log(review.rating)
+    // console.log(review.review)
+
+    console.log(session.user);
+    addReview(newReview, token);
+  };
 
   return (
     <div className="flex flex-col gap-5 px-[16px] py-5 rounded-[5px] bg-[#F5F5F5] md:pl-8 md:pr-[84px] md:py-[22px] xl:w-[627px] xl:px-8">
@@ -34,17 +63,21 @@ const CardReviews = ({reviews}: Props) => {
         })}
         onSubmit={(values, actions) => {
           const review = { rating: ratingValue, review: values.feedbacText };
-          alert(JSON.stringify(review, null, 2));
-          setRatingValue(0);
+          createReview(review);
           actions.resetForm();
         }}
       >
-        <Form className="flex justify-center items-center gap-3 bg-white">
+        <Form className="relative flex justify-center items-center gap-3 bg-white">
           <Field
             className="w-full text-black pl-3 py-[5px] focus:outline-none font-semibold text-[10px]"
             id="feedbacText"
             name="feedbacText"
             placeholder="Write a review or rate your purchase"
+          />
+          <ErrorMessage
+            className="absolute top-8 left-0 text-[8px] text-[#D63F3F] font-medium pl-2"
+            component="div"
+            name="feedbacText"
           />
           <Rating
             name="rating"
@@ -68,7 +101,7 @@ const CardReviews = ({reviews}: Props) => {
         <ul className="flex flex-col gap-5 pr-3 md:pr-5">
           {reviews.map((reviwe, index) => (
             <li key={index} className="flex gap-4">
-              <ReviewItem reviwe={reviwe} />
+              <ReviewItem reviwe={reviwe} userId={session?.user?.id} />
             </li>
           ))}
         </ul>

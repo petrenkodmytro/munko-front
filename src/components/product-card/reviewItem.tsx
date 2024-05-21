@@ -5,13 +5,15 @@ import Rating from '@mui/material/Rating';
 import ReviewIcon from './../../../public/icons/reviews-icon.svg';
 import IconStar from './../../../public/icons/rating-icon.svg';
 import IconStarEmpty from './../../../public/icons/rating-empty-icon.svg';
+import IconDel from './../../../public/icons/icon-del.svg';
 import { IReview } from '@/types/types';
 
 type Props = {
   reviwe: IReview;
+  userId: number;
 };
 
-const ReviewItem = ({ reviwe }: Props) => {
+const ReviewItem = ({ reviwe, userId }: Props) => {
   const [isShowMore, setIsShowMore] = useState(false);
   // console.log(reviwe);
   const toggleReadMoreLess = () => {
@@ -25,6 +27,11 @@ const ReviewItem = ({ reviwe }: Props) => {
       <div className="w-full">
         <div className="flex justify-between">
           <p className="text-base font-semibold">{reviwe.username}</p>
+          {userId === reviwe.userId && (
+            <button className="ml-auto" type="button">
+              <IconDel/>
+            </button>
+          )}
           <Rating
             readOnly={true}
             name="rating-read"
