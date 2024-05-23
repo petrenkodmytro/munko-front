@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import CardImage from './cardImage';
 import CardReviews from './reviewList';
-import { getItem, getReviewsById } from '@/api/api';
+import { getItem } from '@/api/api';
 import { notFound, useParams } from 'next/navigation';
-import { ICard, IReview } from '@/types/types';
+import { ICard } from '@/types/types';
 import Link from 'next/link';
 
 const initialValue = {
@@ -30,23 +30,24 @@ type Params = {
 
 const ProductCard = () => {
   const id = useParams<Params>().id; // item id
+  // console.log(id);
 
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
   const [product, setProduct] = useState<ICard>(initialValue);
   const [error, setError] = useState(false);
-  const [reviews, setReviews] = useState<IReview[]>([]);
+  // const [reviews, setReviews] = useState<IReview[]>([]);
 
   useEffect(() => {
     async function fetchProduct() {
       try {
         const card = await getItem(id);
-        const reviews = await getReviewsById(id);
+        // const reviews = await getReviewsById(id);
         if (card === null) {
           setError(true);
-          console.log(card);
+          // console.log(card);
         }
         setProduct(card);
-        setReviews(reviews);
+        // setReviews(reviews);
       } catch (error) {
         console.log(error);
         setError(true);
@@ -160,7 +161,7 @@ const ProductCard = () => {
             </li>
           </ul>
         </div>
-        <CardReviews reviews={reviews} cardId={id} />
+        <CardReviews cardId={id} />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Send from '../../../public/icons/send.svg';
@@ -10,22 +10,43 @@ import IconStar from './../../../public/icons/rating-icon.svg';
 import IconStarEmpty from './../../../public/icons/rating-empty-icon.svg';
 import { IReview } from '@/types/types';
 import { useSession } from 'next-auth/react';
-import { addReview } from '@/api/api';
+import { addReview, getReviewsById } from '@/api/api';
 
 type Props = {
-  reviews: IReview[];
   cardId: string;
 };
+
 type Review = {
   rating: number | null;
   review: string;
 };
 
-const CardReviews = ({ reviews, cardId }: Props) => {
+const CardReviews = ({ cardId }: Props) => {
+  const [reviews, setReviews] = useState<IReview[]>([]);
   const [ratingValue, setRatingValue] = useState<number | null>(0);
+  const [newReview, setNewReview] = useState<Omit<IReview, 'id'> | null>(null);
+
   const { data: session } = useSession();
   const token: string = session?.user?.token;
   console.log(session?.user);
+
+  useEffect(() => {
+    async function fetchReviewsById() {
+      try {
+        if (newReview === null) {
+          const reviews = await getReviewsById(cardId);
+          setReviews(reviews);
+        } else {
+          await addReview(newReview, token);
+          const reviews = await getReviewsById(cardId);
+          setReviews(reviews);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchReviewsById();
+  }, [cardId, newReview, token]);
 
   const createReview = (review: Review) => {
     if (session === null) {
@@ -34,16 +55,13 @@ const CardReviews = ({ reviews, cardId }: Props) => {
     }
     const newReview = {
       userId: session?.user?.id,
-      funkoId: cardId,
+      funkoId: Number(cardId),
       review: review.review,
       star: ratingValue,
       username: session.user?.firstName,
     };
-    // console.log(review.rating)
-    // console.log(review.review)
-
-    console.log(session.user);
-    addReview(newReview, token);
+    // console.log(newReview);
+    setNewReview(newReview);
   };
 
   return (
@@ -64,6 +82,7 @@ const CardReviews = ({ reviews, cardId }: Props) => {
         onSubmit={(values, actions) => {
           const review = { rating: ratingValue, review: values.feedbacText };
           createReview(review);
+          setRatingValue(0);
           actions.resetForm();
         }}
       >
