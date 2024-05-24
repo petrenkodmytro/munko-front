@@ -11,9 +11,10 @@ import { IReview } from '@/types/types';
 type Props = {
   reviwe: IReview;
   userId: number;
+  setIdRemoveReview: (id: number) => void;
 };
 
-const ReviewItem = ({ reviwe, userId }: Props) => {
+const ReviewItem = ({ reviwe, userId, setIdRemoveReview }: Props) => {
   const [isShowMore, setIsShowMore] = useState(false);
   // console.log(reviwe);
   const toggleReadMoreLess = () => {
@@ -28,8 +29,12 @@ const ReviewItem = ({ reviwe, userId }: Props) => {
         <div className="flex justify-between">
           <p className="text-base font-semibold">{reviwe.username}</p>
           {userId === reviwe.userId && (
-            <button className="ml-auto" type="button">
-              <IconDel/>
+            <button
+              onClick={() => setIdRemoveReview(reviwe.id)}
+              className="ml-2 mr-auto px-2 text-red-700"
+              type="button"
+            >
+              <IconDel />
             </button>
           )}
           <Rating

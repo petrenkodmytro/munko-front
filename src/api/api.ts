@@ -194,6 +194,26 @@ export const addReview = async (
   return data;
 };
 
+export const deleteReview = async (reviewId: number, token: string) => {
+  const mutation = gql`
+    mutation DeleteReview {
+    deleteReview(entity: ${reviewId})
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data = await graphQLClient.request(
+    mutation,
+    { reviewId },
+    requestHeaders
+  );
+
+  console.log(data);
+  return data;
+};
+
 export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
   // const stringified = `[${filteredParams.category .map(b => `"${b}"`).join(', ')}]`;
   const query = gql`
