@@ -11,6 +11,7 @@ import IconStarEmpty from './../../../public/icons/rating-empty-icon.svg';
 import { IReview } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { addReview, deleteReview, getReviewsById } from '@/api/api';
+import Notification from '../notification-modal/notification';
 
 type Props = {
   cardId: string;
@@ -22,6 +23,7 @@ type Review = {
 };
 
 const CardReviews = ({ cardId }: Props) => {
+  const [notify, setNotify] = useState(false);
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [ratingValue, setRatingValue] = useState<number | null>(0);
   const [newReview, setNewReview] = useState<Omit<IReview, 'id'> | null>(null);
@@ -71,11 +73,11 @@ const CardReviews = ({ cardId }: Props) => {
   const isUserReview = reviews
     .map(review => review.userId)
     .includes(session?.user?.id);
-  console.log(isUserReview);
+  // console.log(isUserReview);
 
   const createReview = (review: Review) => {
     if (session === null) {
-      alert('You must be logged in or you must register');
+      setNotify(true);
       return;
     }
     const newReview = {
@@ -89,6 +91,7 @@ const CardReviews = ({ cardId }: Props) => {
     setNewReview(newReview);
   };
 
+ 
   return (
     <div className="flex flex-col gap-5 px-[16px] py-5 rounded-[5px] bg-[#F5F5F5] md:pl-8 md:pr-[84px] md:py-[22px] xl:w-[627px] xl:px-8">
       <h6 className="text-xl font-semibold md:text-[26px]">Reviews</h6>
@@ -156,6 +159,9 @@ const CardReviews = ({ cardId }: Props) => {
           ))}
         </ul>
       </div>
+      <Notification notify={notify} setNotify={setNotify}>
+        <p>Notify</p>
+      </Notification>
     </div>
   );
 };
