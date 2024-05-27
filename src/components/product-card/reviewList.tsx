@@ -160,7 +160,7 @@ const CardReviews = ({ cardId }: Props) => {
         </ul>
       </div>
       <Notification notify={notify} setNotify={setNotify}>
-        <p>Notify</p>
+        <p className='pt-5 text-sm md:text-base font-semibold'>You are not logged in. If you want to leave a review, you must log in</p>
       </Notification>
     </div>
   );
