@@ -15,6 +15,8 @@ import Notification from '../notification-modal/notification';
 
 type Props = {
   cardId: string;
+  notify: boolean;
+  setNotify: (modalState: boolean) => void;
 };
 
 type Review = {
@@ -22,8 +24,8 @@ type Review = {
   review: string;
 };
 
-const CardReviews = ({ cardId }: Props) => {
-  const [notify, setNotify] = useState(false);
+const CardReviews = ({ cardId, notify, setNotify }: Props) => {
+
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [ratingValue, setRatingValue] = useState<number | null>(0);
   const [newReview, setNewReview] = useState<Omit<IReview, 'id'> | null>(null);

@@ -7,6 +7,8 @@ import { getItem } from '@/api/api';
 import { notFound, useParams } from 'next/navigation';
 import { ICard } from '@/types/types';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import Notification from '../notification-modal/notification';
 
 const initialValue = {
   id: 0,
@@ -31,10 +33,12 @@ type Params = {
 const ProductCard = () => {
   const id = useParams<Params>().id; // item id
   // console.log(id);
-
+  const { data: session } = useSession();
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
   const [product, setProduct] = useState<ICard>(initialValue);
   const [error, setError] = useState(false);
+  const [notifyOder, setNotifyOder] = useState(false);
+  const [notifyReview, setNotifyReview] = useState(false);
   // const [reviews, setReviews] = useState<IReview[]>([]);
 
   useEffect(() => {
@@ -60,6 +64,13 @@ const ProductCard = () => {
     notFound();
   }
 
+  const addToCart = () => {
+    if (session === null) {
+      setNotifyOder(true);
+      return;
+    }
+  };
+
   return (
     <div className="md:px-5 md:pb-[72px] xl:px-20 xl:pb-[35px]">
       <div className="hidden md:block py-[25px] text-xs font-medium">
@@ -79,6 +90,7 @@ const ProductCard = () => {
           </p>
           <div className="flex justify-between xl:flex-col gap-5">
             <button
+              onClick={addToCart}
               type="button"
               className="uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white bg-[#31304D] text-base not-italic font-bold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear md:px-[90px] xl:w-[302px]"
             >
@@ -161,8 +173,13 @@ const ProductCard = () => {
             </li>
           </ul>
         </div>
-        <CardReviews cardId={id} />
+        <CardReviews cardId={id} notify={notifyReview} setNotify={setNotifyReview} />
       </div>
+      <Notification notify={notifyOder} setNotify={setNotifyOder}>
+        <p className="pt-5 text-sm md:text-base font-semibold">
+          You are not logged in. If you want to buy the product, you must log in
+        </p>
+      </Notification>
     </div>
   );
 };
