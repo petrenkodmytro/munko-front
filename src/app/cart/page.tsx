@@ -7,9 +7,10 @@ import CartImage from './../../../public/image/free-icon-shopping-cart.png';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
 import IconCloseCart from './../../../public/icons/icon-x-cart.svg';
 import CheckOrder from './../../../public/icons/check-cart.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
+import Notification from '@/components/notification-modal/notification';
 
 const allOrders = [
   {
@@ -111,6 +112,15 @@ const Cart = (props: Props) => {
   const delivery = 1;
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
+  const [notifyCart, setNotifyCart] = useState(false);
+useEffect(() => {
+  if (session === null) {
+    setNotifyCart(true);
+  }
+  }
+, [session])
+
+ 
 
   const toggleSelectedOrder = (newOrder: ICartCard) => {
     // console.log(newOrder);
@@ -373,6 +383,11 @@ const Cart = (props: Props) => {
           </p>
         </div>
       )}
+      <Notification notify={notifyCart} setNotify={setNotifyCart}>
+        <p className="pt-5 text-sm md:text-base font-semibold">
+          You are not logged in. If you want to buy the product, you must log in
+        </p>
+      </Notification>
     </section>
   );
 };
