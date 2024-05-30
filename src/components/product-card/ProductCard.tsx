@@ -54,6 +54,7 @@ const ProductCard = () => {
     }
     fetchProduct();
   }, [id]);
+  
 
   if (error) {
     notFound();
@@ -79,7 +80,7 @@ const ProductCard = () => {
           <div className="flex justify-between xl:flex-col gap-5">
             <button
               type="button"
-              className="uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white bg-[#31304D] text-base not-italic font-bold  lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear md:px-[90px] xl:w-[302px]"
+              className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
             >
               add to cart
             </button>

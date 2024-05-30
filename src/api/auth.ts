@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { User } from "@/types/types";
 import { JWT } from "next-auth/jwt";
+import { googleLoginUser } from "./api";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -71,27 +72,27 @@ const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    // async signIn({ user, account }: { user: any; account: any }) {
-    //   console.log(account);
+    async signIn({ user, account }: { user: any; account: any }) {
       
-    //   if (account.provider === "google") {
-    //       const res = await createNewUser(user);
-    //   }
-    //   return user;
-    // },
+      if (account.provider === "google") {
+        user.data = await googleLoginUser(account.id_token, account.providerAccountId); 
+        return true;
+      }
+    return true
+    },
     
-    async jwt({ token, user } : {token: JWT, user:any}) {
+    async jwt({ token, user } : {token: JWT, user:any}) {                
       if (user) {
-        token.user = user
+        token.user = user.data       
       }
       return token;
     },
 
-    async session({ session, token }: { session: any; token: any }) {
-      if (session.user) {
-        session.user = token.user
+    async session({ session, token }: { session: any; token: any}) {
+      if (session) {
+        session.data = token.user
       }
-      return session;
+      return session.data;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
