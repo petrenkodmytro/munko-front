@@ -13,6 +13,7 @@ const FilterMobile = ({
   setPriceTo,
   stock,
   setStock,
+  stockShow,
   sale,
   setSale,
   toggleSelectedFilter,
@@ -52,6 +53,7 @@ const FilterMobile = ({
               setPriceTo={setPriceTo}
               stock={stock}
               setStock={setStock}
+              stockShow={stockShow}
               sale={sale}
               setSale={setSale}
               toggleSelectedFilter={toggleSelectedFilter}

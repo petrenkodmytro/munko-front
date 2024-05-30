@@ -56,6 +56,7 @@ export interface IPropsFilter {
   setPriceTo: (priceFrom: string) => void;
   stock: boolean;
   setStock: (stock: boolean) => void;
+  stockShow: boolean;
   sale: boolean;
   setSale: (sale: boolean) => void;
   toggleSelectedFilter: (filterName: string, value: string) => void;
