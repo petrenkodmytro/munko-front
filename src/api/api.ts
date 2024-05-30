@@ -91,10 +91,7 @@ export const getItem = async (id: string) => {
   return dataCard;
 };
 
-export const loginUser = async (
-  email: string | undefined,
-  password: string | undefined
-) => {
+export const loginUser = async (email: string, password: string) => {
   const loginUserMutation = gql`
     query Authenticate($email: String!, $password: String!) {
       authenticate(email: $email, password: $password) {
@@ -115,7 +112,7 @@ export const loginUser = async (
       email,
       password,
     });
-    console.log('User logged:', loggedUser);
+    // console.log('User logged:', loggedUser);
     return loggedUser;
   } catch (error) {
     console.error('Error login user:', error);
@@ -138,7 +135,7 @@ export const createNewUser = async (newUser: NewUser) => {
     const createdUser = await graphQLClient.request(createUserMutation, {
       newUser,
     });
-    console.log('User created:', createdUser);
+    // console.log('User created:', createdUser);
     return createdUser;
   } catch (error) {
     console.error('Error creating user:', error);
@@ -282,5 +279,69 @@ export const getFilterAttributes = async () => {
       collections: [],
       series: [],
     };
+  }
+};
+
+export const getSoonCatalog = async () => {
+  const query = gql`
+    query GetAllItems {
+      getAllItems(paging: { perPage: 12 }, searchCriteria: { inStock: false }) {
+        items {
+          id
+          name
+          images
+          price
+          amount
+          description
+          sale
+          collection
+          sublicense
+          series
+          category
+          productType
+          date
+        }
+      }
+    }
+  `;
+  try {
+    const data: IDataCatalog = await graphQLClient.request(query);
+    let dataCards = data.getAllItems.items;
+    // console.log(dataCards)
+    return dataCards;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+export const googleLoginUser = async (
+  idToken: string,
+  providerAccountId: string
+) => {
+  const googleLoginUserMutation = gql`
+    mutation GoogleAuth($idToken: String!, $providerAccountId: String!) {
+      googleAuth(idToken: $idToken, providerAccountId: $providerAccountId) {
+        token
+        user {
+          id
+          firstName
+          lastName
+          email
+          phone
+        }
+      }
+    }
+  `;
+
+  try {
+    const loggedUser: any = await graphQLClient.request(
+      googleLoginUserMutation,
+      { idToken, providerAccountId }
+    );
+    // console.log('User logged:', loggedUser.googleAuth);
+    return loggedUser.googleAuth;
+  } catch (error) {
+    console.error('Error login user:', error);
   }
 };

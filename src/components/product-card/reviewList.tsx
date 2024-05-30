@@ -33,7 +33,7 @@ const CardReviews = ({ cardId, notify, setNotify }: Props) => {
 
   const { data: session } = useSession();
   const token: string = session?.user?.token;
-  console.log(session?.user);
+  console.log(session);
 
   useEffect(() => {
     // console.log('useEffect 1');
