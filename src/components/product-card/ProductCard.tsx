@@ -4,10 +4,9 @@ import React, { useEffect, useState } from 'react';
 import CardImage from './cardImage';
 import CardReviews from './reviewList';
 import { getItem, getReviewsById } from '@/api/api';
-import { useParams } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { ICard, IReview } from '@/types/types';
 import Link from 'next/link';
-
 
 const initialValue = {
   id: 0,
@@ -34,6 +33,7 @@ const ProductCard = () => {
 
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
   const [product, setProduct] = useState<ICard>(initialValue);
+  const [error, setError] = useState(false);
   const [reviews, setReviews] = useState<IReview[]>([]);
 
   useEffect(() => {
@@ -41,17 +41,24 @@ const ProductCard = () => {
       try {
         const card = await getItem(id);
         const reviews = await getReviewsById(id);
-
+        if (card === null) {
+          setError(true);
+          console.log(card);
+        }
         setProduct(card);
         setReviews(reviews);
       } catch (error) {
         console.log(error);
-        
+        setError(true);
       }
     }
     fetchProduct();
   }, [id]);
   
+
+  if (error) {
+    notFound();
+  }
 
   return (
     <div className="md:px-5 md:pb-[72px] xl:px-20 xl:pb-[35px]">

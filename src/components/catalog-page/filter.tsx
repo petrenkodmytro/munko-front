@@ -305,7 +305,7 @@ const Filter = ({
                   name="filter"
                   id={el}
                   value={el}
-                  className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
+                  className="appearance-none peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
                 />
                 <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
                 <label className="">{el}</label>

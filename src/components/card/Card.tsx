@@ -3,7 +3,11 @@ import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 
-type CardCatalog = Pick<ICard, 'id' | 'name' | 'images' | 'price' | 'amount'>;
+type CardCatalog = Pick<
+  ICard,
+  'id' | 'name' | 'images' | 'price' | 'productType'| 'amount'
+>;
+
 type CardProps = {
   card: CardCatalog;
 };
@@ -37,7 +41,7 @@ const Card = ({ card }: CardProps) => {
           )}
         </div>
         <div className="text-base text-black my-5">
-          <span className="">POP!</span>
+          <span className="">{card.productType}</span>
           <p className="font-bold mb-5">{card.name}</p>
           <p className="font-bold">{card.price}$</p>
         </div>
