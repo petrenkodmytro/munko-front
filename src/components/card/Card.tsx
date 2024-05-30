@@ -3,12 +3,13 @@ import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 
-type CardCatalog = Pick<ICard, 'id' | 'name' | 'images' | 'price'>;
+type CardCatalog = Pick<ICard, 'id' | 'name' | 'images' | 'price' | 'amount'>;
 type CardProps = {
   card: CardCatalog;
 };
 
 const Card = ({ card }: CardProps) => {
+  
   return (
     <div className="w-[242px] h-[384px] md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
       <Link href={`/catalog/${card.id}`}>
@@ -41,7 +42,9 @@ const Card = ({ card }: CardProps) => {
           <p className="font-bold">{card.price}$</p>
         </div>
       </Link>
-      <button className="m-auto rounded text-base h-9 font-bold w-full bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear">
+      <button
+        className={`m-auto rounded text-base h-9 font-bold w-full text-white ${card.amount ? 'bg-subscribeBtn hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
+      >
         ADD TO CART
       </button>
     </div>

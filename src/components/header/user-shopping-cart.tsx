@@ -15,8 +15,6 @@ import Link from 'next/link';
 const UserShoppingCart = () => {
   const [modalState, setModalState] = useState(false);
   const { data: session } = useSession();
-  console.log(session);
-  
 
   useEffect(() => {
     if (modalState) {

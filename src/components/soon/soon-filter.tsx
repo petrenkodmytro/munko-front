@@ -1,14 +1,14 @@
 'use client';
 
 import { SetStateAction, useEffect, useState } from 'react';
-import SortBy from './sortBy';
+import SortBy from './../catalog-page/sortBy';
 import Card from '../card/Card';
 import { ICard, IFilteredParams, IPagination } from '@/types/types';
-import FilterMobile from './filter-mobile';
-import Filter from './filter';
+import FilterMobile from './../catalog-page/filter-mobile';
+import Filter from './../catalog-page/filter';
 import { getFilteredCatalog } from '@/api/api';
 import Link from 'next/link';
-import SimplePagination from './pagination';
+import SimplePagination from './../catalog-page/pagination';
 import useWindowSize from '@/hooks/useWindowSize';
 import { useRouter } from 'next/navigation';
 
@@ -37,7 +37,7 @@ const CatalogFilter = ({
   const [sortBy, setSortBy] = useState('IdAsc');
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
-  const [stock, setStock] = useState(false);
+  const [stock, setStock] = useState(true);
   const [sale, setSale] = useState(saleProps);
   const [colectionSearchParams, setColectionSearchParams] = useState<string[]>(
     []
@@ -71,7 +71,7 @@ const CatalogFilter = ({
       };
 
       if (stock) {
-        filteredParams.searchCriteria.inStock = true;
+        filteredParams.searchCriteria.inStock = false;
       }
       if (sale) {
         filteredParams.searchCriteria.sale = true;
@@ -227,7 +227,7 @@ const CatalogFilter = ({
           <Link className="underline" href={'/'}>
             Home page
           </Link>
-          / Catalog
+          / Coming Soon
         </div>
         <div className="xl:flex grow flex-row-reverse justify-between">
           <div className="flex justify-between">
@@ -240,7 +240,7 @@ const CatalogFilter = ({
                 setPriceTo={setPriceTo}
                 stock={stock}
                 setStock={setStock}
-                stockShow={true}
+                stockShow={false}
                 sale={sale}
                 setSale={setSale}
                 toggleSelectedFilter={toggleSelectedFilter}
@@ -277,7 +277,7 @@ const CatalogFilter = ({
               setPriceTo={setPriceTo}
               stock={stock}
               setStock={setStock}
-              stockShow={true}
+              stockShow={false}
               sale={sale}
               setSale={setSale}
               toggleSelectedFilter={toggleSelectedFilter}
