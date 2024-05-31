@@ -1,7 +1,6 @@
-import { NextAuthOptions } from "next-auth";
+import { Account, NextAuthOptions, Session, User} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { User } from "@/types/types";
 import { JWT } from "next-auth/jwt";
 import { googleLoginUser } from "./api";
 
@@ -72,27 +71,38 @@ const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    async signIn({ user, account }: { user: any; account: any }) {
-      
+    async signIn({ user, account }: { user: User; account: Account | null }) {
+      if(!account){
+        return false
+      }
       if (account.provider === "google") {
-        user.data = await googleLoginUser(account.id_token, account.providerAccountId); 
+          user.data = await googleLoginUser(account.id_token, account.providerAccountId); 
         return true;
-      }
+        }
     return true
-    },
+      },
     
-    async jwt({ token, user } : {token: JWT, user:any}) {                
-      if (user) {
-        token.user = user.data       
+    async jwt({ token, user }: {token: JWT; user: User}) {  
+      
+      if(user && user.token) {
+        token.accessToken = user.token;
+        delete user.token
+        token.user = user
       }
+
+      if(user && user.data){
+        token.accessToken = user.data.token;
+        token.user = user.data.user;
+      }        
       return token;
     },
 
-    async session({ session, token }: { session: any; token: any}) {
-      if (session) {
-        session.data = token.user
+    async session({ session, token }: { session: Session; token: JWT}) {      
+      if(session){
+        session.user = token.user
+        session.token = token.accessToken
       }
-      return session.data;
+    return session
     },
   },
   secret: process.env.NEXTAUTH_SECRET,

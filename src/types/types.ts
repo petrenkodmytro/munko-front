@@ -16,7 +16,7 @@ export interface ICard {
   date: string;
 }
 
-export interface User extends AdapterUser {
+export interface CustomUser extends AdapterUser {
   id: string;
   firstName: string;
   lastName?: string | null;
