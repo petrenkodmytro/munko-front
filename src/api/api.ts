@@ -259,7 +259,7 @@ export const getSoonCatalog = async () => {
   }
 };
 
-export const googleLoginUser = async (idToken: string, providerAccountId:string) => {
+export const googleLoginUser = async (idToken: string | undefined, providerAccountId:string) => {
   const googleLoginUserMutation = gql`
   mutation GoogleAuth($idToken: String!, $providerAccountId: String!) {
     googleAuth(idToken: $idToken, providerAccountId: $providerAccountId) {
