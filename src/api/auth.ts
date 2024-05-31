@@ -1,7 +1,6 @@
-import { NextAuthOptions, Session} from "next-auth";
+import { Account, NextAuthOptions, Session, User} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { User } from "@/types/types";
 import { JWT } from "next-auth/jwt";
 import { googleLoginUser } from "./api";
 
@@ -72,7 +71,7 @@ const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    async signIn({ user, account }: { user: any; account: any }) {
+    async signIn({ user, account }: { user: User; account: Account | null }) {
       if(!account){
         return false
       }
@@ -83,7 +82,7 @@ const authOptions: NextAuthOptions = {
     return true
       },
     
-    async jwt({ token, user }: {token: JWT; user: any}) {  
+    async jwt({ token, user }: {token: JWT; user: User}) {  
       
       if(user && user.token) {
         token.accessToken = user.token;
@@ -98,16 +97,12 @@ const authOptions: NextAuthOptions = {
       return token;
     },
 
-    async session({ session, token }: { session: Session; token: any;}) {      
-      if (session && token.accessToken) {
+    async session({ session, token }: { session: Session; token: JWT}) {      
+      if(session){
+        session.user = token.user
         session.token = token.accessToken
-        session.user = token.user
-        return session;        
-      } else {
-        session.user = token.user
-        session.token = token.user.token
-        return session
       }
+    return session
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
