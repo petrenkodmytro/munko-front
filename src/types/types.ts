@@ -1,5 +1,3 @@
-import { AdapterUser } from 'next-auth/adapters';
-
 export interface ICard {
   id: number;
   name: string;
@@ -16,8 +14,8 @@ export interface ICard {
   date: string;
 }
 
-export interface CustomUser extends AdapterUser {
-  id: string;
+export interface CustomUser {
+  id: number;
   firstName: string;
   lastName?: string | null;
   email: string;
