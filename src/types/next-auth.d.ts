@@ -11,7 +11,7 @@ declare module "next-auth" {
 
   interface User {
     data?:{
-      user:CustomUser,
+      user: CustomUser,
       token: string
     },
     token?: string,
