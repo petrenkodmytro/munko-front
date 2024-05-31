@@ -42,7 +42,7 @@ export interface NewUser {
 
 export interface IReview {
   id: number;
-  username: string;
+  username: string | null | undefined;
   funkoId: number;
   userId: number;
   star: number | null;

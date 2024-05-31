@@ -162,7 +162,7 @@ export const getReviewsById = async (id: string) => {
 
 export const addReview = async (
   newReview: Omit<IReview, 'id'>,
-  token: string
+  token: string | undefined
 ) => {
   console.log(newReview);
   const mutation = gql`
@@ -191,7 +191,10 @@ export const addReview = async (
   return data;
 };
 
-export const deleteReview = async (reviewId: number, token: string) => {
+export const deleteReview = async (
+  reviewId: number,
+  token: string | undefined
+) => {
   const mutation = gql`
     mutation DeleteReview {
     deleteReview(entity: ${reviewId})
@@ -315,7 +318,10 @@ export const getSoonCatalog = async () => {
   }
 };
 
-export const googleLoginUser = async (idToken: string | undefined, providerAccountId:string) => {
+export const googleLoginUser = async (
+  idToken: string | undefined,
+  providerAccountId: string
+) => {
   const googleLoginUserMutation = gql`
     mutation GoogleAuth($idToken: String!, $providerAccountId: String!) {
       googleAuth(idToken: $idToken, providerAccountId: $providerAccountId) {

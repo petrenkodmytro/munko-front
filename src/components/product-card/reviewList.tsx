@@ -25,15 +25,14 @@ type Review = {
 };
 
 const CardReviews = ({ cardId, notify, setNotify }: Props) => {
-
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [ratingValue, setRatingValue] = useState<number | null>(0);
   const [newReview, setNewReview] = useState<Omit<IReview, 'id'> | null>(null);
   const [idRemoveReview, setIdRemoveReview] = useState<number | null>(null);
 
   const { data: session } = useSession();
-  const token: string = session?.user?.token;
-  console.log(session);
+  const token: string | undefined = session?.user?.token;
+  console.log(typeof(session?.user?.id));
 
   useEffect(() => {
     // console.log('useEffect 1');
@@ -74,7 +73,7 @@ const CardReviews = ({ cardId, notify, setNotify }: Props) => {
 
   const isUserReview = reviews
     .map(review => review.userId)
-    .includes(session?.user?.id);
+    .includes(Number(session?.user.id));
   // console.log(isUserReview);
 
   const createReview = (review: Review) => {
@@ -87,13 +86,12 @@ const CardReviews = ({ cardId, notify, setNotify }: Props) => {
       funkoId: Number(cardId),
       review: review.review,
       star: ratingValue,
-      username: session.user?.firstName,
+      username: session?.user.id,
     };
     // console.log(newReview);
     setNewReview(newReview);
   };
 
- 
   return (
     <div className="flex flex-col gap-5 px-[16px] py-5 rounded-[5px] bg-[#F5F5F5] md:pl-8 md:pr-[84px] md:py-[22px] xl:w-[627px] xl:px-8">
       <h6 className="text-xl font-semibold md:text-[26px]">Reviews</h6>
@@ -154,7 +152,7 @@ const CardReviews = ({ cardId, notify, setNotify }: Props) => {
             <li key={index} className="flex gap-4">
               <ReviewItem
                 reviwe={reviwe}
-                userId={session?.user?.id}
+                userId={Number(session?.user.id)}
                 setIdRemoveReview={setIdRemoveReview}
               />
             </li>
@@ -162,7 +160,9 @@ const CardReviews = ({ cardId, notify, setNotify }: Props) => {
         </ul>
       </div>
       <Notification notify={notify} setNotify={setNotify}>
-        <p className='pt-5 text-sm md:text-base font-semibold'>You are not logged in. If you want to leave a review, you must log in</p>
+        <p className="pt-5 text-sm md:text-base font-semibold">
+          You are not logged in. If you want to leave a review, you must log in
+        </p>
       </Notification>
     </div>
   );
