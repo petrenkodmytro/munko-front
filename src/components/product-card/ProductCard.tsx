@@ -59,7 +59,6 @@ const ProductCard = () => {
     }
     fetchProduct();
   }, [id]);
-  
 
   if (error) {
     notFound();
@@ -174,7 +173,11 @@ const ProductCard = () => {
             </li>
           </ul>
         </div>
-        <CardReviews cardId={id} notify={notifyReview} setNotify={setNotifyReview} />
+        <CardReviews
+          cardId={id}
+          notify={notifyReview}
+          setNotify={setNotifyReview}
+        />
       </div>
       <Notification notify={notifyOder} setNotify={setNotifyOder}>
         <p className="pt-5 text-sm md:text-base font-semibold">

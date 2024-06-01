@@ -32,7 +32,7 @@ const CardReviews = ({ cardId, notify, setNotify }: Props) => {
 
   const { data: session } = useSession();
   const token: string | undefined = session?.user?.token;
-  console.log(typeof(session?.user?.id));
+  console.log(typeof session?.user?.id);
 
   useEffect(() => {
     // console.log('useEffect 1');
@@ -82,11 +82,11 @@ const CardReviews = ({ cardId, notify, setNotify }: Props) => {
       return;
     }
     const newReview = {
-      userId: session?.user?.id,
+      userId: Number(session?.user?.id),
       funkoId: Number(cardId),
       review: review.review,
       star: ratingValue,
-      username: session?.user.id,
+      username: 'user',
     };
     // console.log(newReview);
     setNewReview(newReview);

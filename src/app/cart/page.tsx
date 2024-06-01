@@ -103,8 +103,8 @@ type Props = {};
 
 const Cart = (props: Props) => {
   const { data: session } = useSession();
-  const user={...session}
-  console.log(user);
+  // const user={...session}
+  // console.log(session?.user?.firstName);
 
   const modifyOrders = allOrders.map(order => {
     return { ...order, count: 1 };
