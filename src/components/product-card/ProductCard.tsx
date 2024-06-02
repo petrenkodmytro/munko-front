@@ -9,6 +9,7 @@ import { ICard } from '@/types/types';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import Notification from '../notification-modal/notification';
+import ModalWnd from '../modal/modal-window';
 
 const initialValue = {
   id: 0,
@@ -35,6 +36,7 @@ const ProductCard = () => {
   // console.log(id);
   const { data: session } = useSession();
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
+  const [modalState, setModalState] = useState(false);
   const [product, setProduct] = useState<ICard>(initialValue);
   const [error, setError] = useState(false);
   const [notifyOder, setNotifyOder] = useState(false);
@@ -177,13 +179,30 @@ const ProductCard = () => {
           cardId={id}
           notify={notifyReview}
           setNotify={setNotifyReview}
+          modalState={modalState}
+          setModalState={setModalState}
         />
       </div>
       <Notification notify={notifyOder} setNotify={setNotifyOder}>
-        <p className="pt-5 text-sm md:text-base font-semibold">
-          You are not logged in. If you want to buy the product, you must log in
-        </p>
+        <div className="flex flex-col gap-7 items-center">
+          {' '}
+          <p className="pt-5 text-sm md:text-base font-semibold">
+            You are not logged in. If you want to buy the product, you must log
+            in
+          </p>
+          <button
+            onClick={() => {
+              setModalState(true);
+              setNotifyOder(false);
+            }}
+            type="button"
+            className="w-[137px] uppercase px-8 py-2 rounded-[5px] border-2 border-current text-white text-xl not-italic font-semibold  bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
+          >
+            login
+          </button>
+        </div>
       </Notification>
+      <ModalWnd call={modalState} onDestroy={() => setModalState(false)} />
     </div>
   );
 };

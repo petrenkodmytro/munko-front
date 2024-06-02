@@ -12,11 +12,14 @@ import { IReview } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { addReview, deleteReview, getReviewsById } from '@/api/api';
 import Notification from '../notification-modal/notification';
+import ModalWnd from '../modal/modal-window';
 
 type Props = {
   cardId: string;
   notify: boolean;
-  setNotify: (modalState: boolean) => void;
+  setNotify: (notifyState: boolean) => void;
+  modalState: boolean;
+  setModalState: (modalState: boolean) => void;
 };
 
 type Review = {
@@ -24,7 +27,13 @@ type Review = {
   review: string;
 };
 
-const CardReviews = ({ cardId, notify, setNotify }: Props) => {
+const CardReviews = ({
+  cardId,
+  notify,
+  setNotify,
+  modalState,
+  setModalState,
+}: Props) => {
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [ratingValue, setRatingValue] = useState<number | null>(0);
   const [newReview, setNewReview] = useState<Omit<IReview, 'id'> | null>(null);
@@ -160,10 +169,25 @@ const CardReviews = ({ cardId, notify, setNotify }: Props) => {
         </ul>
       </div>
       <Notification notify={notify} setNotify={setNotify}>
-        <p className="pt-5 text-sm md:text-base font-semibold">
-          You are not logged in. If you want to leave a review, you must log in
-        </p>
+        <div className="flex flex-col gap-7 items-center">
+          {' '}
+          <p className="pt-5 text-sm md:text-base font-semibold">
+            You are not logged in. If you want to leave a review, you must log
+            in
+          </p>
+          <button
+            onClick={() => {
+              setModalState(true);
+              setNotify(false);
+            }}
+            type="button"
+            className="w-[137px] uppercase px-8 py-2 rounded-[5px] border-2 border-current text-white text-xl not-italic font-semibold  bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
+          >
+            login
+          </button>
+        </div>
       </Notification>
+      <ModalWnd call={modalState} onDestroy={() => setModalState(false)} />
     </div>
   );
 };
