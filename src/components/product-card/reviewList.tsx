@@ -40,8 +40,8 @@ const CardReviews = ({
   const [idRemoveReview, setIdRemoveReview] = useState<number | null>(null);
 
   const { data: session } = useSession();
-  const token: string | undefined = session?.user?.token;
-  console.log(typeof session?.user?.id);
+  const token: string | undefined = session?.token;
+  console.log(session);
 
   useEffect(() => {
     // console.log('useEffect 1');
@@ -82,7 +82,7 @@ const CardReviews = ({
 
   const isUserReview = reviews
     .map(review => review.userId)
-    .includes(Number(session?.user.id));
+    .includes(Number(session?.user?.id));
   // console.log(isUserReview);
 
   const createReview = (review: Review) => {
@@ -95,7 +95,7 @@ const CardReviews = ({
       funkoId: Number(cardId),
       review: review.review,
       star: ratingValue,
-      username: 'user',
+      username: session.user?.firstName,
     };
     // console.log(newReview);
     setNewReview(newReview);
@@ -161,7 +161,7 @@ const CardReviews = ({
             <li key={index} className="flex gap-4">
               <ReviewItem
                 reviwe={reviwe}
-                userId={Number(session?.user.id)}
+                userId={Number(session?.user?.id)}
                 setIdRemoveReview={setIdRemoveReview}
               />
             </li>

@@ -10,10 +10,13 @@ import LogoutIcon from './../../../public/icons/logout_icon.svg';
 import LogoutIconHover from './../../../public/icons/logout_icon hover.svg';
 import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
 import { useSession, signOut } from 'next-auth/react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import Notification from '../notification-modal/notification';
 
 const UserShoppingCart = () => {
+  const router = useRouter();
   const [modalState, setModalState] = useState(false);
+  const [notifyCart, setNotifyCart] = useState(false);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -55,7 +58,16 @@ const UserShoppingCart = () => {
           </div>
         </button>
       )}
-      <Link href={'/cart'}>
+      <button
+        type="button"
+        onClick={() => {
+          if (session === null) {
+            setNotifyCart(true);
+          } else {
+            router.push('/cart');
+          }
+        }}
+      >
         <div className="inline-block md:hidden align-bottom">
           <BasketIconMobile />
         </div>
@@ -65,7 +77,26 @@ const UserShoppingCart = () => {
           </div>
           <BasketIconHover />
         </div>
-      </Link>
+      </button>
+      <Notification notify={notifyCart} setNotify={setNotifyCart}>
+        <div className="flex flex-col gap-7 items-center">
+          {' '}
+          <p className="pt-5 text-sm md:text-base font-semibold">
+            You are not logged in. If you want to buy the product, you must log
+            in
+          </p>
+          <button
+            onClick={() => {
+              setModalState(true);
+              setNotifyCart(false);
+            }}
+            type="button"
+            className="w-[137px] uppercase px-8 py-2 rounded-[5px] border-2 border-current text-white text-xl not-italic font-semibold  bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
+          >
+            login
+          </button>
+        </div>
+      </Notification>
     </div>
   );
 };

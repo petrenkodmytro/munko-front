@@ -103,8 +103,7 @@ type Props = {};
 
 const Cart = (props: Props) => {
   const { data: session } = useSession();
-  // const user={...session}
-  // console.log(session?.user?.firstName);
+  console.log(session);
 
   const modifyOrders = allOrders.map(order => {
     return { ...order, count: 1 };
@@ -113,15 +112,14 @@ const Cart = (props: Props) => {
   const delivery = 1;
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
-  const [notifyCart, setNotifyCart] = useState(false);
-useEffect(() => {
-  if (session === null) {
-    setNotifyCart(true);
-  }
-  }
-, [session])
+  // const [notifyCart, setNotifyCart] = useState(false);
 
- 
+  // useEffect(() => {
+  //   if (session === null) {
+  //     setNotifyCart(true);
+  //   }
+  //   }
+  // , [session])
 
   const toggleSelectedOrder = (newOrder: ICartCard) => {
     // console.log(newOrder);
@@ -362,7 +360,7 @@ useEffect(() => {
           </div>
         </div>
       ) : (
-        <div className='flex flex-col items-center'>
+        <div className="flex flex-col items-center">
           <div className="w-[150px] md:w-[342px]">
             <Image
               src={CartImage}
@@ -376,7 +374,7 @@ useEffect(() => {
               // }}
             />
           </div>
-          <p className='text-sm font-medium md:text-lg'>
+          <p className="text-sm font-medium md:text-lg">
             Your cart is empty. Let’s go to{' '}
             <Link href={`/catalog`} className="p-1  font-semibold">
               Catalog
@@ -384,11 +382,11 @@ useEffect(() => {
           </p>
         </div>
       )}
-      <Notification notify={notifyCart} setNotify={setNotifyCart}>
+      {/* <Notification notify={notifyCart} setNotify={setNotifyCart}>
         <p className="pt-5 text-sm md:text-base font-semibold">
           You are not logged in. If you want to buy the product, you must log in
         </p>
-      </Notification>
+      </Notification> */}
     </section>
   );
 };

@@ -186,7 +186,7 @@ export const addReview = async (
     { newReview },
     requestHeaders
   );
-  // let dataReview = data;
+  let dataReview = data;
   console.log(data);
   return data;
 };
