@@ -1,5 +1,6 @@
 import {
-  ICard, NewUser,
+  ICard,
+  NewUser,
   IDataFilteredCatalog,
   IFilterAttributes,
   IFilteredParams,
@@ -92,50 +93,54 @@ export const getItem = async (id: string) => {
 
 export const loginUser = async (email: string, password: string) => {
   const loginUserMutation = gql`
-  query Authenticate($email: String!, $password: String!) {
-    authenticate(email: $email, password: $password) {
-      token
-      user {
-            id
-            firstName
-            lastName
-            email
-            phone
+    query Authenticate($email: String!, $password: String!) {
+      authenticate(email: $email, password: $password) {
+        token
+        user {
+          id
+          firstName
+          lastName
+          email
+          phone
         }
+      }
     }
-}
-`;
+  `;
 
-try {
-  const loggedUser = await graphQLClient.request(loginUserMutation, {email, password});
-  // console.log('User logged:', loggedUser);
-  return loggedUser;
-} catch (error) {
-  console.error('Error login user:', error);
-}
+  try {
+    const loggedUser = await graphQLClient.request(loginUserMutation, {
+      email,
+      password,
+    });
+    // console.log('User logged:', loggedUser);
+    return loggedUser;
+  } catch (error) {
+    console.error('Error login user:', error);
+  }
 };
 
 export const createNewUser = async (newUser: NewUser) => {
   const createUserMutation = gql`
-  mutation Registration ($newUser: UserInput!) {
-    registration(user: $newUser) {
-      id
-      firstName
-      email
-      password
+    mutation Registration($newUser: UserInput!) {
+      registration(user: $newUser) {
+        id
+        firstName
+        email
+        password
+      }
     }
+  `;
+
+  try {
+    const createdUser = await graphQLClient.request(createUserMutation, {
+      newUser,
+    });
+    // console.log('User created:', createdUser);
+    return createdUser;
+  } catch (error) {
+    console.error('Error creating user:', error);
   }
-`;
-
-try {
-  const createdUser = await graphQLClient.request(createUserMutation, {newUser});
-  // console.log('User created:', createdUser);
-  return createdUser
-} catch (error) {
-  console.error('Error creating user:', error);
-}
 };
-
 
 export const getReviewsById = async (id: string) => {
   const query = gql`
@@ -153,6 +158,60 @@ export const getReviewsById = async (id: string) => {
   const data: IDataReviewById = await graphQLClient.request(query);
   let dataReview = data.getFunkoReviews;
   return dataReview;
+};
+
+export const addReview = async (
+  newReview: Omit<IReview, 'id'>,
+  token: string | undefined
+) => {
+  console.log(newReview);
+  const mutation = gql`
+    mutation Save($newReview: ReviewInput!) {
+      save(entity: $newReview) {
+        id
+        userId
+        funkoId
+        review
+        star
+        username
+      }
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data: IReview = await graphQLClient.request(
+    mutation,
+    { newReview },
+    requestHeaders
+  );
+  let dataReview = data;
+  console.log(data);
+  return data;
+};
+
+export const deleteReview = async (
+  reviewId: number,
+  token: string | undefined
+) => {
+  const mutation = gql`
+    mutation DeleteReview {
+    deleteReview(entity: ${reviewId})
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data = await graphQLClient.request(
+    mutation,
+    { reviewId },
+    requestHeaders
+  );
+
+  console.log(data);
+  return data;
 };
 
 export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
@@ -259,27 +318,33 @@ export const getSoonCatalog = async () => {
   }
 };
 
-export const googleLoginUser = async (idToken: string | undefined, providerAccountId:string) => {
+export const googleLoginUser = async (
+  idToken: string | undefined,
+  providerAccountId: string
+) => {
   const googleLoginUserMutation = gql`
-  mutation GoogleAuth($idToken: String!, $providerAccountId: String!) {
-    googleAuth(idToken: $idToken, providerAccountId: $providerAccountId) {
-      token
-      user {
-            id
-            firstName
-            lastName
-            email
-            phone
+    mutation GoogleAuth($idToken: String!, $providerAccountId: String!) {
+      googleAuth(idToken: $idToken, providerAccountId: $providerAccountId) {
+        token
+        user {
+          id
+          firstName
+          lastName
+          email
+          phone
         }
+      }
     }
-}
-`;
+  `;
 
-try {
-  const loggedUser: any = await graphQLClient.request(googleLoginUserMutation, {idToken, providerAccountId});
-  // console.log('User logged:', loggedUser.googleAuth);
-  return loggedUser.googleAuth;
-} catch (error) {
-  console.error('Error login user:', error);
-}
+  try {
+    const loggedUser: any = await graphQLClient.request(
+      googleLoginUserMutation,
+      { idToken, providerAccountId }
+    );
+    // console.log('User logged:', loggedUser.googleAuth);
+    return loggedUser.googleAuth;
+  } catch (error) {
+    console.error('Error login user:', error);
+  }
 };

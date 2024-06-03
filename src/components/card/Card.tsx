@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 type CardCatalog = Pick<
   ICard,
-  'id' | 'name' | 'images' | 'price' | 'productType'| 'amount'
+  'id' | 'name' | 'images' | 'price' | 'productType' | 'amount'
 >;
 
 type CardProps = {
@@ -13,7 +13,6 @@ type CardProps = {
 };
 
 const Card = ({ card }: CardProps) => {
-  
   return (
     <div className="w-[242px] h-[384px] flex flex-wrap md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
       <Link href={`/catalog/${card.id}`}>

@@ -3,10 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import CardImage from './cardImage';
 import CardReviews from './reviewList';
-import { getItem, getReviewsById } from '@/api/api';
+import { getItem } from '@/api/api';
 import { notFound, useParams } from 'next/navigation';
-import { ICard, IReview } from '@/types/types';
+import { ICard } from '@/types/types';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import Notification from '../notification-modal/notification';
+import ModalWnd from '../modal/modal-window';
 
 const initialValue = {
   id: 0,
@@ -30,23 +33,27 @@ type Params = {
 
 const ProductCard = () => {
   const id = useParams<Params>().id; // item id
-
+  // console.log(id);
+  const { data: session } = useSession();
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
+  const [modalState, setModalState] = useState(false);
   const [product, setProduct] = useState<ICard>(initialValue);
   const [error, setError] = useState(false);
-  const [reviews, setReviews] = useState<IReview[]>([]);
+  const [notifyOder, setNotifyOder] = useState(false);
+  const [notifyReview, setNotifyReview] = useState(false);
+  // const [reviews, setReviews] = useState<IReview[]>([]);
 
   useEffect(() => {
     async function fetchProduct() {
       try {
         const card = await getItem(id);
-        const reviews = await getReviewsById(id);
+        // const reviews = await getReviewsById(id);
         if (card === null) {
           setError(true);
-          console.log(card);
+          // console.log(card);
         }
         setProduct(card);
-        setReviews(reviews);
+        // setReviews(reviews);
       } catch (error) {
         console.log(error);
         setError(true);
@@ -54,11 +61,17 @@ const ProductCard = () => {
     }
     fetchProduct();
   }, [id]);
-  
 
   if (error) {
     notFound();
   }
+
+  const addToCart = () => {
+    if (session === null) {
+      setNotifyOder(true);
+      return;
+    }
+  };
 
   return (
     <div className="md:px-5 md:pb-[72px] xl:px-20 xl:pb-[35px]">
@@ -79,6 +92,7 @@ const ProductCard = () => {
           </p>
           <div className="flex justify-between xl:flex-col gap-5">
             <button
+              onClick={addToCart}
               type="button"
               className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
             >
@@ -161,8 +175,34 @@ const ProductCard = () => {
             </li>
           </ul>
         </div>
-        <CardReviews reviews={reviews} />
+        <CardReviews
+          cardId={id}
+          notify={notifyReview}
+          setNotify={setNotifyReview}
+          modalState={modalState}
+          setModalState={setModalState}
+        />
       </div>
+      <Notification notify={notifyOder} setNotify={setNotifyOder}>
+        <div className="flex flex-col gap-7 items-center">
+          {' '}
+          <p className="pt-5 text-sm md:text-base font-semibold">
+            You are not logged in. If you want to buy the product, you must log
+            in
+          </p>
+          <button
+            onClick={() => {
+              setModalState(true);
+              setNotifyOder(false);
+            }}
+            type="button"
+            className="w-[137px] uppercase px-8 py-2 rounded-[5px] border-2 border-current text-white text-xl not-italic font-semibold  bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
+          >
+            login
+          </button>
+        </div>
+      </Notification>
+      <ModalWnd call={modalState} onDestroy={() => setModalState(false)} />
     </div>
   );
 };
