@@ -44,6 +44,8 @@ const authOptions: NextAuthOptions = {
 
             if (data && data.authenticate !== null) {
               const user: User = data.authenticate.user;
+              const userId: string = data.authenticate.user.id.toString();
+              user.id = userId;
               const token: string = data.authenticate.token;
               user.token = token;                  
       
@@ -76,7 +78,11 @@ const authOptions: NextAuthOptions = {
         return false
       }
       if (account.provider === "google") {
-          user.data = await googleLoginUser(account.id_token, account.providerAccountId); 
+          user.data = await googleLoginUser(account.id_token, account.providerAccountId);
+          if (user.data) {
+            const userId: string = user.data.user.id.toString();
+            user.data.user.id = userId;
+          }           
         return true;
         }
     return true

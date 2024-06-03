@@ -1,3 +1,5 @@
+import { User } from "next-auth";
+
 export interface ICard {
   id: number;
   name: string;
@@ -14,23 +16,23 @@ export interface ICard {
   date: string;
 }
 
-export interface CustomUser {
-  id: number;
-  firstName: string;
-  lastName?: string | null;
-  email: string;
-  phone?: number | null;
-  password: string;
-  address?: {
-    id: number;
-    userId: number;
-    locality: string;
-    postOffice: string;
-  } | null;
-  orders?: string[] | null;
-  role?: string;
-  token?: string;
-}
+// export interface CustomUser extends User {
+//   id: string;
+//   firstName: string;
+//   lastName?: string | null;
+//   email: string;
+//   phone?: number | null;
+//   password: string;
+//   address?: {
+//     id: number;
+//     userId: number;
+//     locality: string;
+//     postOffice: string;
+//   } | null;
+//   orders?: string[] | null;
+//   role?: string;
+//   token?: string;
+// }
 
 export interface NewUser {
   firstName: string;
