@@ -186,8 +186,8 @@ export const addReview = async (
     { newReview },
     requestHeaders
   );
-  let dataReview = data;
-  console.log(data);
+  // let dataReview = data;
+  // console.log(data);
   return data;
 };
 
@@ -210,7 +210,71 @@ export const deleteReview = async (
     requestHeaders
   );
 
-  console.log(data);
+  // console.log(data);
+  return data;
+};
+
+export const addToCart = async (
+  funkoId: number,
+  userId: number,
+  token: string | undefined
+) => {
+  const mutation = gql`
+    mutation CreateOrder {
+      createOrder(funkoId: ${funkoId}, userId: ${userId}) {
+        id
+        orderItems {
+          id
+          img
+          name
+          amount
+          pricePerItem
+        }
+        userId {
+          id
+          firstName
+          lastName
+        }
+        status
+      }
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data = await graphQLClient.request(
+    mutation,
+    { funkoId, userId },
+    requestHeaders
+  );
+
+  // console.log(data);
+  return data;
+};
+
+export const getUserOrders = async (
+  userId: number,
+  token: string | undefined
+) => {
+  const query = gql`
+    query GetOrderItems {
+    getOrderItems(userId: ${userId}) {
+        id
+        img
+        name
+        amount
+        pricePerItem
+    }
+}
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data = await graphQLClient.request(query, { userId }, requestHeaders);
+
+  // console.log(data);
   return data;
 };
 

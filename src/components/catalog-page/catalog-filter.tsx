@@ -10,7 +10,7 @@ import { getFilteredCatalog } from '@/api/api';
 import Link from 'next/link';
 import SimplePagination from './pagination';
 import useWindowSize from '@/hooks/useWindowSize';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
 type Props = {
   cardsCatalog: ICard[];

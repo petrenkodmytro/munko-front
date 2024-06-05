@@ -10,7 +10,7 @@ import CheckOrder from './../../../public/icons/check-cart.svg';
 import { useEffect, useState } from 'react';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
-import Notification from '@/components/notification-modal/notification';
+// import Notification from '@/components/notification-modal/notification';
 
 const allOrders = [
   {
@@ -379,6 +379,15 @@ const Cart = (props: Props) => {
             <Link href={`/catalog`} className="p-1  font-semibold">
               Catalog
             </Link>
+            <button
+              onClick={() => {
+                throw new Error('Unexpected error');
+              }}
+              type="button"
+              className="uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-[#31304D] bg-white text-base not-italic font-bold  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear md:px-[90px] xl:w-[302px]"
+            >
+              Fast order
+            </button>
           </p>
         </div>
       )}
