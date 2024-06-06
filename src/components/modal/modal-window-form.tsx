@@ -6,7 +6,7 @@ import SignForm from './sign-form';
 
 type ModalWndFormProps = {
   onDestroy: () => void;
-  serverError: string;
+  serverError?: string;
 };
 
 const ModalWndForm: React.FC<ModalWndFormProps> = ({onDestroy, serverError}) => {

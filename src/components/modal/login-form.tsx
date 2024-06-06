@@ -16,7 +16,7 @@ interface LoginForm {
   handleToogleChange: () => void;
   onDestroy: () => void;
   csrfToken?: string;
-  serverError: string;
+  serverError?: string;
 }
 
 const LoginForm: React.FC<LoginForm> = ({

@@ -4,7 +4,7 @@ import ModalWndForm from "./modal-window-form";
 type ModalWndProps = {
   call: boolean;
   onDestroy: () => void;
-  serverError: string;
+  serverError?: string;
 };
 
 const ModalWnd: React.FC<ModalWndProps> = ({ call, onDestroy, serverError }) => {
