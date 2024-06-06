@@ -4,7 +4,6 @@ import 'tailwindcss/tailwind.css';
 import Footer from '@/components/footer/Footer';
 import { Montserrat } from 'next/font/google';
 import AuthProvider from '@/components/providers/SessionProvider';
-import { SessionProvider } from 'next-auth/react';
 
 export const metadata = {
   title: 'Munko-PoP',

@@ -10,7 +10,8 @@ import LogoutIcon from './../../../public/icons/logout_icon.svg';
 import LogoutIconHover from './../../../public/icons/logout_icon hover.svg';
 import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
 import { useSession, signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Notification from '../notification-modal/notification';
 
 const UserShoppingCart = () => {
@@ -18,6 +19,17 @@ const UserShoppingCart = () => {
   const [modalState, setModalState] = useState(false);
   const [notifyCart, setNotifyCart] = useState(false);
   const { data: session } = useSession();
+  const [serverError, setServerError] = useState('');
+
+  const searchParams = useSearchParams();
+  const search = searchParams.get('error');
+
+  useEffect(() => {
+    if (search) {
+      setModalState(true);
+      setServerError(search);
+    }
+  }, [search]);
 
   useEffect(() => {
     if (modalState) {
@@ -29,7 +41,11 @@ const UserShoppingCart = () => {
 
   return (
     <div className="w-16 pb-6 pr-1 md:pr-0 md:ml-4 xl:ml-5 self-end md:w-auto md:self-center md:pb-0 md:mt-5">
-      <ModalWnd call={modalState} onDestroy={() => setModalState(false)} />
+      <ModalWnd
+        call={modalState}
+        serverError={serverError}
+        onDestroy={() => setModalState(false)}
+      />
       {session ? (
         <button
           onClick={() => signOut()}
@@ -46,7 +62,7 @@ const UserShoppingCart = () => {
           </div>
         </button>
       ) : (
-        <button onClick={() => setModalState(true)}>
+        <button onClick={() => (setModalState(true), setServerError(''))}>
           <div className="mr-2.5 inline-block md:hidden align-bottom">
             <LogoutMobile />
           </div>

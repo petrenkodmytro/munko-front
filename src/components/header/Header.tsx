@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, {Suspense} from 'react';
 import logo from './../../../public/image/Logo.png';
 import Link from 'next/link';
 import UserShoppingCart from './user-shopping-cart';
@@ -31,7 +31,9 @@ const Header = () => {
           <Navigation />
         </nav>
         <SearchForm />
-        <UserShoppingCart />
+        <Suspense>
+          <UserShoppingCart />  
+        </Suspense>
       </header>
     </>
   );

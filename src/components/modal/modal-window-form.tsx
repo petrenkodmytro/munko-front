@@ -6,9 +6,10 @@ import SignForm from './sign-form';
 
 type ModalWndFormProps = {
   onDestroy: () => void;
+  serverError?: string;
 };
 
-const ModalWndForm: React.FC<ModalWndFormProps> = ({onDestroy}) => {
+const ModalWndForm: React.FC<ModalWndFormProps> = ({onDestroy, serverError}) => {
 
   const [toogleLogin, setToogleLogin] = useState(false);
 
@@ -21,7 +22,7 @@ const ModalWndForm: React.FC<ModalWndFormProps> = ({onDestroy}) => {
       {toogleLogin ? (
         <SignForm handleToogleChange={handleToogleChange} onDestroy={onDestroy} />
       ) : (
-        <LoginForm handleToogleChange={handleToogleChange} onDestroy={onDestroy}/>
+        <LoginForm handleToogleChange={handleToogleChange} serverError={serverError} onDestroy={onDestroy}/>
       )}
     </>
   );
