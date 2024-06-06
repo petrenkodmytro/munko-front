@@ -3,12 +3,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
+import CartImage from './../../../public/image/free-icon-shopping-cart.png';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
 import IconCloseCart from './../../../public/icons/icon-x-cart.svg';
 import CheckOrder from './../../../public/icons/check-cart.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
+import Notification from '@/components/notification-modal/notification';
 
 const allOrders = [
   {
@@ -108,8 +110,16 @@ const Cart = (props: Props) => {
   });
   // console.log(modifyOrders)
   const delivery = 1;
-  const [cart, setCart] = useState<ICartCard[]>(modifyOrders);
+  const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
+  // const [notifyCart, setNotifyCart] = useState(false);
+
+  // useEffect(() => {
+  //   if (session === null) {
+  //     setNotifyCart(true);
+  //   }
+  //   }
+  // , [session])
 
   const toggleSelectedOrder = (newOrder: ICartCard) => {
     // console.log(newOrder);
@@ -298,7 +308,7 @@ const Cart = (props: Props) => {
                 <li key={card.id} className="flex justify-between">
                   <p className="text-xs font-bold md:text-sm">{card.name}</p>
                   {card.count > 1 && (
-                    <p className='ml-auto text-xs font-semibold md:text-sm'>
+                    <p className="ml-auto text-xs font-semibold md:text-sm">
                       {card.count}
                       <span className="px-2">x</span>
                     </p>
@@ -350,13 +360,33 @@ const Cart = (props: Props) => {
           </div>
         </div>
       ) : (
-        <p>
-          Cart is empty. Let`s go to{' '}
-          <Link href={`/catalog`} className="p-1 italic font-semibold">
-            Catalog
-          </Link>
-        </p>
+        <div className="flex flex-col items-center">
+          <div className="w-[150px] md:w-[342px]">
+            <Image
+              src={CartImage}
+              alt="empty cart"
+              width={342}
+              height={342}
+              // sizes="100vw"
+              // style={{
+              //   width: '100%',
+              //   height: 'auto',
+              // }}
+            />
+          </div>
+          <p className="text-sm font-medium md:text-lg">
+            Your cart is empty. Let’s go to{' '}
+            <Link href={`/catalog`} className="p-1  font-semibold">
+              Catalog
+            </Link>
+          </p>
+        </div>
       )}
+      {/* <Notification notify={notifyCart} setNotify={setNotifyCart}>
+        <p className="pt-5 text-sm md:text-base font-semibold">
+          You are not logged in. If you want to buy the product, you must log in
+        </p>
+      </Notification> */}
     </section>
   );
 };
