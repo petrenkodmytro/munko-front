@@ -18,7 +18,7 @@ const Catalog = ({ width }: { width: number }) => {
       }
     };
     getCardCatalog();
-  });
+  }, []);
 
   let sliceTo: number = 9;
 
