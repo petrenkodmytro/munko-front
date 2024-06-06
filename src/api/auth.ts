@@ -82,8 +82,10 @@ const authOptions: NextAuthOptions = {
           if (user.data) {
             const userId: string = user.data.user.id.toString();
             user.data.user.id = userId;
-          }           
-        return true;
+            return true;
+          } else {
+            throw new Error()
+          }
         }
     return true
       },
@@ -114,6 +116,7 @@ const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/",
+    error: '/auth/error',
   },
 };
 
