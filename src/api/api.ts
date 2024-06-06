@@ -274,7 +274,7 @@ export const getUserOrders = async (
   };
   const data = await graphQLClient.request(query, { userId }, requestHeaders);
 
-  // console.log(data);
+  console.log(data);
   return data;
 };
 

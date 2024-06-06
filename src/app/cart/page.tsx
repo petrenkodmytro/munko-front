@@ -10,116 +10,43 @@ import CheckOrder from './../../../public/icons/check-cart.svg';
 import { useEffect, useState } from 'react';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
-// import Notification from '@/components/notification-modal/notification';
+import { getUserOrders } from '@/api/api';
+import Notification from '@/components/notification-modal/notification';
 
-const allOrders = [
-  {
-    id: 9,
-    name: 'Deluxe Albus Dumbledore and Magic Albus Dumbledore',
-    images: [
-      'https://drive.google.com/file/d/1yDwPmF30DZYaKOoDrkz9o4GhIeOJ0Ows/view',
-      'https://drive.google.com/file/d/1LDdW-IBK3bLTYBu4oES7CYg60Dd1AdKu/view',
-      'https://drive.google.com/file/d/1LDdW-IBK3bLTYBu4oES7CYg60Dd1AdKu/view',
-    ],
-    price: 22,
-    amount: 34,
-    description: "Pop! Deluxe Albus Dumbledore with Hog's Head Inn",
-    sale: false,
-    collection: 'Harry Potter',
-    sublicense: null,
-    series: "Harry Potter and the Philosopher's Stone ",
-    category: 'Movies',
-    productType: 'Pop!',
-    date: '14.04.24',
-  },
-  {
-    id: 20,
-    name: 'Harley Quinn',
-    images: [
-      'https://drive.google.com/file/d/1x6BVSZWwC485D3I0bI_9ib5RIEQsilJS/view',
-      'https://drive.google.com/file/d/1Ot4cWKkghuOON1hDqr5mp-WAoGRTTl5W/view',
-    ],
-    price: 28,
-    amount: 52,
-    description: 'Pop! Harley Quinn with Bat',
-    sale: true,
-    collection: 'Marvel',
-    sublicense: null,
-    series: 'Suicide Squad',
-    category: 'Comics',
-    productType: 'Pop!',
-    date: '01.01.24',
-  },
-  {
-    id: 30,
-    name: 'Remus Lupin',
-    images: [
-      'https://drive.google.com/file/d/11bZN2iwJXmqWtnIHflVuiHKN9inBQae8/view',
-      'https://drive.google.com/file/d/1-khIfuzZMMFfwi9174d0TC6PDEYlciwt/view',
-    ],
-    price: 21,
-    amount: 35,
-    description: 'Pop! Remus Lupin with Map',
-    sale: false,
-    collection: 'Harry Potter',
-    sublicense: null,
-    series: 'Harry Potter and the Prisoner of Azkaban',
-    category: 'Movies',
-    productType: 'Pop!',
-    date: '02.02.24',
-  },
-  {
-    id: 41,
-    name: 'Homer Simpson',
-    images: [],
-    price: 23,
-    amount: 0,
-    description: 'Homer Pop!',
-    sale: false,
-    collection: 'The Simpsons',
-    sublicense: null,
-    series: 'Spiderman',
-    category: 'Anime',
-    productType: 'Pop!',
-    date: '02.03.24',
-  },
-  {
-    id: 45,
-    name: 'Yang',
-    images: [],
-    price: 21,
-    amount: 12,
-    description: 'Yang Pop!',
-    sale: false,
-    collection: 'Avatar',
-    sublicense: null,
-    series: 'Maleficent',
-    category: 'Anime',
-    productType: 'Pop!',
-    date: '02.03.24',
-  },
-];
 type Props = {};
 
 const Cart = (props: Props) => {
   const { data: session } = useSession();
   console.log(session);
 
-  const modifyOrders = allOrders.map(order => {
-    return { ...order, count: 1 };
-  });
-  // console.log(modifyOrders)
   const delivery = 1;
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
-  // const [notifyCart, setNotifyCart] = useState(false);
+  const [notifyCart, setNotifyCart] = useState(false);
+  // getUserOrders(Number(session?.user?.id), session?.token);
+  useEffect(() => {
+    if (session === null) {
+      setNotifyCart(true);
+      return;
+    }
+    async function fetchOrders() {
+      try {
+        const allOrders = await getUserOrders(
+          Number(session?.user?.id),
+          session?.token
+        );
 
-  // useEffect(() => {
-  //   if (session === null) {
-  //     setNotifyCart(true);
-  //   }
-  //   }
-  // , [session])
+        const modifyOrders = allOrders[0].map(order => {
+          return { ...order, count: 1 };
+        });
+        setCart(modifyOrders);
+        console.log(modifyOrders);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchOrders();
+  }, [session]);
 
   const toggleSelectedOrder = (newOrder: ICartCard) => {
     // console.log(newOrder);
@@ -212,14 +139,14 @@ const Cart = (props: Props) => {
                   </div>
 
                   <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
-                    {card.images.length === 0 ? (
+                    {card.img.length === 0 ? (
                       <Image src={ImgPlaceholder} alt="card-picture" />
                     ) : (
                       <Image
                         src={
-                          card.images[0].slice(0, 25) +
+                          card.img.slice(0, 25) +
                           'uc?id=' +
-                          card.images[0].slice(32, 65)
+                          card.img.slice(32, 65)
                         }
                         // src={icon}
                         width={150}
@@ -236,7 +163,7 @@ const Cart = (props: Props) => {
 
                       <div className="flex justify-between md:flex-row-reverse md:gap-6 md:justify-start md:items-center md:ml-auto">
                         <p className="text-xs font-semibold md:text-base">
-                          {card.price}$
+                          {card.pricePerItem}$
                         </p>
                         {card.amount > 0 && (
                           <div className="flex items-center gap-[10px] mb-[6px] md:mb-0">
@@ -314,7 +241,7 @@ const Cart = (props: Props) => {
                     </p>
                   )}
                   <p className="text-xs font-semibold md:text-sm">
-                    {card.price}$
+                    {card.pricePerItem}$
                   </p>
                 </li>
               ))}
@@ -334,7 +261,7 @@ const Cart = (props: Props) => {
                 Total
                 <span>
                   {[...orders].reduce((total, order) => {
-                    return total + order.price * order.count;
+                    return total + order.pricePerItem * order.count;
                   }, delivery)}
                   $
                 </span>
@@ -379,23 +306,14 @@ const Cart = (props: Props) => {
             <Link href={`/catalog`} className="p-1  font-semibold">
               Catalog
             </Link>
-            <button
-              onClick={() => {
-                throw new Error('Unexpected error');
-              }}
-              type="button"
-              className="uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-[#31304D] bg-white text-base not-italic font-bold  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear md:px-[90px] xl:w-[302px]"
-            >
-              Fast order
-            </button>
           </p>
         </div>
       )}
-      {/* <Notification notify={notifyCart} setNotify={setNotifyCart}>
+      <Notification notify={notifyCart} setNotify={setNotifyCart}>
         <p className="pt-5 text-sm md:text-base font-semibold">
           You are not logged in. If you want to buy the product, you must log in
         </p>
-      </Notification> */}
+      </Notification>
     </section>
   );
 };
