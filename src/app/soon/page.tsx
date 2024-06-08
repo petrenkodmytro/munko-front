@@ -1,8 +1,12 @@
-import React from "react";
+import React, {Suspense} from 'react';
 import CatalogPage from '@/components/catalog-page/catalog-page';
 
 const ComingSoon = () => {
-  return <CatalogPage sale={false} inStock={false}/>;
+  return (
+    <Suspense>
+      <CatalogPage sale={false} inStock={false} />;
+    </Suspense>
+  );
 };
 
 export default ComingSoon;
