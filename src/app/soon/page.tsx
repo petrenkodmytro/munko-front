@@ -1,8 +1,8 @@
 import React from "react";
-import SoonPage from "@/components/soon/soon-page";
+import CatalogPage from '@/components/catalog-page/catalog-page';
 
 const ComingSoon = () => {
-  return <SoonPage sale={false}/>;
+  return <CatalogPage sale={false} inStock={false}/>;
 };
 
 export default ComingSoon;
