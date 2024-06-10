@@ -1,6 +1,7 @@
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import SearchIcon from './../../../public/icons/search-icon.svg';
+import { useRouter } from 'next/navigation';
 
 const SearchForm = () => {
   const searchSchema = Yup.object().shape({
@@ -11,12 +12,14 @@ const SearchForm = () => {
       .required('Too Short! min 3'),
   });
 
+  const router = useRouter();
+
   return (
     <Formik
       initialValues={{ search: '' }}
       validationSchema={searchSchema}
       onSubmit={(values, actions) => {
-        alert(JSON.stringify(values, null, 2));
+        router.push(`/catalog/?search=${values.search}`);
         actions.resetForm();
       }}
     >

@@ -278,10 +278,10 @@ export const getUserOrders = async (
   return data;
 };
 
-export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
+export const getFilteredCatalog = async (filteredParams: IFilteredParams, name:string) => {
   // const stringified = `[${filteredParams.category .map(b => `"${b}"`).join(', ')}]`;
   const query = gql`
-    query GetAllItems {
+    query GetAllItems ($name: String) {
       getAllItems(
         searchCriteria: {
           category: ${filteredParams.searchCriteria.category}
@@ -290,6 +290,7 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
           sale: ${filteredParams.searchCriteria.sale}
           price: { from: ${filteredParams.searchCriteria.priceFrom}, to: ${filteredParams.searchCriteria.priceTo} }
           inStock: ${filteredParams.searchCriteria.inStock}
+          name: $name
         }
         paging: { page: ${filteredParams.paging.page}, perPage: ${filteredParams.paging.perPage} }
         orderBy: ${filteredParams.orderBy}
@@ -318,7 +319,7 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
       }
     }
   `;
-  const data: IDataFilteredCatalog = await graphQLClient.request(query);
+  const data: IDataFilteredCatalog = await graphQLClient.request(query, {name});
   let dataCards = data.getAllItems;
   // console.log(dataCards)
   return dataCards;
@@ -410,5 +411,38 @@ export const googleLoginUser = async (
     return loggedUser.googleAuth;
   } catch (error) {
     console.error('Error login user:', error);
+  }
+};
+
+export const getSearchedCatalog = async (name: string) => {
+  const query = gql`
+    query GetAllItems ($name: String!) {
+      getAllItems(paging: { perPage: 12 }, searchCriteria: { name: $name }) {
+        items {
+          id
+          name
+          images
+          price
+          amount
+          description
+          sale
+          collection
+          sublicense
+          series
+          category
+          productType
+          date
+        }
+      }
+    }
+  `;
+  try {
+    const data: IDataCatalog = await graphQLClient.request(query, {name});
+    let dataCards = data.getAllItems.items;
+    // console.log(dataCards)
+    return dataCards;
+  } catch (error) {
+    console.log(error);
+    return [];
   }
 };

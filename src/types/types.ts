@@ -54,7 +54,7 @@ export interface IPropsFilter {
   priceTo: string;
   setPriceFrom: (priceFrom: string) => void;
   setPriceTo: (priceFrom: string) => void;
-  stock: boolean;
+  stock: boolean | null;
   setStock: (stock: boolean) => void;
   stockShow: boolean;
   sale: boolean;
@@ -81,6 +81,7 @@ export interface IFilteredParams {
     priceTo: string | null;
     sale: boolean | null;
     inStock: boolean | null;
+    name: string | null;
   };
   orderBy: string;
   paging: { page: number; perPage: number };
@@ -121,3 +122,15 @@ export interface ICartCard {
   pricePerItem: number;
   count: number;
 }
+
+// export interface CustomError extends Error {
+//   extensions: {
+//     classification: string
+//   },
+//   locations:{
+//     line: number,
+//     column: number,
+//   }[],
+//   message: string,
+//   path:string[],
+// }

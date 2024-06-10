@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import Spinner from '@/app/loading';
+import Spinner from '@/components/loading/loading';
 
 const ErrorPage = () => {
   const router = useRouter();

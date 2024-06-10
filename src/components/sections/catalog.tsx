@@ -5,7 +5,7 @@ import Link from 'next/link';
 import CardsCarousel from '../card/card-carousel';
 import { ICard } from '@/types/types';
 import { getCatalog } from '@/api/api';
-import Spinner from '@/app/loading';
+import Spinner from '@/components/loading/loading';
 
 const Catalog = ({ width }: { width: number }) => {
   const [cardsCatalog, setCardsCatalog] = useState<ICard[]>([]);
