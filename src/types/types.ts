@@ -123,6 +123,19 @@ export interface ICartCard {
   count: number;
 }
 
+export interface IUserOrders {
+  id: number;
+  status: string;
+  orderItems: ICartCard[];
+  userId: {
+    id: number;
+    firstName: string;
+    lastName: string | null;
+    email: string;
+    phone: number | null;
+  };
+}
+
 // export interface CustomError extends Error {
 //   extensions: {
 //     classification: string

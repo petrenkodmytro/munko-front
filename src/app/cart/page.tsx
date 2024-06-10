@@ -10,7 +10,7 @@ import CheckOrder from './../../../public/icons/check-cart.svg';
 import { useEffect, useState } from 'react';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
-import { getUserOrders } from '@/api/api';
+import { getUserCart } from '@/api/api';
 import Notification from '@/components/notification-modal/notification';
 
 type Props = {};
@@ -31,16 +31,16 @@ const Cart = (props: Props) => {
     }
     async function fetchOrders() {
       try {
-        const allOrders = await getUserOrders(
+        const allOrders: ICartCard[] = await getUserCart(
           Number(session?.user?.id),
           session?.token
         );
-
-        const modifyOrders = allOrders[0].map(order => {
+        console.log(allOrders);
+        const modifyOrders = allOrders.map(order => {
           return { ...order, count: 1 };
         });
         setCart(modifyOrders);
-        console.log(modifyOrders);
+        // console.log(modifyOrders);
       } catch (error) {
         console.log(error);
       }

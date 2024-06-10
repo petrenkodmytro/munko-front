@@ -33,6 +33,10 @@ interface IDataReviewById {
   getFunkoReviews: IReview[];
 }
 
+interface IDataOrdersItems {
+  getOrderItems: [];
+}
+
 export const getCatalog = async () => {
   const query = gql`
     query GetAllItems {
@@ -253,13 +257,13 @@ export const addToCart = async (
   return data;
 };
 
-export const getUserOrders = async (
+export const getUserCart = async (
   userId: number,
   token: string | undefined
 ) => {
   const query = gql`
     query GetOrderItems {
-    getOrderItems(userId: ${userId}) {
+      getOrderItems(userId: ${userId}) {
         id
         img
         name
@@ -272,13 +276,20 @@ export const getUserOrders = async (
   const requestHeaders = {
     authorization: `Bearer ${token}`,
   };
-  const data = await graphQLClient.request(query, { userId }, requestHeaders);
+  const data: IDataOrdersItems = await graphQLClient.request(
+    query,
+    { userId },
+    requestHeaders
+  );
 
-  console.log(data);
-  return data;
+  console.log(data.getOrderItems);
+  return data.getOrderItems;
 };
 
-export const getFilteredCatalog = async (filteredParams: IFilteredParams, name:string) => {
+export const getFilteredCatalog = async (
+  filteredParams: IFilteredParams,
+  name: string
+) => {
   // const stringified = `[${filteredParams.category .map(b => `"${b}"`).join(', ')}]`;
   const query = gql`
     query GetAllItems ($name: String) {
@@ -319,7 +330,9 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams, name:s
       }
     }
   `;
-  const data: IDataFilteredCatalog = await graphQLClient.request(query, {name});
+  const data: IDataFilteredCatalog = await graphQLClient.request(query, {
+    name,
+  });
   let dataCards = data.getAllItems;
   // console.log(dataCards)
   return dataCards;
@@ -416,7 +429,7 @@ export const googleLoginUser = async (
 
 export const getSearchedCatalog = async (name: string) => {
   const query = gql`
-    query GetAllItems ($name: String!) {
+    query GetAllItems($name: String!) {
       getAllItems(paging: { perPage: 12 }, searchCriteria: { name: $name }) {
         items {
           id
@@ -437,7 +450,7 @@ export const getSearchedCatalog = async (name: string) => {
     }
   `;
   try {
-    const data: IDataCatalog = await graphQLClient.request(query, {name});
+    const data: IDataCatalog = await graphQLClient.request(query, { name });
     let dataCards = data.getAllItems.items;
     // console.log(dataCards)
     return dataCards;
