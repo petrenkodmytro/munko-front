@@ -10,7 +10,6 @@ import LogoutIcon from './../../../public/icons/logout_icon.svg';
 import LogoutIconHover from './../../../public/icons/logout_icon hover.svg';
 import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
 import { useSession, signOut } from 'next-auth/react';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Notification from '../notification-modal/notification';
 

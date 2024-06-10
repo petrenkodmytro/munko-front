@@ -4,7 +4,7 @@ import Card from '../card/Card';
 import CardsCarousel from '../card/card-carousel';
 import { getCatalog } from '@/api/api';
 import { ICard } from '@/types/types';
-import Spinner from '@/app/loading';
+import Spinner from '@/components/loading/loading';
 
 const Popular = ({ width }: { width?: number }) => {
   const [cardsCatalog, setCardsCatalog] = useState<ICard[]>([]);

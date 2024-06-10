@@ -11,6 +11,7 @@ import Link from 'next/link';
 import SimplePagination from './pagination';
 import useWindowSize from '@/hooks/useWindowSize';
 import { useRouter } from 'next/navigation';
+import Spinner from '@/components/loading/loading';
 
 type Props = {
   cardsCatalog: ICard[];
@@ -20,12 +21,18 @@ type Props = {
     series: string[];
   };
   saleProps: boolean;
+  inStockProps: boolean | null;
+  searchValue: string;
+  isLoading: boolean;
 };
 
 const CatalogFilter = ({
   cardsCatalog,
   filterAttributes,
   saleProps,
+  searchValue,
+  isLoading,
+  inStockProps
 }: Props) => {
   const { width } = useWindowSize();
   // console.log(width);
@@ -37,7 +44,7 @@ const CatalogFilter = ({
   const [sortBy, setSortBy] = useState('IdAsc');
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
-  const [stock, setStock] = useState(false);
+  const [stock, setStock] = useState<boolean | null>(inStockProps);
   const [sale, setSale] = useState(saleProps);
   const [colectionSearchParams, setColectionSearchParams] = useState<string[]>(
     []
@@ -53,6 +60,13 @@ const CatalogFilter = ({
     pageCount: 0,
     totalCount: 0,
   });
+  const [searchInputValue, setSearchInputValue] = useState(searchValue);
+
+  useEffect(() => {
+    if (searchValue) {
+      setSearchInputValue(searchValue);
+    }
+  }, [searchValue]);
 
   useEffect(() => {
     const search = async () => {
@@ -65,13 +79,14 @@ const CatalogFilter = ({
           priceTo: null,
           sale: null,
           inStock: null,
+          name: null,
         },
         orderBy: sortBy,
         paging: { page: pageCatalog, perPage: 12 },
       };
 
-      if (stock) {
-        filteredParams.searchCriteria.inStock = true;
+      if (stock !== null) {
+        filteredParams.searchCriteria.inStock = stock;
       }
       if (sale) {
         filteredParams.searchCriteria.sale = true;
@@ -102,11 +117,16 @@ const CatalogFilter = ({
         pageCount: 0,
         totalCount: 0,
       };
+      console.log(filteredParams);
+      
       try {
-        const dataFilteredCatalog = await getFilteredCatalog(filteredParams);
+        const dataFilteredCatalog = await getFilteredCatalog(
+          filteredParams,
+          searchInputValue
+        );
         currentfilteredCatalog = dataFilteredCatalog.items;
         pagination = dataFilteredCatalog.paging;
-        // console.log('currentfilteredCatalog', currentfilteredCatalog);
+        console.log('currentfilteredCatalog', currentfilteredCatalog);
         // console.log('pagination', pagination);
       } catch (error) {
         console.log(error);
@@ -131,6 +151,7 @@ const CatalogFilter = ({
     sale,
     pageCatalog,
     sortBy,
+    searchInputValue,
   ]);
 
   const toggleSelectedFilter = (filterName: string, value: string) => {
@@ -240,7 +261,7 @@ const CatalogFilter = ({
                 setPriceTo={setPriceTo}
                 stock={stock}
                 setStock={setStock}
-                stockShow={true}
+                stockShow={inStockProps !== null ? inStockProps : true}
                 sale={sale}
                 setSale={setSale}
                 toggleSelectedFilter={toggleSelectedFilter}
@@ -277,7 +298,7 @@ const CatalogFilter = ({
               setPriceTo={setPriceTo}
               stock={stock}
               setStock={setStock}
-              stockShow={true}
+              stockShow={inStockProps !== null ? inStockProps : true}
               sale={sale}
               setSale={setSale}
               toggleSelectedFilter={toggleSelectedFilter}
@@ -292,7 +313,11 @@ const CatalogFilter = ({
         )}
 
         {/* Catalog */}
-        {filteredCardsCatalog.length === 0 ? (
+        {isLoading ? (
+          <div className='flex justify-center w-full'>
+            <Spinner />
+          </div>
+        ) : filteredCardsCatalog.length === 0 ? (
           <div className="text-2xl flex items-center flex-col gap-[30px] my-5 md:my-9 md:px-16 md:flex-row md:flex-wrap justify-center lg:justify-evenly md:gap-[70px] xl:w-[894px] xl:px-0 xl:mt-0 xl:gap-[84px]">
             За данними критеріями пошуку результатів не знайдено
           </div>

@@ -254,7 +254,7 @@ const Filter = ({
               type="checkbox"
               name="In stock"
               id="In stock"
-              checked={stock}
+              checked={stock !== null ? stock : undefined}
               onChange={() => {
                 setStock(!stock);
                 setPageCatalog(0);
