@@ -118,6 +118,12 @@ export interface ICartCard extends ICard {
   count: number;
 }
 
+export interface PopupProps {
+  notifyCart: boolean;
+  setNotifyCart: (modalState: boolean) => void;
+  handleOpenPopUp?: () => void;
+} 
+
 // export interface CustomError extends Error {
 //   extensions: {
 //     classification: string
@@ -129,3 +135,4 @@ export interface ICartCard extends ICard {
 //   message: string,
 //   path:string[],
 // }
+

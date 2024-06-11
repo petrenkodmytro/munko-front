@@ -11,7 +11,7 @@ import ShowPasswordIcon from './../../../public/icons/show-password.svg';
 import HidePassword from './../../../public/icons/hide-password.svg';
 import { useRouter } from 'next/navigation';
 import { createNewUser } from '@/api/api';
-import PasswordNotification from '../notification-modal/password-notification';
+import RegSuccess from '../pop-ups/reg-success';
 
 interface SignForm {
   handleToogleChange: () => void;
@@ -20,7 +20,7 @@ interface SignForm {
 
 const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
   const router = useRouter();
-  const [modalState, setModalState] = useState(false);
+  // const [modalState, setModalState] = useState(false);
   const [notifyCart, setNotifyCart] = useState(false);
   const [error, setError] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -122,7 +122,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
           if (login?.error) {
             setError(true);
           } else {
-            // onDestroy();
+            onDestroy();
           }
         } else {
           setError(true);
@@ -263,7 +263,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
               </label>
             </div>
           </div>
-          <p className="font-medium text-center text-[8px] m-auto pb-3">
+          <p className="font-medium text-center text-[10px] m-auto pb-3">
             or sign in with
           </p>
           <div className="mt-0.5 border border-blueBorder"></div>
@@ -275,17 +275,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
               <InstagramImage />
             </Link> */}
           </div>
-          <PasswordNotification notify={notifyCart} setNotify={setNotifyCart} onDestroy={onDestroy}>
-        <div className="flex flex-col items-center">
-          {' '}
-          <p className="text-sm md:text-base font-semibold">
-          Registration was successful!
-          </p>
-          <p className="pt-2.5 text-xs md:text-sm font-medium">
-          You can change or look for your personal information in your cabinet
-          </p>
-        </div>
-      </PasswordNotification>
+              <RegSuccess notifyCart={notifyCart} setNotifyCart={setNotifyCart} />
         </Form>
       )}
     </Formik>
