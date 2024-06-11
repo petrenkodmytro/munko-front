@@ -11,8 +11,12 @@ import IconStarEmpty from './../../../public/icons/rating-empty-icon.svg';
 import { IReview } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { addReview, deleteReview, getReviewsById } from '@/api/api';
-import Notification from '../notification-modal/notification';
 import ModalWnd from '../modal/modal-window';
+import NotLogin from '../pop-ups/not-login';
+import ForgetPassword from '../pop-ups/forget-password';
+import InputNewPassword from '../pop-ups/new-password';
+import Instructions from '../pop-ups/instructions';
+import NewPassConfirm from '../pop-ups/new-pass-confirm';
 
 type Props = {
   cardId: string;
@@ -38,6 +42,10 @@ const CardReviews = ({
   const [ratingValue, setRatingValue] = useState<number | null>(0);
   const [newReview, setNewReview] = useState<Omit<IReview, 'id'> | null>(null);
   const [idRemoveReview, setIdRemoveReview] = useState<number | null>(null);
+  const [forget, setForget] = useState(false);
+  const [inputNewPassword, setInputNewPassword] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
+  const [showPassConfirm, setShowPassConfirm] = useState(false);
 
   const { data: session } = useSession();
   const token: string | undefined = session?.token;
@@ -99,6 +107,30 @@ const CardReviews = ({
     };
     // console.log(newReview);
     setNewReview(newReview);
+  };
+
+  const handleModalOpen = () => {
+    setModalState(!modalState);
+  };
+
+  const handleForgetOpen = () => {
+    setForget(true);
+    setModalState(false);    
+  };
+  
+  const handleNewPasswordOpen = () => {
+    setForget(false);
+    setInputNewPassword(true);
+  };
+
+  const handleInstructionsOpen = () => {
+    setInputNewPassword(false);
+    setShowInstructions(true);
+  };
+
+  const handlePassConfrimOpen = () => {
+    setShowInstructions(false);
+    setShowPassConfirm(true);
   };
 
   return (
@@ -168,26 +200,35 @@ const CardReviews = ({
           ))}
         </ul>
       </div>
-      <Notification notify={notify} setNotify={setNotify}>
-        <div className="flex flex-col gap-7 items-center">
-          {' '}
-          <p className="pt-5 text-sm md:text-base font-semibold">
-            You are not logged in. If you want to leave a review, you must log
-            in
-          </p>
-          <button
-            onClick={() => {
-              setModalState(true);
-              setNotify(false);
-            }}
-            type="button"
-            className="w-[137px] uppercase px-8 py-2 rounded-[5px] border-2 border-current text-white text-xl not-italic font-semibold  bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
-          >
-            login
-          </button>
-        </div>
-      </Notification>
-      <ModalWnd call={modalState} onDestroy={() => setModalState(false)} />
+      <NotLogin
+        notifyCart={notify}
+        setNotifyCart={setNotify}
+        handleOpenPopUp={handleModalOpen}
+      />
+      <ForgetPassword
+        notifyCart={forget}
+        setNotifyCart={setForget}
+        handleOpenPopUp={handleNewPasswordOpen}
+      />
+      <InputNewPassword
+        notifyCart={inputNewPassword}
+        setNotifyCart={setInputNewPassword}
+        handleOpenPopUp={handleInstructionsOpen}
+      />
+      <Instructions
+        notifyCart={showInstructions}
+        setNotifyCart={setShowInstructions}
+        handleOpenPopUp={handlePassConfrimOpen}
+      />
+      <NewPassConfirm
+        notifyCart={showPassConfirm}
+        setNotifyCart={setShowPassConfirm}
+      />
+      <ModalWnd
+        call={modalState}
+        onDestroy={() => setModalState(false)}
+        handleForgetOpen={handleForgetOpen}
+      />
     </div>
   );
 };

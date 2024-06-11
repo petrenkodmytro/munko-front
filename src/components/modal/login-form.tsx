@@ -138,13 +138,12 @@ const LoginForm: React.FC<LoginForm> = ({
             >
               {formik.isSubmitting ? 'Please wait...' : 'LOGIN'}
             </button>
-            <Link
-              href={'/'}
+            <button
               onClick={handleForgetOpen}
               className="underline font-semibold text-[9px] mx-3 hover:text-[#686868] duration-200 ease-linear"
             >
               Forgot your password?
-            </Link>
+            </button>
           </div>
           <p className="font-medium text-[10px] text-center pb-3">
             or login with

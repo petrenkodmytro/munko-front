@@ -11,7 +11,6 @@ import LogoutIconHover from './../../../public/icons/logout_icon hover.svg';
 import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Notification from '../notification-modal/notification';
 import NotLogin from '../pop-ups/not-login';
 import ForgetPassword from '../pop-ups/forget-password';
 import InputNewPassword from '../pop-ups/new-password';
