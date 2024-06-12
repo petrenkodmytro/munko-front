@@ -23,7 +23,7 @@ const Cart = (props: Props) => {
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
   const [notifyCart, setNotifyCart] = useState(false);
-  // getUserOrders(Number(session?.user?.id), session?.token);
+
   useEffect(() => {
     if (session === null) {
       setNotifyCart(true);
@@ -36,11 +36,7 @@ const Cart = (props: Props) => {
           session?.token
         );
         console.log(allOrders);
-        const modifyOrders = allOrders.map(order => {
-          return { ...order, count: 1 };
-        });
-        setCart(modifyOrders);
-        // console.log(modifyOrders);
+        setCart(allOrders);
       } catch (error) {
         console.log(error);
       }
@@ -58,7 +54,6 @@ const Cart = (props: Props) => {
     }
     setOrders(currentOrders);
   };
-  // console.log(orders);
 
   const removeItem = (card: ICartCard) => {
     let currentCart = [...cart];
@@ -70,13 +65,13 @@ const Cart = (props: Props) => {
   };
 
   const handleIncreaceCount = (card: ICartCard) => {
-    if (card.count === card.amount) {
+    if (card.amount === card.funkoPop.amount) {
       return;
     } else {
       setCart(
         cart.map(item => {
           if (item.id === card.id) {
-            item.count++;
+            item.amount++;
           }
           return item;
         })
@@ -85,13 +80,13 @@ const Cart = (props: Props) => {
   };
 
   const handleDecreaceCount = (card: ICartCard) => {
-    if (card.count < 2) {
+    if (card.amount < 2) {
       return;
     } else {
       setCart(
         cart.map(item => {
           if (item.id === card.id) {
-            item.count--;
+            item.amount--;
           }
           return item;
         })
@@ -129,8 +124,8 @@ const Cart = (props: Props) => {
                       type="checkbox"
                       // checked={orders.includes(card.id)}
                       onChange={() => toggleSelectedOrder(card)}
-                      name={card.name}
-                      id={card.name}
+                      name={card.funkoPop.name}
+                      id={card.funkoPop.name}
                       // hidden={card.amount === 0}
                       disabled={card.amount === 0}
                       className="  appearance-none peer shrink-0  w-[24px] h-[24px] rounded-full shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
@@ -139,14 +134,14 @@ const Cart = (props: Props) => {
                   </div>
 
                   <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
-                    {card.img.length === 0 ? (
+                    {card.funkoPop.images.length === 0 ? (
                       <Image src={ImgPlaceholder} alt="card-picture" />
                     ) : (
                       <Image
                         src={
-                          card.img.slice(0, 25) +
+                          card.funkoPop.images[0].slice(0, 25) +
                           'uc?id=' +
-                          card.img.slice(32, 65)
+                          card.funkoPop.images[0].slice(32, 65)
                         }
                         // src={icon}
                         width={150}
@@ -158,12 +153,12 @@ const Cart = (props: Props) => {
                   <div className="grow">
                     <div className="md:flex md:items-center">
                       <p className="mb-[6px] text-xs font-bold md:text-base xl:w-[400px]">
-                        {card.name}
+                        {card.funkoPop.name}
                       </p>
 
                       <div className="flex justify-between md:flex-row-reverse md:gap-6 md:justify-start md:items-center md:ml-auto">
                         <p className="text-xs font-semibold md:text-base">
-                          {card.pricePerItem}$
+                          {card.funkoPop.price}$
                         </p>
                         {card.amount > 0 && (
                           <div className="flex items-center gap-[10px] mb-[6px] md:mb-0">
@@ -174,7 +169,7 @@ const Cart = (props: Props) => {
                             >
                               -
                             </button>
-                            <p className="text-xs font-bold">{card.count}</p>
+                            <p className="text-xs font-bold">{card.amount}</p>
                             <button
                               onClick={() => handleIncreaceCount(card)}
                               type="button"
@@ -187,11 +182,11 @@ const Cart = (props: Props) => {
                       </div>
                     </div>
 
-                    {card.amount > 0 ? (
+                    {card.funkoPop.amount > 0 ? (
                       <p className="text-xs font-bold text-[#34A853]">
                         In stock{' '}
                         <span className="text-[#B1B1B1] text-[10px]">
-                          ({card.amount})
+                          ({card.funkoPop.amount})
                         </span>
                       </p>
                     ) : (
@@ -233,15 +228,17 @@ const Cart = (props: Props) => {
             <ul className="flex flex-col gap-4">
               {orders.map(card => (
                 <li key={card.id} className="flex justify-between">
-                  <p className="text-xs font-bold md:text-sm">{card.name}</p>
-                  {card.count > 1 && (
+                  <p className="text-xs font-bold md:text-sm">
+                    {card.funkoPop.name}
+                  </p>
+                  {card.amount > 1 && (
                     <p className="ml-auto text-xs font-semibold md:text-sm">
-                      {card.count}
+                      {card.amount}
                       <span className="px-2">x</span>
                     </p>
                   )}
                   <p className="text-xs font-semibold md:text-sm">
-                    {card.pricePerItem}$
+                    {card.funkoPop.price}$
                   </p>
                 </li>
               ))}
@@ -261,7 +258,7 @@ const Cart = (props: Props) => {
                 Total
                 <span>
                   {[...orders].reduce((total, order) => {
-                    return total + order.pricePerItem * order.count;
+                    return total + order.funkoPop.price * order.amount;
                   }, delivery)}
                   $
                 </span>

@@ -5,6 +5,7 @@ import {
   IFilterAttributes,
   IFilteredParams,
   IReview,
+  ICartCard,
 } from '@/types/types';
 import { GraphQLClient, gql } from 'graphql-request';
 
@@ -33,8 +34,8 @@ interface IDataReviewById {
   getFunkoReviews: IReview[];
 }
 
-interface IDataOrdersItems {
-  getOrderItems: [];
+interface IDataCartItems {
+  getOrderItems: ICartCard[];
 }
 
 export const getCatalog = async () => {
@@ -224,23 +225,38 @@ export const addToCart = async (
   token: string | undefined
 ) => {
   const mutation = gql`
-    mutation CreateOrder {
-      createOrder(funkoId: ${funkoId}, userId: ${userId}) {
+    mutation AddItemInBasket {
+    addItemInBasket(funkoId: ${funkoId}, userId: ${userId}) {
         id
-        orderItems {
+        amount
+        funkoPop {
           id
-          img
-          name
-          amount
-          pricePerItem
         }
-        userId {
-          id
-          firstName
-          lastName
-        }
-        status
-      }
+    }
+  }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data = await graphQLClient.request(
+    mutation,
+    { funkoId, userId },
+    requestHeaders
+  );
+
+  console.log('AddItemInBasket', data);
+  return data;
+};
+
+export const removeFromCart = async (
+  funkoId: number,
+  userId: number,
+  token: string | undefined
+) => {
+  const mutation = gql`
+    mutation DeleteItemInBasket {
+      deleteItemInBasket(userId: ${userId}, itemId: ${funkoId})
     }
   `;
 
@@ -253,7 +269,7 @@ export const addToCart = async (
     requestHeaders
   );
 
-  // console.log(data);
+  console.log('DeleteItemInBasket', data);
   return data;
 };
 
@@ -265,18 +281,30 @@ export const getUserCart = async (
     query GetOrderItems {
       getOrderItems(userId: ${userId}) {
         id
-        img
-        name
         amount
-        pricePerItem
+        funkoPop {
+            id
+            name
+            images
+            price
+            amount
+            description
+            sale
+            collection
+            sublicense
+            series
+            category
+            productType
+            date
+        }
+      }
     }
-}
   `;
 
   const requestHeaders = {
     authorization: `Bearer ${token}`,
   };
-  const data: IDataOrdersItems = await graphQLClient.request(
+  const data: IDataCartItems = await graphQLClient.request(
     query,
     { userId },
     requestHeaders

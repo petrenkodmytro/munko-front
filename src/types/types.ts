@@ -1,4 +1,4 @@
-import { User } from 'next-auth';
+// import { User } from 'next-auth';
 
 export interface ICard {
   id: number;
@@ -117,10 +117,7 @@ export interface IPagination {
 export interface ICartCard {
   id: number;
   amount: number;
-  img: string;
-  name: string;
-  pricePerItem: number;
-  count: number;
+  funkoPop: ICard;
 }
 
 export interface IUserOrders {

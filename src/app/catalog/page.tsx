@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 const Catalog = async () => {
   return (
     <Suspense>
-      <CatalogPage sale={false} inStock={null} />;
+      <CatalogPage sale={false} inStock={null} />
     </Suspense>
   );
 };
