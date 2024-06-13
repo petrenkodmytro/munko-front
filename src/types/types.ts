@@ -55,7 +55,7 @@ export interface IPropsFilter {
   setPriceFrom: (priceFrom: string) => void;
   setPriceTo: (priceFrom: string) => void;
   stock: boolean | null;
-  setStock: (stock: boolean) => void;
+  setStock: (stock: boolean | null) => void;
   stockShow: boolean;
   sale: boolean;
   setSale: (sale: boolean) => void;
@@ -81,7 +81,7 @@ export interface IFilteredParams {
     priceTo: string | null;
     sale: boolean | null;
     inStock: boolean | null;
-    name: string | null;
+    name: string;
   };
   orderBy: string;
   paging: { page: number; perPage: number };
@@ -125,14 +125,19 @@ export interface PopupProps {
 } 
 
 // export interface CustomError extends Error {
-//   extensions: {
-//     classification: string
-//   },
-//   locations:{
-//     line: number,
-//     column: number,
-//   }[],
-//   message: string,
-//   path:string[],
+//   response:{
+//     errors:Array<{
+//       extensions: {
+//         classification: string
+//       },
+//       locations:{
+//         line: number,
+//         column: number,
+//       }[],
+//       message: string,
+//       path:string[],
+//     }>
+//     data:null;
+//   }
 // }
 

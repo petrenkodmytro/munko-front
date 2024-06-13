@@ -12,6 +12,7 @@ import HidePassword from './../../../public/icons/hide-password.svg';
 import { useRouter } from 'next/navigation';
 import { createNewUser } from '@/api/api';
 import RegSuccess from '../pop-ups/reg-success';
+import RegUnsuccess from '../pop-ups/reg-unsuccess';
 
 interface SignForm {
   handleToogleChange: () => void;
@@ -21,7 +22,8 @@ interface SignForm {
 const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
   const router = useRouter();
   // const [modalState, setModalState] = useState(false);
-  const [notifyCart, setNotifyCart] = useState(false);
+  const [regSuccess, setRegSuccess] = useState(false);
+  const [regUnsuccess, setRegUnsuccess] = useState(false);
   const [error, setError] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -111,7 +113,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
         const res = await createNewUser(newUser);
         if (res) {
           // onDestroy();
-          setNotifyCart(true);
+          setRegSuccess(true);
           const login = await signIn('credentials', {
             redirect: false,
             email: values.emailSign,
@@ -126,7 +128,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
           }
         } else {
           setError(true);
-          alert(`The email ${values.emailSign} is already registered`)
+          setRegUnsuccess(true)
         }
 
         actions.setSubmitting(false);
@@ -275,7 +277,8 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
               <InstagramImage />
             </Link> */}
           </div>
-              <RegSuccess notifyCart={notifyCart} setNotifyCart={setNotifyCart} />
+              <RegSuccess notifyCart={regSuccess} setNotifyCart={setRegSuccess} />
+              <RegUnsuccess notifyCart={regUnsuccess} setNotifyCart={setRegUnsuccess} />
         </Form>
       )}
     </Formik>

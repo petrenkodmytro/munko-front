@@ -60,9 +60,9 @@ export const getCatalog = async () => {
     let dataCards = data.getAllItems.items;
     // console.log(dataCards)
     return dataCards;
-  } catch (error) {
-    console.log(error);
-    return [];
+  } catch (error: any) {
+    console.log(error.response);
+    return error.response;
   }
 };
 
@@ -114,8 +114,8 @@ export const loginUser = async (email: string, password: string) => {
     });
     // console.log('User logged:', loggedUser);
     return loggedUser;
-  } catch (error) {
-    console.error('Error login user:', error);
+  } catch (error: any) {
+    console.error('Error login user:', error.response);
   }
 };
 
@@ -214,10 +214,10 @@ export const deleteReview = async (
   return data;
 };
 
-export const getFilteredCatalog = async (filteredParams: IFilteredParams, name:string) => {
+export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
   // const stringified = `[${filteredParams.category .map(b => `"${b}"`).join(', ')}]`;
   const query = gql`
-    query GetAllItems ($name: String) {
+    query GetAllItems {
       getAllItems(
         searchCriteria: {
           category: ${filteredParams.searchCriteria.category}
@@ -226,7 +226,7 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams, name:s
           sale: ${filteredParams.searchCriteria.sale}
           price: { from: ${filteredParams.searchCriteria.priceFrom}, to: ${filteredParams.searchCriteria.priceTo} }
           inStock: ${filteredParams.searchCriteria.inStock}
-          name: $name
+          name: "${filteredParams.searchCriteria.name}"
         }
         paging: { page: ${filteredParams.paging.page}, perPage: ${filteredParams.paging.perPage} }
         orderBy: ${filteredParams.orderBy}
@@ -255,8 +255,8 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams, name:s
       }
     }
   `;
-  const data: IDataFilteredCatalog = await graphQLClient.request(query, {name});
-  let dataCards = data.getAllItems;
+  const data: IDataFilteredCatalog = await graphQLClient.request(query);
+  let dataCards = data.getAllItems;  
   // console.log(dataCards)
   return dataCards;
 };
@@ -276,8 +276,8 @@ export const getFilterAttributes = async () => {
     const filterAttributes: IFilterAttributes =
       await graphQLClient.request(query);
     return filterAttributes.getAllAttributes;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log(error.response);
     return {
       categories: [],
       collections: [],

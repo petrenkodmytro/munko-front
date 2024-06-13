@@ -31,6 +31,9 @@ const UserShoppingCart = () => {
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
 
+  console.log(session);
+  
+
   useEffect(() => {
     if (search) {
       setModalState(true);
