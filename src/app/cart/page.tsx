@@ -10,7 +10,7 @@ import CheckOrder from './../../../public/icons/check-cart.svg';
 import { useEffect, useState } from 'react';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
-import { getUserCart } from '@/api/api';
+import { getUserCart, removeFromCart } from '@/api/api';
 import Notification from '@/components/notification-modal/notification';
 
 type Props = {};
@@ -55,13 +55,18 @@ const Cart = (props: Props) => {
     setOrders(currentOrders);
   };
 
-  const removeItem = (card: ICartCard) => {
-    let currentCart = [...cart];
-    currentCart = currentCart.filter(cartItem => cartItem.id !== card.id);
-    setCart(currentCart);
-    let currentOrders = [...orders];
-    currentOrders = currentOrders.filter(order => order.id !== card.id);
-    setOrders(currentOrders);
+  const removeItem = async (card: ICartCard) => {
+    try {
+      await removeFromCart(card.id, Number(session?.user?.id), session?.token);
+      let currentCart = [...cart];
+      currentCart = currentCart.filter(cartItem => cartItem.id !== card.id);
+      setCart(currentCart);
+      let currentOrders = [...orders];
+      currentOrders = currentOrders.filter(order => order.id !== card.id);
+      setOrders(currentOrders);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleIncreaceCount = (card: ICartCard) => {
