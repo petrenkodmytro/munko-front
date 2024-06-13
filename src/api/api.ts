@@ -5,6 +5,7 @@ import {
   IFilterAttributes,
   IFilteredParams,
   IReview,
+  ICartCard,
 } from '@/types/types';
 import { GraphQLClient, gql } from 'graphql-request';
 
@@ -31,6 +32,10 @@ interface IDataItem {
 
 interface IDataReviewById {
   getFunkoReviews: IReview[];
+}
+
+interface IDataCartItems {
+  getOrderItems: ICartCard[];
 }
 
 export const getCatalog = async () => {
@@ -186,8 +191,8 @@ export const addReview = async (
     { newReview },
     requestHeaders
   );
-  let dataReview = data;
-  console.log(data);
+  // let dataReview = data;
+  // console.log(data);
   return data;
 };
 
@@ -210,11 +215,109 @@ export const deleteReview = async (
     requestHeaders
   );
 
-  console.log(data);
+  // console.log(data);
   return data;
 };
 
-export const getFilteredCatalog = async (filteredParams: IFilteredParams, name:string) => {
+export const addToCart = async (
+  funkoId: number,
+  userId: number,
+  token: string | undefined
+) => {
+  const mutation = gql`
+    mutation AddItemInBasket {
+    addItemInBasket(funkoId: ${funkoId}, userId: ${userId}) {
+        id
+        amount
+        funkoPop {
+          id
+        }
+    }
+  }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data = await graphQLClient.request(
+    mutation,
+    { funkoId, userId },
+    requestHeaders
+  );
+
+  console.log('AddItemInBasket', data);
+  return data;
+};
+
+export const removeFromCart = async (
+  funkoId: number,
+  userId: number,
+  token: string | undefined
+) => {
+  const mutation = gql`
+    mutation DeleteItemInBasket {
+      deleteItemInBasket(userId: ${userId}, itemId: ${funkoId})
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data = await graphQLClient.request(
+    mutation,
+    { funkoId, userId },
+    requestHeaders
+  );
+
+  console.log('DeleteItemInBasket', data);
+  return data;
+};
+
+export const getUserCart = async (
+  userId: number,
+  token: string | undefined
+) => {
+  const query = gql`
+    query GetOrderItems {
+      getOrderItems(userId: ${userId}) {
+        id
+        amount
+        funkoPop {
+            id
+            name
+            images
+            price
+            amount
+            description
+            sale
+            collection
+            sublicense
+            series
+            category
+            productType
+            date
+        }
+      }
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data: IDataCartItems = await graphQLClient.request(
+    query,
+    { userId },
+    requestHeaders
+  );
+
+  console.log(data.getOrderItems);
+  return data.getOrderItems;
+};
+
+export const getFilteredCatalog = async (
+  filteredParams: IFilteredParams,
+  name: string
+) => {
   // const stringified = `[${filteredParams.category .map(b => `"${b}"`).join(', ')}]`;
   const query = gql`
     query GetAllItems ($name: String) {
@@ -255,7 +358,9 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams, name:s
       }
     }
   `;
-  const data: IDataFilteredCatalog = await graphQLClient.request(query, {name});
+  const data: IDataFilteredCatalog = await graphQLClient.request(query, {
+    name,
+  });
   let dataCards = data.getAllItems;
   // console.log(dataCards)
   return dataCards;
@@ -352,7 +457,7 @@ export const googleLoginUser = async (
 
 export const getSearchedCatalog = async (name: string) => {
   const query = gql`
-    query GetAllItems ($name: String!) {
+    query GetAllItems($name: String!) {
       getAllItems(paging: { perPage: 12 }, searchCriteria: { name: $name }) {
         items {
           id
@@ -373,7 +478,7 @@ export const getSearchedCatalog = async (name: string) => {
     }
   `;
   try {
-    const data: IDataCatalog = await graphQLClient.request(query, {name});
+    const data: IDataCatalog = await graphQLClient.request(query, { name });
     let dataCards = data.getAllItems.items;
     // console.log(dataCards)
     return dataCards;
