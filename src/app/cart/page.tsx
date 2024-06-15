@@ -271,7 +271,11 @@ const Cart = (props: Props) => {
             )}
             <div className="mt-9 flex items-center justify-between md:flex-row-reverse xl:flex-col xl:mt-14 xl:gap-6">
               <button
-                onClick={() => alert(JSON.stringify(orders))}
+                onClick={() => {
+                  let res = orders.map(order => order.funkoPop.name);
+                  console.log(res);
+                  alert(JSON.stringify(res));
+                }}
                 disabled={orders.length === 0}
                 type="button"
                 className="w-[170px] md:w-[331px] xl:w-full px-5 py-2 md:py-2.5 text-xs md:text-base font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:enabled:hover:text-[#31304D] lg:enabled:hover:bg-white duration-200 ease-linear disabled:bg-[#B1B1B1]"

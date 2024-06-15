@@ -45,14 +45,13 @@ const Card = ({ card }: CardProps) => {
     <>
       {' '}
       <div className="w-[242px] h-[384px] flex flex-wrap md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
-        <Link href={`/catalog/${card.id}`}>
+        <Link href={`/catalog/${card.id}`} className='w-full'>
           <div className="w-[173px] h-[153px] flex justify-center items-center bg-[#F5F5F5] m-auto">
             {card.images.length === 0 ? (
               <Image
                 src={ImgPlaceholder}
-                // src={icon}
-                // width={150}
-                // height={138}
+                width={150}
+                height={138}
                 alt="card-picture"
               />
             ) : (
@@ -62,7 +61,6 @@ const Card = ({ card }: CardProps) => {
                   'uc?id=' +
                   card.images[0].slice(32, 65)
                 }
-                // src={icon}
                 width={150}
                 height={138}
                 alt="card-picture"
