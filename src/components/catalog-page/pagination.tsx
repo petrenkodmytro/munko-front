@@ -1,3 +1,4 @@
+import { animateScroll } from 'react-scroll';
 import IconArrowLeft from '../../../public/icons/arrow-left-pagination.svg';
 import IconArrowRight from '../../../public/icons/arrow-right-pagination.svg';
 
@@ -15,14 +16,27 @@ const SimplePagination = ({
   paginationValue,
   setPageCatalog,
 }: IPaginationProps) => {
+
+
+
+const options = {
+  // your options here, for example:
+  duration: 700,
+  smooth: true,
+};
+
+
+
   const next = () => {
     if (paginationValue.page + 1 === paginationValue.pageCount) return;
     setPageCatalog(paginationValue.page + 1);
+    animateScroll.scrollToTop(options);
   };
 
   const prev = () => {
     if (paginationValue.page + 1 === 1) return;
     setPageCatalog(paginationValue.page - 1);
+    animateScroll.scrollToTop(options);
   };
 
   return (
