@@ -1,4 +1,5 @@
 'use client';
+
 import { getCatalog, getFilterAttributes } from '@/api/api';
 import CatalogFilter from './catalog-filter';
 import { useSearchParams } from 'next/navigation';
@@ -48,8 +49,8 @@ const CatalogPage = ({ sale, inStock }: ICatalogPageProps) => {
   useEffect(() => {
     if (cardsCatalog.length === 0 && filterAttributes.categories.length === 0) {
       setIsLoading(true);
-      } else {
-      setIsLoading(false);  
+    } else {
+      setIsLoading(false);
     }
   }, [cardsCatalog.length, filterAttributes.categories.length]);
 

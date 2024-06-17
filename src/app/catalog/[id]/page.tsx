@@ -6,7 +6,7 @@ const page = () => {
     <>
       <ProductCard />
       <div className="pl-4 pt-[30px] pb-10 md:hidden xl:block xl:px-20 xl:pb-[72px]">
-        <Popular />
+        <Popular width={750} />
       </div>
     </>
   );

@@ -35,7 +35,7 @@ const CardReviews = ({
   setModalState,
 }: Props) => {
   const [reviews, setReviews] = useState<IReview[]>([]);
-  const [ratingValue, setRatingValue] = useState<number | null>(0);
+  const [ratingValue, setRatingValue] = useState<number | null>(1);
   const [newReview, setNewReview] = useState<Omit<IReview, 'id'> | null>(null);
   const [idRemoveReview, setIdRemoveReview] = useState<number | null>(null);
 
@@ -120,7 +120,7 @@ const CardReviews = ({
           onSubmit={(values, actions) => {
             const review = { rating: ratingValue, review: values.feedbacText };
             createReview(review);
-            setRatingValue(0);
+            setRatingValue(1);
             actions.resetForm();
           }}
         >
@@ -142,6 +142,11 @@ const CardReviews = ({
               icon={<IconStar />}
               value={ratingValue}
               onChange={(_, newValue) => {
+                // rating is must be
+                if (newValue === null) {
+                  newValue = 1;
+                }
+                console.log(newValue);
                 setRatingValue(newValue);
               }}
             />
