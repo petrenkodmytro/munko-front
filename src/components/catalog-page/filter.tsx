@@ -73,18 +73,7 @@ const Filter = ({
             {openPrice ? <FilterArrUp /> : <FilterArrDown />}
           </button>
         </div>
-        {/* {isVisibleBtnReset && (
-          <button
-            onClick={() => {
-              resetFilter();
-              resetLocalStateFilter();
-            }}
-            className=" inline-flex justify-center items-center text-lg xl:text-2xl font-semibold ml-8 p-2   rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-30 h-12  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[2px] lg:hover:border-subscribeBtn"
-            type="button"
-          >
-            RESET
-          </button>
-        )} */}
+       
         {openPrice && (
           <div className="mt-4 flex">
             {' '}
