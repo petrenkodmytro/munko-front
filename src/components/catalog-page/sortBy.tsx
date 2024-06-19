@@ -37,9 +37,9 @@ const SortBy = ({ sortBy, handleChangeSort }: Props) => {
     <div className="text-lg">
       <label>
         Sort by:
-        <select value={currentSortValue} onChange={handleChangeSort}>
+        <select  value={currentSortValue} onChange={handleChangeSort} className='outline-none'>
           {sortByOptions.map((value, i) => (
-            <option value={value} key={i} className='text-lg'>
+            <option value={value} key={i} className='text-lg '>
               {value}
             </option>
           ))}

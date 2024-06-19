@@ -73,32 +73,37 @@ const Filter = ({
             {openPrice ? <FilterArrUp /> : <FilterArrDown />}
           </button>
         </div>
-        {/* {isVisibleBtnReset && (
-          <button
-            onClick={() => {
-              resetFilter();
-              resetLocalStateFilter();
-            }}
-            className=" inline-flex justify-center items-center text-lg xl:text-2xl font-semibold ml-8 p-2   rounded-[5px] text-white bg-subscribeBtn duration-200 ease-linear w-30 h-12  lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-[2px] lg:hover:border-subscribeBtn"
-            type="button"
-          >
-            RESET
-          </button>
-        )} */}
+
         {openPrice && (
           <div className="mt-4 flex">
             {' '}
             <input
               value={localPriceFrom}
               type="number"
-              onChange={event => setLocalPriceFrom(event.target.value)}
+              min={0}
+              onChange={event => {
+                if (
+                  parseInt(event.target.value) >= 0 ||
+                  event.target.value === ''
+                ) {
+                  setLocalPriceFrom(event.target.value);
+                }
+              }}
               placeholder="From"
               className="pl-1 py-1 mr-[25px] w-[90px]  xl:text-2xl bg-[#F5F5F5] rounded"
             />
             <input
               value={localPriceTo}
               type="number"
-              onChange={event => setLocalPriceTo(event.target.value)}
+              min={0}
+              onChange={event => {
+                if (
+                  parseInt(event.target.value) >= 0 ||
+                  event.target.value === ''
+                ) {
+                  setLocalPriceTo(event.target.value);
+                }
+              }}
               placeholder="To"
               className="pl-1 py-1 w-[90px]  xl:text-2xl bg-[#F5F5F5] rounded"
             />

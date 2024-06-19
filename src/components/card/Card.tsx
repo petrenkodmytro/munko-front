@@ -13,10 +13,11 @@ import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import { useState } from 'react';
+import FavoritIcon from '../../../public/icons/favorite-small-icon.svg';
 
 type CardCatalog = Pick<
   ICard,
-  'id' | 'name' | 'images' | 'price' | 'productType' | 'amount'
+  'id' | 'name' | 'images' | 'price' | 'productType' | 'amount' | 'sale'
 >;
 
 type CardProps = {
@@ -27,6 +28,9 @@ const Card = ({ card }: CardProps) => {
   const { data: session } = useSession();
   const [modalState, setModalState] = useState(false);
   const [notifyOder, setNotifyOder] = useState(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  const discount = 0.8;
   const [forget, setForget] = useState(false);
   const [inputNewPassword, setInputNewPassword] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
@@ -77,9 +81,9 @@ const Card = ({ card }: CardProps) => {
   return (
     <>
       {' '}
-      <div className="w-[242px] h-[384px] flex flex-wrap md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
-        <Link href={`/catalog/${card.id}`} className='w-full'>
-          <div className="w-[173px] h-[153px] flex justify-center items-center bg-[#F5F5F5] m-auto">
+      <div className="w-[242px] h-[384px] flex flex-col md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
+        <Link href={`/catalog/${card.id}`} className="flex flex-col w-full ">
+          <div className="w-[173px] h-[153px] flex justify-center items-center bg-[#F5F5F5] mx-auto">
             {card.images.length === 0 ? (
               <Image
                 src={ImgPlaceholder}
@@ -100,17 +104,43 @@ const Card = ({ card }: CardProps) => {
               />
             )}
           </div>
-          <div className="text-base leading-5 text-black mt-5">
-            <span className="">{card.productType}</span>
-            <p className="font-bold mb-5">{card.name}</p>
-            <p className="font-bold">{card.price}$</p>
-          </div>
         </Link>
+        <div className="flex flex-col grow text-base leading-5 text-black mt-5">
+          <p>{card.productType}</p>
+          <p className="h-10 font-bold uppercase  overflow-hidden text-ellipsis">
+            {card.name}
+          </p>
+          <div className="relative mt-auto mb-5">
+            {card.sale && (
+              <p className="line-through text-[#656582] font-bold">
+                {card.price}$
+              </p>
+            )}
+            {card.sale ? (
+              <p className="font-bold">{(card.price * discount).toFixed(1)}$</p>
+            ) : (
+              <p className="font-bold">{card.price}$</p>
+            )}
+            {card.amount <= 0 && (
+              <p className="uppercase text-xs font-normal"> Out of stock</p>
+            )}
+            {card.amount <= 0 && (
+              <button
+                onClick={() => setIsFavorite(!isFavorite)}
+                type="button"
+                className="absolute right-0 top-0 z-40"
+              >
+                <FavoritIcon fill={isFavorite ? '#31304D' : 'white'} />
+              </button>
+            )}
+          </div>
+        </div>
+
         <button
           onClick={() =>
             addCardToCart(card.id, Number(session?.user?.id), session?.token)
           }
-          className={`self-end rounded text-base h-9 font-bold w-full text-white ${card.amount ? 'bg-subscribeBtn hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
+          className={`mt-auto rounded text-base h-9 font-bold w-full text-white ${card.amount ? 'bg-subscribeBtn hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
         >
           ADD TO CART
         </button>

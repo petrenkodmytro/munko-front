@@ -10,7 +10,6 @@ import { getFilteredCatalog } from '@/api/api';
 import Link from 'next/link';
 import SimplePagination from './pagination';
 import useWindowSize from '@/hooks/useWindowSize';
-import { useRouter } from 'next/navigation';
 import Spinner from '@/components/loading/loading';
 
 type Props = {
@@ -32,7 +31,7 @@ const CatalogFilter = ({
   saleProps,
   searchValue,
   isLoading,
-  inStockProps
+  inStockProps,
 }: Props) => {
   const { width } = useWindowSize();
   // console.log(width);
@@ -99,11 +98,11 @@ const CatalogFilter = ({
         const stringified = `[${categorySearchParams.map(v => `"${v}"`).join(', ')}]`;
         filteredParams.searchCriteria.category = stringified;
       }
-      if (priceFrom !== '') {
-        filteredParams.searchCriteria.priceFrom = priceFrom;
+      if (priceFrom !== '' && parseInt(priceFrom) >= 0) {
+        filteredParams.searchCriteria.priceFrom = `${parseInt(priceFrom)}`;
       }
-      if (priceTo !== '') {
-        filteredParams.searchCriteria.priceTo = priceTo;
+      if (priceTo !== '' && parseInt(priceTo) >= 0) {
+        filteredParams.searchCriteria.priceTo = `${parseInt(priceTo)}`;
       }
       if (searchValue) {
         filteredParams.searchCriteria.name = searchValue;
@@ -123,7 +122,7 @@ const CatalogFilter = ({
         const dataFilteredCatalog = await getFilteredCatalog(filteredParams);
         currentfilteredCatalog = dataFilteredCatalog.items;
         pagination = dataFilteredCatalog.paging;
-        // console.log('currentfilteredCatalog', currentfilteredCatalog);
+        // console.log('seach');
         // console.log('pagination', pagination);
       } catch (error: any) {
         console.log(error.response);
