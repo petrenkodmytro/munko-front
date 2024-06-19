@@ -32,7 +32,7 @@ const CatalogFilter = ({
   saleProps,
   searchValue,
   isLoading,
-  inStockProps
+  inStockProps,
 }: Props) => {
   const { width } = useWindowSize();
   // console.log(width);
@@ -103,11 +103,11 @@ const CatalogFilter = ({
         const stringified = `[${categorySearchParams.map(v => `"${v}"`).join(', ')}]`;
         filteredParams.searchCriteria.category = stringified;
       }
-      if (priceFrom !== '') {
-        filteredParams.searchCriteria.priceFrom = priceFrom;
+      if (priceFrom !== '' && parseInt(priceFrom) >= 0) {
+        filteredParams.searchCriteria.priceFrom = `${parseInt(priceFrom)}`;
       }
-      if (priceTo !== '') {
-        filteredParams.searchCriteria.priceTo = priceTo;
+      if (priceTo !== '' && parseInt(priceTo) >= 0) {
+        filteredParams.searchCriteria.priceTo = `${parseInt(priceTo)}`;
       }
 
       let currentfilteredCatalog: ICard[] = [];
@@ -118,7 +118,7 @@ const CatalogFilter = ({
         totalCount: 0,
       };
       // console.log(filteredParams);
-      
+
       try {
         const dataFilteredCatalog = await getFilteredCatalog(
           filteredParams,
@@ -126,7 +126,7 @@ const CatalogFilter = ({
         );
         currentfilteredCatalog = dataFilteredCatalog.items;
         pagination = dataFilteredCatalog.paging;
-        // console.log('currentfilteredCatalog', currentfilteredCatalog);
+        console.log('seach');
         // console.log('pagination', pagination);
       } catch (error) {
         console.log(error);
@@ -314,7 +314,7 @@ const CatalogFilter = ({
 
         {/* Catalog */}
         {isLoading ? (
-          <div className='flex justify-center w-full'>
+          <div className="flex justify-center w-full">
             <Spinner />
           </div>
         ) : filteredCardsCatalog.length === 0 ? (

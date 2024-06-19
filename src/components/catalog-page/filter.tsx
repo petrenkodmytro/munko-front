@@ -73,21 +73,37 @@ const Filter = ({
             {openPrice ? <FilterArrUp /> : <FilterArrDown />}
           </button>
         </div>
-       
+
         {openPrice && (
           <div className="mt-4 flex">
             {' '}
             <input
               value={localPriceFrom}
               type="number"
-              onChange={event => setLocalPriceFrom(event.target.value)}
+              min={0}
+              onChange={event => {
+                if (
+                  parseInt(event.target.value) >= 0 ||
+                  event.target.value === ''
+                ) {
+                  setLocalPriceFrom(event.target.value);
+                }
+              }}
               placeholder="From"
               className="pl-1 py-1 mr-[25px] w-[90px]  xl:text-2xl bg-[#F5F5F5] rounded"
             />
             <input
               value={localPriceTo}
               type="number"
-              onChange={event => setLocalPriceTo(event.target.value)}
+              min={0}
+              onChange={event => {
+                if (
+                  parseInt(event.target.value) >= 0 ||
+                  event.target.value === ''
+                ) {
+                  setLocalPriceTo(event.target.value);
+                }
+              }}
               placeholder="To"
               className="pl-1 py-1 w-[90px]  xl:text-2xl bg-[#F5F5F5] rounded"
             />
