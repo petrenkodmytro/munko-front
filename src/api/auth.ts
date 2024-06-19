@@ -113,7 +113,9 @@ const authOptions: NextAuthOptions = {
     return session
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+  },
   pages: {
     signIn: "/",
     error: '/auth/error',

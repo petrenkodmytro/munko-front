@@ -6,8 +6,8 @@ type Props = {
 };
 
 export default function Questions({ element }: Props) {
-  const handleClick = function (event: React.SyntheticEvent<HTMLElement>) {
-    const parent = event.currentTarget.parentElement as Element;
+  const handleClick = (event: React.SyntheticEvent<HTMLElement>) => {
+    const parent = event.currentTarget as Element;
     const elem = parent.nextSibling as Element;
 
     const buttonShow = parent.childNodes[1] as Element;
@@ -28,19 +28,14 @@ export default function Questions({ element }: Props) {
 
   return (
     <>
-      <article className="relative">
+      <article className="relative cursor-pointer" onClick={handleClick}>
         <h4 className="max-w-[271px] leading-[20px] py-3 md:leading-[30px] md:max-w-[548px] lg:max-w-full md:h-full">
           {element.question}
         </h4>
-        <button
-          onClick={handleClick}
-          className="text-[65px] font-normal absolute top-2/4 -translate-y-2/4 right-0"
-        >
+        <button className="text-[65px] font-normal absolute top-2/4 -translate-y-2/4 right-0">
           +
         </button>
-        <button onClick={handleClick} className="hidden">
-          -
-        </button>
+        <button className="hidden">-</button>
       </article>
       <p className="hidden">{element.answer}</p>
     </>
