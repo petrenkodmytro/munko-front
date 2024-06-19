@@ -10,7 +10,6 @@ import { getFilteredCatalog } from '@/api/api';
 import Link from 'next/link';
 import SimplePagination from './pagination';
 import useWindowSize from '@/hooks/useWindowSize';
-import { useRouter } from 'next/navigation';
 import Spinner from '@/components/loading/loading';
 
 type Props = {
@@ -126,7 +125,7 @@ const CatalogFilter = ({
         );
         currentfilteredCatalog = dataFilteredCatalog.items;
         pagination = dataFilteredCatalog.paging;
-        console.log('seach');
+        // console.log('seach');
         // console.log('pagination', pagination);
       } catch (error) {
         console.log(error);

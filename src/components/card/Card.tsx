@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 import ModalWnd from '../modal/modal-window';
 import Notification from '../notification-modal/notification';
 import { useState } from 'react';
+import FavoritIcon from '../../../public/icons/favorite-small-icon.svg';
 
 type CardCatalog = Pick<
   ICard,
@@ -23,7 +24,10 @@ const Card = ({ card }: CardProps) => {
   const { data: session } = useSession();
   const [modalState, setModalState] = useState(false);
   const [notifyOder, setNotifyOder] = useState(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
   const discount = 0.8;
+
   const addCardToCart = async (
     funkoId: number,
     userId: number,
@@ -45,10 +49,7 @@ const Card = ({ card }: CardProps) => {
     <>
       {' '}
       <div className="w-[242px] h-[384px] flex flex-col md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
-        <Link
-          href={`/catalog/${card.id}`}
-          className="flex flex-col w-full h-full"
-        >
+        <Link href={`/catalog/${card.id}`} className="flex flex-col w-full ">
           <div className="w-[173px] h-[153px] flex justify-center items-center bg-[#F5F5F5] mx-auto">
             {card.images.length === 0 ? (
               <Image
@@ -70,25 +71,38 @@ const Card = ({ card }: CardProps) => {
               />
             )}
           </div>
-          <div className="flex flex-col grow text-base leading-5 text-black mt-5">
-            <p>{card.productType}</p>
-            <p className="font-bold uppercase">{card.name}</p>
-            <div className="mt-auto mb-4">
-              {card.sale && (
-                <p className="line-through text-[#656582] font-bold">
-                  {card.price}$
-                </p>
-              )}
-              {card.sale ? (
-                <p className="font-bold">
-                  {(card.price * discount).toFixed(1)}$
-                </p>
-              ) : (
-                <p className="font-bold">{card.price}$</p>
-              )}
-            </div>
-          </div>
         </Link>
+        <div className="flex flex-col grow text-base leading-5 text-black mt-5">
+          <p>{card.productType}</p>
+          <p className="h-10 font-bold uppercase  overflow-hidden text-ellipsis">
+            {card.name}
+          </p>
+          <div className="relative mt-auto mb-5">
+            {card.sale && (
+              <p className="line-through text-[#656582] font-bold">
+                {card.price}$
+              </p>
+            )}
+            {card.sale ? (
+              <p className="font-bold">{(card.price * discount).toFixed(1)}$</p>
+            ) : (
+              <p className="font-bold">{card.price}$</p>
+            )}
+            {card.amount <= 0 && (
+              <p className="uppercase text-xs font-normal"> Out of stock</p>
+            )}
+            {card.amount <= 0 && (
+              <button
+                onClick={() => setIsFavorite(!isFavorite)}
+                type="button"
+                className="absolute right-0 top-0 z-40"
+              >
+                <FavoritIcon fill={isFavorite ? '#31304D' : 'white'} />
+              </button>
+            )}
+          </div>
+        </div>
+
         <button
           onClick={() =>
             addCardToCart(card.id, Number(session?.user?.id), session?.token)
