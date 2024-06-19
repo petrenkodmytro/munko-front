@@ -49,7 +49,7 @@ const CardReviews = ({
 
   const { data: session } = useSession();
   const token: string | undefined = session?.token;
-  console.log(session);
+  // console.log(session);
 
   useEffect(() => {
     // console.log('useEffect 1');

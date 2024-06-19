@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 const Catalog = () => {
   return (
     <Suspense>
-      <CatalogPage sale={false} inStock={null} />;
+      <CatalogPage sale={false} inStock={null} />
     </Suspense>
   );
 };

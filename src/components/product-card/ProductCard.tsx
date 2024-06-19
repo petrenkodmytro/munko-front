@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import CardImage from './cardImage';
 import CardReviews from './reviewList';
-import { getItem } from '@/api/api';
+import { addToCart, getItem } from '@/api/api';
 import { notFound, useParams } from 'next/navigation';
 import { ICard } from '@/types/types';
 import Link from 'next/link';
@@ -39,6 +39,7 @@ const ProductCard = () => {
   const id = useParams<Params>().id; // item id
   // console.log(id);
   const { data: session } = useSession();
+  console.log(session);
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
   const [modalState, setModalState] = useState(false);
   const [product, setProduct] = useState<ICard>(initialValue);
@@ -74,10 +75,20 @@ const ProductCard = () => {
     notFound();
   }
 
-  const addToCart = () => {
+  const addCardToCart = async (
+    funkoId: number,
+    userId: number,
+    token: string | undefined
+  ) => {
     if (session === null) {
       setNotifyOder(true);
       return;
+    } else {
+      try {
+        await addToCart(funkoId, userId, token);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
   
@@ -124,7 +135,7 @@ const ProductCard = () => {
           </p>
           <div className="flex justify-between xl:flex-col gap-5">
             <button
-              onClick={addToCart}
+              onClick={() => addCardToCart(product.id, Number(session?.user?.id), session?.token)}
               type="button"
               className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
             >
