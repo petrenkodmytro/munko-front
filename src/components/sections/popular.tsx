@@ -22,16 +22,10 @@ const Popular = ({ width }: { width?: number }) => {
     getCardCatalog();
   }, []);
 
-  let sliceTo: number = 8;  
+  let sliceTo: number = 4;  
 
-  if (width) {
-    if (width > 720 && width <= 1093) {
-      sliceTo = 4;
-    } else if (width > 1093 && width <= 1355) {
-      sliceTo = 6;
-    } else if (width > 1355) {
-      sliceTo = 8;
-    }
+  if (width && width > 1093 && width <= 1355)  {
+    sliceTo = 6;
   }
 
   return (
