@@ -5,9 +5,10 @@ type ModalWndProps = {
   call: boolean;
   onDestroy: () => void;
   serverError?: string;
+  handleForgetOpen: () => void;
 };
 
-const ModalWnd: React.FC<ModalWndProps> = ({ call, onDestroy, serverError }) => {
+const ModalWnd: React.FC<ModalWndProps> = ({ call, onDestroy, serverError, handleForgetOpen }) => {
   if (!call) {
     return null;
   }
@@ -78,7 +79,7 @@ const ModalWnd: React.FC<ModalWndProps> = ({ call, onDestroy, serverError }) => 
             </g>
           </svg>
         </button>
-        <ModalWndForm onDestroy={onDestroy} serverError={serverError}/>
+        <ModalWndForm onDestroy={onDestroy} serverError={serverError} handleForgetOpen={handleForgetOpen}/>
       </div>
     </div>
   );

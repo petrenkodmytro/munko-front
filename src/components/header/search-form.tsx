@@ -29,7 +29,7 @@ const SearchForm = () => {
             placeholder="SEARCH"
             id="search"
             name="search"
-            className={`text-black placeholder:text-blackCustom rounded lg:w-44 xl:w-56 pl-2 pr-11 leading-[30px] font-bold outline-none focus:placeholder:text-transparent ${
+            className={`text-black rounded lg:w-44 xl:w-56 pl-2 pr-11 leading-[30px] font-bold outline-none focus:placeholder:text-transparent ${
               !errors.search
                 ? ''
                 : 'border h-[30px] border-redError text-redError placeholder:text-redError'
