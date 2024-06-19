@@ -17,6 +17,7 @@ interface LoginForm {
   onDestroy: () => void;
   csrfToken?: string;
   serverError?: string;
+  handleForgetOpen: () => void;
 }
 
 const LoginForm: React.FC<LoginForm> = ({
@@ -24,6 +25,7 @@ const LoginForm: React.FC<LoginForm> = ({
   onDestroy,
   csrfToken,
   serverError,
+  handleForgetOpen
 }) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [values, setValuesObj] = useState({
@@ -136,12 +138,12 @@ const LoginForm: React.FC<LoginForm> = ({
             >
               {formik.isSubmitting ? 'Please wait...' : 'LOGIN'}
             </button>
-            <Link
-              href={'/'}
+            <button
+              onClick={handleForgetOpen}
               className="underline font-semibold text-[9px] mx-3 hover:text-[#686868] duration-200 ease-linear"
             >
               Forgot your password?
-            </Link>
+            </button>
           </div>
           <p className="font-medium text-[10px] text-center pb-3">
             or login with

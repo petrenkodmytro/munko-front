@@ -25,7 +25,7 @@ const CardsCarousel = ({ slides }: CatalogProps) => {
         effect="slide"
         slideNextClass="swiper-slide-cards-next"
       >
-        {slides && slides.map((slide, index) => (
+        {slides?.length && slides.map((slide, index) => (
           <SwiperSlide key={index} virtualIndex={index}>
             <Card card={slide} />
           </SwiperSlide>

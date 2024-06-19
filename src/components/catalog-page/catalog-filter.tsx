@@ -21,7 +21,7 @@ type Props = {
   };
   saleProps: boolean;
   inStockProps: boolean | null;
-  searchValue: string;
+  searchValue: string | null;
   isLoading: boolean;
 };
 
@@ -38,7 +38,7 @@ const CatalogFilter = ({
 
   // search parameters
   const [filteredCardsCatalog, setFilteredCardsCatalog] =
-    useState(cardsCatalog);
+    useState<ICard[]>(cardsCatalog);
 
   const [sortBy, setSortBy] = useState('IdAsc');
   const [priceFrom, setPriceFrom] = useState('');
@@ -59,13 +59,6 @@ const CatalogFilter = ({
     pageCount: 0,
     totalCount: 0,
   });
-  const [searchInputValue, setSearchInputValue] = useState(searchValue);
-
-  useEffect(() => {
-    if (searchValue) {
-      setSearchInputValue(searchValue);
-    }
-  }, [searchValue]);
 
   useEffect(() => {
     const search = async () => {
@@ -78,13 +71,16 @@ const CatalogFilter = ({
           priceTo: null,
           sale: null,
           inStock: null,
-          name: null,
+          name: '',
         },
         orderBy: sortBy,
         paging: { page: pageCatalog, perPage: 12 },
       };
 
-      if (stock !== null) {
+      if (stock) {
+        filteredParams.searchCriteria.inStock = stock;
+      }
+      if (inStockProps !== null) {
         filteredParams.searchCriteria.inStock = stock;
       }
       if (sale) {
@@ -108,6 +104,9 @@ const CatalogFilter = ({
       if (priceTo !== '' && parseInt(priceTo) >= 0) {
         filteredParams.searchCriteria.priceTo = `${parseInt(priceTo)}`;
       }
+      if (searchValue) {
+        filteredParams.searchCriteria.name = searchValue;
+      }
 
       let currentfilteredCatalog: ICard[] = [];
       let pagination: IPagination = {
@@ -116,19 +115,17 @@ const CatalogFilter = ({
         pageCount: 0,
         totalCount: 0,
       };
+
       // console.log(filteredParams);
 
       try {
-        const dataFilteredCatalog = await getFilteredCatalog(
-          filteredParams,
-          searchInputValue
-        );
+        const dataFilteredCatalog = await getFilteredCatalog(filteredParams);
         currentfilteredCatalog = dataFilteredCatalog.items;
         pagination = dataFilteredCatalog.paging;
         // console.log('seach');
         // console.log('pagination', pagination);
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        console.log(error.response);
       }
       // if (pageCatalog > 0) {
       //   currentfilteredCatalog = [
@@ -150,7 +147,8 @@ const CatalogFilter = ({
     sale,
     pageCatalog,
     sortBy,
-    searchInputValue,
+    searchValue,
+    inStockProps,
   ]);
 
   const toggleSelectedFilter = (filterName: string, value: string) => {

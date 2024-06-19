@@ -11,7 +11,8 @@ import ShowPasswordIcon from './../../../public/icons/show-password.svg';
 import HidePassword from './../../../public/icons/hide-password.svg';
 import { useRouter } from 'next/navigation';
 import { createNewUser } from '@/api/api';
-import PasswordNotification from '../notification-modal/password-notification';
+import RegSuccess from '../pop-ups/reg-success';
+import RegUnsuccess from '../pop-ups/reg-unsuccess';
 
 interface SignForm {
   handleToogleChange: () => void;
@@ -20,8 +21,9 @@ interface SignForm {
 
 const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
   const router = useRouter();
-  const [modalState, setModalState] = useState(false);
-  const [notifyCart, setNotifyCart] = useState(false);
+  // const [modalState, setModalState] = useState(false);
+  const [regSuccess, setRegSuccess] = useState(false);
+  const [regUnsuccess, setRegUnsuccess] = useState(false);
   const [error, setError] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -111,7 +113,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
         const res = await createNewUser(newUser);
         if (res) {
           // onDestroy();
-          setNotifyCart(true);
+          setRegSuccess(true);
           const login = await signIn('credentials', {
             redirect: false,
             email: values.emailSign,
@@ -122,11 +124,11 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
           if (login?.error) {
             setError(true);
           } else {
-            // onDestroy();
+            onDestroy();
           }
         } else {
           setError(true);
-          alert(`The email ${values.emailSign} is already registered`)
+          setRegUnsuccess(true)
         }
 
         actions.setSubmitting(false);
@@ -263,7 +265,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
               </label>
             </div>
           </div>
-          <p className="font-medium text-center text-[8px] m-auto pb-3">
+          <p className="font-medium text-center text-[10px] m-auto pb-3">
             or sign in with
           </p>
           <div className="mt-0.5 border border-blueBorder"></div>
@@ -275,17 +277,8 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
               <InstagramImage />
             </Link> */}
           </div>
-          <PasswordNotification notify={notifyCart} setNotify={setNotifyCart} onDestroy={onDestroy}>
-        <div className="flex flex-col items-center">
-          {' '}
-          <p className="text-sm md:text-base font-semibold">
-          Registration was successful!
-          </p>
-          <p className="pt-2.5 text-xs md:text-sm font-medium">
-          You can change or look for your personal information in your cabinet
-          </p>
-        </div>
-      </PasswordNotification>
+              <RegSuccess notifyCart={regSuccess} setNotifyCart={setRegSuccess} />
+              <RegUnsuccess notifyCart={regUnsuccess} setNotifyCart={setRegUnsuccess} />
         </Form>
       )}
     </Formik>

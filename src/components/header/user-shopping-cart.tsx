@@ -11,7 +11,11 @@ import LogoutIconHover from './../../../public/icons/logout_icon hover.svg';
 import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Notification from '../notification-modal/notification';
+import NotLogin from '../pop-ups/not-login';
+import ForgetPassword from '../pop-ups/forget-password';
+import InputNewPassword from '../pop-ups/new-password';
+import Instructions from '../pop-ups/instructions';
+import NewPassConfirm from '../pop-ups/new-pass-confirm';
 
 const UserShoppingCart = () => {
   const router = useRouter();
@@ -19,9 +23,16 @@ const UserShoppingCart = () => {
   const [notifyCart, setNotifyCart] = useState(false);
   const { data: session } = useSession();
   const [serverError, setServerError] = useState('');
+  const [forget, setForget] = useState(false);
+  const [inputNewPassword, setInputNewPassword] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
+  const [showPassConfirm, setShowPassConfirm] = useState(false);
 
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
+
+  console.log(session);
+  
 
   useEffect(() => {
     if (search) {
@@ -38,12 +49,37 @@ const UserShoppingCart = () => {
     }
   }, [modalState]);
 
+  const handleForgetOpen = () => {
+    setForget(!forget);
+    setModalState(false);
+  };
+
+  const handleNewPasswordOpen = () => {
+    setForget(false);
+    setInputNewPassword(true);
+  };
+
+  const handleModalOpen = () => {
+    setModalState(!modalState);
+  };
+
+  const handleInstructionsOpen = () => {
+    setInputNewPassword(false);
+    setShowInstructions(true);
+  };
+
+  const handlePassConfrimOpen = () => {
+    setShowInstructions(false);
+    setShowPassConfirm(true);
+  };
+
   return (
     <div className="w-16 pb-6 pr-1 md:pr-0 md:ml-4 xl:ml-5 self-end md:w-auto md:self-center md:pb-0 md:mt-5">
       <ModalWnd
         call={modalState}
         serverError={serverError}
         onDestroy={() => setModalState(false)}
+        handleForgetOpen={handleForgetOpen}
       />
       {session ? (
         <button
@@ -93,25 +129,30 @@ const UserShoppingCart = () => {
           <BasketIconHover />
         </div>
       </button>
-      <Notification notify={notifyCart} setNotify={setNotifyCart}>
-        <div className="flex flex-col gap-7 items-center">
-          {' '}
-          <p className="pt-5 text-sm md:text-base font-semibold">
-            You are not logged in. If you want to buy the product, you must log
-            in
-          </p>
-          <button
-            onClick={() => {
-              setModalState(true);
-              setNotifyCart(false);
-            }}
-            type="button"
-            className="w-[137px] uppercase px-8 py-2 rounded-[5px] border-2 border-current text-white text-xl not-italic font-semibold  bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear"
-          >
-            login
-          </button>
-        </div>
-      </Notification>
+      <NotLogin
+        notifyCart={notifyCart}
+        setNotifyCart={setNotifyCart}
+        handleOpenPopUp={handleModalOpen}
+      />
+      <ForgetPassword
+        notifyCart={forget}
+        setNotifyCart={setForget}
+        handleOpenPopUp={handleNewPasswordOpen}
+      />
+      <InputNewPassword
+        notifyCart={inputNewPassword}
+        setNotifyCart={setInputNewPassword}
+        handleOpenPopUp={handleInstructionsOpen}
+      />
+      <Instructions
+        notifyCart={showInstructions}
+        setNotifyCart={setShowInstructions}
+        handleOpenPopUp={handlePassConfrimOpen}
+      />
+      <NewPassConfirm
+        notifyCart={showPassConfirm}
+        setNotifyCart={setShowPassConfirm}
+      />
     </div>
   );
 };
