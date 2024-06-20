@@ -31,10 +31,7 @@ const Cart = (props: Props) => {
     }
     async function fetchOrders() {
       try {
-        const allOrders: ICartCard[] = await getUserCart(
-          Number(session?.user?.id),
-          session?.token
-        );
+        const allOrders: ICartCard[] = await getUserCart(session?.token);
         console.log(allOrders);
         setCart(allOrders);
       } catch (error) {
@@ -57,7 +54,7 @@ const Cart = (props: Props) => {
 
   const removeItem = async (card: ICartCard) => {
     try {
-      await removeFromCart(card.id, Number(session?.user?.id), session?.token);
+      await removeFromCart(card.id, session?.token);
       let currentCart = [...cart];
       currentCart = currentCart.filter(cartItem => cartItem.id !== card.id);
       setCart(currentCart);

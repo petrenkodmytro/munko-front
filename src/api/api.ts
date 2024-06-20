@@ -215,18 +215,17 @@ export const deleteReview = async (
     requestHeaders
   );
 
-  // console.log(data);
+  // console.log('deleteReview', data);
   return data;
 };
 
 export const addToCart = async (
   funkoId: number,
-  userId: number,
   token: string | undefined
 ) => {
   const mutation = gql`
     mutation AddItemInBasket {
-    addItemInBasket(funkoId: ${funkoId}, userId: ${userId}) {
+    addItemInBasket(funkoId: ${funkoId}) {
         id
         amount
         funkoPop {
@@ -241,22 +240,21 @@ export const addToCart = async (
   };
   const data = await graphQLClient.request(
     mutation,
-    { funkoId, userId },
+    { funkoId },
     requestHeaders
   );
 
-  console.log('AddItemInBasket', data);
+  // console.log('AddItemInBasket', data);
   return data;
 };
 
 export const removeFromCart = async (
   funkoId: number,
-  userId: number,
   token: string | undefined
 ) => {
   const mutation = gql`
     mutation DeleteItemInBasket {
-      deleteItemInBasket(userId: ${userId}, itemId: ${funkoId})
+      deleteItemInBasket (itemId: ${funkoId})
     }
   `;
 
@@ -265,37 +263,34 @@ export const removeFromCart = async (
   };
   const data = await graphQLClient.request(
     mutation,
-    { funkoId, userId },
+    { funkoId },
     requestHeaders
   );
 
-  console.log('DeleteItemInBasket', data);
+  // console.log('DeleteItemInBasket', data);
   return data;
 };
 
-export const getUserCart = async (
-  userId: number,
-  token: string | undefined
-) => {
+export const getUserCart = async (token: string | undefined) => {
   const query = gql`
     query GetOrderItems {
-      getOrderItems(userId: ${userId}) {
+      getOrderItems {
         id
         amount
         funkoPop {
-            id
-            name
-            images
-            price
-            amount
-            description
-            sale
-            collection
-            sublicense
-            series
-            category
-            productType
-            date
+          id
+          name
+          images
+          price
+          amount
+          description
+          sale
+          collection
+          sublicense
+          series
+          category
+          productType
+          date
         }
       }
     }
@@ -306,16 +301,15 @@ export const getUserCart = async (
   };
   const data: IDataCartItems = await graphQLClient.request(
     query,
-    { userId },
+    {},
     requestHeaders
   );
 
-  console.log(data.getOrderItems);
+  // console.log('getOrderItems', data.getOrderItems);
   return data.getOrderItems;
 };
 
 export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
-
   // const stringified = `[${filteredParams.category .map(b => `"${b}"`).join(', ')}]`;
   const query = gql`
     query GetAllItems {
@@ -358,7 +352,7 @@ export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
   `;
 
   const data: IDataFilteredCatalog = await graphQLClient.request(query);
-  let dataCards = data.getAllItems;  
+  let dataCards = data.getAllItems;
   // console.log(dataCards)
   return dataCards;
 };
