@@ -17,9 +17,9 @@ const CatalogPage = ({ sale, inStock }: ICatalogPageProps) => {
     collections: string[];
     series: string[];
   }>({ categories: [], collections: [], series: [] });
-  const [searchValue, setSearchValue] = useState('');
   const searchParams = useSearchParams();
   const search = searchParams.get('search');
+  const [searchValue, setSearchValue] = useState(search);
 
   useEffect(() => {
     search ? setSearchValue(search) : null;

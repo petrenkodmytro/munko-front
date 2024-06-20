@@ -3,8 +3,12 @@ import Navigation from './header-nav';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { BackDrop } from './back-drop';
+import { useRouter } from 'next/navigation';
 
 const BurgerMenu = () => {
+
+  const router = useRouter();
+
   const searchSchema = Yup.object().shape({
     search: Yup.string()
       .min(3, 'Too Short! min 3')
@@ -199,8 +203,10 @@ const BurgerMenu = () => {
           initialValues={{ search: '' }}
           validationSchema={searchSchema}
           onSubmit={(values, actions) => {
-            alert(JSON.stringify(values, null, 2));
+            router.push(`/catalog/?search=${values.search}`);
             actions.resetForm();
+            setIsOpen(false)
+            setHideOrShow({display: 'none'})
           }}
         >
           {({ errors }) => (
