@@ -75,32 +75,28 @@ const ProductCard = () => {
     notFound();
   }
 
-  const addCardToCart = async (
-    funkoId: number,
-    userId: number,
-    token: string | undefined
-  ) => {
+  const addCardToCart = async (funkoId: number, token: string | undefined) => {
     if (session === null) {
       setNotifyOder(true);
       return;
     } else {
       try {
-        await addToCart(funkoId, userId, token);
+        await addToCart(funkoId, token);
       } catch (error) {
         console.error(error);
       }
     }
   };
-  
+
   const handleModalOpen = () => {
     setModalState(!modalState);
   };
 
   const handleForgetOpen = () => {
     setForget(true);
-    setModalState(false);    
+    setModalState(false);
   };
-  
+
   const handleNewPasswordOpen = () => {
     setForget(false);
     setInputNewPassword(true);
@@ -135,13 +131,7 @@ const ProductCard = () => {
           </p>
           <div className="flex justify-between xl:flex-col gap-5">
             <button
-              onClick={() =>
-                addCardToCart(
-                  product.id,
-                  Number(session?.user?.id),
-                  session?.token
-                )
-              }
+              onClick={() => addCardToCart(product.id, session?.token)}
               type="button"
               className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
             >
@@ -256,7 +246,11 @@ const ProductCard = () => {
         notifyCart={showPassConfirm}
         setNotifyCart={setShowPassConfirm}
       />
-      <ModalWnd call={modalState} onDestroy={() => setModalState(false)} handleForgetOpen={handleForgetOpen}/>
+      <ModalWnd
+        call={modalState}
+        onDestroy={() => setModalState(false)}
+        handleForgetOpen={handleForgetOpen}
+      />
     </div>
   );
 };

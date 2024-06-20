@@ -38,7 +38,6 @@ const Card = ({ card }: CardProps) => {
 
   const addCardToCart = async (
     funkoId: number,
-    userId: number,
     token: string | undefined
   ) => {
     if (session === null) {
@@ -46,7 +45,7 @@ const Card = ({ card }: CardProps) => {
       return;
     } else {
       try {
-        await addToCart(funkoId, userId, token);
+        await addToCart(funkoId, token);
       } catch (error) {
         console.error(error);
       }
@@ -138,7 +137,7 @@ const Card = ({ card }: CardProps) => {
 
         <button
           onClick={() =>
-            addCardToCart(card.id, Number(session?.user?.id), session?.token)
+            addCardToCart(card.id, session?.token)
           }
           className={`mt-auto rounded text-base h-9 font-bold w-full text-white ${card.amount ? 'bg-subscribeBtn hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
         >
