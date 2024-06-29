@@ -102,7 +102,7 @@ const CartPage = (props: Props) => {
   };
 
   return (
-    <section className="px-4 pt-6 pb-10 md:px-5  md:pb-[74px] xl:px-20 xl:pt-9">
+    <section className="px-4 pt-6 pb-10 md:px-5 md:pb-[74px] xl:px-20 xl:pt-9">
       {/* <div className="mb-6 text-xs font-medium md:mb-10 md:text-base">
         <Link className="underline" href={'/'}>
           Home page
