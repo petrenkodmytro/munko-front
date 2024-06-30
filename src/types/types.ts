@@ -45,7 +45,7 @@ export interface IReview {
   username: string | null | undefined;
   funkoId: number;
   userId: number;
-  star: number | null;
+  star: number ;
   review: string;
 }
 

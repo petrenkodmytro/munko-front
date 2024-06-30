@@ -14,7 +14,7 @@ const SortBy = ({ sortBy, handleChangeSort }: Props) => {
     'Best selling',
     'Price, low to high',
     'Price, high to low',
-    'Date, old to new',
+    // 'Date, old to new',
     'Date, new to old',
   ];
   let currentSortValue: string = 'Best selling';
@@ -27,9 +27,9 @@ const SortBy = ({ sortBy, handleChangeSort }: Props) => {
   if (sortBy === 'PriceDesc') {
     currentSortValue = 'Price, high to low';
   }
-  if (sortBy === 'DateDesc') {
-    currentSortValue = 'Date, old to new';
-  }
+  // if (sortBy === 'DateDesc') {
+  //   currentSortValue = 'Date, old to new';
+  // }
   if (sortBy === 'DateAsc') {
     currentSortValue = 'Date, new to old';
   }

@@ -36,10 +36,7 @@ const Card = ({ card }: CardProps) => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
 
-  const addCardToCart = async (
-    funkoId: number,
-    token: string | undefined
-  ) => {
+  const addCardToCart = async (funkoId: number, token: string | undefined) => {
     if (session === null) {
       setNotifyOder(true);
       return;
@@ -52,16 +49,15 @@ const Card = ({ card }: CardProps) => {
     }
   };
 
-
   const handleModalOpen = () => {
     setModalState(!modalState);
   };
 
   const handleForgetOpen = () => {
     setForget(true);
-    setModalState(false);    
+    setModalState(false);
   };
-  
+
   const handleNewPasswordOpen = () => {
     setForget(false);
     setInputNewPassword(true);
@@ -136,9 +132,7 @@ const Card = ({ card }: CardProps) => {
         </div>
 
         <button
-          onClick={() =>
-            addCardToCart(card.id, session?.token)
-          }
+          onClick={() => addCardToCart(card.id, session?.token)}
           className={`mt-auto rounded text-base h-9 font-bold w-full text-white ${card.amount ? 'bg-subscribeBtn hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
         >
           ADD TO CART
@@ -168,7 +162,11 @@ const Card = ({ card }: CardProps) => {
         notifyCart={showPassConfirm}
         setNotifyCart={setShowPassConfirm}
       />
-      <ModalWnd call={modalState} onDestroy={() => setModalState(false)} handleForgetOpen={handleForgetOpen}/>
+      <ModalWnd
+        call={modalState}
+        onDestroy={() => setModalState(false)}
+        handleForgetOpen={handleForgetOpen}
+      />
     </>
   );
 };
