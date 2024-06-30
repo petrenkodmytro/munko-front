@@ -39,13 +39,6 @@ const CatalogPage = ({ sale, inStock }: ICatalogPageProps) => {
     getData();
   }, [search]);
 
-  // if (cardsCatalog.length === 0 && filterAttributes.categories.length === 0) {
-  //   return (
-  //     <div className="h-20 flex justify-center items-center">
-  //       Вибачте трапилась помилка. Спробуйте пізніше. Сервер не відповідає
-  //     </div>
-  //   );
-  // }
   useEffect(() => {
     if (cardsCatalog.length === 0 && filterAttributes.categories.length === 0) {
       setIsLoading(true);
@@ -53,6 +46,14 @@ const CatalogPage = ({ sale, inStock }: ICatalogPageProps) => {
       setIsLoading(false);
     }
   }, [cardsCatalog.length, filterAttributes.categories.length]);
+
+  // if (cardsCatalog.length === 0 && filterAttributes.categories.length === 0) {
+  //   return (
+  //     <div className="h-20 flex justify-center items-center">
+  //       Вибачте трапилась помилка. Спробуйте пізніше. Сервер не відповідає
+  //     </div>
+  //   );
+  // }
 
   return (
     <>

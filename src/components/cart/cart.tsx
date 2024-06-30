@@ -11,8 +11,9 @@ import { useEffect, useState } from 'react';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { getUserCart, removeFromCart } from '@/api/api';
-import Notification from '@/components/notification-modal/notification';
 import Spinner from '../loading/loading';
+import NotLogin from '../pop-ups/not-login';
+import ModalWnd from '../modal/modal-window';
 
 type Props = {};
 
@@ -24,6 +25,7 @@ const CartPage = (props: Props) => {
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
   const [notifyCart, setNotifyCart] = useState(false);
+  const [modalState, setModalState] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -41,6 +43,7 @@ const CartPage = (props: Props) => {
         setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
     }
     fetchOrders();
@@ -99,6 +102,10 @@ const CartPage = (props: Props) => {
         })
       );
     }
+  };
+
+  const handleModalOpen = () => {
+    setModalState(!modalState);
   };
 
   return (
@@ -322,11 +329,17 @@ const CartPage = (props: Props) => {
           </p>
         </div>
       )}
-      <Notification notify={notifyCart} setNotify={setNotifyCart}>
-        <p className="pt-5 text-sm md:text-base font-semibold">
-          You are not logged in. If you want to buy the product, you must log in
-        </p>
-      </Notification>
+
+      <NotLogin
+        notifyCart={notifyCart}
+        setNotifyCart={setNotifyCart}
+        handleOpenPopUp={handleModalOpen}
+      />
+      <ModalWnd
+        call={modalState}
+        onDestroy={() => setModalState(false)}
+        handleForgetOpen={() => setModalState(false)}
+      />
     </section>
   );
 };

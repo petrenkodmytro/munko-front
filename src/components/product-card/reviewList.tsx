@@ -39,7 +39,7 @@ const CardReviews = ({
   setModalState,
 }: Props) => {
   const [reviews, setReviews] = useState<IReview[]>([]);
-  const [ratingValue, setRatingValue] = useState<number | null>(1);
+  const [ratingValue, setRatingValue] = useState<number>(1);
   const [newReview, setNewReview] = useState<Omit<IReview, 'id'> | null>(null);
   const [idRemoveReview, setIdRemoveReview] = useState<number | null>(null);
   const [forget, setForget] = useState(false);
@@ -115,9 +115,9 @@ const CardReviews = ({
 
   const handleForgetOpen = () => {
     setForget(true);
-    setModalState(false);    
+    setModalState(false);
   };
-  
+
   const handleNewPasswordOpen = () => {
     setForget(false);
     setInputNewPassword(true);
@@ -133,9 +133,39 @@ const CardReviews = ({
     setShowPassConfirm(true);
   };
 
+  const averageRating = () => {
+    if (reviews.length) {
+      const sum = reviews
+        .map(review => review.star)
+        .reduce((sum, review) => sum + review, 0);
+      return sum / reviews.length;
+    } else {
+      return 1;
+    }
+  };
+
   return (
     <div className="flex flex-col gap-5 px-[16px] py-5 rounded-[5px] bg-[#F5F5F5] md:pl-8 md:pr-[84px] md:py-[22px] xl:w-[627px] xl:px-8">
-      <h6 className="text-xl font-semibold md:text-[26px]">Reviews</h6>
+      <div className="flex justify-between items-center">
+        <h6 className="text-xl font-semibold md:text-[26px]">Reviews</h6>
+        {reviews.length > 0 && (
+          <div className="flex items-center gap-[14px]">
+            <p className="text-base font-medium">Rate</p>
+            <Rating
+              name="rating"
+              emptyIcon={<IconStarEmpty />}
+              icon={<IconStar />}
+              value={averageRating()}
+              precision={0.1}
+              readOnly
+            />
+            <p className="text-base font-medium">
+              {averageRating().toFixed(1)}
+            </p>
+          </div>
+        )}
+      </div>
+
       <div className="h-[1px] bg-[#B6BBC4]"></div>
       {!isUserReview && (
         <Formik
@@ -178,7 +208,7 @@ const CardReviews = ({
                 if (newValue === null) {
                   newValue = 1;
                 }
-                console.log(newValue);
+                // console.log(newValue);
                 setRatingValue(newValue);
               }}
             />

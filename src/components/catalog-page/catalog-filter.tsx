@@ -77,12 +77,13 @@ const CatalogFilter = ({
         paging: { page: pageCatalog, perPage: 12 },
       };
 
-      if (stock) {
-        filteredParams.searchCriteria.inStock = stock;
-      }
-      if (inStockProps !== null) {
-        filteredParams.searchCriteria.inStock = stock;
-      }
+      filteredParams.searchCriteria.inStock = stock;
+      // if (stock || inStockProps !== null) {
+      //   filteredParams.searchCriteria.inStock = stock;
+      // }
+      // if (inStockProps !== null) {
+      //   filteredParams.searchCriteria.inStock = stock;
+      // }
       if (sale) {
         filteredParams.searchCriteria.sale = true;
       }
