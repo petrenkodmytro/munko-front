@@ -1,4 +1,4 @@
-import CabinetNav from '@/components/cabinet-nav/cabinet-nav';
+import CabinetNav from '@/components/cabinet/cabinet-nav/cabinet-nav';
 
 export interface LayoutProps {
   children: React.ReactNode;
