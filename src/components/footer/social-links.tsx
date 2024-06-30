@@ -10,7 +10,7 @@ const SocialLinks = (props: Props) => {
       <p className="uppercase text-lg not-italic font-normal leading-[normal]">
         Follow us
       </p>
-      <div className="hidden md:flex flex-col gap-2">
+      {/* <div className="hidden md:flex flex-col gap-2">
         <div className="flex gap-2">
           <Instagram />
           <a
@@ -44,8 +44,8 @@ const SocialLinks = (props: Props) => {
             www.facebook.com/munkopop
           </a>
         </div>
-      </div>
-      <div className="flex gap-2 md:hidden">
+      </div> */}
+      <div className="flex gap-2">
         <div className="flex">
           <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
             <Instagram />

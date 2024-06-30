@@ -121,6 +121,67 @@ const Filter = ({
           </div>
         )}
       </div>
+      {stockShow && (
+        <>
+          {/* in stock */}
+          <div className="relative flex items-center gap-[10px] xl:text-2xl">
+            <input
+              className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px]  rounded-[5px]"
+              type="checkbox"
+              name="in stock"
+              id="in stock"
+              checked={stock === true}
+              onChange={() => {
+                if (!stock) {
+                  setStock(true);
+                }
+                if (stock === true) {
+                  setStock(null);
+                }
+                setPageCatalog(0);
+              }}
+            />
+            <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+            In stock
+          </div>
+          {/* sale */}
+          <div className="relative flex items-center gap-5 xl:text-2xl">
+            <input
+              className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
+              type="checkbox"
+              name="sale"
+              id="sale"
+              checked={sale}
+              onChange={() => {
+                setSale(!sale);
+                setPageCatalog(0);
+              }}
+            />
+            <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+            Sale
+          </div>
+        </>
+      )}
+      {/* Coming soon */}
+      <div className="relative flex items-center gap-[10px] xl:text-2xl">
+        <input
+          className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px]  rounded-[5px]"
+          type="checkbox"
+          name="coming soon"
+          id="coming soon"
+          checked={stock === false}
+          onChange={() => {
+            if (stock === false) {
+              setStock(null);
+            } else {
+              setStock(false);
+            }
+            setPageCatalog(0);
+          }}
+        />
+        <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+        Coming soon
+      </div>
       {/* Collection */}
       <div className="">
         <div className="inline-flex gap-2 px-2 py-2  rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
@@ -250,42 +311,6 @@ const Filter = ({
           </button>
         )}
       </div>
-      {stockShow && (
-        <>
-          {/* in stock */}
-          <div className="relative flex items-center gap-[10px] xl:text-2xl">
-            <input
-              className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px]  rounded-[5px]"
-              type="checkbox"
-              name="In stock"
-              id="In stock"
-              checked={stock !== null ? stock : undefined}
-              onChange={() => {
-                setStock(!stock);
-                setPageCatalog(0);
-              }}
-            />
-            <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-            In stock
-          </div>
-          {/* sale */}
-          <div className="relative flex items-center gap-5 xl:text-2xl">
-            <input
-              className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
-              type="checkbox"
-              name="sale"
-              id="sale"
-              checked={sale}
-              onChange={() => {
-                setSale(!sale);
-                setPageCatalog(0);
-              }}
-            />
-            <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-            Sale
-          </div>
-        </>
-      )}
       {/* Category */}
       <div className="">
         <div className="inline-flex gap-2 px-2 py-2  rounded shadow-[0px_4px_20px_0px_rgba(0,0,0,0.15)]">
@@ -347,22 +372,6 @@ const Filter = ({
             Others
           </button>
         )}
-      </div>
-      {/* Coming soon */}
-      <div className="relative flex items-center gap-[10px] xl:text-2xl">
-        <input
-          className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px]  rounded-[5px]"
-          type="checkbox"
-          name="In stock"
-          id="In stock"
-          checked={stock !== null ? stock : undefined}
-          onChange={() => {
-            setStock(false);
-            setPageCatalog(0);
-          }}
-        />
-        <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-        Coming soon
       </div>
       {/* reset filters */}
       {isVisibleBtnReset && (
