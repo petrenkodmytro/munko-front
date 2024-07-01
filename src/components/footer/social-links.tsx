@@ -7,7 +7,7 @@ type Props = {};
 const SocialLinks = (props: Props) => {
   return (
     <div className="flex flex-col gap-2">
-      <p className="uppercase text-lg not-italic font-normal leading-[normal]">
+      <p className="uppercase text-lg md:text-base xl:text-lg not-italic font-normal leading-[normal]">
         Follow us
       </p>
       {/* <div className="hidden md:flex flex-col gap-2">

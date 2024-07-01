@@ -32,13 +32,13 @@ const FooterForm = () => {
       >
         <Form className="flex flex-col shrink-0">
           <label
-            className="text-lg not-italic font-semibold mb-3 md:text-base"
+            className="text-lg md:text-sm not-italic font-semibold mb-3 xl:text-lg"
             htmlFor="Email"
           >
             Subscribe to our newsletter
           </label>
           <div>
-            <div className="flex overflow-hidden justify-center rounded-[5px] bg-white w-[284px] md:w-[226px] lg:w-[284px]">
+            <div className="flex overflow-hidden justify-center rounded-[5px] bg-white w-[284px] md:w-[217px] lg:w-[284px]">
               <Field
                 className="w-full text-black pl-2 focus:outline-none"
                 id="email"
@@ -73,8 +73,8 @@ const FooterForm = () => {
             <svg
               className="absolute  hidden peer-checked:block pointer-events-none"
               xmlns="http://www.w3.org/2000/svg"
-              width="23"
-              height="20"
+              width="22"
+              height="18"
               viewBox="0 0 23 20"
               fill="none"
             >
@@ -87,11 +87,11 @@ const FooterForm = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-base not-italic font-normal leading-[normal] md:flex md:flex-col lg:block">
+            <p className="text-base md:text-sm xl:text-base not-italic font-normal leading-[normal]  lg:block">
               I agree with the{' '}
               <Link
                 href={'/privancy-policy'}
-                className="text-base not-italic font-normal leading-[normal] underline duration-200 ease-linear lg:hover:text-[#C3C3C3]"
+                className="text-base md:text-sm xl:text-base not-italic font-normal leading-[normal] underline duration-200 ease-linear lg:hover:text-[#C3C3C3]"
               >
                 Privacy Policy
               </Link>

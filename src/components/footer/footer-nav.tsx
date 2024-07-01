@@ -6,10 +6,10 @@ const FooterNav = (props: Props) => {
   return (
     <div className="flex flex-col place-items-center text-lg not-italic font-semibold leading-[normal] md:place-items-start md:text-base">
       <div className="bg-white mt-6 mb-4 h-[1px] w-[184px] md:hidden" />
-      <p className="uppercase mb-2 text-lg not-italic font-normal leading-[normal]">
+      <p className="uppercase mb-2 text-lg md:text-base xl:text-lg not-italic font-normal leading-[normal]">
         other
       </p>
-      <div className="flex flex-col place-items-center gap-2.5 md:place-items-start">
+      <div className="flex flex-col place-items-center gap-2.5 md:gap-2 xl:gap-1 md:place-items-start md:text-sm xl:text-lg ">
         <Link
           className="duration-200 ease-linear lg:hover:text-[#C3C3C3]"
           href={'/about'}
@@ -24,7 +24,7 @@ const FooterNav = (props: Props) => {
         </Link>
         <Link
           className="duration-200 ease-linear lg:hover:text-[#C3C3C3]"
-          href={'/about'}
+          href={'/catalog'}
         >
           OUR store
         </Link>
