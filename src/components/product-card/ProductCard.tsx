@@ -51,6 +51,7 @@ const ProductCard = () => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   // const [reviews, setReviews] = useState<IReview[]>([]);
+  const discount = 0.8;
 
   useEffect(() => {
     async function fetchProduct() {
@@ -126,9 +127,20 @@ const ProductCard = () => {
           <h5 className="text-2xl font-bold mb-5 md:text-[32px]">
             {product.name}
           </h5>
-          <p className="text-base font-semibold mb-[6px] md:text-2xl">
-            {product.price}$
-          </p>
+          {product.sale ? (
+            <p className="line-through text-[#656582] font-bold text-base mb-[6px] md:text-2xl">
+              {product.price}$
+            </p>
+          ) : (
+            <p className="text-base font-semibold mb-[6px] md:text-2xl">
+              {product.price}$
+            </p>
+          )}
+          {product.sale && (
+            <p className="text-base font-semibold mb-[6px] md:text-2xl">
+              {(product.price * discount).toFixed(2)}$
+            </p>
+          )}
           {product.amount ? (
             <p className="uppercase text-xs mb-[10px] xl:mb-[60px]">in stock</p>
           ) : (

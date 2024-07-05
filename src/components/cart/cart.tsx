@@ -22,6 +22,7 @@ const CartPage = (props: Props) => {
   console.log(session);
 
   const delivery = 1;
+  const discount = 0.8;
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
   const [notifyCart, setNotifyCart] = useState(false);
@@ -177,7 +178,10 @@ const CartPage = (props: Props) => {
 
                       <div className="flex justify-between md:flex-row-reverse md:gap-6 md:justify-start md:items-center md:ml-auto">
                         <p className="text-xs font-semibold md:text-base">
-                          {card.funkoPop.price}$
+                          {card.funkoPop.sale
+                            ? (card.funkoPop.price * discount).toFixed(2)
+                            : card.funkoPop.price}
+                          $
                         </p>
                         {card.amount > 0 && (
                           <div className="flex items-center gap-[10px] mb-[6px] md:mb-0">
@@ -257,7 +261,9 @@ const CartPage = (props: Props) => {
                     </p>
                   )}
                   <p className="text-xs font-semibold md:text-sm">
-                    {card.funkoPop.price}$
+                    {card.funkoPop.sale
+                            ? (card.funkoPop.price * discount).toFixed(2)
+                            : card.funkoPop.price}$
                   </p>
                 </li>
               ))}

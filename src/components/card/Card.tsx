@@ -112,7 +112,7 @@ const Card = ({ card }: CardProps) => {
               </p>
             )}
             {card.sale ? (
-              <p className="font-bold">{(card.price * discount).toFixed(1)}$</p>
+              <p className="font-bold">{(card.price * discount).toFixed(2)}$</p>
             ) : (
               <p className="font-bold">{card.price}$</p>
             )}
