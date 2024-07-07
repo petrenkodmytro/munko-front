@@ -142,8 +142,8 @@ export const createNewUser = async (newUser: NewUser) => {
     });
     // console.log('User created:', createdUser);
     return createdUser;
-  } catch (error) {
-    console.error('Error creating user:', error);
+  } catch (error: any) {
+    console.error(error.response.errors[0]);
   }
 };
 

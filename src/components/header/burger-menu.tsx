@@ -6,7 +6,6 @@ import { BackDrop } from './back-drop';
 import { useRouter } from 'next/navigation';
 
 const BurgerMenu = () => {
-
   const router = useRouter();
 
   const searchSchema = Yup.object().shape({
@@ -35,7 +34,7 @@ const BurgerMenu = () => {
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'scroll';
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -54,7 +53,6 @@ const BurgerMenu = () => {
               xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink"
             >
-              <desc>Created with Pixso.</desc>
               <defs>
                 <clipPath id="clip329_278">
                   <rect
@@ -106,7 +104,6 @@ const BurgerMenu = () => {
               xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink"
             >
-              <desc>Created with Pixso.</desc>
               <defs />
               <line
                 id="Line 1"
@@ -148,7 +145,6 @@ const BurgerMenu = () => {
               xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink"
             >
-              <desc>Created with Pixso.</desc>
               <defs>
                 <clipPath id="clip294_2487">
                   <rect
@@ -205,8 +201,8 @@ const BurgerMenu = () => {
           onSubmit={(values, actions) => {
             router.push(`/catalog/?search=${values.search}`);
             actions.resetForm();
-            setIsOpen(false)
-            setHideOrShow({display: 'none'})
+            setIsOpen(false);
+            setHideOrShow({ display: 'none' });
           }}
         >
           {({ errors }) => (
