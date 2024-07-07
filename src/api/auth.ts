@@ -47,7 +47,7 @@ const authOptions: NextAuthOptions = {
               const userId: string = data.authenticate.user.id.toString();
               user.id = userId;
               const token: string = data.authenticate.token;
-              user.token = token;                  
+              user.token = token;                
       
               // Return the user object with the JWT token
               return user;
@@ -70,6 +70,7 @@ const authOptions: NextAuthOptions = {
 
   session: {
     strategy: "jwt",
+    maxAge: 24 * 60 * 60,
   },
 
   callbacks: {
@@ -91,7 +92,7 @@ const authOptions: NextAuthOptions = {
       },
     
     async jwt({ token, user }: {token: JWT; user: User}) {  
-      
+
       if(user && user.token) {
         token.accessToken = user.token;
         delete user.token
@@ -105,10 +106,10 @@ const authOptions: NextAuthOptions = {
       return token;
     },
 
-    async session({ session, token }: { session: Session; token: JWT}) {      
+    async session({ session, token }: { session: Session; token: JWT}) {            
       if(session){
-        session.user = token.user
-        session.token = token.accessToken
+        session.user = token.user;
+        session.token = token.accessToken;
       }
     return session
     },

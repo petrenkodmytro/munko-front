@@ -1,13 +1,8 @@
-import NextAuth, { User } from "next-auth"
+import NextAuth from "next-auth"
 import { CustomUser } from "./types";
 import { JWT } from "next-auth/jwt";
 
 declare module "next-auth" {
-
-  interface Session {
-    token: string;
-    user: User;
-  };
 
   interface User {
     data?:{
@@ -30,12 +25,19 @@ declare module "next-auth" {
     orders?: string[] | null;
     role?: string;
   };
+
+  interface Session {
+    token: string;
+    user: User;
+    tokenExpires: number;
+  };
 };
 
 declare module "next-auth/jwt" {
 
   interface JWT {
     accessToken: string,
-    user: User
+    user: User,
+    exp: number
   }
 };

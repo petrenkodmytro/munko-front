@@ -99,6 +99,25 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
     setIsValidFrom(SignUpSchema.isValidSync(values) && isChecked);
   }, [SignUpSchema, values, isChecked]);
 
+  useEffect(() => {
+    if (regSuccess) {
+      setTimeout(async () => {
+        const login = await signIn('credentials', {
+          redirect: false,
+          email: values.emailSign,
+          password: values.password,
+          callbackUrl: `${window.location.origin}`,
+        });
+
+        if (login?.error) {
+          setError(true);
+        } else {
+          onDestroy();
+        }
+      }, 5000);
+    }
+  }, [regSuccess]);
+
   return (
     <Formik
       initialValues={{
@@ -114,23 +133,10 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
         if (res) {
           // onDestroy();
           setRegSuccess(true);
-          const login = await signIn('credentials', {
-            redirect: false,
-            email: values.emailSign,
-            password: values.password,
-            callbackUrl: `${window.location.origin}`,
-          });          
-      
-          if (login?.error) {
-            setError(true);
-          } else {
-            onDestroy();
-          }
         } else {
           setError(true);
-          setRegUnsuccess(true)
+          setRegUnsuccess(true);
         }
-
         actions.setSubmitting(false);
         actions.resetForm();
       }}
@@ -270,15 +276,18 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
           </p>
           <div className="mt-0.5 border border-blueBorder"></div>
           <div className="mt-3 flex justify-center items-center gap-[18px]">
-          <button onClick={()=>signIn('google')}>
+            <button onClick={() => signIn('google')}>
               <GoogleImage />
             </button>
             {/* <Link href={'/'} className="h-[34px]">
               <InstagramImage />
             </Link> */}
           </div>
-              <RegSuccess notifyCart={regSuccess} setNotifyCart={setRegSuccess} />
-              <RegUnsuccess notifyCart={regUnsuccess} setNotifyCart={setRegUnsuccess} />
+          <RegSuccess notifyCart={regSuccess} setNotifyCart={setRegSuccess} />
+          <RegUnsuccess
+            notifyCart={regUnsuccess}
+            setNotifyCart={setRegUnsuccess}
+          />
         </Form>
       )}
     </Formik>
