@@ -29,11 +29,11 @@ const UserShoppingCart = () => {
   const [inputNewPassword, setInputNewPassword] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
-  const [isMenuShow, setIsMenuShow] = useState(false)
+  const [isMenuShow, setIsMenuShow] = useState(false);
 
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
-  
+
   useEffect(() => {
     if (search) {
       setModalState(true);
@@ -83,27 +83,31 @@ const UserShoppingCart = () => {
       />
       {session ? (
         isMenuShow ? (
-          <div
-            className="py-2.5 md:pr-3 flex flex-col relative top-8 md:top-[18px] rounded gap-3 md:mr-1 items-center bg-footer z-10"
-          >
-            <Link href={'/cabinet'} className="inline-block pl-1 mr-1.5 md:hidden align-bottom">
+          <div className="py-2.5 md:pr-3 flex flex-col relative top-8 md:top-[18px] rounded gap-3 md:mr-1 items-center bg-footer z-10">
+            <Link
+              href={'/cabinet'}
+              className="inline-block pl-1 mr-1.5 md:hidden align-bottom"
+            >
               <UserIconMobile />
             </Link>
             <div className="hidden md:inline-block">
-              <Link href={'/cabinet'} className="absolute duration-200 ease-linear hover:opacity-20">
+              <Link
+                href={'/cabinet'}
+                className="absolute duration-200 ease-linear hover:opacity-20"
+              >
                 <UserIcon />
               </Link>
               <UserIconHover />
             </div>
-            <button className='pl-1 bg-footer rounded' onClick={()=> signOut()}>
+            <button
+              className="pl-1 bg-footer rounded"
+              onClick={() => signOut()}
+            >
               <Logout />
             </button>
           </div>
-        ):(
-          <button
-            onClick={()=> setIsMenuShow(true)}
-            className="self-end"
-          >
+        ) : (
+          <button onClick={() => setIsMenuShow(true)} className="self-end">
             <div className="inline-block mr-1.5 pl-1 md:hidden self-end align-bottom">
               <UserIconMobile />
             </div>
@@ -116,7 +120,10 @@ const UserShoppingCart = () => {
           </button>
         )
       ) : (
-        <button className='self-end' onClick={() => (setModalState(true), setServerError(''))}>
+        <button
+          className="self-end"
+          onClick={() => (setModalState(true), setServerError(''))}
+        >
           <div className="mr-2.5 inline-block md:hidden align-bottom">
             <LoginMobile />
           </div>
@@ -129,7 +136,7 @@ const UserShoppingCart = () => {
         </button>
       )}
       <button
-      className='self-end md:self-center'
+        className="self-end md:self-center"
         type="button"
         onClick={() => {
           if (session === null) {
@@ -139,8 +146,9 @@ const UserShoppingCart = () => {
           }
         }}
       >
-        <div className="inline-block md:self-stretch md:hidden align-bottom">
+        <div className="relative inline-block md:self-stretch md:hidden align-bottom ">
           <BasketIconMobile />
+          <div className='absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]'>2</div>
         </div>
         <div className="hidden md:inline-block">
           <div className="absolute duration-200 ease-linear hover:opacity-0">
