@@ -12,8 +12,9 @@ import ForgetPassword from '../pop-ups/forget-password';
 import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import FavoritIcon from '../../../public/icons/favorite-small-icon.svg';
+import { CartContext } from '@/context/cart';
 
 type CardCatalog = Pick<
   ICard,
@@ -29,7 +30,7 @@ const Card = ({ card }: CardProps) => {
   const [modalState, setModalState] = useState(false);
   const [notifyOder, setNotifyOder] = useState(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-
+  const { addCardToCartCtx } = useContext(CartContext);
   const discount = 0.8;
   const [forget, setForget] = useState(false);
   const [inputNewPassword, setInputNewPassword] = useState(false);
@@ -42,7 +43,7 @@ const Card = ({ card }: CardProps) => {
       return;
     } else {
       try {
-        await addToCart(funkoId, token);
+        await addCardToCartCtx(funkoId, token);
       } catch (error) {
         console.error(error);
       }

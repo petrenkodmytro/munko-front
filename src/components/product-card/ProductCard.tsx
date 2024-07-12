@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CardImage from './cardImage';
 import CardReviews from './reviewList';
-import { addToCart, getItem } from '@/api/api';
+import { getItem } from '@/api/api';
 import { notFound, useParams } from 'next/navigation';
 import { ICard } from '@/types/types';
 import Link from 'next/link';
@@ -14,6 +14,7 @@ import ForgetPassword from '../pop-ups/forget-password';
 import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
+import { CartContext } from '@/context/cart';
 
 const initialValue = {
   id: 0,
@@ -39,7 +40,8 @@ const ProductCard = () => {
   const id = useParams<Params>().id; // item id
   // console.log(id);
   const { data: session } = useSession();
-  console.log(session);
+  // console.log(session);
+  const { addCardToCartCtx } = useContext(CartContext);
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
   const [modalState, setModalState] = useState(false);
   const [product, setProduct] = useState<ICard>(initialValue);
@@ -82,7 +84,7 @@ const ProductCard = () => {
       return;
     } else {
       try {
-        await addToCart(funkoId, token);
+        await addCardToCartCtx(funkoId, token);
       } catch (error) {
         console.error(error);
       }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import ModalWnd from '../modal/modal-window';
 import UserIconMobile from './../../../public/icons/user-icon-mobile.svg';
 import BasketIconMobile from './../../../public/icons/basket-icon-mobile.svg';
@@ -18,6 +18,7 @@ import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import Link from 'next/link';
+import { CartContext } from '@/context/cart';
 
 const UserShoppingCart = () => {
   const router = useRouter();
@@ -30,6 +31,8 @@ const UserShoppingCart = () => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [isMenuShow, setIsMenuShow] = useState(false);
+
+  const { cartItemsCtx } = useContext(CartContext);
 
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
@@ -148,7 +151,9 @@ const UserShoppingCart = () => {
       >
         <div className="relative inline-block md:self-stretch md:hidden align-bottom ">
           <BasketIconMobile />
-          <div className='absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]'>2</div>
+          <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
+            {cartItemsCtx}
+          </div>
         </div>
         <div className="hidden md:inline-block">
           <div className="absolute duration-200 ease-linear hover:opacity-0">

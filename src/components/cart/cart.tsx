@@ -15,11 +15,16 @@ import Spinner from '../loading/loading';
 import NotLogin from '../pop-ups/not-login';
 import ModalWnd from '../modal/modal-window';
 
+import { useContext } from 'react';
+import { CartContext } from '@/context/cart';
+
 type Props = {};
 
 const CartPage = (props: Props) => {
   const { data: session } = useSession();
-  console.log(session);
+  console.log(session?.user);
+
+  const { removeItemCtx } = useContext(CartContext);
 
   const delivery = 1;
   const discount = 0.8;
@@ -63,7 +68,7 @@ const CartPage = (props: Props) => {
 
   const removeItem = async (card: ICartCard) => {
     try {
-      await removeFromCart(card.id, session?.token);
+      await removeItemCtx(card);
       let currentCart = [...cart];
       currentCart = currentCart.filter(cartItem => cartItem.id !== card.id);
       setCart(currentCart);
@@ -262,8 +267,9 @@ const CartPage = (props: Props) => {
                   )}
                   <p className="text-xs font-semibold md:text-sm">
                     {card.funkoPop.sale
-                            ? (card.funkoPop.price * discount).toFixed(2)
-                            : card.funkoPop.price}$
+                      ? (card.funkoPop.price * discount).toFixed(2)
+                      : card.funkoPop.price}
+                    $
                   </p>
                 </li>
               ))}
