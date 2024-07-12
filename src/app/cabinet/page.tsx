@@ -3,7 +3,7 @@ import React from 'react';
 type Props = {};
 
 const Cabinet = (props: Props) => {
-  return <div>Cabinet</div>;
+  return <div className='pt-10 text-center text-base font-semibold'>Welcom to your own cabinet</div>;
 };
 
 export default Cabinet;
