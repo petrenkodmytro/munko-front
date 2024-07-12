@@ -4,10 +4,10 @@
 			<rect id="shopping-cart" width="25.000000" height="25.000000" fill="white" fill-opacity="0"/>
 		</clipPath>
 	</defs>
-	<rect id="shopping-cart" width="25.000000" height="25.000000" fill="#FFFFFF" fill-opacity="0"/>
+	<rect id="shopping-cart" width="25.000000" height="25.000000" fill="currentColor" fill-opacity="0"/>
 	<g clip-path="url(#clip302_3839)">
-		<path id="Vector" d="M9.375 22.9167C8.7998 22.9167 8.33301 22.4503 8.33301 21.875C8.33301 21.2998 8.7998 20.8334 9.375 20.8334C9.9502 20.8334 10.416 21.2998 10.416 21.875C10.416 22.4503 9.9502 22.9167 9.375 22.9167Z" stroke="#FFFFFF" stroke-opacity="1.000000" stroke-width="1.500000" stroke-linejoin="round"/>
-		<path id="Vector" d="M20.834 22.9167C20.2588 22.9167 19.792 22.4503 19.792 21.875C19.792 21.2998 20.2588 20.8334 20.834 20.8334C21.4092 20.8334 21.875 21.2998 21.875 21.875C21.875 22.4503 21.4092 22.9167 20.834 22.9167Z" stroke="#FFFFFF" stroke-opacity="1.000000" stroke-width="1.500000" stroke-linejoin="round"/>
-		<path id="Vector" d="M1.04199 1.04163L5.20898 1.04163L8 14.9895C8.0957 15.4691 8.35645 15.8999 8.7373 16.2065C9.11816 16.5132 9.59473 16.676 10.084 16.6666L20.209 16.6666C20.6973 16.676 21.1738 16.5132 21.5547 16.2065C21.9355 15.8999 22.1963 15.4691 22.292 14.9895L23.959 6.25L6.25 6.25" stroke="#FFFFFF" stroke-opacity="1.000000" stroke-width="2.000000" stroke-linejoin="round" stroke-linecap="round"/>
+		<path id="Vector" d="M9.375 22.9167C8.7998 22.9167 8.33301 22.4503 8.33301 21.875C8.33301 21.2998 8.7998 20.8334 9.375 20.8334C9.9502 20.8334 10.416 21.2998 10.416 21.875C10.416 22.4503 9.9502 22.9167 9.375 22.9167Z" stroke="currentColor" stroke-opacity="1.000000" stroke-width="1.500000" stroke-linejoin="round"/>
+		<path id="Vector" d="M20.834 22.9167C20.2588 22.9167 19.792 22.4503 19.792 21.875C19.792 21.2998 20.2588 20.8334 20.834 20.8334C21.4092 20.8334 21.875 21.2998 21.875 21.875C21.875 22.4503 21.4092 22.9167 20.834 22.9167Z" stroke="currentColor" stroke-opacity="1.000000" stroke-width="1.500000" stroke-linejoin="round"/>
+		<path id="Vector" d="M1.04199 1.04163L5.20898 1.04163L8 14.9895C8.0957 15.4691 8.35645 15.8999 8.7373 16.2065C9.11816 16.5132 9.59473 16.676 10.084 16.6666L20.209 16.6666C20.6973 16.676 21.1738 16.5132 21.5547 16.2065C21.9355 15.8999 22.1963 15.4691 22.292 14.9895L23.959 6.25L6.25 6.25" stroke="currentColor" stroke-opacity="1.000000" stroke-width="2.000000" stroke-linejoin="round" stroke-linecap="round"/>
 	</g>
 </svg>

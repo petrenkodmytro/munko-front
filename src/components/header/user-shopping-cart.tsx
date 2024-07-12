@@ -9,7 +9,6 @@ import LoginMobile from './../../../public/icons/login_icon_mobile.svg';
 import LoginIcon from './../../../public/icons/login_icon.svg';
 import LoginIconHover from './../../../public/icons/login_icon hover.svg';
 import Logout from './../../../public/icons/logout-icon.svg';
-import BasketIconHover from './../../../public/icons/basket-hover-icon.svg';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import NotLogin from '../pop-ups/not-login';
@@ -150,16 +149,32 @@ const UserShoppingCart = () => {
         }}
       >
         <div className="relative inline-block md:self-stretch md:hidden align-bottom ">
-          <BasketIconMobile />
-          <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
-            {cartItemsCtx}
-          </div>
+          {cartItemsCtx ? (
+            <div className="text-[#31304D]">
+              <BasketIconMobile />
+              <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
+                {cartItemsCtx}
+              </div>
+            </div>
+          ) : (
+            <div className="text-white">
+              <BasketIconMobile />
+            </div>
+          )}
         </div>
-        <div className="hidden md:inline-block">
-          <div className="absolute duration-200 ease-linear hover:opacity-0">
-            <BasketIcon />
-          </div>
-          <BasketIconHover />
+        <div className="relative hidden md:inline-block">
+          {cartItemsCtx ? (
+            <div className="text-[#31304D] duration-200 ease-linear hover:text-[#161629]">
+              <BasketIcon />
+              <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
+                {cartItemsCtx}
+              </div>
+            </div>
+          ) : (
+            <div className="text-white duration-200 ease-linear hover:text-[#C3C3C3]">
+              <BasketIcon />
+            </div>
+          )}
         </div>
       </button>
       <NotLogin
