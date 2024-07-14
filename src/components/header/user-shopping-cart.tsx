@@ -18,6 +18,7 @@ import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import Link from 'next/link';
 import { CartContext } from '@/context/cart';
+import { BackDrop } from './back-drop';
 
 const UserShoppingCart = () => {
   const router = useRouter();
@@ -83,13 +84,18 @@ const UserShoppingCart = () => {
         onDestroy={() => setModalState(false)}
         handleForgetOpen={handleForgetOpen}
       />
+            {isMenuShow ? <BackDrop handleMenu={()=>setIsMenuShow(false)} /> : null}
       {session ? (
         isMenuShow ? (
           <div className="py-2.5 md:pr-3 flex flex-col relative top-8 md:top-[18px] rounded gap-3 md:mr-1 items-center bg-footer z-10">
-            <Link
+            {/* <Link
               href={'/cabinet'}
               className="inline-block pl-1 mr-1.5 md:hidden align-bottom"
-            >
+            > */}
+          <div
+            className="py-2.5 md:pr-3 flex flex-col relative top-8 md:top-[19px] rounded gap-3 md:mr-1 items-center bg-footer z-30"
+          >
+            <Link href={'/cabinet'} className="inline-block pl-1 mr-1.5 md:hidden align-bottom">
               <UserIconMobile />
             </Link>
             <div className="hidden md:inline-block">
@@ -107,6 +113,7 @@ const UserShoppingCart = () => {
             >
               <Logout />
             </button>
+          </div>
           </div>
         ) : (
           <button onClick={() => setIsMenuShow(true)} className="self-end">
