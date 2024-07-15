@@ -8,6 +8,7 @@ type Props = {
 };
 
 const Notification = ({ notify, setNotify, children, handleOpenPopUp }: Props) => {
+
   if (!notify) {
     return null;
   }

@@ -31,35 +31,37 @@ const UserShoppingCart = () => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [isMenuShow, setIsMenuShow] = useState(false);
+  const [resetToken, setResetToken] = useState('');
 
   const { cartItemsCtx } = useContext(CartContext);
 
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
+  const resetTokenParams = searchParams.get('token');  
 
   useEffect(() => {
     if (search) {
       setModalState(true);
       setServerError(search);
     }
-  }, [search]);
+
+    if(resetTokenParams){
+      setResetToken(resetTokenParams)
+      setInputNewPassword(true)
+    }
+  }, [search, resetTokenParams]);
 
   useEffect(() => {
-    if (modalState) {
+    if (modalState || forget || inputNewPassword || showInstructions || showPassConfirm) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [modalState]);
+  }, [modalState, forget, inputNewPassword, showInstructions, showPassConfirm]);
 
   const handleForgetOpen = () => {
     setForget(!forget);
     setModalState(false);
-  };
-
-  const handleNewPasswordOpen = () => {
-    setForget(false);
-    setInputNewPassword(true);
   };
 
   const handleModalOpen = () => {
@@ -67,12 +69,13 @@ const UserShoppingCart = () => {
   };
 
   const handleInstructionsOpen = () => {
-    setInputNewPassword(false);
+    setForget(false);
     setShowInstructions(true);
   };
 
   const handlePassConfrimOpen = () => {
-    setShowInstructions(false);
+    setInputNewPassword(false);
+    router.push('/')
     setShowPassConfirm(true);
   };
 
@@ -132,7 +135,7 @@ const UserShoppingCart = () => {
         )
       ) : (
         <button
-          className="self-end"
+          className="self-end md:ml-[19px]"
           onClick={() => (setModalState(true), setServerError(''))}
         >
           <div className="mr-2.5 inline-block md:hidden align-bottom">
@@ -194,17 +197,17 @@ const UserShoppingCart = () => {
       <ForgetPassword
         notifyCart={forget}
         setNotifyCart={setForget}
-        handleOpenPopUp={handleNewPasswordOpen}
+        handleOpenPopUp={handleInstructionsOpen}
       />
       <InputNewPassword
         notifyCart={inputNewPassword}
         setNotifyCart={setInputNewPassword}
-        handleOpenPopUp={handleInstructionsOpen}
+        resetToken={resetToken}
+        handleOpenPopUp={handlePassConfrimOpen}
       />
       <Instructions
         notifyCart={showInstructions}
         setNotifyCart={setShowInstructions}
-        handleOpenPopUp={handlePassConfrimOpen}
       />
       <NewPassConfirm
         notifyCart={showPassConfirm}
