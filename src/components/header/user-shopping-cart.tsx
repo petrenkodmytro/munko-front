@@ -77,46 +77,48 @@ const UserShoppingCart = () => {
   };
 
   return (
-    <div className="w-16 pb-6 flex pr-1 md:pr-0 md:ml-4 xl:ml-5 md:w-auto md:self-center md:pb-0 md:mt-5">
+    <div className="w-auto pb-6 flex pr-1 md:pr-0 md:w-auto md:self-center md:pb-0 md:mt-5">
       <ModalWnd
         call={modalState}
         serverError={serverError}
         onDestroy={() => setModalState(false)}
         handleForgetOpen={handleForgetOpen}
       />
-            {isMenuShow ? <BackDrop handleMenu={()=>setIsMenuShow(false)} /> : null}
+      {isMenuShow ? <BackDrop handleMenu={() => setIsMenuShow(false)} /> : null}
       {session ? (
         isMenuShow ? (
-          <div className="py-2.5 md:pr-3 flex flex-col relative top-8 md:top-[18px] rounded gap-3 md:mr-1 items-center bg-footer z-10">
-            {/* <Link
-              href={'/cabinet'}
-              className="inline-block pl-1 mr-1.5 md:hidden align-bottom"
-            > */}
-          <div
-            className="py-2.5 md:pr-3 flex flex-col relative top-8 md:top-[19px] rounded gap-3 md:mr-1 items-center bg-footer z-30"
-          >
-            <Link href={'/cabinet'} className="inline-block pl-1 mr-1.5 md:hidden align-bottom">
-              <UserIconMobile />
-            </Link>
-            <div className="hidden md:inline-block">
+          <div className="py-2.5 md:px-4 relative top-8 md:top-[19px] z-30">
+            <div className="border-white border-2 flex flex-col rounded gap-3 items-center bg-footer">
               <Link
                 href={'/cabinet'}
-                className="absolute duration-200 ease-linear hover:opacity-20"
+                onClick={() => setIsMenuShow(false)}
+                className="inline-block pl-1 mr-1.5 md:hidden align-bottom"
               >
-                <UserIcon />
+                <UserIconMobile />
               </Link>
-              <UserIconHover />
+              <div className="hidden md:inline-block">
+                <Link
+                  href={'/cabinet'}
+                  className="absolute duration-200 ease-linear hover:opacity-20"
+                  onClick={() => setIsMenuShow(false)}
+                >
+                  <UserIcon />
+                </Link>
+                <UserIconHover />
+              </div>
+              <button
+                className="pl-1 scale-[0.8] md:scale-100 bg-footer rounded"
+                onClick={() => signOut()}
+              >
+                <Logout />
+              </button>
             </div>
-            <button
-              className="pl-1 bg-footer rounded"
-              onClick={() => signOut()}
-            >
-              <Logout />
-            </button>
-          </div>
           </div>
         ) : (
-          <button onClick={() => setIsMenuShow(true)} className="self-end">
+          <button
+            onClick={() => setIsMenuShow(true)}
+            className="self-end md:ml-[19px]"
+          >
             <div className="inline-block mr-1.5 pl-1 md:hidden self-end align-bottom">
               <UserIconMobile />
             </div>
