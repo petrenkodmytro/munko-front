@@ -137,6 +137,7 @@ export interface PopupProps {
   notifyCart: boolean;
   setNotifyCart: (modalState: boolean) => void;
   handleOpenPopUp?: () => void;
+  resetToken?: string;
 } 
 
 // export interface CustomError extends Error {

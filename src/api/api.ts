@@ -478,3 +478,34 @@ export const getSearchedCatalog = async (name: string) => {
     return [];
   }
 };
+
+export const forgotPassword = async (
+  email: string
+) => {
+  const mutation = gql`
+    mutation ForgotPassword($email: String) {
+        forgotPassword(email: $email)
+    }
+  `;
+
+  const data: any = await graphQLClient.request(
+    mutation, { email }
+  );
+  return data.forgotPassword
+};
+
+export const resetPassword = async (
+  token: string,
+  newPassword: string
+) => {
+  const mutation = gql`
+    mutation ResetPassword($token: String, $newPassword: String) {
+      resetPassword(token: $token, newPassword: $newPassword)
+}
+  `;
+
+  const data: any = await graphQLClient.request(
+    mutation, { token, newPassword }
+  );  
+  return data.resetPassword
+};

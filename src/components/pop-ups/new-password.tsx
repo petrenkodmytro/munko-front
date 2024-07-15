@@ -5,12 +5,17 @@ import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import ShowPasswordIcon from './../../../public/icons/show-password.svg';
 import HidePassword from './../../../public/icons/hide-password.svg';
+import { resetPassword } from '@/api/api';
+import { log } from 'console';
 
 export default function InputNewPassword({
   notifyCart,
   setNotifyCart,
   handleOpenPopUp,
+  resetToken,
 }: PopupProps) {
+  const [inputValue, setInputValue] = useState('');
+  const [inputConfirmValue, setInputConfirmValue] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfrimPassword] = useState(false);
 
@@ -42,6 +47,27 @@ export default function InputNewPassword({
     setIsShowPassword(!isShowPassword);
   };
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLFormElement>) => {
+    if (event.target.name === 'password') {
+      setInputValue(event.target.value);
+    } else {
+      setInputConfirmValue(event.target.value);
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (resetToken && inputValue === inputConfirmValue) {
+      const response = await resetPassword(resetToken, inputValue);
+      if (response) {
+        handleOpenPopUp ? handleOpenPopUp() : null;
+      } else {
+        console.log('Error: something went wrong.');
+      }
+    }
+  };
+
   return (
     <Notification notify={notifyCart} setNotify={setNotifyCart}>
       <div className="flex flex-col gap-2 items-start px-16 py-11 min-w-[410px] w-full">
@@ -49,8 +75,6 @@ export default function InputNewPassword({
         <h3 className="text-lg font-bold">ENTER NEW PASSWORD</h3>
         <Formik
           initialValues={{
-            emailSign: '',
-            name: '',
             password: '',
             confirmPass: '',
             tenantKey: '',
@@ -60,7 +84,11 @@ export default function InputNewPassword({
             console.log(values);
           }}
         >
-          <Form className="w-full flex flex-col">
+          <Form
+            className="w-full flex flex-col"
+            onChange={handleInputChange}
+            onSubmit={handleSubmit}
+          >
             <div className="relative overflow-hidden mb-5">
               <Field
                 type={isShowPassword ? 'text' : 'password'}
@@ -106,8 +134,7 @@ export default function InputNewPassword({
               </div>
             </div>
             <button
-              onClick={handleOpenPopUp}
-              type="button"
+              type="submit"
               className={
                 'rounded self-center font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear bg-footer'
               }
