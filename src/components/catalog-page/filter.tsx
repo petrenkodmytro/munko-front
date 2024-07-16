@@ -42,7 +42,8 @@ const Filter = ({
     seriesSearchParams.length > 0 ||
     categorySearchParams.length > 0 ||
     sale === true ||
-    stock === true
+    stock === true ||
+    stock === false
   ) {
     isVisibleBtnReset = true;
   }

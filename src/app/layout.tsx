@@ -1,5 +1,6 @@
 import Header from '@/components/header/Header';
 import './globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 import 'tailwindcss/tailwind.css';
 import Footer from '@/components/footer/Footer';
 import { Montserrat } from 'next/font/google';
