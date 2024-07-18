@@ -15,8 +15,8 @@ import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import { CartContext } from '@/context/cart';
-import { toast, ToastContainer } from 'react-toastify';
-// import { notifyAddedToCart } from '../notification-modal/toast-notify';
+// import { toast, ToastContainer } from 'react-toastify';
+import { notifyAddedToCart } from '../notification-modal/toast-notify';
 
 const initialValue = {
   id: 0,
@@ -80,20 +80,20 @@ const ProductCard = () => {
     notFound();
   }
 
-  const notifyAddedToCart = () =>
-    toast.success(`Card added to cart!`, {
-      position: 'top-center',
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: 'colored',
-      style: {
-        backgroundColor: '#31304D',
-        color: '#fff',
-      },
-    });
+  // const notifyAddedToCart = () =>
+  //   toast.success(`Card added to cart!`, {
+  //     position: 'top-center',
+  //     autoClose: 2000,
+  //     hideProgressBar: true,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     theme: 'colored',
+  //     style: {
+  //       backgroundColor: '#31304D',
+  //       color: '#fff',
+  //     },
+  //   });
 
   const addCardToCart = async (funkoId: number, token: string | undefined) => {
     if (session === null) {
@@ -135,7 +135,6 @@ const ProductCard = () => {
 
   return (
     <div className="md:px-5 md:pb-[72px] xl:px-20 xl:pb-[35px]">
-      <ToastContainer />
       <div className="hidden md:block py-[25px] text-xs font-medium md:text-base">
         <Link className="underline" href={'/catalog'}>
           Catalog

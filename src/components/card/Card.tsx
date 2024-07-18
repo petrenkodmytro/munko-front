@@ -15,8 +15,8 @@ import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import { useContext, useState } from 'react';
 import FavoritIcon from '../../../public/icons/favorite-small-icon.svg';
 import { CartContext } from '@/context/cart';
-import { toast, ToastContainer } from 'react-toastify';
-// import { notifyAddedToCart } from '../notification-modal/toast-notify';
+// import { toast, ToastContainer } from 'react-toastify';
+import { notifyAddedToCart } from '../notification-modal/toast-notify';
 
 type CardCatalog = Pick<
   ICard,
@@ -39,20 +39,20 @@ const Card = ({ card }: CardProps) => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
 
-  const notifyAddedToCart = () =>
-    toast.success(`Card added to cart!`, {
-      position: 'top-center',
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: 'colored',
-      style: {
-        backgroundColor: '#31304D',
-        color: '#fff',
-      },
-    });
+  // const notifyAddedToCart = () =>
+  //   toast.success(`Card added to cart!`, {
+  //     position: 'top-center',
+  //     autoClose: 2000,
+  //     hideProgressBar: true,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     theme: 'colored',
+  //     style: {
+  //       backgroundColor: '#31304D',
+  //       color: '#fff',
+  //     },
+  //   });
 
   const addCardToCart = async (funkoId: number, token: string | undefined) => {
     if (session === null) {
@@ -186,7 +186,6 @@ const Card = ({ card }: CardProps) => {
         onDestroy={() => setModalState(false)}
         handleForgetOpen={handleForgetOpen}
       />
-      <ToastContainer />
     </>
   );
 };
