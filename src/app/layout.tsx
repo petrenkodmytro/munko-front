@@ -1,10 +1,12 @@
 import Header from '@/components/header/Header';
 import './globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 import 'tailwindcss/tailwind.css';
 import Footer from '@/components/footer/Footer';
 import { Montserrat } from 'next/font/google';
 import AuthProvider from '@/components/providers/SessionProvider';
 import CartProvider from '@/context/cart';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata = {
   title: 'Munko-PoP',
@@ -35,6 +37,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
+            <ToastContainer />
           </body>
         </html>
       </CartProvider>

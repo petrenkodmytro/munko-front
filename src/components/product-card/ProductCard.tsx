@@ -15,6 +15,8 @@ import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import { CartContext } from '@/context/cart';
+// import { toast, ToastContainer } from 'react-toastify';
+import { notifyAddedToCart } from '../notification-modal/toast-notify';
 
 const initialValue = {
   id: 0,
@@ -78,6 +80,21 @@ const ProductCard = () => {
     notFound();
   }
 
+  // const notifyAddedToCart = () =>
+  //   toast.success(`Card added to cart!`, {
+  //     position: 'top-center',
+  //     autoClose: 2000,
+  //     hideProgressBar: true,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     theme: 'colored',
+  //     style: {
+  //       backgroundColor: '#31304D',
+  //       color: '#fff',
+  //     },
+  //   });
+
   const addCardToCart = async (funkoId: number, token: string | undefined) => {
     if (session === null) {
       setNotifyOder(true);
@@ -85,6 +102,7 @@ const ProductCard = () => {
     } else {
       try {
         await addCardToCartCtx(funkoId, token);
+        notifyAddedToCart();
       } catch (error) {
         console.error(error);
       }

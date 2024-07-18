@@ -42,7 +42,8 @@ const Filter = ({
     seriesSearchParams.length > 0 ||
     categorySearchParams.length > 0 ||
     sale === true ||
-    stock === true
+    stock === true ||
+    stock === false
   ) {
     isVisibleBtnReset = true;
   }
@@ -121,47 +122,44 @@ const Filter = ({
           </div>
         )}
       </div>
-      {stockShow && (
-        <>
-          {/* in stock */}
-          <div className="relative flex items-center gap-[10px] xl:text-2xl">
-            <input
-              className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px]  rounded-[5px]"
-              type="checkbox"
-              name="in stock"
-              id="in stock"
-              checked={stock === true}
-              onChange={() => {
-                if (!stock) {
-                  setStock(true);
-                }
-                if (stock === true) {
-                  setStock(null);
-                }
-                setPageCatalog(0);
-              }}
-            />
-            <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-            In stock
-          </div>
-          {/* sale */}
-          <div className="relative flex items-center gap-5 xl:text-2xl">
-            <input
-              className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
-              type="checkbox"
-              name="sale"
-              id="sale"
-              checked={sale}
-              onChange={() => {
-                setSale(!sale);
-                setPageCatalog(0);
-              }}
-            />
-            <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
-            Sale
-          </div>
-        </>
-      )}
+      {/* in stock */}
+      <div className="relative flex items-center gap-[10px] xl:text-2xl">
+        <input
+          className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px]  rounded-[5px]"
+          type="checkbox"
+          name="in stock"
+          id="in stock"
+          checked={stock === true}
+          onChange={() => {
+            if (!stock) {
+              setStock(true);
+            }
+            if (stock === true) {
+              setStock(null);
+            }
+            setPageCatalog(0);
+          }}
+        />
+        <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+        In stock
+      </div>
+      {/* sale */}
+      <div className="relative flex items-center gap-5 xl:text-2xl">
+        <input
+          className="appearance-none  peer shrink-0 bg-[#F5F5F5] w-[30px] h-[30px] xl:w-[35px] xl:h-[35px] rounded-[5px]"
+          type="checkbox"
+          name="sale"
+          id="sale"
+          checked={sale}
+          onChange={() => {
+            setSale(!sale);
+            setPageCatalog(0);
+          }}
+        />
+        <CheckFilter className="absolute left-[5px] hidden peer-checked:block pointer-events-none" />
+        Sale
+      </div>
+
       {/* Coming soon */}
       <div className="relative flex items-center gap-[10px] xl:text-2xl">
         <input

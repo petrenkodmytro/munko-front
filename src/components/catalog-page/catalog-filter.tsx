@@ -231,7 +231,7 @@ const CatalogFilter = ({
     setSortBy('IdAsc');
     setPriceFrom('');
     setPriceTo('');
-    setStock(false);
+    setStock(null);
     setSale(false);
     setColectionSearchParams([]);
     setSeriesSearchParams([]);
