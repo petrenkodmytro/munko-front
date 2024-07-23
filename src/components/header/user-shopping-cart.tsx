@@ -80,25 +80,20 @@ const UserShoppingCart = () => {
   };
 
   return (
-    <div className="w-16 pb-6 flex pr-1 md:pr-0 md:ml-4 xl:ml-5 md:w-auto md:self-center md:pb-0 md:mt-5">
+    <div className="w-auto pb-6 flex pr-1 md:pr-0 md:w-auto md:self-center md:pb-0 md:mt-5">
       <ModalWnd
         call={modalState}
         serverError={serverError}
         onDestroy={() => setModalState(false)}
         handleForgetOpen={handleForgetOpen}
       />
-            {isMenuShow ? <BackDrop handleMenu={()=>setIsMenuShow(false)} /> : null}
       {session ? (
         isMenuShow ? (
           <div className="py-2.5 md:pr-3 flex flex-col relative top-8 md:top-[18px] rounded gap-3 md:mr-1 items-center bg-footer z-10">
-            {/* <Link
+            <Link
               href={'/cabinet'}
               className="inline-block pl-1 mr-1.5 md:hidden align-bottom"
-            > */}
-          <div
-            className="py-2.5 md:pr-3 flex flex-col relative top-8 md:top-[19px] rounded gap-3 md:mr-1 items-center bg-footer z-30"
-          >
-            <Link href={'/cabinet'} className="inline-block pl-1 mr-1.5 md:hidden align-bottom">
+            >
               <UserIconMobile />
             </Link>
             <div className="hidden md:inline-block">
@@ -117,9 +112,11 @@ const UserShoppingCart = () => {
               <Logout />
             </button>
           </div>
-          </div>
         ) : (
-          <button onClick={() => setIsMenuShow(true)} className="self-end">
+          <button
+            onClick={() => setIsMenuShow(true)}
+            className="self-end md:ml-[19px]"
+          >
             <div className="inline-block mr-1.5 pl-1 md:hidden self-end align-bottom">
               <UserIconMobile />
             </div>
