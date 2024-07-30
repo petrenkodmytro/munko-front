@@ -15,8 +15,8 @@ import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import { CartContext } from '@/context/cart';
-// import { toast, ToastContainer } from 'react-toastify';
 import { notifyAddedToCart } from '../notification-modal/toast-notify';
+import { discount } from '@/constant/constant';
 
 const initialValue = {
   id: 0,
@@ -54,8 +54,6 @@ const ProductCard = () => {
   const [inputNewPassword, setInputNewPassword] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
-  // const [reviews, setReviews] = useState<IReview[]>([]);
-  const discount = 0.8;
 
   useEffect(() => {
     async function fetchProduct() {

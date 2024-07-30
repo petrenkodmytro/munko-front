@@ -1,7 +1,6 @@
 'use client';
 
 import { addToCart, getUserCart, removeFromCart } from '@/api/api';
-import NotLogin from '@/components/pop-ups/not-login';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { createContext, useState, useEffect } from 'react';

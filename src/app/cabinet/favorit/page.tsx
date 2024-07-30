@@ -2,12 +2,18 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
-import CartImage from './../../../public/image/free-icon-shopping-cart.png';
-import IconCloseCart from './../../../public/icons/icon-x-cart.svg';
-import { ICard, ICartCard } from '@/types/types';
+import ImgPlaceholder from './../../../../public/image/placeholder-png-image.jpg';
+import CartImage from './../../../../public/image/free-icon-shopping-cart.png';
+import FavoritIcon from './../../../../public/icons/favorite-small-icon.svg';
+import { ICard } from '@/types/types';
 import Spinner from '@/components/loading/loading';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { discount } from '@/constant/constant';
+import NotLogin from '@/components/pop-ups/not-login';
+import ModalWnd from '@/components/modal/modal-window';
+import { useSession } from 'next-auth/react';
+import { notifyAddedToCart } from '@/components/notification-modal/toast-notify';
+import { CartContext } from '@/context/cart';
 
 type Props = {};
 const arr: ICard[] = [
@@ -135,9 +141,64 @@ const arr: ICard[] = [
 ];
 
 const Favorit = (props: Props) => {
-  const [cart, setCart] = useState<ICard[]>(arr);
-  const [orders, setOrders] = useState<ICartCard[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: session } = useSession();
+  const { addCardToCartCtx } = useContext(CartContext);
+  const [favorite, setFavorite] = useState<ICard[]>(arr);
+  const [notify, setNotify] = useState(false);
+  const [modalState, setModalState] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // useEffect(() => {
+  //   if (session === null) {
+  //     setNotify(true);
+  //     return;
+  //   }
+
+  //   async function fetchFavorite() {
+  //     try {
+  //       const allFavorite: ICard[] = await getUserCart(session?.token);
+  //       console.log(allFavorite);
+  //       setFavorite(allFavorite);
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       console.log(error);
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   fetchFavorite();
+  // }, [session]);
+
+  // const removeItem = async (card: ICartCard) => {
+  //   try {
+  //     await removeItemCtx(card);
+  //     let currentCart = [...cart];
+  //     currentCart = currentCart.filter(cartItem => cartItem.id !== card.id);
+  //     setCart(currentCart);
+  //     let currentOrders = [...orders];
+  //     currentOrders = currentOrders.filter(order => order.id !== card.id);
+  //     setOrders(currentOrders);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const addCardToCart = async (funkoId: number, token: string | undefined) => {
+    if (session === null) {
+      setNotify(true);
+      return;
+    } else {
+      try {
+        await addCardToCartCtx(funkoId, token);
+        notifyAddedToCart();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const handleModalOpen = () => {
+    setModalState(!modalState);
+  };
 
   return (
     <section className="px-4 pt-6 pb-10 md:px-5 md:pb-[74px] xl:px-20 xl:pt-9">
@@ -145,21 +206,20 @@ const Favorit = (props: Props) => {
         <div className="flex justify-center w-full">
           <Spinner />
         </div>
-      ) : cart.length ? (
+      ) : favorite.length ? (
         <div className="xl:flex gap-28">
-          {/* your cart */}
           <div className="xl:grow">
             <ul className="flex flex-col gap-4">
-              {cart.map(card => (
-                <li key={card.id} className="flex gap-6">
+              {favorite.map(card => (
+                <li key={card.id} className="flex">
                   <button
                     // onClick={() => removeItem(card)}
                     type="button"
-                    className="hidden md:block"
+                    className="mr-[10px] md:mr-[22px]"
                   >
-                    <IconCloseCart />
+                    <FavoritIcon fill={'#31304D'} />
                   </button>
-                  <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
+                  <div className="w-[86px] h-[80px] mr-6 flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
                     {card.images.length === 0 ? (
                       <Image src={ImgPlaceholder} alt="card-picture" />
                     ) : (
@@ -181,14 +241,15 @@ const Favorit = (props: Props) => {
                       <p className="mb-[6px] text-xs font-bold md:text-base xl:w-[400px]">
                         {card.name}
                       </p>
-
                       <div className="flex justify-between md:flex-row-reverse md:gap-6 md:justify-start md:items-center md:ml-auto">
                         <p className="text-xs font-semibold md:text-base">
-                          {card.sale ? card.price.toFixed(2) : card.price}$
+                          {card.sale
+                            ? (card.price * discount).toFixed(2)
+                            : card.price}
+                          $
                         </p>
                       </div>
                     </div>
-
                     {card.amount > 0 ? (
                       <p className="text-xs font-bold text-[#34A853]">
                         In stock{' '}
@@ -202,6 +263,12 @@ const Favorit = (props: Props) => {
                       </p>
                     )}
                   </div>
+                  <button
+                    onClick={() => addCardToCart(card.id, session?.token)}
+                    className={`mt-auto rounded text-base h-9 font-bold w-full text-white ${card.amount ? 'bg-subscribeBtn hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
+                  >
+                    MOVE TO CART
+                  </button>
                 </li>
               ))}
             </ul>
@@ -209,17 +276,30 @@ const Favorit = (props: Props) => {
         </div>
       ) : (
         <div className="flex flex-col items-center">
-          <div className="w-[150px] md:w-[342px]">
+          {/* <div className="w-[150px] md:w-[342px]">
             <Image src={CartImage} alt="empty cart" width={342} height={342} />
-          </div>
-          <p className="text-sm font-medium md:text-lg">
-            Your have not favorit. Let’s go to{' '}
-            <Link href={`/catalog`} className="p-1  font-semibold">
+          </div> */}
+          <p className="text-xs font-medium md:text-lg">
+            Your have not favorit product. Let’s go to{' '}
+            <Link
+              href={`/catalog`}
+              className="text-xs p-1  font-semibold md:text-lg"
+            >
               Catalog
             </Link>
           </p>
         </div>
       )}
+      <NotLogin
+        notifyCart={notify}
+        setNotifyCart={setNotify}
+        handleOpenPopUp={handleModalOpen}
+      />
+      <ModalWnd
+        call={modalState}
+        onDestroy={() => setModalState(false)}
+        handleForgetOpen={() => setModalState(false)}
+      />
     </section>
   );
 };

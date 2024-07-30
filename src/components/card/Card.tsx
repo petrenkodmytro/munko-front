@@ -4,7 +4,6 @@ import { ICard } from '@/types/types';
 import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
-import { addToCart } from '@/api/api';
 import { useSession } from 'next-auth/react';
 import ModalWnd from '../modal/modal-window';
 import NotLogin from '../pop-ups/not-login';
@@ -15,8 +14,8 @@ import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import { useContext, useState } from 'react';
 import FavoritIcon from '../../../public/icons/favorite-small-icon.svg';
 import { CartContext } from '@/context/cart';
-// import { toast, ToastContainer } from 'react-toastify';
 import { notifyAddedToCart } from '../notification-modal/toast-notify';
+import { discount } from '@/constant/constant';
 
 type CardCatalog = Pick<
   ICard,
@@ -29,30 +28,14 @@ type CardProps = {
 
 const Card = ({ card }: CardProps) => {
   const { data: session } = useSession();
+  const { addCardToCartCtx } = useContext(CartContext);
   const [modalState, setModalState] = useState(false);
   const [notifyOder, setNotifyOder] = useState(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const { addCardToCartCtx } = useContext(CartContext);
-  const discount = 0.8;
   const [forget, setForget] = useState(false);
   const [inputNewPassword, setInputNewPassword] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
-
-  // const notifyAddedToCart = () =>
-  //   toast.success(`Card added to cart!`, {
-  //     position: 'top-center',
-  //     autoClose: 2000,
-  //     hideProgressBar: true,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //     theme: 'colored',
-  //     style: {
-  //       backgroundColor: '#31304D',
-  //       color: '#fff',
-  //     },
-  //   });
 
   const addCardToCart = async (funkoId: number, token: string | undefined) => {
     if (session === null) {
@@ -94,7 +77,6 @@ const Card = ({ card }: CardProps) => {
 
   return (
     <>
-      
       <div className="w-[242px] h-[384px] flex flex-col md:mr-0 px-3 py-6 rounded shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)] duration-200 ease-linear hover:scale-105 flex-shrink-0">
         <Link href={`/catalog/${card.id}`} className="flex flex-col w-full ">
           <div className="w-[173px] h-[153px] flex justify-center items-center bg-[#F5F5F5] mx-auto">
@@ -138,15 +120,14 @@ const Card = ({ card }: CardProps) => {
             {card.amount <= 0 && (
               <p className="uppercase text-xs font-normal"> Out of stock</p>
             )}
-            {card.amount <= 0 && (
-              <button
-                onClick={() => setIsFavorite(!isFavorite)}
-                type="button"
-                className="absolute right-0 top-0 z-40"
-              >
-                <FavoritIcon fill={isFavorite ? '#31304D' : 'white'} />
-              </button>
-            )}
+
+            <button
+              onClick={() => setIsFavorite(!isFavorite)}
+              type="button"
+              className="absolute right-0 bottom-0 z-40"
+            >
+              <FavoritIcon fill={isFavorite ? '#31304D' : 'white'} />
+            </button>
           </div>
         </div>
 

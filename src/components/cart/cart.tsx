@@ -17,6 +17,7 @@ import ModalWnd from '../modal/modal-window';
 
 import { useContext } from 'react';
 import { CartContext } from '@/context/cart';
+import { delivery, discount } from '@/constant/constant';
 
 type Props = {};
 
@@ -26,8 +27,6 @@ const CartPage = (props: Props) => {
 
   const { removeItemCtx } = useContext(CartContext);
 
-  const delivery = 1;
-  const discount = 0.8;
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
   const [notifyCart, setNotifyCart] = useState(false);
