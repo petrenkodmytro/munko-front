@@ -172,6 +172,7 @@ const ProductCard = () => {
               onClick={() => addCardToCart(product.id, session?.token)}
               type="button"
               className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
+              disabled={!product.amount}
             >
               add to cart
             </button>

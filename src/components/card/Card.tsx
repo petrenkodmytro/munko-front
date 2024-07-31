@@ -134,6 +134,7 @@ const Card = ({ card }: CardProps) => {
         <button
           onClick={() => addCardToCart(card.id, session?.token)}
           className={`mt-auto rounded text-base h-9 font-bold w-full text-white ${card.amount ? 'bg-subscribeBtn hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
+          disabled={!card.amount}
         >
           ADD TO CART
         </button>

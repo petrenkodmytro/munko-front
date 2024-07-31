@@ -49,7 +49,7 @@ const arr: ICard[] = [
       'https://drive.google.com/file/d/1MBxXPvtm8ntgQD08UZeWng6kab7OQOaK/view',
     ],
     price: 45,
-    amount: 23,
+    amount: 0,
     description: 'Bitty Pop! Harry Potter 4-Pack Series 1',
     sale: false,
     collection: 'Harry Potter',
@@ -211,7 +211,7 @@ const Favorit = (props: Props) => {
           <div className="xl:grow">
             <ul className="flex flex-col gap-4">
               {favorite.map(card => (
-                <li key={card.id} className="flex">
+                <li key={card.id} className="relative flex">
                   <button
                     // onClick={() => removeItem(card)}
                     type="button"
@@ -236,20 +236,16 @@ const Favorit = (props: Props) => {
                       />
                     )}
                   </div>
-                  <div className="grow">
-                    <div className="md:flex md:items-center">
-                      <p className="mb-[6px] text-xs font-bold md:text-base xl:w-[400px]">
-                        {card.name}
-                      </p>
-                      <div className="flex justify-between md:flex-row-reverse md:gap-6 md:justify-start md:items-center md:ml-auto">
-                        <p className="text-xs font-semibold md:text-base">
-                          {card.sale
-                            ? (card.price * discount).toFixed(2)
-                            : card.price}
-                          $
-                        </p>
-                      </div>
-                    </div>
+                  <div className="">
+                    <p className="text-xs font-bold md:text-base xl:w-[400px]">
+                      {card.name}
+                    </p>
+                    <p className="text-xs font-semibold md:text-base">
+                      {card.sale
+                        ? (card.price * discount).toFixed(2)
+                        : card.price}
+                      $
+                    </p>
                     {card.amount > 0 ? (
                       <p className="text-xs font-bold text-[#34A853]">
                         In stock{' '}
@@ -265,7 +261,8 @@ const Favorit = (props: Props) => {
                   </div>
                   <button
                     onClick={() => addCardToCart(card.id, session?.token)}
-                    className={`mt-auto rounded text-base h-9 font-bold w-full text-white ${card.amount ? 'bg-subscribeBtn hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
+                    className={`absolute right-0 bottom-0 rounded text-sm px-10 py-2 font-bold  text-white ${card.amount ? 'bg-subscribeBtn lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-subscribeBtn lg:hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
+                    disabled={!card.amount}
                   >
                     MOVE TO CART
                   </button>
