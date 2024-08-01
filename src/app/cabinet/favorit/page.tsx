@@ -5,6 +5,7 @@ import Link from 'next/link';
 import ImgPlaceholder from './../../../../public/image/placeholder-png-image.jpg';
 import CartImage from './../../../../public/image/free-icon-shopping-cart.png';
 import FavoritIcon from './../../../../public/icons/favorite-small-icon.svg';
+import ArrowFavoriteBtn from './../../../../public/icons/arrow-right-btn-favorite.svg';
 import { ICard } from '@/types/types';
 import Spinner from '@/components/loading/loading';
 import { useContext, useEffect, useState } from 'react';
@@ -261,10 +262,11 @@ const Favorit = (props: Props) => {
                   </div>
                   <button
                     onClick={() => addCardToCart(card.id, session?.token)}
-                    className={`absolute right-0 bottom-0 rounded text-sm px-10 py-2 font-bold  text-white ${card.amount ? 'bg-subscribeBtn lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-subscribeBtn lg:hover:border-2 duration-200 ease-linear' : 'bg-grayBG'}`}
+                    className={`absolute flex right-0 bottom-0 text-xs underline md:no-underline md:rounded md:uppercase md:px-10 md:py-2 font-bold  md:text-white ${card.amount ? 'md:bg-subscribeBtn lg:hover:bg-white lg:hover:text-subscribeBtn lg:hover:border-subscribeBtn lg:hover:border-2 duration-200 ease-linear' : 'md:bg-grayBG'}`}
                     disabled={!card.amount}
                   >
-                    MOVE TO CART
+                    Move to cart
+                    <ArrowFavoriteBtn className="md:hidden" />
                   </button>
                 </li>
               ))}
