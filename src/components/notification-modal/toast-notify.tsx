@@ -14,3 +14,18 @@ export const notifyAddedToCart = () =>
       color: '#fff',
     },
   });
+
+  export const notifyAddedToFavorite = () =>
+    toast.success(`Card added to favorite!`, {
+      position: 'top-center',
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: 'colored',
+      style: {
+        backgroundColor: '#0e3d1b',
+        color: '#fff',
+      },
+    });

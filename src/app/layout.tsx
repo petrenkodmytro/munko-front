@@ -5,7 +5,7 @@ import 'tailwindcss/tailwind.css';
 import Footer from '@/components/footer/Footer';
 import { Montserrat } from 'next/font/google';
 import AuthProvider from '@/components/providers/SessionProvider';
-import CartProvider from '@/context/cart';
+import ContextProvider from '@/context/context';
 import { ToastContainer } from 'react-toastify';
 
 export const metadata = {
@@ -27,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <AuthProvider>
-      <CartProvider>
+      <ContextProvider>
         <html lang="en" className={montserrat.className}>
           <body
             suppressContentEditableWarning
@@ -40,7 +40,7 @@ export default function RootLayout({
             <ToastContainer />
           </body>
         </html>
-      </CartProvider>
+      </ContextProvider>
     </AuthProvider>
   );
 }

@@ -3,6 +3,7 @@ import ModalWnd from '../modal/modal-window';
 import UserIconMobile from './../../../public/icons/user-icon-mobile.svg';
 import BasketIconMobile from './../../../public/icons/basket-icon-mobile.svg';
 import BasketIcon from './../../../public/icons/basket-icon.svg';
+import FavoriteIcon from './../../../public/icons/favorite-icon.svg';
 import UserIcon from './../../../public/icons/user-icon.svg';
 import UserIconHover from './../../../public/icons/user-hover-icon.svg';
 import LoginMobile from './../../../public/icons/login_icon_mobile.svg';
@@ -17,8 +18,7 @@ import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import Link from 'next/link';
-import { CartContext } from '@/context/cart';
-import { BackDrop } from './back-drop';
+import { Context } from '@/context/context';
 
 const UserShoppingCart = () => {
   const router = useRouter();
@@ -33,7 +33,8 @@ const UserShoppingCart = () => {
   const [isMenuShow, setIsMenuShow] = useState(false);
   const [resetToken, setResetToken] = useState('');
 
-  const { cartItemsCtx } = useContext(CartContext);
+  const { cartItemsCtx } = useContext(Context);
+  const { favoriteItemsCtx } = useContext(Context);
 
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
@@ -144,6 +145,7 @@ const UserShoppingCart = () => {
           </div>
         </button>
       )}
+      {/* cart icon */}
       <button
         className="self-end md:self-center"
         type="button"
@@ -180,6 +182,47 @@ const UserShoppingCart = () => {
           ) : (
             <div className="text-white duration-200 ease-linear hover:text-[#C3C3C3]">
               <BasketIcon />
+            </div>
+          )}
+        </div>
+      </button>
+      {/* favorite icon */}
+      <button
+        className="self-end md:self-center"
+        type="button"
+        onClick={() => {
+          if (session === null) {
+            setNotifyCart(true);
+          } else {
+            router.push('/cabinet/favorite');
+          }
+        }}
+      >
+        <div className="relative inline-block md:self-stretch md:hidden align-bottom ">
+          {favoriteItemsCtx.length ? (
+            <div className="text-[#31304D]">
+              <FavoriteIcon />
+              <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
+                {favoriteItemsCtx.length}
+              </div>
+            </div>
+          ) : (
+            <div className="text-white">
+              <FavoriteIcon />
+            </div>
+          )}
+        </div>
+        <div className="relative hidden md:inline-block">
+          {favoriteItemsCtx.length ? (
+            <div className="text-[#31304D] duration-200 ease-linear hover:text-[#161629]">
+              <FavoriteIcon />
+              <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
+                {favoriteItemsCtx.length}
+              </div>
+            </div>
+          ) : (
+            <div className="text-white duration-200 ease-linear hover:text-[#C3C3C3]">
+              <FavoriteIcon />
             </div>
           )}
         </div>

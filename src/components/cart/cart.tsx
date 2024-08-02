@@ -16,7 +16,7 @@ import NotLogin from '../pop-ups/not-login';
 import ModalWnd from '../modal/modal-window';
 
 import { useContext } from 'react';
-import { CartContext } from '@/context/cart';
+import { Context } from '@/context/context';
 import { delivery, discount } from '@/constant/constant';
 
 type Props = {};
@@ -25,7 +25,7 @@ const CartPage = (props: Props) => {
   const { data: session } = useSession();
   // console.log(session?.user);
 
-  const { removeItemCtx } = useContext(CartContext);
+  const { removeItemFromCartCtx: removeItemCtx } = useContext(Context);
 
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);

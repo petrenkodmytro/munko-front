@@ -14,7 +14,7 @@ import ForgetPassword from '../pop-ups/forget-password';
 import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
-import { CartContext } from '@/context/cart';
+import { Context } from '@/context/cart';
 import { notifyAddedToCart } from '../notification-modal/toast-notify';
 import { discount } from '@/constant/constant';
 
@@ -43,7 +43,7 @@ const ProductCard = () => {
   // console.log(id);
   const { data: session } = useSession();
   // console.log(session);
-  const { addCardToCartCtx } = useContext(CartContext);
+  const { addCardToCartCtx } = useContext(Context);
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
   const [modalState, setModalState] = useState(false);
   const [product, setProduct] = useState<ICard>(initialValue);

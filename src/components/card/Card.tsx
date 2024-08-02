@@ -11,11 +11,15 @@ import ForgetPassword from '../pop-ups/forget-password';
 import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import FavoritIcon from '../../../public/icons/favorite-small-icon.svg';
-import { CartContext } from '@/context/cart';
-import { notifyAddedToCart } from '../notification-modal/toast-notify';
+import { Context } from '@/context/context';
+import {
+  notifyAddedToCart,
+  notifyAddedToFavorite,
+} from '../notification-modal/toast-notify';
 import { discount } from '@/constant/constant';
+import { GetUserFavorite } from '@/api/api';
 
 type CardCatalog = Pick<
   ICard,
@@ -28,10 +32,10 @@ type CardProps = {
 
 const Card = ({ card }: CardProps) => {
   const { data: session } = useSession();
-  const { addCardToCartCtx } = useContext(CartContext);
+  const { addCardToCartCtx, toggleFavoriteCtx, favoriteItemsCtx } =
+    useContext(Context);
   const [modalState, setModalState] = useState(false);
   const [notifyOder, setNotifyOder] = useState(false);
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [forget, setForget] = useState(false);
   const [inputNewPassword, setInputNewPassword] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
@@ -45,6 +49,21 @@ const Card = ({ card }: CardProps) => {
       try {
         await addCardToCartCtx(funkoId, token);
         notifyAddedToCart();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const toggleFavorite = async (funkoId: number, token: string | undefined) => {
+    console.log('Favorite');
+    if (session === null) {
+      setNotifyOder(true);
+      return;
+    } else {
+      try {
+        await toggleFavoriteCtx(Number(session.user.id), funkoId, token);
+        notifyAddedToFavorite();
       } catch (error) {
         console.error(error);
       }
@@ -122,11 +141,13 @@ const Card = ({ card }: CardProps) => {
             )}
 
             <button
-              onClick={() => setIsFavorite(!isFavorite)}
+              onClick={() => toggleFavorite(card.id, session?.token)}
               type="button"
               className="absolute right-0 bottom-0 z-40"
             >
-              <FavoritIcon fill={isFavorite ? '#31304D' : 'white'} />
+              <FavoritIcon
+                fill={favoriteItemsCtx.includes(card.id) ? '#31304D' : 'white'}
+              />
             </button>
           </div>
         </div>
