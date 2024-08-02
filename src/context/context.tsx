@@ -51,9 +51,7 @@ const ContextProvider = ({ children }: Props) => {
         const allOrders: ICartCard[] = await getUserCart(session?.token);
         setCartItemsCtx(allOrders.length);
         const allFavorite: ICard[] = await GetUserFavorite(session?.token);
-        console.log(allFavorite);
         let favoriteId = allFavorite.map(favorite => favorite.id);
-        console.log(favoriteId);
         setFavoritItemsCtx(favoriteId);
       } catch (error) {
         console.log(error);

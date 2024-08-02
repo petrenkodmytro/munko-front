@@ -25,7 +25,7 @@ export const notifyAddedToCart = () =>
       draggable: true,
       theme: 'colored',
       style: {
-        backgroundColor: '#0e3d1b',
+        backgroundColor: '#161629',
         color: '#fff',
       },
     });

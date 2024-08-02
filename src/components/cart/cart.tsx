@@ -55,7 +55,6 @@ const CartPage = (props: Props) => {
   }, [session]);
 
   const toggleSelectedOrder = (newOrder: ICartCard) => {
-    // console.log(newOrder);
     let currentOrders = [...orders];
     if (!orders.map(order => order.id).includes(newOrder.id)) {
       currentOrders = [...currentOrders, newOrder];

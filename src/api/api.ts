@@ -317,7 +317,7 @@ export const updateFavorite = async (
 ) => {
   const mutation = gql`
     mutation UpdateUser {
-    updateUser(user: { id: ${id}, favorite: ${favorite} }) {
+    updateUser(user: { id: ${id}, favorite: [${favorite}] }) {
         favorite
       }
     }

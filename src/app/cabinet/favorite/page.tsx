@@ -36,7 +36,6 @@ const Favorite = (props: Props) => {
     async function fetchFavorite() {
       try {
         const allFavorite: ICard[] = await GetUserFavorite(session?.token);
-        console.log(allFavorite);
         setFavorite(allFavorite);
         setIsLoading(false);
       } catch (error) {
@@ -46,20 +45,6 @@ const Favorite = (props: Props) => {
     }
     fetchFavorite();
   }, [session]);
-
-  // const removeItem = async (card: ICartCard) => {
-  //   try {
-  //     await removeItemCtx(card);
-  //     let currentCart = [...cart];
-  //     currentCart = currentCart.filter(cartItem => cartItem.id !== card.id);
-  //     setCart(currentCart);
-  //     let currentOrders = [...orders];
-  //     currentOrders = currentOrders.filter(order => order.id !== card.id);
-  //     setOrders(currentOrders);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const addCardToCart = async (funkoId: number, token: string | undefined) => {
     if (session === null) {

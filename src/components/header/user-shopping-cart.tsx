@@ -38,7 +38,7 @@ const UserShoppingCart = () => {
 
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
-  const resetTokenParams = searchParams.get('token');  
+  const resetTokenParams = searchParams.get('token');
 
   useEffect(() => {
     if (search) {
@@ -46,14 +46,20 @@ const UserShoppingCart = () => {
       setServerError(search);
     }
 
-    if(resetTokenParams){
-      setResetToken(resetTokenParams)
-      setInputNewPassword(true)
+    if (resetTokenParams) {
+      setResetToken(resetTokenParams);
+      setInputNewPassword(true);
     }
   }, [search, resetTokenParams]);
 
   useEffect(() => {
-    if (modalState || forget || inputNewPassword || showInstructions || showPassConfirm) {
+    if (
+      modalState ||
+      forget ||
+      inputNewPassword ||
+      showInstructions ||
+      showPassConfirm
+    ) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -76,7 +82,7 @@ const UserShoppingCart = () => {
 
   const handlePassConfrimOpen = () => {
     setInputNewPassword(false);
-    router.push('/')
+    router.push('/');
     setShowPassConfirm(true);
   };
 
