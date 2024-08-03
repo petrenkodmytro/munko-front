@@ -13,7 +13,10 @@ import { discount } from '@/constant/constant';
 import NotLogin from '@/components/pop-ups/not-login';
 import ModalWnd from '@/components/modal/modal-window';
 import { useSession } from 'next-auth/react';
-import { notifyAddedToCart } from '@/components/notification-modal/toast-notify';
+import {
+  notifyAddedToCart,
+  notifyRemoveFromFavorite,
+} from '@/components/notification-modal/toast-notify';
 import { Context } from '@/context/context';
 import { GetUserFavorite } from '@/api/api';
 
@@ -21,7 +24,7 @@ type Props = {};
 
 const Favorite = (props: Props) => {
   const { data: session } = useSession();
-  const { addCardToCartCtx } = useContext(Context);
+  const { addCardToCartCtx, toggleFavoriteCtx } = useContext(Context);
   const [favorite, setFavorite] = useState<ICard[]>([]);
   const [notify, setNotify] = useState(false);
   const [modalState, setModalState] = useState(false);
@@ -60,6 +63,19 @@ const Favorite = (props: Props) => {
     }
   };
 
+  const toggleFavorite = async (funkoId: number, token: string | undefined) => {
+    try {
+      await toggleFavoriteCtx(Number(session?.user.id), funkoId, token);
+      let currentFavorite = favorite.filter(
+        cartItem => cartItem.id !== funkoId
+      );
+      setFavorite(currentFavorite);
+      notifyRemoveFromFavorite();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleModalOpen = () => {
     setModalState(!modalState);
   };
@@ -77,7 +93,7 @@ const Favorite = (props: Props) => {
               {favorite.map(card => (
                 <li key={card.id} className="relative flex">
                   <button
-                    // onClick={() => removeItem(card)}
+                    onClick={() => toggleFavorite(card.id, session?.token)}
                     type="button"
                     className="mr-[10px] md:mr-[22px]"
                   >

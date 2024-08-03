@@ -18,6 +18,7 @@ import ModalWnd from '../modal/modal-window';
 import { useContext } from 'react';
 import { Context } from '@/context/context';
 import { delivery, discount } from '@/constant/constant';
+import { notifyRemoveFromCart } from '../notification-modal/toast-notify';
 
 type Props = {};
 
@@ -73,6 +74,7 @@ const CartPage = (props: Props) => {
       let currentOrders = [...orders];
       currentOrders = currentOrders.filter(order => order.id !== card.id);
       setOrders(currentOrders);
+      notifyRemoveFromCart();
     } catch (error) {
       console.log(error);
     }

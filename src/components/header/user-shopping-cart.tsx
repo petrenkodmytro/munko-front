@@ -163,7 +163,7 @@ const UserShoppingCart = () => {
           }
         }}
       >
-        <div className="relative inline-block md:self-stretch md:hidden align-bottom ">
+        <div className="relative inline-block mr-1.5 md:self-stretch md:hidden align-bottom ">
           {cartItemsCtx ? (
             <div className="text-[#31304D]">
               <BasketIconMobile />
@@ -177,7 +177,7 @@ const UserShoppingCart = () => {
             </div>
           )}
         </div>
-        <div className="relative hidden md:inline-block">
+        <div className="relative hidden md:inline-block md:mr-4">
           {cartItemsCtx ? (
             <div className="text-[#31304D] duration-200 ease-linear hover:text-[#161629]">
               <BasketIcon />
@@ -222,7 +222,7 @@ const UserShoppingCart = () => {
           {favoriteItemsCtx.length ? (
             <div className="text-[#31304D] duration-200 ease-linear hover:text-[#161629]">
               <FavoriteIcon />
-              <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
+              <div className="absolute -top-4 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
                 {favoriteItemsCtx.length}
               </div>
             </div>

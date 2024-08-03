@@ -17,9 +17,9 @@ import { Context } from '@/context/context';
 import {
   notifyAddedToCart,
   notifyAddedToFavorite,
+  notifyRemoveFromFavorite,
 } from '../notification-modal/toast-notify';
 import { discount } from '@/constant/constant';
-import { GetUserFavorite } from '@/api/api';
 
 type CardCatalog = Pick<
   ICard,
@@ -56,14 +56,17 @@ const Card = ({ card }: CardProps) => {
   };
 
   const toggleFavorite = async (funkoId: number, token: string | undefined) => {
-    console.log('Favorite');
     if (session === null) {
       setNotifyOder(true);
       return;
     } else {
       try {
         await toggleFavoriteCtx(Number(session.user.id), funkoId, token);
-        notifyAddedToFavorite();
+        if (favoriteItemsCtx.includes(funkoId)) {
+          notifyRemoveFromFavorite();
+        } else {
+          notifyAddedToFavorite();
+        }
       } catch (error) {
         console.error(error);
       }
