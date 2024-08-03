@@ -14,7 +14,7 @@ import ForgetPassword from '../pop-ups/forget-password';
 import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
-import { Context } from '@/context/cart';
+import { Context } from '@/context/context';
 import { notifyAddedToCart } from '../notification-modal/toast-notify';
 import { discount } from '@/constant/constant';
 
