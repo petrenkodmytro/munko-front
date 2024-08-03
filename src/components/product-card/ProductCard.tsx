@@ -14,9 +14,9 @@ import ForgetPassword from '../pop-ups/forget-password';
 import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
-import { CartContext } from '@/context/cart';
-// import { toast, ToastContainer } from 'react-toastify';
+import { Context } from '@/context/context';
 import { notifyAddedToCart } from '../notification-modal/toast-notify';
+import { discount } from '@/constant/constant';
 
 const initialValue = {
   id: 0,
@@ -43,7 +43,7 @@ const ProductCard = () => {
   // console.log(id);
   const { data: session } = useSession();
   // console.log(session);
-  const { addCardToCartCtx } = useContext(CartContext);
+  const { addCardToCartCtx } = useContext(Context);
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
   const [modalState, setModalState] = useState(false);
   const [product, setProduct] = useState<ICard>(initialValue);
@@ -54,8 +54,6 @@ const ProductCard = () => {
   const [inputNewPassword, setInputNewPassword] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
-  // const [reviews, setReviews] = useState<IReview[]>([]);
-  const discount = 0.8;
 
   useEffect(() => {
     async function fetchProduct() {
@@ -174,6 +172,7 @@ const ProductCard = () => {
               onClick={() => addCardToCart(product.id, session?.token)}
               type="button"
               className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
+              disabled={!product.amount}
             >
               add to cart
             </button>

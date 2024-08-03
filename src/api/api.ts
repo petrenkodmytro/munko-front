@@ -38,6 +38,10 @@ interface IDataCartItems {
   getOrderItems: ICartCard[];
 }
 
+interface IDataFavoriteItems {
+  getUserFavorite: ICard[];
+}
+
 export const getCatalog = async () => {
   const query = gql`
     query GetAllItems {
@@ -219,10 +223,7 @@ export const deleteReview = async (
   return data;
 };
 
-export const addToCart = async (
-  funkoId: number,
-  token: string | undefined
-) => {
+export const addToCart = async (funkoId: number, token: string | undefined) => {
   const mutation = gql`
     mutation AddItemInBasket {
     addItemInBasket(funkoId: ${funkoId}) {
@@ -307,6 +308,64 @@ export const getUserCart = async (token: string | undefined) => {
 
   // console.log('getOrderItems', data.getOrderItems);
   return data.getOrderItems;
+};
+
+export const updateFavorite = async (
+  id: number,
+  favorite: number[],
+  token: string | undefined
+) => {
+  const mutation = gql`
+    mutation UpdateUser {
+    updateUser(user: { id: ${id}, favorite: [${favorite}] }) {
+        favorite
+      }
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data = await graphQLClient.request(
+    mutation,
+    { favorite },
+    requestHeaders
+  );
+
+  return data;
+};
+
+export const GetUserFavorite = async (token: string | undefined) => {
+  const query = gql`
+    query GetUserFavorite {
+      getUserFavorite {
+        id
+        name
+        images
+        price
+        amount
+        description
+        sale
+        collection
+        sublicense
+        series
+        category
+        productType
+        date
+      }
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data: IDataFavoriteItems = await graphQLClient.request(
+    query,
+    {},
+    requestHeaders
+  );
+
+  return data.getUserFavorite;
 };
 
 export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {
@@ -479,33 +538,27 @@ export const getSearchedCatalog = async (name: string) => {
   }
 };
 
-export const forgotPassword = async (
-  email: string
-) => {
+export const forgotPassword = async (email: string) => {
   const mutation = gql`
     mutation ForgotPassword($email: String) {
-        forgotPassword(email: $email)
+      forgotPassword(email: $email)
     }
   `;
 
-  const data: any = await graphQLClient.request(
-    mutation, { email }
-  );
-  return data.forgotPassword
+  const data: any = await graphQLClient.request(mutation, { email });
+  return data.forgotPassword;
 };
 
-export const resetPassword = async (
-  token: string,
-  newPassword: string
-) => {
+export const resetPassword = async (token: string, newPassword: string) => {
   const mutation = gql`
     mutation ResetPassword($token: String, $newPassword: String) {
       resetPassword(token: $token, newPassword: $newPassword)
-}
+    }
   `;
 
-  const data: any = await graphQLClient.request(
-    mutation, { token, newPassword }
-  );  
-  return data.resetPassword
+  const data: any = await graphQLClient.request(mutation, {
+    token,
+    newPassword,
+  });
+  return data.resetPassword;
 };

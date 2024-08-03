@@ -16,7 +16,9 @@ import NotLogin from '../pop-ups/not-login';
 import ModalWnd from '../modal/modal-window';
 
 import { useContext } from 'react';
-import { CartContext } from '@/context/cart';
+import { Context } from '@/context/context';
+import { delivery, discount } from '@/constant/constant';
+import { notifyRemoveFromCart } from '../notification-modal/toast-notify';
 
 type Props = {};
 
@@ -24,10 +26,8 @@ const CartPage = (props: Props) => {
   const { data: session } = useSession();
   // console.log(session?.user);
 
-  const { removeItemCtx } = useContext(CartContext);
+  const { removeItemFromCartCtx: removeItemCtx } = useContext(Context);
 
-  const delivery = 1;
-  const discount = 0.8;
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
   const [notifyCart, setNotifyCart] = useState(false);
@@ -56,7 +56,6 @@ const CartPage = (props: Props) => {
   }, [session]);
 
   const toggleSelectedOrder = (newOrder: ICartCard) => {
-    // console.log(newOrder);
     let currentOrders = [...orders];
     if (!orders.map(order => order.id).includes(newOrder.id)) {
       currentOrders = [...currentOrders, newOrder];
@@ -75,6 +74,7 @@ const CartPage = (props: Props) => {
       let currentOrders = [...orders];
       currentOrders = currentOrders.filter(order => order.id !== card.id);
       setOrders(currentOrders);
+      notifyRemoveFromCart();
     } catch (error) {
       console.log(error);
     }

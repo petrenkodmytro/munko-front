@@ -22,7 +22,7 @@ const navUrl = [
     icon: <OrderHistory />,
   },
   {
-    url: '/cabinet/favorit',
+    url: '/cabinet/favorite',
     text: 'favorites',
     icon: <Favorites />,
   },
