@@ -13,11 +13,12 @@ import 'swiper/css/thumbs';
 
 type CardImgProps = {
   images: string[];
+  toggleFavorite: () => void;
+  isFavorite: boolean;
 };
 
-const CardImage = ({ images }: CardImgProps) => {
+const CardImage = ({ images, toggleFavorite, isFavorite }: CardImgProps) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
   // const images = sliderCard;
   const newImgs = images.map(image => {
@@ -37,7 +38,7 @@ const CardImage = ({ images }: CardImgProps) => {
       ) : (
         <div className="relative md:flex md:flex-row-reverse bg-[#F5F5F5] pb-5 md:p-5 xl:w-[737px] xl:py-6 xl:px-8 xl:gap-16">
           <button
-            onClick={() => setIsFavorite(!isFavorite)}
+            onClick={() => toggleFavorite()}
             type="button"
             className="absolute right-4 md:right-5 top-4 md:top-5 z-10"
           >
