@@ -17,12 +17,12 @@ const Footer = () => {
       </div>
       <div className="text-center pt-6 pb-2 md:pt-2">
         © 2024{' '}
-        <a
+        <Link
           className="duration-200 ease-linear lg:hover:text-[#C3C3C3]"
           href="https://github.com/petrenkodmytro/munko-front"
         >
           Munko Pop
-        </a>
+        </Link>
       </div>
     </footer>
   );
