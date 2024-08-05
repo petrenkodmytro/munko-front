@@ -1,10 +1,12 @@
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface NavProps {
   handleMenu?: () => void;
 }
 
 const Navigation: React.FC<NavProps> = ({ handleMenu }) => {
+  const pathname = usePathname();
   const pagesList = [
     {
       url: '/about',
@@ -33,12 +35,13 @@ const Navigation: React.FC<NavProps> = ({ handleMenu }) => {
         HOME
       </Link>
       {pagesList.map((page, index) => {
+        const isActive = pathname.startsWith(page.url);
         return (
           <li key={index} className="pb-2.5 lg:pb-0 lg:ml-6 xl:ml-12">
             <Link
               onClick={handleMenu}
               href={page.url}
-              className="duration-200 ease-linear lg:hover:text-[#C3C3C3]"
+              className={`${isActive ? 'text-[#31304D]' : ''} duration-200 ease-linear lg:hover:text-[#C3C3C3]`}
             >
               {page.text}
             </Link>
