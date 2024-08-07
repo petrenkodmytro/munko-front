@@ -157,24 +157,28 @@ const CartPage = (props: Props) => {
                     />
                     <CheckOrder className="  absolute left-[5px] hidden peer-checked:block pointer-events-none" />
                   </div>
-
-                  <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
-                    {card.funkoPop.images.length === 0 ? (
-                      <Image src={ImgPlaceholder} alt="card-picture" />
-                    ) : (
-                      <Image
-                        src={
-                          card.funkoPop.images[0].slice(0, 25) +
-                          'uc?id=' +
-                          card.funkoPop.images[0].slice(32, 65)
-                        }
-                        // src={icon}
-                        width={150}
-                        height={138}
-                        alt="card-picture"
-                      />
-                    )}
-                  </div>
+                  <Link
+                    href={`/catalog/${card.id}`}
+                    className="hover:scale-105 duration-200 ease-linear hover:shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)]"
+                  >
+                    <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
+                      {card.funkoPop.images.length === 0 ? (
+                        <Image src={ImgPlaceholder} alt="card-picture" />
+                      ) : (
+                        <Image
+                          src={
+                            card.funkoPop.images[0].slice(0, 25) +
+                            'uc?id=' +
+                            card.funkoPop.images[0].slice(32, 65)
+                          }
+                          // src={icon}
+                          width={150}
+                          height={138}
+                          alt="card-picture"
+                        />
+                      )}
+                    </div>{' '}
+                  </Link>
                   <div className="grow">
                     <div className="md:flex md:items-center">
                       <p className="mb-[6px] text-xs font-bold md:text-base xl:w-[400px]">
