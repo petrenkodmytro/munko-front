@@ -34,6 +34,15 @@ export interface ICard {
 //   token?: string;
 // }
 
+export interface CustomSvg {
+  className?: string;
+  stroke?: string;
+  color?: string;
+  width?: number;
+  height?: number;
+  fill?: string;
+}
+
 export interface NewUser {
   firstName: string;
   email: string;

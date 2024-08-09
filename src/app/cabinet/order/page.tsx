@@ -2,15 +2,10 @@
 
 import Spinner from '@/components/loading/loading';
 import { useSession } from 'next-auth/react';
-import React, { useContext, useEffect, useState } from 'react';
-import ImgPlaceholder from './../../../../public/image/placeholder-png-image.jpg';
-import { Context } from '@/context/context';
-import { notifyAddedToCart } from '@/components/notification-modal/toast-notify';
+import React, { useEffect, useState } from 'react';
 import NotLogin from '@/components/pop-ups/not-login';
 import ModalWnd from '@/components/modal/modal-window';
-import Image from 'next/image';
-import { ICard, IDataOrders, IOrder } from '@/types/types';
-import Link from 'next/link';
+import { IOrder } from '@/types/types';
 import { GetUserOrders } from '@/api/api';
 import OrderItem from '@/components/cabinet/order/orderItem';
 
@@ -22,7 +17,6 @@ const Order = (props: Props) => {
   const [notify, setNotify] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { addCardToCartCtx } = useContext(Context);
 
   useEffect(() => {
     if (session === null) {
@@ -72,9 +66,12 @@ const Order = (props: Props) => {
           <div className="xl:grow">
             <ul className="">
               {orders.map(order => (
-                <li key={order.id} className="border-2 border-green-600">
-                  <p>ID:{order.id}</p>
-                  <p>Status{order.status}</p>
+                <li key={order.id} className="p-4 border-2 border-green-600">
+                  <div className="flex justify-between">
+                    <p>Status: {order.status}</p>
+                    <p>Order ID: {order.id}</p>
+                  </div>
+                  <div className="h-[1px] my-4 bg-gray-600"></div>
                   <OrderItem order={order.orderItems} />
                 </li>
               ))}
@@ -82,7 +79,7 @@ const Order = (props: Props) => {
           </div>
         </div>
       ) : (
-        <p className="text-xs font-medium md:text-lg">
+        <p className="text-xs font-medium md:text-lg text-center">
           Your have not orders yet
         </p>
       )}

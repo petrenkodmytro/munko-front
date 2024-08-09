@@ -3,7 +3,7 @@ import ModalWnd from '../modal/modal-window';
 import UserIconMobile from './../../../public/icons/user-icon-mobile.svg';
 import BasketIconMobile from './../../../public/icons/basket-icon-mobile.svg';
 import BasketIcon from './../../../public/icons/basket-icon.svg';
-import FavoriteIcon from './../../../public/icons/favorite-icon.svg';
+// import FavoriteIcon from './../../../public/icons/favorite-header-icon.svg';
 import UserIcon from './../../../public/icons/user-icon.svg';
 import UserIconHover from './../../../public/icons/user-hover-icon.svg';
 import LoginMobile from './../../../public/icons/login_icon_mobile.svg';
@@ -19,6 +19,7 @@ import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import Link from 'next/link';
 import { Context } from '@/context/context';
+import { FavoriteIcon } from '../svgs/FavoriteIcon.svg';
 
 const UserShoppingCart = () => {
   const router = useRouter();
@@ -87,7 +88,7 @@ const UserShoppingCart = () => {
   };
 
   return (
-    <div className="w-auto pb-6 flex pr-1 md:pr-0 md:w-auto md:self-center md:pb-0 md:mt-5">
+    <div className="w-auto pb-6 flex gap-1 md:gap-2 pr-1 md:pr-0 md:w-auto md:self-center md:pb-0 md:mt-5">
       <ModalWnd
         call={modalState}
         serverError={serverError}
@@ -204,17 +205,17 @@ const UserShoppingCart = () => {
           }
         }}
       >
-        <div className="relative inline-block md:self-stretch md:hidden align-bottom ">
+        <div className="relative inline-block md:self-stretch md:hidden align-bottom">
           {favoriteItemsCtx.length ? (
             <div className="text-[#31304D]">
-              <FavoriteIcon />
+              <FavoriteIcon width={25} height={25}/>
               <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
                 {favoriteItemsCtx.length}
               </div>
             </div>
           ) : (
             <div className="text-white">
-              <FavoriteIcon />
+              <FavoriteIcon width={25} height={25}/>
             </div>
           )}
         </div>
@@ -222,7 +223,7 @@ const UserShoppingCart = () => {
           {favoriteItemsCtx.length ? (
             <div className="text-[#31304D] duration-200 ease-linear hover:text-[#161629]">
               <FavoriteIcon />
-              <div className="absolute -top-4 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
+              <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
                 {favoriteItemsCtx.length}
               </div>
             </div>

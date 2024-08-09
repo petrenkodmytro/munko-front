@@ -1,4 +1,4 @@
-import { ICard, IOrder } from '@/types/types';
+import { ICard } from '@/types/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import ImgPlaceholder from './../../../../public/image/placeholder-png-image.jpg';
@@ -9,14 +9,14 @@ type Props = {
 
 const OrderItem = ({ order }: Props) => {
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className="flex  gap-4">
       {order.map(ord => (
         <li key={ord.id} className="relative flex">
           <Link
             href={`/catalog/${ord.funkoPop.id}`}
-            className="hover:scale-105 duration-200 ease-linear hover:shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)]"
+            className="md:hover:scale-105 duration-200 ease-linear md:hover:shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)]"
           >
-            <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
+            <div className="w-[70px] h-[70px]  flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
               {ord.funkoPop.images.length === 0 ? (
                 <Image src={ImgPlaceholder} alt="card-picture" />
               ) : (
@@ -34,11 +34,14 @@ const OrderItem = ({ order }: Props) => {
               )}
             </div>{' '}
           </Link>
-          <div className="ml-6">
+          {/* <div className="ml-6">
             <p className="text-xs font-bold md:text-base xl:w-[400px]">
               {ord.funkoPop.name}
             </p>
-          </div>
+            <p className="text-xs font-bold md:text-base">
+              {ord.amount}
+            </p>
+          </div> */}
         </li>
       ))}
     </ul>
