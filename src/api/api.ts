@@ -6,6 +6,12 @@ import {
   IFilteredParams,
   IReview,
   ICartCard,
+  IDataCatalog,
+  IDataOrders,
+  IDataItem,
+  IDataReviewById,
+  IDataCartItems,
+  IDataFavoriteItems,
 } from '@/types/types';
 import { GraphQLClient, gql } from 'graphql-request';
 
@@ -19,28 +25,6 @@ const graphQLClient = new GraphQLClient(endpoint);
 //     stringify: JSON.stringify,
 //   },
 // })
-
-interface IDataCatalog {
-  getAllItems: {
-    items: ICard[];
-  };
-}
-
-interface IDataItem {
-  getItem: ICard;
-}
-
-interface IDataReviewById {
-  getFunkoReviews: IReview[];
-}
-
-interface IDataCartItems {
-  getOrderItems: ICartCard[];
-}
-
-interface IDataFavoriteItems {
-  getUserFavorite: ICard[];
-}
 
 export const getCatalog = async () => {
   const query = gql`
@@ -366,6 +350,47 @@ export const GetUserFavorite = async (token: string | undefined) => {
   );
 
   return data.getUserFavorite;
+};
+
+export const GetUserOrders = async (token: string | undefined) => {
+  const query = gql`
+    query GetUserOrders {
+      getUserOrders {
+        id
+        status
+        orderItems {
+          id
+          amount
+          funkoPop {
+            id
+            name
+            images
+            price
+            amount
+            description
+            sale
+            collection
+            sublicense
+            series
+            category
+            productType
+            date
+          }
+        }
+      }
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+  const data: IDataOrders = await graphQLClient.request(
+    query,
+    {},
+    requestHeaders
+  );
+
+  return data.getUserOrders;
 };
 
 export const getFilteredCatalog = async (filteredParams: IFilteredParams) => {

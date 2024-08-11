@@ -99,24 +99,29 @@ const Favorite = (props: Props) => {
                   >
                     <FavoritIcon fill={'#31304D'} />
                   </button>
-                  <div className="w-[86px] h-[80px] mr-6 flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
-                    {card.images.length === 0 ? (
-                      <Image src={ImgPlaceholder} alt="card-picture" />
-                    ) : (
-                      <Image
-                        src={
-                          card.images[0].slice(0, 25) +
-                          'uc?id=' +
-                          card.images[0].slice(32, 65)
-                        }
-                        // src={icon}
-                        width={150}
-                        height={138}
-                        alt="card-picture"
-                      />
-                    )}
-                  </div>
-                  <div className="">
+                  <Link
+                    href={`/catalog/${card.id}`}
+                    className="hover:scale-105 duration-200 ease-linear hover:shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)]"
+                  >
+                    <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
+                      {card.images.length === 0 ? (
+                        <Image src={ImgPlaceholder} alt="card-picture" />
+                      ) : (
+                        <Image
+                          src={
+                            card.images[0].slice(0, 25) +
+                            'uc?id=' +
+                            card.images[0].slice(32, 65)
+                          }
+                          // src={icon}
+                          width={150}
+                          height={138}
+                          alt="card-picture"
+                        />
+                      )}
+                    </div>{' '}
+                  </Link>
+                  <div className="ml-6">
                     <p className="text-xs font-bold md:text-base xl:w-[400px]">
                       {card.name}
                     </p>
