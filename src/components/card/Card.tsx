@@ -146,7 +146,7 @@ const Card = ({ card }: CardProps) => {
             <button
               onClick={() => toggleFavorite(card.id, session?.token)}
               type="button"
-              className="absolute right-0 bottom-0 z-40"
+              className="absolute right-0 bottom-0 z-19"
             >
               <FavoritIcon
                 fill={favoriteItemsCtx.includes(card.id) ? '#31304D' : 'white'}
