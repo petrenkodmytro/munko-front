@@ -16,7 +16,9 @@ import NotLogin from '../pop-ups/not-login';
 import ModalWnd from '../modal/modal-window';
 
 import { useContext } from 'react';
-import { CartContext } from '@/context/cart';
+import { Context } from '@/context/context';
+import { delivery, discount } from '@/constant/constant';
+import { notifyRemoveFromCart } from '../notification-modal/toast-notify';
 
 type Props = {};
 
@@ -24,10 +26,8 @@ const CartPage = (props: Props) => {
   const { data: session } = useSession();
   // console.log(session?.user);
 
-  const { removeItemCtx } = useContext(CartContext);
+  const { removeItemFromCartCtx: removeItemCtx } = useContext(Context);
 
-  const delivery = 1;
-  const discount = 0.8;
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
   const [notifyCart, setNotifyCart] = useState(false);
@@ -56,7 +56,6 @@ const CartPage = (props: Props) => {
   }, [session]);
 
   const toggleSelectedOrder = (newOrder: ICartCard) => {
-    // console.log(newOrder);
     let currentOrders = [...orders];
     if (!orders.map(order => order.id).includes(newOrder.id)) {
       currentOrders = [...currentOrders, newOrder];
@@ -75,6 +74,7 @@ const CartPage = (props: Props) => {
       let currentOrders = [...orders];
       currentOrders = currentOrders.filter(order => order.id !== card.id);
       setOrders(currentOrders);
+      notifyRemoveFromCart();
     } catch (error) {
       console.log(error);
     }
@@ -157,24 +157,28 @@ const CartPage = (props: Props) => {
                     />
                     <CheckOrder className="  absolute left-[5px] hidden peer-checked:block pointer-events-none" />
                   </div>
-
-                  <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
-                    {card.funkoPop.images.length === 0 ? (
-                      <Image src={ImgPlaceholder} alt="card-picture" />
-                    ) : (
-                      <Image
-                        src={
-                          card.funkoPop.images[0].slice(0, 25) +
-                          'uc?id=' +
-                          card.funkoPop.images[0].slice(32, 65)
-                        }
-                        // src={icon}
-                        width={150}
-                        height={138}
-                        alt="card-picture"
-                      />
-                    )}
-                  </div>
+                  <Link
+                    href={`/catalog/${card.id}`}
+                    className="hover:scale-105 duration-200 ease-linear hover:shadow-[0px_0px_20px_0px_rgb(0,0,0,0.15)]"
+                  >
+                    <div className="w-[86px] h-[80px] flex justify-center items-center bg-[#F5F5F5] rounded flex-shrink-0 md:w-[98px] md:h-[91px]">
+                      {card.funkoPop.images.length === 0 ? (
+                        <Image src={ImgPlaceholder} alt="card-picture" />
+                      ) : (
+                        <Image
+                          src={
+                            card.funkoPop.images[0].slice(0, 25) +
+                            'uc?id=' +
+                            card.funkoPop.images[0].slice(32, 65)
+                          }
+                          // src={icon}
+                          width={150}
+                          height={138}
+                          alt="card-picture"
+                        />
+                      )}
+                    </div>{' '}
+                  </Link>
                   <div className="grow">
                     <div className="md:flex md:items-center">
                       <p className="mb-[6px] text-xs font-bold md:text-base xl:w-[400px]">

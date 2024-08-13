@@ -3,6 +3,7 @@ import ModalWnd from '../modal/modal-window';
 import UserIconMobile from './../../../public/icons/user-icon-mobile.svg';
 import BasketIconMobile from './../../../public/icons/basket-icon-mobile.svg';
 import BasketIcon from './../../../public/icons/basket-icon.svg';
+// import FavoriteIcon from './../../../public/icons/favorite-header-icon.svg';
 import UserIcon from './../../../public/icons/user-icon.svg';
 import UserIconHover from './../../../public/icons/user-hover-icon.svg';
 import LoginMobile from './../../../public/icons/login_icon_mobile.svg';
@@ -19,9 +20,11 @@ import NewPassConfirm from '../pop-ups/new-pass-confirm';
 import RegSuccess from '../pop-ups/reg-success';
 import EmailConfirm from '../pop-ups/email-confirm';
 import Link from 'next/link';
-import { CartContext } from '@/context/cart';
 import { BackDrop } from './back-drop';
 import { enableAccount } from '@/api/api';
+import { Context } from '@/context/context';
+import { FavoriteIcon } from '../svgs/FavoriteIcon.svg';
+
 
 const UserShoppingCart = () => {
   const router = useRouter();
@@ -38,7 +41,8 @@ const UserShoppingCart = () => {
   const [regSuccess, setRegSuccess] = useState(false);
   const [emailConfirmation, setEmailConfirmation] = useState(false);
 
-  const { cartItemsCtx } = useContext(CartContext);  
+  const { cartItemsCtx } = useContext(Context);
+  const { favoriteItemsCtx } = useContext(Context);
 
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
@@ -103,7 +107,7 @@ const UserShoppingCart = () => {
   };
 
   return (
-    <div className="w-auto pb-6 flex pr-1 md:pr-0 md:w-auto md:self-center md:pb-0 md:mt-5">
+    <div className="w-auto pb-6 flex gap-1 md:gap-2 pr-1 md:pr-0 md:w-auto md:self-center md:pb-0 md:mt-5">
       <ModalWnd
         call={modalState}
         serverError={serverError}
@@ -172,6 +176,7 @@ const UserShoppingCart = () => {
           </div>
         </button>
       )}
+      {/* cart icon */}
       <button
         className="self-end md:self-center"
         type="button"
@@ -183,7 +188,7 @@ const UserShoppingCart = () => {
           }
         }}
       >
-        <div className="relative inline-block md:self-stretch md:hidden align-bottom ">
+        <div className="relative inline-block mr-1.5 md:self-stretch md:hidden align-bottom ">
           {cartItemsCtx ? (
             <div className="text-[#31304D]">
               <BasketIconMobile />
@@ -197,7 +202,7 @@ const UserShoppingCart = () => {
             </div>
           )}
         </div>
-        <div className="relative hidden md:inline-block">
+        <div className="relative hidden md:inline-block md:mr-4">
           {cartItemsCtx ? (
             <div className="text-[#31304D] duration-200 ease-linear hover:text-[#161629]">
               <BasketIcon />
@@ -208,6 +213,47 @@ const UserShoppingCart = () => {
           ) : (
             <div className="text-white duration-200 ease-linear hover:text-[#C3C3C3]">
               <BasketIcon />
+            </div>
+          )}
+        </div>
+      </button>
+      {/* favorite icon */}
+      <button
+        className="self-end md:self-center"
+        type="button"
+        onClick={() => {
+          if (session === null) {
+            setNotifyCart(true);
+          } else {
+            router.push('/cabinet/favorite');
+          }
+        }}
+      >
+        <div className="relative inline-block md:self-stretch md:hidden align-bottom">
+          {favoriteItemsCtx.length ? (
+            <div className="text-[#31304D]">
+              <FavoriteIcon width={25} height={25}/>
+              <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
+                {favoriteItemsCtx.length}
+              </div>
+            </div>
+          ) : (
+            <div className="text-white">
+              <FavoriteIcon width={25} height={25}/>
+            </div>
+          )}
+        </div>
+        <div className="relative hidden md:inline-block">
+          {favoriteItemsCtx.length ? (
+            <div className="text-[#31304D] duration-200 ease-linear hover:text-[#161629]">
+              <FavoriteIcon />
+              <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
+                {favoriteItemsCtx.length}
+              </div>
+            </div>
+          ) : (
+            <div className="text-white duration-200 ease-linear hover:text-[#C3C3C3]">
+              <FavoriteIcon />
             </div>
           )}
         </div>

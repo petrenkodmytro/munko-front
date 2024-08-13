@@ -38,7 +38,7 @@ const FilterMobile = ({
       </button>
 
       {isOpen && (
-        <div className="absolute opacity-1 overflow-auto md:rounded md:shadow-[5px_5px_20px_0px_rgb(124,157,150)]  py-4 pl-4 flex-col top-0 w-[390px] max-h-[750px]  items-center -ml-4 md:-ml-5 bg-footer overflow-y-auto custom">
+        <div className="absolute z-50 opacity-1 overflow-auto md:rounded md:shadow-[5px_5px_20px_0px_rgb(124,157,150)]  py-4 pl-4 flex-col top-0 w-[390px] max-h-[750px]  items-center -ml-4 md:-ml-5 bg-footer overflow-y-auto custom">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="absolute top-1 right-1 cursor-pointer z-40"

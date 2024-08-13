@@ -34,6 +34,15 @@ export interface ICard {
 //   token?: string;
 // }
 
+export interface CustomSvg {
+  className?: string;
+  stroke?: string;
+  color?: string;
+  width?: number;
+  height?: number;
+  fill?: string;
+}
+
 export interface NewUser {
   firstName: string;
   email: string;
@@ -45,7 +54,7 @@ export interface IReview {
   username: string | null | undefined;
   funkoId: number;
   userId: number;
-  star: number ;
+  star: number;
   review: string;
 }
 
@@ -138,7 +147,7 @@ export interface PopupProps {
   setNotifyCart: (modalState: boolean) => void;
   handleOpenPopUp?: () => void;
   resetToken?: string;
-} 
+}
 
 // export interface CustomError extends Error {
 //   response:{
@@ -157,3 +166,34 @@ export interface PopupProps {
 //   }
 // }
 
+export interface IOrder {
+  id: number;
+  status: string;
+  orderItems: [{ id: number; amount: number; funkoPop: ICard }];
+}
+
+export interface IDataCatalog {
+  getAllItems: {
+    items: ICard[];
+  };
+}
+
+export interface IDataItem {
+  getItem: ICard;
+}
+
+export interface IDataReviewById {
+  getFunkoReviews: IReview[];
+}
+
+export interface IDataCartItems {
+  getOrderItems: ICartCard[];
+}
+
+export interface IDataFavoriteItems {
+  getUserFavorite: ICard[];
+}
+
+export interface IDataOrders {
+  getUserOrders: IOrder[];
+}

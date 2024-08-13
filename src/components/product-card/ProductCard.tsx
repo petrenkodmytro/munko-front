@@ -14,9 +14,13 @@ import ForgetPassword from '../pop-ups/forget-password';
 import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
-import { CartContext } from '@/context/cart';
-// import { toast, ToastContainer } from 'react-toastify';
-import { notifyAddedToCart } from '../notification-modal/toast-notify';
+import { Context } from '@/context/context';
+import {
+  notifyAddedToCart,
+  notifyAddedToFavorite,
+  notifyRemoveFromFavorite,
+} from '../notification-modal/toast-notify';
+import { discount } from '@/constant/constant';
 
 const initialValue = {
   id: 0,
@@ -43,7 +47,8 @@ const ProductCard = () => {
   // console.log(id);
   const { data: session } = useSession();
   // console.log(session);
-  const { addCardToCartCtx } = useContext(CartContext);
+  const { addCardToCartCtx, toggleFavoriteCtx, favoriteItemsCtx } =
+    useContext(Context);
   // const [product, setProduct] = useState<{ [key: string]: any }>({}); // or set initialValue
   const [modalState, setModalState] = useState(false);
   const [product, setProduct] = useState<ICard>(initialValue);
@@ -54,8 +59,8 @@ const ProductCard = () => {
   const [inputNewPassword, setInputNewPassword] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
-  // const [reviews, setReviews] = useState<IReview[]>([]);
-  const discount = 0.8;
+
+  let isFavorite = favoriteItemsCtx.includes(Number(id));
 
   useEffect(() => {
     async function fetchProduct() {
@@ -80,21 +85,6 @@ const ProductCard = () => {
     notFound();
   }
 
-  // const notifyAddedToCart = () =>
-  //   toast.success(`Card added to cart!`, {
-  //     position: 'top-center',
-  //     autoClose: 2000,
-  //     hideProgressBar: true,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //     theme: 'colored',
-  //     style: {
-  //       backgroundColor: '#31304D',
-  //       color: '#fff',
-  //     },
-  //   });
-
   const addCardToCart = async (funkoId: number, token: string | undefined) => {
     if (session === null) {
       setNotifyOder(true);
@@ -103,6 +93,28 @@ const ProductCard = () => {
       try {
         await addCardToCartCtx(funkoId, token);
         notifyAddedToCart();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const toggleFavorite = async () => {
+    if (session === null) {
+      setNotifyOder(true);
+      return;
+    } else {
+      try {
+        await toggleFavoriteCtx(
+          Number(session.user.id),
+          Number(id),
+          session.token
+        );
+        if (favoriteItemsCtx.includes(Number(id))) {
+          notifyRemoveFromFavorite();
+        } else {
+          notifyAddedToFavorite();
+        }
       } catch (error) {
         console.error(error);
       }
@@ -142,7 +154,11 @@ const ProductCard = () => {
         / {product.category ?? 'Unknown'} / {product.collection ?? 'Unknown'}
       </div>
       <div className="xl:flex gap-6">
-        <CardImage images={product.images} />
+        <CardImage
+          images={product.images}
+          toggleFavorite={toggleFavorite}
+          isFavorite={isFavorite}
+        />
         <div className="px-[16px] py-[30px] md:px-0 md:pb-10">
           <h5 className="text-2xl font-bold mb-5 md:text-[32px]">
             {product.name}
@@ -174,6 +190,7 @@ const ProductCard = () => {
               onClick={() => addCardToCart(product.id, session?.token)}
               type="button"
               className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
+              disabled={!product.amount}
             >
               add to cart
             </button>
