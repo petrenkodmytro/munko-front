@@ -10,9 +10,10 @@ import GoogleImage from './../../../public/icons/google-login-icon.svg';
 import ShowPasswordIcon from './../../../public/icons/show-password.svg';
 import HidePassword from './../../../public/icons/hide-password.svg';
 import { useRouter } from 'next/navigation';
-import { createNewUser } from '@/api/api';
-import RegSuccess from '../pop-ups/reg-success';
+import { createNewUser, emailConfrim } from '@/api/api';
+import Registered from '../pop-ups/registered';
 import RegUnsuccess from '../pop-ups/reg-unsuccess';
+import EmailConfirm from '../pop-ups/email-confirm';
 
 interface SignForm {
   handleToogleChange: () => void;
@@ -99,24 +100,24 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
     setIsValidFrom(SignUpSchema.isValidSync(values) && isChecked);
   }, [SignUpSchema, values, isChecked]);
 
-  useEffect(() => {
-    if (regSuccess) {
-      setTimeout(async () => {
-        const login = await signIn('credentials', {
-          redirect: false,
-          email: values.emailSign,
-          password: values.password,
-          callbackUrl: `${window.location.origin}`,
-        });
+  // useEffect(() => {
+  //   if (regSuccess) {
+  //     setTimeout(async () => {
+  //       const login = await signIn('credentials', {
+  //         redirect: false,
+  //         email: values.emailSign,
+  //         password: values.password,
+  //         callbackUrl: `${window.location.origin}`,
+  //       });
 
-        if (login?.error) {
-          setError(true);
-        } else {
-          onDestroy();
-        }
-      }, 5000);
-    }
-  }, [regSuccess]);
+  //       if (login?.error) {
+  //         setError(true);
+  //       } else {
+  //         onDestroy();
+  //       }
+  //     }, 5000);
+  //   }
+  // }, [regSuccess]);
 
   return (
     <Formik
@@ -129,9 +130,11 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
       }}
       validationSchema={SignUpSchema}
       onSubmit={async (values, actions) => {
-        const res = await createNewUser(newUser);
+        const res:any = await createNewUser(newUser);
         if (res) {
           // onDestroy();
+          console.log(res);
+          await emailConfrim(res.registration.id)
           setRegSuccess(true);
         } else {
           setError(true);
@@ -283,7 +286,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
               <InstagramImage />
             </Link> */}
           </div>
-          <RegSuccess notifyCart={regSuccess} setNotifyCart={setRegSuccess} />
+          <Registered notifyCart={regSuccess} setNotifyCart={setRegSuccess} />
           <RegUnsuccess
             notifyCart={regUnsuccess}
             setNotifyCart={setRegUnsuccess}

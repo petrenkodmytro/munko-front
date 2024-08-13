@@ -16,9 +16,12 @@ import ForgetPassword from '../pop-ups/forget-password';
 import InputNewPassword from '../pop-ups/new-password';
 import Instructions from '../pop-ups/instructions';
 import NewPassConfirm from '../pop-ups/new-pass-confirm';
+import RegSuccess from '../pop-ups/reg-success';
+import EmailConfirm from '../pop-ups/email-confirm';
 import Link from 'next/link';
 import { CartContext } from '@/context/cart';
 import { BackDrop } from './back-drop';
+import { enableAccount } from '@/api/api';
 
 const UserShoppingCart = () => {
   const router = useRouter();
@@ -31,13 +34,16 @@ const UserShoppingCart = () => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
   const [isMenuShow, setIsMenuShow] = useState(false);
-  const [resetToken, setResetToken] = useState('');
+  const [tokenFromEmail, setTokenFromEmail] = useState('');
+  const [regSuccess, setRegSuccess] = useState(false);
+  const [emailConfirmation, setEmailConfirmation] = useState(false);
 
-  const { cartItemsCtx } = useContext(CartContext);
+  const { cartItemsCtx } = useContext(CartContext);  
 
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
-  const resetTokenParams = searchParams.get('token');  
+  const resetTokenParams = searchParams.get('token');
+  const emailConfirmationToken = searchParams.get('confirm_token');
 
   useEffect(() => {
     if (search) {
@@ -45,14 +51,25 @@ const UserShoppingCart = () => {
       setServerError(search);
     }
 
-    if(resetTokenParams){
-      setResetToken(resetTokenParams)
-      setInputNewPassword(true)
+    if (resetTokenParams) {
+      setTokenFromEmail(resetTokenParams);
+      setInputNewPassword(true);
     }
-  }, [search, resetTokenParams]);
+
+    if (emailConfirmationToken) {      
+      setEmailConfirmation(true);
+      enableAccount(emailConfirmationToken)
+    }
+  }, [search, resetTokenParams, emailConfirmationToken]);
 
   useEffect(() => {
-    if (modalState || forget || inputNewPassword || showInstructions || showPassConfirm) {
+    if (
+      modalState ||
+      forget ||
+      inputNewPassword ||
+      showInstructions ||
+      showPassConfirm
+    ) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -75,8 +92,14 @@ const UserShoppingCart = () => {
 
   const handlePassConfrimOpen = () => {
     setInputNewPassword(false);
-    router.push('/')
+    router.push('/');
     setShowPassConfirm(true);
+  };
+
+  const handleRegSuccessOpen = () => {
+    setEmailConfirmation(false);
+    router.push('/');
+    setRegSuccess(true);
   };
 
   return (
@@ -87,30 +110,35 @@ const UserShoppingCart = () => {
         onDestroy={() => setModalState(false)}
         handleForgetOpen={handleForgetOpen}
       />
+      {isMenuShow ? <BackDrop handleMenu={() => setIsMenuShow(false)} /> : null}
       {session ? (
         isMenuShow ? (
-          <div className="py-2.5 md:pr-3 flex flex-col relative top-8 md:top-[18px] rounded gap-3 md:mr-1 items-center bg-footer z-10">
-            <Link
-              href={'/cabinet'}
-              className="inline-block pl-1 mr-1.5 md:hidden align-bottom"
-            >
-              <UserIconMobile />
-            </Link>
-            <div className="hidden md:inline-block">
+          <div className="py-2.5 md:px-4 relative top-8 md:top-[19px] z-30 rounded md:bg-footer">
+            <div className="border-white border-2 flex flex-col rounded gap-3 items-cente bg-footer">
               <Link
                 href={'/cabinet'}
-                className="absolute duration-200 ease-linear hover:opacity-20"
+                onClick={() => setIsMenuShow(false)}
+                className="inline-block pl-1 mr-1.5 md:hidden align-bottom"
               >
-                <UserIcon />
+                <UserIconMobile />
               </Link>
-              <UserIconHover />
+              <div className="hidden md:inline-block">
+                <Link
+                  href={'/cabinet'}
+                  className="absolute duration-200 ease-linear hover:opacity-20"
+                  onClick={() => setIsMenuShow(false)}
+                >
+                  <UserIcon />
+                </Link>
+                <UserIconHover />
+              </div>
+              <button
+                className="pl-1 scale-[0.8] md:scale-100 bg-footer rounded"
+                onClick={() => signOut()}
+              >
+                <Logout />
+              </button>
             </div>
-            <button
-              className="pl-1 bg-footer rounded"
-              onClick={() => signOut()}
-            >
-              <Logout />
-            </button>
           </div>
         ) : (
           <button
@@ -197,7 +225,7 @@ const UserShoppingCart = () => {
       <InputNewPassword
         notifyCart={inputNewPassword}
         setNotifyCart={setInputNewPassword}
-        resetToken={resetToken}
+        resetToken={tokenFromEmail}
         handleOpenPopUp={handlePassConfrimOpen}
       />
       <Instructions
@@ -207,6 +235,11 @@ const UserShoppingCart = () => {
       <NewPassConfirm
         notifyCart={showPassConfirm}
         setNotifyCart={setShowPassConfirm}
+      />
+      <RegSuccess notifyCart={regSuccess} setNotifyCart={setRegSuccess} />
+      <EmailConfirm
+        notifyCart={emailConfirmation}
+        setNotifyCart={handleRegSuccessOpen}
       />
     </div>
   );

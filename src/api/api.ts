@@ -8,6 +8,7 @@ import {
   ICartCard,
 } from '@/types/types';
 import { GraphQLClient, gql } from 'graphql-request';
+import { User } from 'next-auth';
 
 const endpoint = 'https://funkopop.onrender.com/graphql';
 
@@ -509,3 +510,69 @@ export const resetPassword = async (
   );  
   return data.resetPassword
 };
+
+export const getCurrentUser = async(token: string)=>{
+  const query = gql`
+  query GetCurrentUser {
+    getCurrentUser {
+        id
+        firstName
+        lastName
+        email
+        phone
+    }
+}
+  `;
+    const requestHeaders = {
+      authorization: `Bearer ${token}`,
+    };
+  try {
+    const data: any = await graphQLClient.request(query, {}, requestHeaders);
+    const currentUser: User = data.getCurrentUser
+    return currentUser;
+  }
+  catch(error) {
+    console.log(error);
+  }; 
+};
+
+
+export const changeName = async (
+  token: string,
+  newName: string
+  ) => {
+  const mutation = gql`
+    mutation UpdateUser ($updatedFirstName: String) {
+      updateUser(user: { firstName: $updatedFirstName }) {
+        firstName
+    }
+  }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+
+  const data: any = await graphQLClient.request(
+    mutation, { newName }, requestHeaders
+  );  
+  return data.updateUser
+};
+
+export const emailConfrim = async (userId: Number)=> {
+  const mutation = gql`
+    mutation EmailConfirmation ($userId: Int) {
+      emailConfirmation(userId: $userId)
+    }
+  `;
+  await graphQLClient.request(mutation, { userId });  
+}
+
+export const enableAccount = async (email_confirm_token: string)=> {
+  const mutation = gql`
+    mutation EnableAccount($email_confirm_token: String) {
+        enableAccount(email_confirm_token: $email_confirm_token)
+    }
+  `;
+  await graphQLClient.request(mutation, { email_confirm_token });  
+}
