@@ -6,7 +6,7 @@ type Props = {};
 
 const FooterContact = (props: Props) => {
   return (
-    <div className='flex flex-col place-items-center md:place-items-start'>
+    <address className='flex flex-col place-items-center md:place-items-start'>
       <p className='mb-2 text-lg md:text-base xl:text-lg not-italic font-normal leading-[normal]'>CONTACT US</p>
       <ul className='flex flex-col gap-2 xl:gap-[14px] pl-14 md:pl-0 md:text-xs xl:text-base'>
         <li className='flex items-center gap-2'>
@@ -29,7 +29,7 @@ const FooterContact = (props: Props) => {
         </li>
       </ul>
       <div className="bg-white mt-6 mb-4 h-[1px] w-[184px] md:hidden" />
-    </div>
+    </address>
   );
 };
 

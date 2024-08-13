@@ -11,6 +11,11 @@ import cadImg2 from './image/cardImg-2.png';
 import cadImg3 from './image/cardImg-3.png';
 import cadImg4 from './image/cardImg-4.png';
 import cadImg5 from './image/cardImg-5.png';
+import aboutBaner from './image/about-banner.png';
+import about1 from './image/about-img1-1.png';
+import about2 from './image/about-img1-2.png';
+import about3 from './image/about-img2-1.png';
+import about4 from './image/about-img2-2.png';
 
 export const sliderCollection = [
   slider1,
@@ -24,3 +29,5 @@ export const sliderCollection = [
 ];
 
 export const sliderCard = [cadImg1, cadImg2, cadImg3, cadImg4, cadImg5];
+
+export const aboutUs = [aboutBaner, about1, about2, about3, about4];
