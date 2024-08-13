@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import ShowPasswordIcon from './../../../public/icons/show-password.svg';
 import HidePassword from './../../../public/icons/hide-password.svg';
 import { resetPassword } from '@/api/api';
-import { log } from 'console';
 
 export default function InputNewPassword({
   notifyCart,
