@@ -18,7 +18,6 @@ export default function ForgetPassword({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const response = await forgotPassword(inputValue);
-    console.log(response);
     
     if (response === 'Email address not found.') {
       setError(response);
