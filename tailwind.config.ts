@@ -15,7 +15,8 @@ const config: Config = {
         grayBorder: '#B6BBC4',
         grayBG: '#B1B1B1',
         blueBorder: '#31304D',
-        redError: '#D63F3F'
+        redError: '#D63F3F',
+        lightGrey: '#F5F5F5',
       },
     },
   },

@@ -6,19 +6,16 @@ const [aboutBaner, about1, about2, about3, about4] = aboutUs;
 
 const About = () => {
   return (
-    <section className="text-[#08080D]   pb-10  md:pb-[72px] xl:px-20 xl:pt-9">
+    <section className="text-[#08080D]   pb-10  md:pb-[72px] xl:px-20 xl:pt-9 text-base font-medium">
       <div
-        className="w-full h-[152px] relative   bg-contain bg-no-repeat"
+        className="w-full h-[152px] relative bg-contain bg-no-repeat"
         style={{
           backgroundImage: `url('./image/about-banner.png')`,
         }}
-      >
-        {/* <div className="relative top-0 left-0 w-full h-full z-10 bg-black/50 flex items-center justify-center flex-col gap-5 "></div> */}
-      </div>
-      {/* <Image src={aboutBaner} alt="image munko" loading="lazy" /> */}
+      ></div>
 
-      <div>
-        <p className="text-2xl font-semibold text-center mb-6 md:text-3xl">
+      <div className="relative max-w-[358px] mx-auto mt-[-20px] rounded-md p-5 bg-lightGrey shadow-[0px_0px_30px_0px_rgb(0,0,0,0.15)]">
+        <p className="text-2xl font-semibold text-center mb-5 md:text-3xl">
           About us
         </p>{' '}
         <p>
@@ -40,13 +37,23 @@ const About = () => {
         </p>
       </div>
 
-      <div>
-        <div className="w-[300px] md:w-[500px] mb-7">
-          <Image src={about1} alt="image munko" loading="lazy" />
+      <div className="overflow-hidden flex gap-3 pb-7 mt-[-10px]">
+        <div className="ml-[-35px] shrink-0">
+          <Image
+            src={about1}
+            alt="image munko"
+            loading="lazy"
+            className="h-[295px] w-auto rounded"
+          />
         </div>
-        <div>
-          <Image src={about2} alt="image munko" loading="lazy" />
-          <p>
+        <div className="">
+          <Image
+            src={about2}
+            alt="image munko"
+            loading="lazy"
+            className="w-[221px] rounded-l"
+          />
+          <p className="pt-4 pr-4 leading-5">
             We want to create not just a store, but a real community for
             everyone who, like us, is devoted to their favorite characters.
             Whether you are a beginner collector or a seasoned geek, we want to
@@ -55,22 +62,28 @@ const About = () => {
         </div>
       </div>
 
-      <div>
-        <Image src={about3} alt="image munko" loading="lazy" />
-        <p>
+      <div className=" relative bg-lightGrey shadow-[0px_0px_7px_0px_rgb(0,0,0,0.3)]">
+        <div className="w-[150px]  [clip-path:circle(100.0%_at_0_50%)]">
+          <Image src={about3} alt="image munko" loading="lazy" />
+        </div>
+        <p className="px-5 py-2">
           Join our community, where everyone can find their favorite hero and
           share their passion. We are sure that you will find here not only
           figurines, but also new friends and an inexhaustible source of
           inspiration.
         </p>
-        <p>
+
+        <p className="px-5 py-2">
           Welcome to our magical place where everyone can make their little
           world fantastic!
         </p>
-        <Image src={about4} alt="image munko" loading="lazy" />
+        <div className="w-[150px] ml-auto [clip-path:circle(100%_at_100%_50%)]">
+          <Image src={about4} alt="image munko" loading="lazy" />
+        </div>
+
         <Link
           href={'/catalog'}
-          className="mx-14 h-[46px] rounded px-8 text-xl font-semibold bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 md:block md:m-auto duration-200 ease-linear"
+          className="inline-block absolute bottom-12 left-10   rounded px-8 py-2 text-xl font-semibold bg-subscribeBtn text-white hover:bg-white hover:text-subscribeBtn hover:border-subscribeBtn hover:border-2 md:block md:m-auto duration-200 ease-linear"
         >
           CATALOG
         </Link>
