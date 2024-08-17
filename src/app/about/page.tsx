@@ -6,16 +6,17 @@ const [aboutBaner, about1, about2, about3, about4] = aboutUs;
 
 const About = () => {
   return (
-    <section className="text-[#08080D]   pb-10  md:pb-[72px] xl:px-20 xl:pt-9 text-base md:text-xl font-medium">
+    <section className="text-[#08080D] pb-10  md:pb-[72px] text-base md:text-xl font-medium">
       <div
-        className="w-full h-[152px] md:h-[278px] bg-contain bg-no-repeat"
+        // className="w-full h-[152px] md:h-[278px] lg:h-[420px] xl:h-[556px] bg-contain bg-no-repeat "
+         className="bg-contain bg-no-repeat min-h-[152px] md:min-h-[278px] lg:min-h-[496px] xl:min-h-[557px] object-cover object-center "
         style={{
           backgroundImage: `url('./image/about-banner.png')`,
         }}
       ></div>
 
-      <div className="relative w-[358px] md:w-[680px] mx-auto mt-[-20px] rounded-md p-5 bg-lightGrey shadow-[0px_0px_30px_0px_rgb(0,0,0,0.15)]">
-        <p className="text-2xl font-semibold text-center mb-5 md:text-4xl">
+      <div className="relative max-w-[358px] md:max-w-[680px] lg:w-auto lg:max-w-[980px] xl:max-w-[1280px] lg:py-[60px] lg:px-[84px] mx-auto mt-[-20px] lg:mt-[-50px] rounded-md p-5 bg-lightGrey shadow-[0px_0px_30px_0px_rgb(0,0,0,0.15)]">
+        <p className="text-2xl font-semibold text-center mb-5 lg:mb-10 md:text-4xl">
           About us
         </p>{' '}
         <p>
@@ -37,7 +38,7 @@ const About = () => {
         </p>
       </div>
 
-      <div className="overflow-hidden flex gap-3 md:gap-8 pb-7 mt-[-10px]">
+      <div className="overflow-hidden flex gap-3 md:gap-10 pb-7 mt-[-10px]">
         <div className="ml-[-35px] md:ml-[-15px] shrink-0">
           <Image
             src={about1}
@@ -51,7 +52,7 @@ const About = () => {
             src={about2}
             alt="image munko"
             loading="lazy"
-            className="w-[221px] md:w-[458px] md:ml-auto rounded-l"
+            className="w-[221px] md:w-[470px] md:ml-auto rounded-l"
           />
           <p className="pt-4 md:pt-10 pr-4 md:pr-5 leading-5 md:leading-7">
             We want to create not just a store, but a real community for
