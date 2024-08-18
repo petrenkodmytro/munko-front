@@ -80,7 +80,7 @@ const Order = (props: Props) => {
         </div>
       ) : (
         <p className="text-xs font-medium md:text-lg text-center">
-          Your have not orders yet
+          You don’t have any orders yet.
         </p>
       )}
       <NotLogin

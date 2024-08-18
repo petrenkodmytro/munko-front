@@ -158,18 +158,19 @@ const Favorite = (props: Props) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center text-center px-20">
           {/* <div className="w-[150px] md:w-[342px]">
             <Image src={CartImage} alt="empty cart" width={342} height={342} />
           </div> */}
           <p className="text-xs font-medium md:text-lg">
-            Your have not favorit product. Let’s go to{' '}
+            You don’t have any favorite products yet. Let’s head to the{' '}
             <Link
               href={`/catalog`}
-              className="text-xs p-1  font-semibold md:text-lg"
+              className="text-xs p-1 italic font-bold md:text-lg"
             >
               Catalog
             </Link>
+            to find some!{' '}
           </p>
         </div>
       )}
