@@ -40,9 +40,9 @@ const Favorite = (props: Props) => {
       try {
         const allFavorite: ICard[] = await GetUserFavorite(session?.token);
         setFavorite(allFavorite);
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
+      } finally {
         setIsLoading(false);
       }
     }

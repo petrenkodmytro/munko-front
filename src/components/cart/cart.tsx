@@ -46,9 +46,9 @@ const CartPage = (props: Props) => {
         console.log(allOrders);
         setCart(allOrders);
         setOrders(allOrders);
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
+      } finally {
         setIsLoading(false);
       }
     }
