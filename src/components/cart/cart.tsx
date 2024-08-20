@@ -293,7 +293,15 @@ const CartPage = (props: Props) => {
                 Total
                 <span>
                   {[...orders].reduce((total, order) => {
-                    return total + order.funkoPop.price * order.amount;
+                    let price: number;
+                    if (order.funkoPop.sale) {
+                      price = Number(
+                        (order.funkoPop.price * discount).toFixed(2)
+                      );
+                    } else {
+                      price = order.funkoPop.price;
+                    }
+                    return total + price * order.amount;
                   }, delivery)}
                   $
                 </span>
