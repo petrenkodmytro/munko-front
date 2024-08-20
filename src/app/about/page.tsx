@@ -2,14 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { aboutUs } from '../../../public/images';
 
-const [aboutBaner, about1, about2, about3, about4] = aboutUs;
+const [aboutBaner, about1, about2, about3, about4, about3mob] = aboutUs;
 
 const About = () => {
   return (
     <section className="text-[#08080D] pb-10  md:pb-[72px] text-base md:text-xl lg:text-[22px] font-medium">
       <div
         // className="w-full h-[152px] md:h-[278px] lg:h-[420px] xl:h-[556px] bg-contain bg-no-repeat "
-         className="bg-contain bg-no-repeat min-h-[152px] md:min-h-[278px] lg:min-h-[496px] xl:min-h-[557px] object-cover object-center "
+        className="bg-contain bg-no-repeat min-h-[152px] md:min-h-[278px] lg:min-h-[496px] xl:min-h-[557px] object-cover object-center "
         style={{
           backgroundImage: `url('./image/about-banner.png')`,
         }}
@@ -64,7 +64,15 @@ const About = () => {
       </div>
 
       <div className="relative py-2 md:py-5 xl:py-10 xl:flex xl:gap-8 bg-lightGrey shadow-[0px_0px_27px_0px_rgb(0,0,0,0.15)]">
-        <div className="w-[150px] md:w-[236px] lg:w-[415px] [clip-path:circle(100.0%_at_0_50%)] shrink-0">
+        <div className="w-[280px] md:hidden relative shrink-0  overflow-hidden">
+          <Image
+            src={about3mob}
+            alt="image munko"
+            loading="lazy"
+            className="rounded-r-full overflow-hidden"
+          />
+        </div>
+        <div className="hidden md:block md:w-[236px] lg:w-[415px] rounded-r-full overflow-hidden  shrink-0">
           <Image src={about3} alt="image munko" loading="lazy" />
         </div>
         <div className="px-5 py-2 md:pt-5 xl:pt-20 md:absolute top-0 left-[230px] lg:left-[430px] xl:static">
@@ -80,7 +88,7 @@ const About = () => {
           </p>
         </div>
 
-        <div className="w-[150px] md:w-[236px] lg:w-[415px] ml-auto [clip-path:circle(100%_at_100%_50%)] shrink-0">
+        <div className="w-[150px] md:w-[236px] lg:w-[415px] ml-auto rounded-l-full  overflow-hidden shrink-0">
           <Image src={about4} alt="image munko" loading="lazy" />
         </div>
 
