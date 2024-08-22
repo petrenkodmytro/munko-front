@@ -3,36 +3,57 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
-import CartImage from './../../../public/image/free-icon-shopping-cart.png';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
 import IconCloseCart from './../../../public/icons/icon-x-cart.svg';
 import CheckOrder from './../../../public/icons/check-cart.svg';
 import { useEffect, useState } from 'react';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
-import { getUserCart, removeFromCart } from '@/api/api';
+// import { getUserCart, removeFromCart } from '@/api/api';
 import Spinner from '../loading/loading';
 import NotLogin from '../pop-ups/not-login';
 import ModalWnd from '../modal/modal-window';
-
 import { useContext } from 'react';
 import { Context } from '@/context/context';
 import { delivery, discount } from '@/constant/constant';
 import { notifyRemoveFromCart } from '../notification-modal/toast-notify';
+import EmptyCart from './emptyCart';
+import { useRouter } from 'next/navigation';
 
 type Props = {};
 
 const CartPage = (props: Props) => {
   const { data: session } = useSession();
   // console.log(session?.user);
-
-  const { removeItemFromCartCtx: removeItemCtx } = useContext(Context);
+  const router = useRouter();
+  const { ordersCtx, removeItemFromCartCtx: removeItemCtx } = useContext(Context);
 
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
   const [notifyCart, setNotifyCart] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  // useEffect(() => {
+  //   if (session === null) {
+  //     setNotifyCart(true);
+  //     return;
+  //   }
+
+  //   async function fetchOrders() {
+  //     try {
+  //       const allOrders: ICartCard[] = await getUserCart(session?.token);
+  //       console.log(allOrders);
+  //       setCart(allOrders);
+  //       setOrders(allOrders);
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   fetchOrders();
+  // }, [session]);
 
   useEffect(() => {
     if (session === null) {
@@ -42,10 +63,10 @@ const CartPage = (props: Props) => {
 
     async function fetchOrders() {
       try {
-        const allOrders: ICartCard[] = await getUserCart(session?.token);
-        console.log(allOrders);
-        setCart(allOrders);
-        setOrders(allOrders);
+        // const allOrders: ICartCard[] = await getUserCart(session?.token);
+        // console.log(allOrders);
+        setCart(ordersCtx);
+        setOrders(ordersCtx);
       } catch (error) {
         console.log(error);
       } finally {
@@ -53,7 +74,7 @@ const CartPage = (props: Props) => {
       }
     }
     fetchOrders();
-  }, [session]);
+  }, [session, ordersCtx]);
 
   const toggleSelectedOrder = (newOrder: ICartCard) => {
     let currentOrders = [...orders];
@@ -295,13 +316,11 @@ const CartPage = (props: Props) => {
                   {[...orders].reduce((total, order) => {
                     let price: number;
                     if (order.funkoPop.sale) {
-                      price = Number(
-                        (order.funkoPop.price * discount).toFixed(2)
-                      );
+                      price = order.funkoPop.price * discount;
                     } else {
                       price = order.funkoPop.price;
                     }
-                    return total + price * order.amount;
+                    return Number((total + price * order.amount).toFixed(2));
                   }, delivery)}
                   $
                 </span>
@@ -310,9 +329,10 @@ const CartPage = (props: Props) => {
             <div className="mt-9 flex items-center justify-between md:flex-row-reverse xl:flex-col xl:mt-14 xl:gap-6">
               <button
                 onClick={() => {
-                  let res = orders.map(order => order.funkoPop.name);
-                  console.log(res);
-                  alert(JSON.stringify(res));
+                  // let res = orders.map(order => order.funkoPop.name);
+                  // console.log(res);
+                  // alert(JSON.stringify(res));
+                  router.push('/cart/checkout');
                 }}
                 disabled={orders.length === 0}
                 type="button"
@@ -331,27 +351,7 @@ const CartPage = (props: Props) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center">
-          <div className="w-[150px] md:w-[342px]">
-            <Image
-              src={CartImage}
-              alt="empty cart"
-              width={342}
-              height={342}
-              // sizes="100vw"
-              // style={{
-              //   width: '100%',
-              //   height: 'auto',
-              // }}
-            />
-          </div>
-          <p className="text-sm font-medium md:text-lg">
-            Your cart is empty. Let’s go to{' '}
-            <Link href={`/catalog`} className="p-1  font-semibold">
-              Catalog
-            </Link>
-          </p>
-        </div>
+        <EmptyCart />
       )}
 
       <NotLogin

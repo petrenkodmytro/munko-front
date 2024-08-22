@@ -13,6 +13,7 @@ import { createContext, useState, useEffect } from 'react';
 
 // export const CartContext = createContext();
 export const Context = createContext<{
+  ordersCtx: ICartCard[];
   cartItemsCtx: number;
   favoriteItemsCtx: number[];
   addCardToCartCtx: (
@@ -26,6 +27,7 @@ export const Context = createContext<{
     token: string | undefined
   ) => Promise<void>;
 }>({
+  ordersCtx: [],
   cartItemsCtx: 0,
   favoriteItemsCtx: [],
   addCardToCartCtx: async () => {},
@@ -40,6 +42,7 @@ type Props = {
 const ContextProvider = ({ children }: Props) => {
   const { data: session } = useSession();
   const [cartItemsCtx, setCartItemsCtx] = useState(0);
+  const [ordersCtx, setOrdersCtx] = useState<ICartCard[]>([]);
   const [favoriteItemsCtx, setFavoritItemsCtx] = useState<number[]>([]);
 
   useEffect(() => {
@@ -49,6 +52,8 @@ const ContextProvider = ({ children }: Props) => {
     async function fetchData() {
       try {
         const allOrders: ICartCard[] = await getUserCart(session?.token);
+        console.log(allOrders);
+        setOrdersCtx(allOrders);
         setCartItemsCtx(allOrders.length);
         const allFavorite: ICard[] = await GetUserFavorite(session?.token);
         let favoriteId = allFavorite.map(favorite => favorite.id);
@@ -107,6 +112,7 @@ const ContextProvider = ({ children }: Props) => {
   return (
     <Context.Provider
       value={{
+        ordersCtx,
         cartItemsCtx,
         favoriteItemsCtx,
         addCardToCartCtx,

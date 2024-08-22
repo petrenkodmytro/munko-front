@@ -139,92 +139,95 @@ const ProductCard = () => {
         </Link>
         / {product.category ?? 'Unknown'} / {product.collection ?? 'Unknown'}
       </div>
-      <div className="xl:flex gap-6">
-        {isLoading ? (
+      {!isLoading ? (
+        <div className="xl:flex gap-6">
           <CardImage
             images={product.images}
             toggleFavorite={toggleFavorite}
             isFavorite={isFavorite}
           />
-        ) : (
-          <Spinner />
-        )}
-        {/* ---card info--- */}
-        <div className="px-[16px] py-[30px] md:px-0 md:pb-10">
-          <h5 className="text-2xl font-bold mb-5 md:text-[32px]">
-            {product.name}
-          </h5>
-          {product.sale ? (
-            <p className="line-through text-[#656582] font-bold text-base mb-[6px] md:text-2xl">
-              {product.price}$
-            </p>
-          ) : (
-            <p className="text-base font-semibold mb-[6px] md:text-2xl">
-              {product.price}$
-            </p>
-          )}
-          {product.sale && (
-            <p className="text-base font-semibold mb-[6px] md:text-2xl">
-              {(product.price * discount).toFixed(2)}$
-            </p>
-          )}
-          {product.amount ? (
-            <p className="uppercase text-xs mb-[10px] xl:mb-[60px]">in stock</p>
-          ) : (
-            <p className="uppercase text-xs mb-[10px] xl:mb-[60px]">
-              coming soon
-            </p>
-          )}
 
-          <div className="flex justify-between xl:flex-col gap-5">
-            <button
-              onClick={() => addCardToCart(product.id, session?.token)}
-              type="button"
-              className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
-              disabled={!product.amount}
-            >
-              add to cart
-            </button>
+          {/* ---card info--- */}
+          <div className="px-[16px] py-[30px] md:px-0 md:pb-10">
+            <h5 className="text-2xl font-bold mb-5 md:text-[32px]">
+              {product.name}
+            </h5>
+            {product.sale ? (
+              <p className="line-through text-[#656582] font-bold text-base mb-[6px] md:text-2xl">
+                {product.price}$
+              </p>
+            ) : (
+              <p className="text-base font-semibold mb-[6px] md:text-2xl">
+                {product.price}$
+              </p>
+            )}
+            {product.sale && (
+              <p className="text-base font-semibold mb-[6px] md:text-2xl">
+                {(product.price * discount).toFixed(2)}$
+              </p>
+            )}
             {product.amount ? (
+              <p className="uppercase text-xs mb-[10px] xl:mb-[60px]">
+                in stock
+              </p>
+            ) : (
+              <p className="uppercase text-xs mb-[10px] xl:mb-[60px]">
+                coming soon
+              </p>
+            )}
+
+            <div className="flex justify-between xl:flex-col gap-5">
               <button
+                onClick={() => addCardToCart(product.id, session?.token)}
                 type="button"
-                className="uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-[#31304D] bg-white text-base not-italic font-bold  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear md:px-[90px] xl:w-[302px]"
+                className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
+                disabled={!product.amount}
               >
-                Fast order
+                add to cart
               </button>
-            ) : null}
+              {product.amount ? (
+                <button
+                  type="button"
+                  className="uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-[#31304D] bg-white text-base not-italic font-bold  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear md:px-[90px] xl:w-[302px]"
+                >
+                  Fast order
+                </button>
+              ) : null}
+            </div>
+            <ul className="hidden xl:flex flex-col gap-[2px] mt-[35px] text-base font-semibold">
+              <li>
+                Item number: <span className="font-medium">{product.id}</span>
+              </li>
+              <li>
+                Category:{' '}
+                <span className="font-medium">
+                  {product.category ?? 'Unknown'}
+                </span>
+              </li>
+              <li>
+                Colection:{' '}
+                <span className="font-medium">
+                  {product.collection ?? 'Unknown'}
+                </span>
+              </li>
+              <li>
+                Sublicense:{' '}
+                <span className="font-medium">
+                  {product.sublicense ?? 'Unknown'}
+                </span>
+              </li>
+              <li>
+                Product type:{' '}
+                <span className="font-medium">
+                  {product.productType ?? 'Unknown'}
+                </span>
+              </li>
+            </ul>
           </div>
-          <ul className="hidden xl:flex flex-col gap-[2px] mt-[35px] text-base font-semibold">
-            <li>
-              Item number: <span className="font-medium">{product.id}</span>
-            </li>
-            <li>
-              Category:{' '}
-              <span className="font-medium">
-                {product.category ?? 'Unknown'}
-              </span>
-            </li>
-            <li>
-              Colection:{' '}
-              <span className="font-medium">
-                {product.collection ?? 'Unknown'}
-              </span>
-            </li>
-            <li>
-              Sublicense:{' '}
-              <span className="font-medium">
-                {product.sublicense ?? 'Unknown'}
-              </span>
-            </li>
-            <li>
-              Product type:{' '}
-              <span className="font-medium">
-                {product.productType ?? 'Unknown'}
-              </span>
-            </li>
-          </ul>
         </div>
-      </div>
+      ) : (
+        <Spinner />
+      )}
 
       <div className="xl:flex gap-6 xl:pt-[35px]">
         {/* ---description--- */}
