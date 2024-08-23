@@ -17,3 +17,9 @@ export const initialValue = {
   productType: '',
   date: '',
 };
+
+export const stepsOrder = {
+  total: 'TOTAL',
+  checkout: 'CHECKOUT',
+  order: 'ORDER',
+};

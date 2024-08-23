@@ -52,7 +52,7 @@ const ContextProvider = ({ children }: Props) => {
     async function fetchData() {
       try {
         const allOrders: ICartCard[] = await getUserCart(session?.token);
-        console.log(allOrders);
+        // console.log(allOrders);
         setOrdersCtx(allOrders);
         setCartItemsCtx(allOrders.length);
         const allFavorite: ICard[] = await GetUserFavorite(session?.token);
