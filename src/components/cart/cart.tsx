@@ -3,22 +3,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import ImgPlaceholder from './../../../public/image/placeholder-png-image.jpg';
-import CartImage from './../../../public/image/free-icon-shopping-cart.png';
-import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
 import IconCloseCart from './../../../public/icons/icon-x-cart.svg';
 import CheckOrder from './../../../public/icons/check-cart.svg';
 import { useEffect, useState } from 'react';
 import { ICartCard } from '@/types/types';
 import { useSession } from 'next-auth/react';
-import { getUserCart, removeFromCart } from '@/api/api';
+import { getUserCart } from '@/api/api';
 import Spinner from '../loading/loading';
 import NotLogin from '../pop-ups/not-login';
 import ModalWnd from '../modal/modal-window';
-
 import { useContext } from 'react';
 import { Context } from '@/context/context';
-import { delivery, discount } from '@/constant/constant';
+import { discount, stepsOrder } from '@/constant/constant';
 import { notifyRemoveFromCart } from '../notification-modal/toast-notify';
+import EmptyCart from './emptyCart';
+import CartTotal from './cartTotal';
+import CartCheckout from './cartCheckout';
+import CartOrder from './cartOrder';
 
 type Props = {};
 
@@ -26,13 +27,15 @@ const CartPage = (props: Props) => {
   const { data: session } = useSession();
   // console.log(session?.user);
 
-  const { removeItemFromCartCtx: removeItemCtx } = useContext(Context);
+  const { ordersCtx, removeItemFromCartCtx: removeItemCtx } =
+    useContext(Context);
 
   const [cart, setCart] = useState<ICartCard[]>([]);
   const [orders, setOrders] = useState<ICartCard[]>([]);
   const [notifyCart, setNotifyCart] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [orderStep, setOrderStep] = useState(stepsOrder.total);
 
   useEffect(() => {
     if (session === null) {
@@ -46,14 +49,35 @@ const CartPage = (props: Props) => {
         console.log(allOrders);
         setCart(allOrders);
         setOrders(allOrders);
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
+      } finally {
         setIsLoading(false);
       }
     }
     fetchOrders();
   }, [session]);
+
+  // useEffect(() => {
+  //   if (session === null) {
+  //     setNotifyCart(true);
+  //     return;
+  //   }
+
+  //   async function fetchOrders() {
+  //     try {
+  //       // const allOrders: ICartCard[] = await getUserCart(session?.token);
+  //       // console.log(allOrders);
+  //       setCart(ordersCtx);
+  //       setOrders(ordersCtx);
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   fetchOrders();
+  // }, [session, ordersCtx]);
 
   const toggleSelectedOrder = (newOrder: ICartCard) => {
     let currentOrders = [...orders];
@@ -116,12 +140,6 @@ const CartPage = (props: Props) => {
 
   return (
     <section className="px-4 pt-6 pb-10 md:px-5 md:pb-[74px] xl:px-20 xl:pt-9">
-      {/* <div className="mb-6 text-xs font-medium md:mb-10 md:text-base">
-        <Link className="underline" href={'/'}>
-          Home page
-        </Link>
-        /
-      </div> */}
       <h3 className="mb-4 uppercase text-2xl font-bold md:text-4xl md:mb-8">
         Your cart
       </h3>
@@ -250,108 +268,21 @@ const CartPage = (props: Props) => {
               </div>
             </div>
           </div>
-
           {/* cart totals */}
-          <div className="mt-10 xl:mt-0 xl:border-l-[1px] xl:border-black xl:pl-10 xl:pr-5 xl:w-[436px]">
-            <h4 className="uppercase text-2xl font-semibold md:text-3xl">
-              Cart totals
-            </h4>
-            <div className="w-full h-[1px] bg-black my-5"></div>
-            <ul className="flex flex-col gap-4">
-              {orders.map(card => (
-                <li key={card.id} className="flex justify-between">
-                  <p className="text-xs font-bold md:text-sm">
-                    {card.funkoPop.name}
-                  </p>
-                  {card.amount > 1 && (
-                    <p className="ml-auto text-xs font-semibold md:text-sm">
-                      {card.amount}
-                      <span className="px-2">x</span>
-                    </p>
-                  )}
-                  <p className="text-xs font-semibold md:text-sm">
-                    {card.funkoPop.sale
-                      ? (card.funkoPop.price * discount).toFixed(2)
-                      : card.funkoPop.price}
-                    $
-                  </p>
-                </li>
-              ))}
-            </ul>
-            {orders.length > 0 ? (
-              <p className="flex justify-between mt-4 text-xs font-bold md:text-sm">
-                Delivery<span>{delivery}$</span>
-              </p>
-            ) : (
-              <p className="flex justify-between  text-xs font-bold md:text-sm">
-                Please checked your orders
-              </p>
-            )}
-            <div className="w-full h-[1px] bg-black my-5"></div>
-            {orders.length > 0 && (
-              <p className="flex justify-between text-lg font-bold md:text-xl">
-                Total
-                <span>
-                  {[...orders].reduce((total, order) => {
-                    let price: number;
-                    if (order.funkoPop.sale) {
-                      price = Number(
-                        (order.funkoPop.price * discount).toFixed(2)
-                      );
-                    } else {
-                      price = order.funkoPop.price;
-                    }
-                    return total + price * order.amount;
-                  }, delivery)}
-                  $
-                </span>
-              </p>
-            )}
-            <div className="mt-9 flex items-center justify-between md:flex-row-reverse xl:flex-col xl:mt-14 xl:gap-6">
-              <button
-                onClick={() => {
-                  let res = orders.map(order => order.funkoPop.name);
-                  console.log(res);
-                  alert(JSON.stringify(res));
-                }}
-                disabled={orders.length === 0}
-                type="button"
-                className="w-[170px] md:w-[331px] xl:w-full px-5 py-2 md:py-2.5 text-xs md:text-base font-bold uppercase rounded-[5px] border-2 border-current text-white bg-[#31304D] lg:enabled:hover:text-[#31304D] lg:enabled:hover:bg-white duration-200 ease-linear disabled:bg-[#B1B1B1]"
-              >
-                Proceed to checkout
-              </button>
-              <Link
-                className="flex items-center uppercase text-xs font-bold md:text-base"
-                href={'/catalog'}
-              >
-                <IconBack />
-                Continue shopping
-              </Link>
-            </div>
-          </div>
+          {orderStep === stepsOrder.total && (
+            <CartTotal orders={orders} setOrderStep={setOrderStep} />
+          )}
+          {/* Checkout */}
+          {orderStep === stepsOrder.checkout && (
+            <CartCheckout orders={orders} setOrderStep={setOrderStep} />
+          )}
+          {/* Order */}
+          {orderStep === stepsOrder.order && (
+            <CartOrder orders={orders} setOrderStep={setOrderStep} />
+          )}
         </div>
       ) : (
-        <div className="flex flex-col items-center">
-          <div className="w-[150px] md:w-[342px]">
-            <Image
-              src={CartImage}
-              alt="empty cart"
-              width={342}
-              height={342}
-              // sizes="100vw"
-              // style={{
-              //   width: '100%',
-              //   height: 'auto',
-              // }}
-            />
-          </div>
-          <p className="text-sm font-medium md:text-lg">
-            Your cart is empty. Let’s go to{' '}
-            <Link href={`/catalog`} className="p-1  font-semibold">
-              Catalog
-            </Link>
-          </p>
-        </div>
+        <EmptyCart />
       )}
 
       <NotLogin

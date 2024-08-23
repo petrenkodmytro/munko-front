@@ -20,23 +20,9 @@ import {
   notifyAddedToFavorite,
   notifyRemoveFromFavorite,
 } from '../notification-modal/toast-notify';
-import { discount } from '@/constant/constant';
-
-const initialValue = {
-  id: 0,
-  name: '',
-  images: [],
-  price: 0,
-  amount: 0,
-  description: '',
-  sale: false,
-  collection: '',
-  sublicense: '',
-  series: '',
-  category: '',
-  productType: '',
-  date: '',
-};
+import { discount, initialValue } from '@/constant/constant';
+import CardDescription from './cardDescription';
+import Spinner from '../loading/loading';
 
 type Params = {
   id: string;
@@ -59,6 +45,7 @@ const ProductCard = () => {
   const [inputNewPassword, setInputNewPassword] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showPassConfirm, setShowPassConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   let isFavorite = favoriteItemsCtx.includes(Number(id));
 
@@ -66,16 +53,15 @@ const ProductCard = () => {
     async function fetchProduct() {
       try {
         const card = await getItem(id);
-        // const reviews = await getReviewsById(id);
         if (card === null) {
           setError(true);
-          // console.log(card);
         }
         setProduct(card);
-        // setReviews(reviews);
       } catch (error) {
         console.log(error);
         setError(true);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchProduct();
@@ -153,126 +139,100 @@ const ProductCard = () => {
         </Link>
         / {product.category ?? 'Unknown'} / {product.collection ?? 'Unknown'}
       </div>
-      <div className="xl:flex gap-6">
-        <CardImage
-          images={product.images}
-          toggleFavorite={toggleFavorite}
-          isFavorite={isFavorite}
-        />
-        <div className="px-[16px] py-[30px] md:px-0 md:pb-10">
-          <h5 className="text-2xl font-bold mb-5 md:text-[32px]">
-            {product.name}
-          </h5>
-          {product.sale ? (
-            <p className="line-through text-[#656582] font-bold text-base mb-[6px] md:text-2xl">
-              {product.price}$
-            </p>
-          ) : (
-            <p className="text-base font-semibold mb-[6px] md:text-2xl">
-              {product.price}$
-            </p>
-          )}
-          {product.sale && (
-            <p className="text-base font-semibold mb-[6px] md:text-2xl">
-              {(product.price * discount).toFixed(2)}$
-            </p>
-          )}
-          {product.amount ? (
-            <p className="uppercase text-xs mb-[10px] xl:mb-[60px]">in stock</p>
-          ) : (
-            <p className="uppercase text-xs mb-[10px] xl:mb-[60px]">
-              coming soon
-            </p>
-          )}
+      {!isLoading ? (
+        <div className="xl:flex gap-6">
+          <CardImage
+            images={product.images}
+            toggleFavorite={toggleFavorite}
+            isFavorite={isFavorite}
+          />
 
-          <div className="flex justify-between xl:flex-col gap-5">
-            <button
-              onClick={() => addCardToCart(product.id, session?.token)}
-              type="button"
-              className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
-              disabled={!product.amount}
-            >
-              add to cart
-            </button>
+          {/* ---card info--- */}
+          <div className="px-[16px] py-[30px] md:px-0 md:pb-10">
+            <h5 className="text-2xl font-bold mb-5 md:text-[32px]">
+              {product.name}
+            </h5>
+            {product.sale ? (
+              <p className="line-through text-[#656582] font-bold text-base mb-[6px] md:text-2xl">
+                {product.price}$
+              </p>
+            ) : (
+              <p className="text-base font-semibold mb-[6px] md:text-2xl">
+                {product.price}$
+              </p>
+            )}
+            {product.sale && (
+              <p className="text-base font-semibold mb-[6px] md:text-2xl">
+                {(product.price * discount).toFixed(2)}$
+              </p>
+            )}
             {product.amount ? (
-              <button
-                type="button"
-                className="uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-[#31304D] bg-white text-base not-italic font-bold  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear md:px-[90px] xl:w-[302px]"
-              >
-                Fast order
-              </button>
-            ) : null}
-          </div>
-          <ul className="hidden xl:flex flex-col gap-[2px] mt-[35px] text-base font-semibold">
-            <li>
-              Item number: <span className="font-medium">{product.id}</span>
-            </li>
-            <li>
-              Category:{' '}
-              <span className="font-medium">
-                {product.category ?? 'Unknown'}
-              </span>
-            </li>
-            <li>
-              Colection:{' '}
-              <span className="font-medium">
-                {product.collection ?? 'Unknown'}
-              </span>
-            </li>
-            <li>
-              Sublicense:{' '}
-              <span className="font-medium">
-                {product.sublicense ?? 'Unknown'}
-              </span>
-            </li>
-            <li>
-              Product type:{' '}
-              <span className="font-medium">
-                {product.productType ?? 'Unknown'}
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
+              <p className="uppercase text-xs mb-[10px] xl:mb-[60px]">
+                in stock
+              </p>
+            ) : (
+              <p className="uppercase text-xs mb-[10px] xl:mb-[60px]">
+                coming soon
+              </p>
+            )}
 
-      {/* ---Description--- */}
-      <div className="xl:flex gap-6 xl:pt-[35px]">
-        <div className="flex flex-col gap-5 md:gap-[25px]  px-4 py-5 mb-5 rounded-[5px] bg-[#F5F5F5] md:pl-8 md:pr-[84px] md:py-[22px] xl:w-[628px] xl:mb-0 xl:px-8">
-          <h6 className="text-xl font-semibold md:text-[26px]">Description</h6>
-          <div className="h-[1px] bg-[#B6BBC4]"></div>
-          <p className="text-xs font-medium text-justify md:text-sm">
-            {product.description}
-          </p>
-          <ul className="flex flex-col gap-[2px] text-sm font-semibold">
-            <li>
-              Item number: <span className="font-medium">{product.id}</span>
-            </li>
-            <li>
-              Category:{' '}
-              <span className="font-medium">
-                {product.category ?? 'Unknown'}
-              </span>
-            </li>
-            <li>
-              Colection:{' '}
-              <span className="font-medium">
-                {product.collection ?? 'Unknown'}
-              </span>
-            </li>
-            <li>
-              Sublicense:{' '}
-              <span className="font-medium">
-                {product.sublicense ?? 'Unknown'}
-              </span>
-            </li>
-            <li>
-              Product type:{' '}
-              <span className="font-medium">
-                {product.productType ?? 'Unknown'}
-              </span>
-            </li>
-          </ul>
+            <div className="flex justify-between xl:flex-col gap-5">
+              <button
+                onClick={() => addCardToCart(product.id, session?.token)}
+                type="button"
+                className={`uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-white text-base not-italic font-bold  md:px-[90px] xl:w-[302px] ${product.amount ? 'bg-[#31304D] lg:hover:text-[#31304D] lg:hover:bg-white duration-200 ease-linear' : 'bg-grayBG'}`}
+                disabled={!product.amount}
+              >
+                add to cart
+              </button>
+              {product.amount ? (
+                <button
+                  type="button"
+                  className="uppercase px-[25px] py-[14px] rounded-[5px] border-2 border-current text-[#31304D] bg-white text-base not-italic font-bold  lg:hover:text-white lg:hover:bg-[#31304D] duration-200 ease-linear md:px-[90px] xl:w-[302px]"
+                >
+                  Fast order
+                </button>
+              ) : null}
+            </div>
+            <ul className="hidden xl:flex flex-col gap-[2px] mt-[35px] text-base font-semibold">
+              <li>
+                Item number: <span className="font-medium">{product.id}</span>
+              </li>
+              <li>
+                Category:{' '}
+                <span className="font-medium">
+                  {product.category ?? 'Unknown'}
+                </span>
+              </li>
+              <li>
+                Colection:{' '}
+                <span className="font-medium">
+                  {product.collection ?? 'Unknown'}
+                </span>
+              </li>
+              <li>
+                Sublicense:{' '}
+                <span className="font-medium">
+                  {product.sublicense ?? 'Unknown'}
+                </span>
+              </li>
+              <li>
+                Product type:{' '}
+                <span className="font-medium">
+                  {product.productType ?? 'Unknown'}
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
+      ) : (
+        <Spinner />
+      )}
+
+      <div className="xl:flex gap-6 xl:pt-[35px]">
+        {/* ---description--- */}
+        <CardDescription product={product} />
+        {/* ---card reviews--- */}
         <CardReviews
           cardId={id}
           notify={notifyReview}
