@@ -24,7 +24,9 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
       )}
 
       <h6 className="font-bold">Country</h6>
+      <input className="border" type="text" />
       <h6 className="font-bold">City/Town</h6>
+      <input className="border" type="text" />
       <h6 className="font-bold">Delivery</h6>
       <p>*Nova Poshta</p>
       <p>*Ukrposhta</p>
