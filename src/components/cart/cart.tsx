@@ -25,7 +25,7 @@ type Props = {};
 
 const CartPage = (props: Props) => {
   const { data: session } = useSession();
-  // console.log(session?.user);
+  console.log(session?.user);
 
   const { ordersCtx, removeItemFromCartCtx: removeItemCtx } =
     useContext(Context);
@@ -46,7 +46,7 @@ const CartPage = (props: Props) => {
     async function fetchOrders() {
       try {
         const allOrders: ICartCard[] = await getUserCart(session?.token);
-        console.log(allOrders);
+        // console.log(allOrders);
         setCart(allOrders);
         setOrders(allOrders);
       } catch (error) {
