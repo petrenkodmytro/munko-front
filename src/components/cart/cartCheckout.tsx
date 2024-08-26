@@ -2,6 +2,7 @@ import { delivery, discount, stepsOrder } from '@/constant/constant';
 import { ICartCard } from '@/types/types';
 import Link from 'next/link';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
+import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
 import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
 
@@ -12,7 +13,7 @@ type Props = {
 
 const CartCheckout = ({ orders, setOrderStep }: Props) => {
   const { data: session } = useSession();
-  const user = session?.user
+  const user = session?.user;
   // console.log(session?.user);
   return (
     <div className="mt-10 xl:mt-0 xl:border-l-[1px] xl:border-black xl:pl-10 xl:pr-5 xl:w-[436px]">
@@ -46,20 +47,66 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
           Please checked your orders
         </p>
       )}
-      <div className="w-full h-[1px] bg-black my-5"></div>
-      <h6 className="font-bold">Data for shipment</h6>
-      <p> {user?.firstName} {user?.lastName}</p>
-      <p>{user?.phone}</p>
-      <p>{user?.address?.addressLine2}</p>
-      <p>{user?.address?.addressLine1} {user?.address?.city} {user?.address?.postalCode}</p>
-      <div className="w-full h-[1px] bg-black my-5"></div>
-      <h6 className="font-bold">Payment method</h6>
-      <p>5379 85****** 4784</p>
-      <div className="w-full h-[1px] bg-black my-5"></div>
-      <h6 className="font-bold">Contacts</h6>
-      <p>{user?.email}</p>
-      <p>Your order receipt will be sent to this email</p>
-      <div className="w-full h-[1px] bg-black my-5"></div>
+      <div className="w-full h-[1px] bg-black my-3"></div>
+      <div className="flex justify-between">
+        <div>
+          <h6 className="font-bold">Data for shipment</h6>
+          <p>
+            {' '}
+            {user?.firstName} {user?.lastName}
+          </p>
+          <p>{user?.phone}</p>
+          <p>{user?.address?.addressLine2}</p>
+          <p>
+            {user?.address?.addressLine1} {user?.address?.city}{' '}
+            {user?.address?.postalCode}
+          </p>
+        </div>
+        <button
+          type="button"
+          className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
+        >
+          <IconBack />
+        </button>
+      </div>
+
+      <div className="w-full h-[1px] bg-black my-3"></div>
+      <div className="flex justify-between">
+        <div>
+          {' '}
+          <h6 className="font-bold">Payment method</h6>
+          <div className="flex justify-center items-center gap-2">
+            {' '}
+            <div className="flex justify-center items-center w-[30px] h-[18px] bg-[#1E1E1E] rounded">
+              <IconCreditCard />
+            </div>
+            <p>5379 85****** 4784</p>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
+        >
+          <IconBack />
+        </button>
+      </div>
+
+      <div className="w-full h-[1px] bg-black my-3"></div>
+      <div className="flex justify-between">
+        <div>
+          <h6 className="font-bold">Contacts</h6>
+          <p>{user?.email}</p>
+          <p>Your order receipt will be sent to this email</p>
+        </div>
+        <button
+          type="button"
+          className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
+        >
+          <IconBack />
+        </button>
+      </div>
+
+      <div className="w-full h-[1px] bg-black my-3"></div>
       {orders.length > 0 && (
         <p className="flex justify-between text-lg font-bold md:text-xl">
           Total
