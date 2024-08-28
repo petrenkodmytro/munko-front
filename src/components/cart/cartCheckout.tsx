@@ -1,10 +1,14 @@
-import { delivery, discount, stepsOrder } from '@/constant/constant';
+import {
+  delivery,
+  discount,
+  stepsCheckout,
+  stepsOrder,
+} from '@/constant/constant';
 import { ICartCard } from '@/types/types';
-import Link from 'next/link';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
 import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
-import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 
 type Props = {
   orders: ICartCard[];
@@ -15,6 +19,8 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
   // console.log(session?.user);
+  const [checkoutStep, setCheckoutStep] = useState(stepsCheckout.start);
+
   return (
     <div className="mt-10 xl:mt-0 xl:border-l-[1px] xl:border-black xl:pl-10 xl:pr-5 xl:w-[436px]">
       <h4 className="uppercase text-2xl font-semibold md:text-3xl">CHECKOUT</h4>
@@ -63,6 +69,9 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
           </p>
         </div>
         <button
+          onClick={() => {
+            setCheckoutStep(stepsCheckout.shipment);
+          }}
           type="button"
           className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
         >
@@ -84,6 +93,9 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
           </div>
         </div>
         <button
+          onClick={() => {
+            setCheckoutStep(stepsCheckout.payment);
+          }}
           type="button"
           className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
         >
@@ -99,14 +111,18 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
           <p>Your order receipt will be sent to this email</p>
         </div>
         <button
+          onClick={() => {
+            setCheckoutStep(stepsCheckout.contacts);
+          }}
           type="button"
           className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
         >
           <IconBack />
         </button>
       </div>
-
       <div className="w-full h-[1px] bg-black my-3"></div>
+
+      {/*  Total price*/}
       {orders.length > 0 && (
         <p className="flex justify-between text-lg font-bold md:text-xl">
           Total

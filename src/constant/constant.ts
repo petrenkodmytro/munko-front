@@ -23,3 +23,10 @@ export const stepsOrder = {
   checkout: 'CHECKOUT',
   order: 'ORDER',
 };
+
+export const stepsCheckout = {
+  start: 'START',
+  shipment: 'SHIPMENT',
+  payment: 'PAYMENT',
+  contacts: 'CONTACTS',
+};

@@ -36,6 +36,8 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
       <p>*Cash on Delivery (COD)</p>
       <p>*5379 85****** 4784</p>
       <div className="w-full h-[1px] bg-black my-5"></div>
+
+      {/* Total price */}
       {orders.length > 0 && (
         <p className="flex justify-between text-lg font-bold md:text-xl">
           Total
@@ -53,6 +55,7 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
           </span>
         </p>
       )}
+      
       {/* button */}
       <div className="mt-9 flex items-center justify-between md:flex-row-reverse xl:flex-col xl:mt-14 xl:gap-6">
         <button
