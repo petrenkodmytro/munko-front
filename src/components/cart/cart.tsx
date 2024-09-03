@@ -20,7 +20,6 @@ import EmptyCart from './emptyCart';
 import CartTotal from './cartTotal';
 import CartCheckout from './cartCheckout';
 import CartOrder from './cartOrder';
-import NovaPost from '../delivery/novaPost';
 
 type Props = {};
 
@@ -285,7 +284,6 @@ const CartPage = (props: Props) => {
       ) : (
         <EmptyCart />
       )}
-      <NovaPost />
       <NotLogin
         notifyCart={notifyCart}
         setNotifyCart={setNotifyCart}
