@@ -1,6 +1,8 @@
 import { delivery, discount, stepsOrder } from '@/constant/constant';
 import { ICartCard } from '@/types/types';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
+import NovaPost from '../delivery/novaPost';
+import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
 
 type Props = {
   orders: ICartCard[];
@@ -24,18 +26,50 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
       )}
 
       <h6 className="font-bold">Country</h6>
-      <input className="border" type="text" />
+      <input className="w-full border" type="text" />
       <h6 className="font-bold">City/Town</h6>
-      <input className="border" type="text" />
+      <input className="w-full border" type="text" />
       <h6 className="font-bold">Delivery</h6>
-      <p>*Nova Poshta</p>
-      <p>*Ukrposhta</p>
-      <p>*Meest Express</p>
+      <form>
+        <label>
+          <input type="radio" name="deliveryMethod" value="nova-poshta" />
+          Nova Poshta
+        </label>
+        <br />
+        <NovaPost />
+        <label>
+          <input type="radio" name="deliveryMethod" value="ukrposhta" />
+          Ukrposhta
+        </label>
+        <br />
+        <label>
+          <input type="radio" name="deliveryMethod" value="meest-express" />
+          Meest Express
+        </label>
+      </form>
+
       <div className="w-full h-[1px] bg-black my-5"></div>
       <h6 className="font-bold">Payment method</h6>
-      <p>*Cash on Delivery (COD)</p>
-      <p>*5379 85****** 4784</p>
+      <form>
+        <label className="flex justify-start gap-2">
+          <input type="radio" name="paymentMethod" value="cod" />
+          Cash on Delivery (COD)
+        </label>
+        <label className="flex justify-start gap-2">
+          <input type="radio" name="paymentMethod" value="card" />
+          <div className="flex justify-center items-center gap-2">
+            {' '}
+            <div className="flex justify-center items-center w-[30px] h-[18px] bg-[#1E1E1E] rounded">
+              <IconCreditCard />
+            </div>
+            <p>5379 85****** 4784</p>
+          </div>
+        </label>
+      </form>
+
       <div className="w-full h-[1px] bg-black my-5"></div>
+
+      {/* Total price */}
       {orders.length > 0 && (
         <p className="flex justify-between text-lg font-bold md:text-xl">
           Total
@@ -53,6 +87,7 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
           </span>
         </p>
       )}
+
       {/* button */}
       <div className="mt-9 flex items-center justify-between md:flex-row-reverse xl:flex-col xl:mt-14 xl:gap-6">
         <button
