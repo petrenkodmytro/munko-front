@@ -1,6 +1,3 @@
-// NEXT_PUBLIC_UKRPOSTA_API_URL=https://api.ukrposhta.ua/v2/
-// NEXT_PUBLIC_UKRPOSTA_API_KEY=your-ukrposhta-api-key
-
 // import React, { useState, useEffect } from 'react';
 
 // const UkrposhtaDelivery = () => {

@@ -17,7 +17,7 @@ const CartTotal = ({ orders, setOrderStep }: Props) => {
         Cart totals
       </h4>
       <div className="w-full h-[1px] bg-black my-5"></div>
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-3 xl:pr-2 xl:max-h-[280px]  xl:overflow-y-scroll custom">
         {orders.map(card => (
           <li key={card.id} className="flex justify-between">
             <p className="text-xs font-bold md:text-sm">{card.funkoPop.name}</p>

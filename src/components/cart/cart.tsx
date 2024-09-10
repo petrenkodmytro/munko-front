@@ -150,8 +150,8 @@ const CartPage = (props: Props) => {
       ) : cart.length ? (
         <div className="xl:flex gap-28">
           {/* your cart */}
-          <div className="xl:grow">
-            <ul className="flex flex-col gap-4">
+          <div className="xl:grow ">
+            <ul className="flex flex-col gap-4 ">
               {cart.map(card => (
                 <li key={card.id} className="flex gap-6">
                   <button

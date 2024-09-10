@@ -25,7 +25,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
     <div className="mt-10 xl:mt-0 xl:border-l-[1px] xl:border-black xl:pl-10 xl:pr-5 xl:w-[436px]">
       <h4 className="uppercase text-2xl font-semibold md:text-3xl">CHECKOUT</h4>
       <div className="w-full h-[1px] bg-black my-5"></div>
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-3  xl:max-h-[280px]  xl:overflow-y-auto  custom  xl:pr-2">
         {orders.map(card => (
           <li key={card.id} className="flex justify-between">
             <p className="text-xs font-bold md:text-sm">{card.funkoPop.name}</p>
@@ -68,7 +68,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
             {user?.address?.postalCode}
           </p>
         </div>
-        <button
+        {/* <button
           onClick={() => {
             setCheckoutStep(stepsCheckout.shipment);
           }}
@@ -76,7 +76,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
           className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
         >
           <IconBack />
-        </button>
+        </button> */}
       </div>
 
       <div className="w-full h-[1px] bg-black my-3"></div>
@@ -110,7 +110,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
           <p>{user?.email}</p>
           <p>Your order receipt will be sent to this email</p>
         </div>
-        <button
+        {/* <button
           onClick={() => {
             setCheckoutStep(stepsCheckout.contacts);
           }}
@@ -118,7 +118,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
           className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
         >
           <IconBack />
-        </button>
+        </button> */}
       </div>
       <div className="w-full h-[1px] bg-black my-3"></div>
 

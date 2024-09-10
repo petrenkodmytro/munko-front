@@ -57,10 +57,9 @@
 .react-datalist-input__listbox {
   position: absolute;
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 20px #31304d;
-  padding: 8px 0;
-  max-height: 200px;
+  box-shadow: 0 0 5px #31304d;
+  padding: 8px;
+  max-height: 100px;
   overflow-y: auto;
 }
 
