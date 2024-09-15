@@ -5,9 +5,10 @@ type Props = {
   setNotify: (modalState: boolean) => void;
   children: React.ReactNode;
   handleOpenPopUp?: () => void;
+  showCloseButton?: boolean;
 };
 
-const Notification = ({ notify, setNotify, children, handleOpenPopUp }: Props) => {
+const Notification = ({ notify, setNotify, children, handleOpenPopUp, showCloseButton = true }: Props) => {
 
   if (!notify) {
     return null;
@@ -26,6 +27,7 @@ const Notification = ({ notify, setNotify, children, handleOpenPopUp }: Props) =
       className="fixed z-50 top-0 left-0 w-full h-full bg-blackCustom/50"
     >
       <div className="fixed top-1/2 left-1/2 rounded bg-white -translate-x-2/4 -translate-y-2/4">
+        {showCloseButton ?
         <button
           onClick={() => {
             setNotify(false);
@@ -34,7 +36,7 @@ const Notification = ({ notify, setNotify, children, handleOpenPopUp }: Props) =
           className="fixed top-5 left-5 cursor-pointer"
         >
           <IconClose />
-        </button>
+        </button> : null}
         {children}
       </div>
     </div>

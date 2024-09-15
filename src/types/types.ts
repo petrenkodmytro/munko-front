@@ -1,4 +1,4 @@
-// import { User } from 'next-auth';
+import { User } from 'next-auth';
 
 export interface ICard {
   id: number;
@@ -147,6 +147,8 @@ export interface PopupProps {
   setNotifyCart: (modalState: boolean) => void;
   handleOpenPopUp?: () => void;
   resetToken?: string;
+  userId?: string;
+  showCloseButton?: boolean;
 }
 
 // export interface CustomError extends Error {

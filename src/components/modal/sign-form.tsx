@@ -10,10 +10,9 @@ import GoogleImage from './../../../public/icons/google-login-icon.svg';
 import ShowPasswordIcon from './../../../public/icons/show-password.svg';
 import HidePassword from './../../../public/icons/hide-password.svg';
 import { useRouter } from 'next/navigation';
-import { createNewUser, emailConfrim } from '@/api/api';
+import { createNewUser, emailConfirm } from '@/api/api';
 import Registered from '../pop-ups/registered';
 import RegUnsuccess from '../pop-ups/reg-unsuccess';
-import EmailConfirm from '../pop-ups/email-confirm';
 
 interface SignForm {
   handleToogleChange: () => void;
@@ -100,25 +99,6 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
     setIsValidFrom(SignUpSchema.isValidSync(values) && isChecked);
   }, [SignUpSchema, values, isChecked]);
 
-  // useEffect(() => {
-  //   if (regSuccess) {
-  //     setTimeout(async () => {
-  //       const login = await signIn('credentials', {
-  //         redirect: false,
-  //         email: values.emailSign,
-  //         password: values.password,
-  //         callbackUrl: `${window.location.origin}`,
-  //       });
-
-  //       if (login?.error) {
-  //         setError(true);
-  //       } else {
-  //         onDestroy();
-  //       }
-  //     }, 5000);
-  //   }
-  // }, [regSuccess]);
-
   return (
     <Formik
       initialValues={{
@@ -134,7 +114,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
         if (res) {
           // onDestroy();
           console.log(res);
-          await emailConfrim(res.registration.id)
+          await emailConfirm(res.registration.id)
           setRegSuccess(true);
         } else {
           setError(true);

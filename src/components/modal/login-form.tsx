@@ -54,8 +54,7 @@ const LoginForm: React.FC<LoginForm> = ({
     });
   };
 
-  const handleSubmit = async (e: React.SyntheticEvent<EventTarget>) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
 
     const res = await signIn('credentials', {
       redirect: false,
@@ -83,12 +82,13 @@ const LoginForm: React.FC<LoginForm> = ({
     <Formik
       initialValues={{ emailLogin: '', password: '' }}
       onSubmit={async (values, actions) => {
+        await handleSubmit()
         actions.setSubmitting(false);
         actions.resetForm();
       }}
     >
       {formik => (
-        <Form onChange={handleChange} onSubmit={handleSubmit}>
+        <Form onChange={handleChange}>
           <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
           <div className="flex mb-[18px] items-start">
             <BtnLogin />

@@ -616,12 +616,15 @@ export const getCurrentUser = async(token: string)=>{
 
 export const changeName = async (
   token: string,
-  newName: string
+  updatedFirstName: string,
+  userId: number,
   ) => {
   const mutation = gql`
-    mutation UpdateUser ($updatedFirstName: String) {
-      updateUser(user: { firstName: $updatedFirstName }) {
+    mutation UpdateUser ($updatedFirstName: String, $userId: Int) {
+      updateUser(user: { firstName: $updatedFirstName, id: $userId }) {
         firstName
+        id
+        email
     }
   }
   `;
@@ -631,18 +634,32 @@ export const changeName = async (
   };
 
   const data: any = await graphQLClient.request(
-    mutation, { newName }, requestHeaders
+    mutation, { updatedFirstName, userId }, requestHeaders
   );  
   return data.updateUser
 };
 
-export const emailConfrim = async (userId: Number)=> {
+export const emailConfirm = async (userId: number, newEmail?: string)=> {
   const mutation = gql`
-    mutation EmailConfirmation ($userId: Int) {
-      emailConfirmation(userId: $userId)
+    mutation EmailConfirmation ($userId: Int, $newEmail: String) {
+      emailConfirmation(userId: $userId, email: $newEmail)
     }
   `;
-  await graphQLClient.request(mutation, { userId });  
+  return await graphQLClient.request(mutation, { userId, newEmail });  
+}
+
+export const emailChange = async (accessToken: string, token: string, newEmail: string)=> {
+  const mutation = gql`
+    mutation ChangeEmail($token: String, $newEmail: String) {
+      changeEmail(token: $token, email: $newEmail)
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${accessToken}`,
+  };
+
+ return await graphQLClient.request(mutation, { token, newEmail }, requestHeaders);  
 }
 
 export const enableAccount = async (email_confirm_token: string)=> {
@@ -652,4 +669,50 @@ export const enableAccount = async (email_confirm_token: string)=> {
     }
   `;
   await graphQLClient.request(mutation, { email_confirm_token });  
-}
+};
+
+export const changePassword = async (
+  token: string,
+  newPassword: string,
+  oldPassword: string
+  ) => {
+    const mutation = gql`
+      mutation ChangePassword($oldPassword: String, $newPassword: String) {
+        changePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
+          id
+          firstName
+          email
+        }
+      }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+
+  const data: any = await graphQLClient.request(
+    mutation, { oldPassword, newPassword }, requestHeaders
+  );  
+  return data.changePassword
+};
+
+export const deleteAccount = async (token: string) => {
+  const query = gql`
+    query DeleteAccount {
+      deleteAccount
+    }
+  `;
+
+const requestHeaders = {
+  authorization: `Bearer ${token}`,
+};
+
+  try{
+    const response = await graphQLClient.request(query, {}, requestHeaders);  
+    console.log(response);
+    
+    return response
+  } catch(error){
+    console.log(error);
+  }
+};
