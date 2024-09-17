@@ -21,10 +21,9 @@ import RegSuccess from '../pop-ups/reg-success';
 import EmailConfirm from '../pop-ups/email-confirm';
 import Link from 'next/link';
 import { BackDrop } from './back-drop';
-import { enableAccount } from '@/api/api';
+import { enableAccount, emailChange } from '@/api/api';
 import { Context } from '@/context/context';
 import { FavoriteIcon } from '../svgs/FavoriteIcon.svg';
-
 
 const UserShoppingCart = () => {
   const router = useRouter();
@@ -46,8 +45,9 @@ const UserShoppingCart = () => {
 
   const searchParams = useSearchParams();
   const search = searchParams.get('error');
-  const resetTokenParams = searchParams.get('token');
+  const resetTokenParams = searchParams.get('reset_token');
   const emailConfirmationToken = searchParams.get('confirm_token');
+  const newEmail = searchParams.get('email');
 
   useEffect(() => {
     if (search) {
@@ -60,11 +60,16 @@ const UserShoppingCart = () => {
       setInputNewPassword(true);
     }
 
-    if (emailConfirmationToken) {      
+    if (emailConfirmationToken) {
+      if (newEmail && session) {
+        emailChange(session.token, emailConfirmationToken, newEmail);
+        signOut({ redirect: false })
+      } else {
+        enableAccount(emailConfirmationToken);
+      }
       setEmailConfirmation(true);
-      enableAccount(emailConfirmationToken)
     }
-  }, [search, resetTokenParams, emailConfirmationToken]);
+  }, [search, resetTokenParams, emailConfirmationToken, newEmail, session]);
 
   useEffect(() => {
     if (
@@ -103,7 +108,9 @@ const UserShoppingCart = () => {
   const handleRegSuccessOpen = () => {
     setEmailConfirmation(false);
     router.push('/');
-    setRegSuccess(true);
+    if(!newEmail){
+      setRegSuccess(true);
+    }
   };
 
   return (
@@ -138,7 +145,7 @@ const UserShoppingCart = () => {
               </div>
               <button
                 className="pl-1 scale-[0.8] md:scale-100 bg-footer rounded"
-                onClick={() => signOut()}
+                onClick={() => signOut({ callbackUrl: '/' })}
               >
                 <Logout />
               </button>
@@ -232,14 +239,14 @@ const UserShoppingCart = () => {
         <div className="relative inline-block md:self-stretch md:hidden align-bottom">
           {favoriteItemsCtx.length ? (
             <div className="text-[#31304D]">
-              <FavoriteIcon width={25} height={25}/>
+              <FavoriteIcon width={25} height={25} />
               <div className="absolute -top-3 -right-3 w-4 h-4 flex justify-center items-center text-[8px] font-bold rounded-full text-white bg-[#31304D]">
                 {favoriteItemsCtx.length}
               </div>
             </div>
           ) : (
             <div className="text-white">
-              <FavoriteIcon width={25} height={25}/>
+              <FavoriteIcon width={25} height={25} />
             </div>
           )}
         </div>

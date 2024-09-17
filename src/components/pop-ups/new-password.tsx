@@ -19,14 +19,6 @@ export default function InputNewPassword({
   const [isShowConfirmPassword, setIsShowConfrimPassword] = useState(false);
 
   const SignUpSchema = Yup.object().shape({
-    emailSign: Yup.string()
-      .min(3, 'Too Short! min 3')
-      .max(45, 'Too Long! max 45')
-      .matches(
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/,
-        'Must be a valid email'
-      )
-      .required('Required'),
     password: Yup.string()
       .min(6, 'Too Short! min 6')
       .max(18, 'Too Long! max 18')
@@ -35,11 +27,6 @@ export default function InputNewPassword({
     confirmPass: Yup.string()
       .required('Required')
       .oneOf([Yup.ref('password')], 'Passwords does not match'),
-    name: Yup.string()
-      .min(3, 'Too Short! min 3')
-      .max(45, 'Too Long! max 45')
-      .matches(/^[A-Za-z0-9 ]*$/, 'Use latin letters and numbers')
-      .required('Required'),
   });
 
   const showPassword = function () {
@@ -54,9 +41,7 @@ export default function InputNewPassword({
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSubmit = async () => {
     if (resetToken && inputValue === inputConfirmValue) {
       const response = await resetPassword(resetToken, inputValue);
       if (response) {
@@ -69,7 +54,7 @@ export default function InputNewPassword({
 
   return (
     <Notification notify={notifyCart} setNotify={setNotifyCart}>
-      <div className="flex flex-col gap-2 items-start px-16 py-11 min-w-[410px] w-full">
+      <div className="flex flex-col gap-2 items-start px-9 pb-10 pt-14 md:px-16 md:py-11 md:w-[480px] w-[358px]">
         {' '}
         <h3 className="text-lg font-bold">ENTER NEW PASSWORD</h3>
         <Formik
@@ -79,68 +64,70 @@ export default function InputNewPassword({
             tenantKey: '',
           }}
           validationSchema={SignUpSchema}
-          onSubmit={(values, actions) => {
-            console.log(values);
+          onSubmit={async (values, actions) => {
+            await handleSubmit();
+            actions.setSubmitting(false);
+            actions.resetForm();
           }}
         >
-          <Form
-            className="w-full flex flex-col"
-            onChange={handleInputChange}
-            onSubmit={handleSubmit}
-          >
-            <div className="relative overflow-hidden mb-5">
-              <Field
-                type={isShowPassword ? 'text' : 'password'}
-                className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
-                id="password"
-                name="password"
-                placeholder="Password"
-              />
-              <ErrorMessage
-                className="self-start text-[8px] text-[#D63F3F] font-medium pl-2"
-                component="div"
-                name="password"
-              />
-              <div
-                className="absolute right-2 top-2 cursor-pointer"
-                onClick={showPassword}
-              >
-                {isShowPassword ? <ShowPasswordIcon /> : <HidePassword />}
+          {formik => (
+            <Form className="w-full flex flex-col" onChange={handleInputChange}>
+              <div className="relative overflow-hidden mb-5">
+                <Field
+                  type={isShowPassword ? 'text' : 'password'}
+                  className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                />
+                <ErrorMessage
+                  className="self-start text-[8px] text-[#D63F3F] font-medium pl-2"
+                  component="div"
+                  name="password"
+                />
+                <div
+                  className="absolute right-2 top-2 cursor-pointer"
+                  onClick={showPassword}
+                >
+                  {isShowPassword ? <ShowPasswordIcon /> : <HidePassword />}
+                </div>
               </div>
-            </div>
-            <div className="relative overflow-hidden mb-5">
-              <Field
-                type={isShowConfirmPassword ? 'text' : 'password'}
-                className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
-                id="confirmPass"
-                name="confirmPass"
-                placeholder="Confirm the password"
-              />
-              <ErrorMessage
-                className="self-start text-[8px] text-[#D63F3F] font-medium pl-2"
-                component="div"
-                name="confirmPass"
-              />
-              <div
-                className="absolute right-2 top-2 cursor-pointer"
-                onClick={() => setIsShowConfrimPassword(!isShowConfirmPassword)}
-              >
-                {isShowConfirmPassword ? (
-                  <ShowPasswordIcon />
-                ) : (
-                  <HidePassword />
-                )}
+              <div className="relative overflow-hidden mb-5">
+                <Field
+                  type={isShowConfirmPassword ? 'text' : 'password'}
+                  className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
+                  id="confirmPass"
+                  name="confirmPass"
+                  placeholder="Confirm the password"
+                />
+                <ErrorMessage
+                  className="self-start text-[8px] text-[#D63F3F] font-medium pl-2"
+                  component="div"
+                  name="confirmPass"
+                />
+                <div
+                  className="absolute right-2 top-2 cursor-pointer"
+                  onClick={() =>
+                    setIsShowConfrimPassword(!isShowConfirmPassword)
+                  }
+                >
+                  {isShowConfirmPassword ? (
+                    <ShowPasswordIcon />
+                  ) : (
+                    <HidePassword />
+                  )}
+                </div>
               </div>
-            </div>
-            <button
-              type="submit"
-              className={
-                'rounded self-center font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear bg-footer'
-              }
-            >
-              SEND
-            </button>
-          </Form>
+              <button
+                type="submit"
+                className={
+                  'rounded self-center font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear bg-footer'
+                }
+              >
+                {formik.isSubmitting ? 'Please wait...' : 'SEND'}
+              </button>
+            </Form>
+          )}
         </Formik>
       </div>
     </Notification>

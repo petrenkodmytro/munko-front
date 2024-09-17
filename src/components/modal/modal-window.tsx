@@ -25,7 +25,7 @@ const ModalWnd: React.FC<ModalWndProps> = ({ call, onDestroy, serverError, handl
       onClick={closeWnd}
       className="fixed z-50 top-0 left-0 w-full h-full bg-blackCustom/50"
     >
-      <div className="fixed top-1/2 left-1/2 px-[62px] pt-11 pb-7 rounded max-w-[410px] w-full bg-white -translate-x-2/4 -translate-y-2/4">
+      <div className="fixed top-1/2 left-1/2 px-9 pb-10 pt-16 md:px-[62px] md:pt-11 md:pb-7 rounded md:min-w-[410px] w-[358px] bg-white -translate-x-2/4 -translate-y-2/4">
         <button
           onClick={onDestroy}
           className="fixed top-5 left-5 cursor-pointer"

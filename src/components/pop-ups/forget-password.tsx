@@ -32,7 +32,7 @@ export default function ForgetPassword({
         action="/submit"
         method="post"
         onSubmit={handleSubmit}
-        className="flex flex-col gap-2 items-start px-16 py-11 min-w-[410px] w-full"
+        className="flex flex-col gap-2 items-start px-9 pb-8 pt-[69px] md:px-16 md:py-11 md:w-[410px] w-[358px]"
       >
         {' '}
         <h3 className="text-lg font-bold">RECOVER PASSWORD</h3>
