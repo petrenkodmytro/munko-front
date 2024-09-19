@@ -19,11 +19,19 @@ declare module "next-auth" {
     address?: {
       id: number;
       userId: number;
-      locality: string;
-      postOffice: string;
+      countryCode: string;
+      district: string;
+      city: string;
+      street: string;
+      house: string;
+      postalCode: string;
     } | null;
     orders?: string[] | null;
     role?: string;
+    creditCard?: {
+      id: number;
+      creditCard: string;
+  }
   };
 
   interface Session {
