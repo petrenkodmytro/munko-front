@@ -18,17 +18,18 @@ declare module 'next-auth' {
     address?: {
       id: number;
       userId: number;
-      house: string;
-      postOffice: string;
-      street: string;
+      country: string;
       district: string;
-      postalCode: string;
       city: string;
-      countryCode: string;
+      street: string;
+      house: string;
+      postalCode: string;
     } | null;
-    orders?: string[] | null;
-    role?: string;
+    creditCard?: {
+      id: number;
+      creditCard: string;
   }
+  };
 
   interface Session {
     token: string;
