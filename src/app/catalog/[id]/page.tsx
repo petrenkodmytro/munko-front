@@ -1,5 +1,6 @@
 import ProductCard from '@/components/product-card/ProductCard';
 import Popular from '@/components/sections/popular';
+// import { Suspense } from 'react';
 
 const page = () => {
   return (
