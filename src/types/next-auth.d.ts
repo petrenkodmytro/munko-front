@@ -1,6 +1,5 @@
-import NextAuth from 'next-auth';
-import { CustomUser } from './types';
-import { JWT } from 'next-auth/jwt';
+import NextAuth from "next-auth"
+import { JWT } from "next-auth/jwt";
 
 declare module 'next-auth' {
   interface User {
