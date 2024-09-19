@@ -1,5 +1,4 @@
 import NextAuth from "next-auth"
-import { CustomUser } from "./types";
 import { JWT } from "next-auth/jwt";
 
 declare module "next-auth" {
@@ -26,8 +25,6 @@ declare module "next-auth" {
       house: string;
       postalCode: string;
     } | null;
-    orders?: string[] | null;
-    role?: string;
     creditCard?: {
       id: number;
       creditCard: string;
