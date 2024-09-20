@@ -34,15 +34,15 @@ const authOptions: NextAuthOptions = {
                         email
                         phone
                         address {
-                                 id
-                userId
-                countryCode
-                district
-                city
-                street
-                house
-                postalCode
-                                 }
+                          id
+                          userId
+                          country
+                          district
+                          city
+                          street
+                          house
+                          postalCode
+                          }
                       }
                     }
                 }
