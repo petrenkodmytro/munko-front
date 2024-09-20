@@ -35,12 +35,13 @@ const authOptions: NextAuthOptions = {
                         phone
                         address {
                                  id
-                                 userId
-                                 addressLine1
-                                 addressLine2
-                                 postalCode
-                                 city
-                                 countryCode
+                userId
+                countryCode
+                district
+                city
+                street
+                house
+                postalCode
                                  }
                       }
                     }
