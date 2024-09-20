@@ -18,10 +18,10 @@ declare module 'next-auth' {
     address?: {
       id: number;
       userId: number;
-      locality: string;
+      house: string;
       postOffice: string;
-      addressLine1: string;
-      addressLine2: string;
+      street: string;
+      district: string;
       postalCode: string;
       city: string;
       countryCode: string;

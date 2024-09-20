@@ -25,7 +25,7 @@ type Props = {};
 
 const CartPage = (props: Props) => {
   const { data: session } = useSession();
-  console.log(session?.user);
+  console.log(session);
 
   const { ordersCtx, removeItemFromCartCtx: removeItemCtx } =
     useContext(Context);
