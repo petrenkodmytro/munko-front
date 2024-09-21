@@ -82,7 +82,7 @@ const LoginForm: React.FC<LoginForm> = ({
     <Formik
       initialValues={{ emailLogin: '', password: '' }}
       onSubmit={async (values, actions) => {
-        console.log(values)
+        // console.log(values)
         await handleSubmit()
         actions.setSubmitting(false);
         actions.resetForm();
