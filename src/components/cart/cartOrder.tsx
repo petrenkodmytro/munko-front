@@ -3,6 +3,8 @@ import { ICartCard } from '@/types/types';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
 import NovaPost from '../delivery/novaPost';
 import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
+import { useState } from 'react';
+import MeestExpress from '../delivery/meestExpress';
 
 type Props = {
   orders: ICartCard[];
@@ -10,6 +12,17 @@ type Props = {
 };
 
 const CartOrder = ({ orders, setOrderStep }: Props) => {
+  const [deliveryMethod, setDeliveryMethod] = useState('');
+  const [payMethod, setPayMethod] = useState('');
+
+  const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDeliveryMethod(e.target.value);
+  };
+
+  const handlePayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPayMethod(e.target.value);
+  };
+
   return (
     <div className="mt-10 xl:mt-0 xl:border-l-[1px] xl:border-black xl:pl-10 xl:pr-5 xl:w-[436px]">
       <h4 className="uppercase text-2xl font-semibold md:text-3xl">
@@ -25,38 +38,66 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
         </>
       )}
 
-      <h6 className="font-bold">Country</h6>
-      <input className="w-full border" type="text" />
-      <h6 className="font-bold">City/Town</h6>
-      <input className="w-full border" type="text" />
       <h6 className="font-bold">Delivery</h6>
       <form>
         <label>
-          <input type="radio" name="deliveryMethod" value="nova-poshta" />
+          <input
+            type="radio"
+            name="deliveryMethod"
+            value="nova-poshta"
+            onChange={handleDeliveryChange}
+          />
           Nova Poshta
         </label>
         <br />
-        <NovaPost />
+        {deliveryMethod === 'nova-poshta' && <NovaPost />}
         <label>
-          <input type="radio" name="deliveryMethod" value="ukrposhta" />
+          <input
+            type="radio"
+            name="deliveryMethod"
+            value="ukrposhta"
+            onChange={handleDeliveryChange}
+          />
           Ukrposhta
         </label>
         <br />
+        {deliveryMethod === 'ukrposhta' && <p>ukrposhta</p>}
         <label>
-          <input type="radio" name="deliveryMethod" value="meest-express" />
+          <input
+            type="radio"
+            name="deliveryMethod"
+            value="meest-express"
+            onChange={handleDeliveryChange}
+          />
           Meest Express
         </label>
+        {deliveryMethod === 'meest-express' && <MeestExpress />}
       </form>
 
       <div className="w-full h-[1px] bg-black my-5"></div>
       <h6 className="font-bold">Payment method</h6>
       <form>
         <label className="flex justify-start gap-2">
-          <input type="radio" name="paymentMethod" value="cod" />
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="cod"
+            onChange={handlePayChange}
+          />
           Cash on Delivery (COD)
         </label>
+        {payMethod === 'cod' && (
+          <p>
+            An additional 2% of the declared purchase amount is paid by post.
+          </p>
+        )}
         <label className="flex justify-start gap-2">
-          <input type="radio" name="paymentMethod" value="card" />
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="card"
+            onChange={handlePayChange}
+          />
           <div className="flex justify-center items-center gap-2">
             {' '}
             <div className="flex justify-center items-center w-[30px] h-[18px] bg-[#1E1E1E] rounded">
