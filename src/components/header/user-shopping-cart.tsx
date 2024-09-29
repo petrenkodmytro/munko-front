@@ -23,7 +23,7 @@ import Link from 'next/link';
 import { BackDrop } from './back-drop';
 import { enableAccount, emailChange } from '@/api/api';
 import { Context } from '@/context/context';
-import { FavoriteIcon } from '../svgs/FavoriteIcon.svg';
+import { FavoriteIcon } from '../ui-kit/svgs/FavoriteIcon.svg';
 
 const UserShoppingCart = () => {
   const router = useRouter();

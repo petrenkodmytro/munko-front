@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         blackCustom: '#08080D',
-        footer: '#7C9D96',
+        darkGreen: '#7C9D96',
         subscribeBtn: '#161A30',
         grayBorder: '#B6BBC4',
         grayBG: '#B1B1B1',

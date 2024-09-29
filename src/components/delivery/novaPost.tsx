@@ -114,7 +114,7 @@ const NovaPost = () => {
         <div>
           <label htmlFor="city">City:</label>
           <DatalistInput
-            className="w-full outline outline-1 p-1"
+            className="w-full border-2 border-darkGreen rounded p-2"
             id="city"
             placeholder="Select a city"
             items={cities.map((city: { Ref: string; Description: string }) => ({
@@ -129,7 +129,7 @@ const NovaPost = () => {
         <div>
           <label htmlFor="postOffice">Post Office:</label>
           <DatalistInput
-            className="outline outline-1 p-1"
+            className="w-full border-2 border-darkGreen rounded p-2"
             id="postOffice"
             placeholder="Select a post office"
             items={postOffices.map(

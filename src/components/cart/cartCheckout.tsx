@@ -19,7 +19,7 @@ type Props = {
 const CartCheckout = ({ orders, setOrderStep }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
-  // console.log(session?.user);
+  console.log(session?.user);
   const [checkoutStep, setCheckoutStep] = useState(stepsCheckout.start);
 
   return (
