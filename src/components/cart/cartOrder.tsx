@@ -1,10 +1,11 @@
 import { delivery, discount, stepsOrder } from '@/constant/constant';
 import { ICartCard } from '@/types/types';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
-import NovaPost from '../delivery/novaPost';
+
 import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
 import { useState } from 'react';
-import MeestExpress from '../delivery/meestExpress';
+import Delivery from '../delivery/delivery';
+import RadioBtn from '../ui-kit/radioBtn/RadioBtn';
 
 type Props = {
   orders: ICartCard[];
@@ -14,10 +15,6 @@ type Props = {
 const CartOrder = ({ orders, setOrderStep }: Props) => {
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [payMethod, setPayMethod] = useState('');
-
-  const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDeliveryMethod(e.target.value);
-  };
 
   const handlePayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPayMethod(e.target.value);
@@ -39,65 +36,34 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
       )}
 
       <h6 className="font-bold">Delivery</h6>
-      <form>
-        <label>
-          <input
-            type="radio"
-            name="deliveryMethod"
-            value="nova-poshta"
-            onChange={handleDeliveryChange}
-          />
-          Nova Poshta
-        </label>
-        <br />
-        {deliveryMethod === 'nova-poshta' && <NovaPost />}
-        <label>
-          <input
-            type="radio"
-            name="deliveryMethod"
-            value="ukrposhta"
-            onChange={handleDeliveryChange}
-          />
-          Ukrposhta
-        </label>
-        <br />
-        {deliveryMethod === 'ukrposhta' && <p>ukrposhta</p>}
-        <label>
-          <input
-            type="radio"
-            name="deliveryMethod"
-            value="meest-express"
-            onChange={handleDeliveryChange}
-          />
-          Meest Express
-        </label>
-        {deliveryMethod === 'meest-express' && <MeestExpress />}
-      </form>
+      <Delivery
+        deliveryMethod={deliveryMethod}
+        setDeliveryMethod={setDeliveryMethod}
+      />
 
       <div className="w-full h-[1px] bg-black my-5"></div>
       <h6 className="font-bold">Payment method</h6>
       <form>
-        <label className="flex justify-start gap-2">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="cod"
-            onChange={handlePayChange}
-          />
-          Cash on Delivery (COD)
-        </label>
+        <RadioBtn
+          label="Cash on Delivery (COD)"
+          id="cod"
+          name="paymentMethod"
+          value="cod"
+          onChange={handlePayChange}
+        />
         {payMethod === 'cod' && (
           <p>
             An additional 2% of the declared purchase amount is paid by post.
           </p>
         )}
-        <label className="flex justify-start gap-2">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="card"
-            onChange={handlePayChange}
-          />
+
+        <RadioBtn
+          label=""
+          id="card"
+          name="paymentMethod"
+          value="card"
+          onChange={handlePayChange}
+        >
           <div className="flex justify-center items-center gap-2">
             {' '}
             <div className="flex justify-center items-center w-[30px] h-[18px] bg-[#1E1E1E] rounded">
@@ -105,7 +71,7 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
             </div>
             <p>5379 85****** 4784</p>
           </div>
-        </label>
+        </RadioBtn>
       </form>
 
       <div className="w-full h-[1px] bg-black my-5"></div>

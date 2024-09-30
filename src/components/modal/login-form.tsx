@@ -134,7 +134,7 @@ const LoginForm: React.FC<LoginForm> = ({
             <button
               type="submit"
               className={
-                'rounded font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear bg-footer'
+                'rounded font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear bg-darkGreen'
               }
             >
               {formik.isSubmitting ? 'Please wait...' : 'LOGIN'}

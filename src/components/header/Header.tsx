@@ -30,7 +30,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="pt-4 pb-2 max-h-[117px] lg:max-h-[110px] md:max-h-[80px] px-4 md:px-5 lg:px-20 md:pb-4 md:pt-0 bg-footer flex justify-between">
+      <header className="pt-4 pb-2 max-h-[117px] lg:max-h-[110px] md:max-h-[80px] px-4 md:px-5 lg:px-20 md:pb-4 md:pt-0 bg-darkGreen flex justify-between">
         {width < 1024 && <BurgerMenu />}
         <div className="md:mr-auto w-40 md:w-28 lg:w-48 md:pt-px">
           <Link href={'/'}>
@@ -43,7 +43,7 @@ const Header = () => {
             />
           </Link>
         </div>
-        <nav className="lg:block hidden mt-5 bg-footer mr-auto w-3/4 absolute top-52 self-center lg:w-auto lg:static">
+        <nav className="lg:block hidden mt-5 bg-darkGreen mr-auto w-3/4 absolute top-52 self-center lg:w-auto lg:static">
           <Navigation />
         </nav>
         <SearchForm />
