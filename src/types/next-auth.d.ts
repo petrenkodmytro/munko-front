@@ -17,7 +17,7 @@ declare module 'next-auth' {
     address?: {
       id: number;
       userId: number;
-      countryCode: string;
+      country: string;
       district: string;
       city: string;
       street: string;

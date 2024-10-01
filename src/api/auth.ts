@@ -36,7 +36,7 @@ const authOptions: NextAuthOptions = {
                         address {
                           id
                           userId
-                          countryCode
+                          country
                           district
                           city
                           street
