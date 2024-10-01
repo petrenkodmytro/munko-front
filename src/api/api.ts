@@ -600,7 +600,7 @@ export const getCurrentUser = async(token: string)=>{
         address {
             id
             userId
-            countryCode
+            country
             district
             city
             street
