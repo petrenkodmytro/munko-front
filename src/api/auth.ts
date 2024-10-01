@@ -34,15 +34,15 @@ const authOptions: NextAuthOptions = {
                         email
                         phone
                         address {
-                                 id
-                userId
-                countryCode
-                district
-                city
-                street
-                house
-                postalCode
-                                 }
+                          id
+                          userId
+                          country
+                          district
+                          city
+                          street
+                          house
+                          postalCode
+                          }
                       }
                     }
                 }
@@ -72,6 +72,7 @@ const authOptions: NextAuthOptions = {
         }
       },
     }),
+    
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
