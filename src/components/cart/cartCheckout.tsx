@@ -69,9 +69,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
                 {user?.firstName} {user?.lastName}
               </p>
               <p>{user?.phone}</p>
-              <p>
-                {user?.address?.countryCode}, {user?.address?.district}
-              </p>
+              <p>{user?.address?.country}</p>
               <p>
                 {user?.address?.city}, {user?.address?.street}{' '}
                 {user?.address?.house}

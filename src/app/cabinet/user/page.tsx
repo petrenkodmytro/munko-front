@@ -1,7 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
-import { getCurrentUser, changeName, forgotPassword, deleteAccount } from '@/api/api';
+import {
+  getCurrentUser,
+  changeName,
+  forgotPassword,
+  deleteAccount,
+} from '@/api/api';
 import { User } from 'next-auth';
 import ProfileIcon from './../../../../public/icons/profile-icon.svg';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
@@ -30,8 +35,8 @@ const UserData = (props: Props) => {
     name: Yup.string()
       .min(3, 'Too Short! min 3')
       .max(45, 'Too Long! max 45')
-      .matches(/^[A-Za-z0-9 ]*$/, 'Use latin letters and numbers')
-      .required('Required'),
+      .matches(/^[A-Za-z0-9 ]*$/, 'Use latin letters and numbers'),
+    // .required('Required'),
   });
 
   useEffect(() => {
@@ -39,6 +44,7 @@ const UserData = (props: Props) => {
       if (session && session.token) {
         const data = await getCurrentUser(session.token);
         setCurrentUser(data);
+        data ? setInputValue(data.firstName) : null;
       }
     };
     handleGetCurrentUser();
@@ -47,7 +53,7 @@ const UserData = (props: Props) => {
   const handleChangeName = async () => {
     setIsInputShow(false);
     if (session && currentUser) {
-      if (inputValue !== currentUser.firstName) {
+      if (inputValue !== currentUser.firstName && inputValue !== '') {
         const newName = await changeName(
           session.token,
           inputValue,
@@ -60,9 +66,10 @@ const UserData = (props: Props) => {
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    if (event.target.name === 'name') {
-      setInputValue(event.target.value);
+  const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.name === 'name') {
+      setInputValue(inputElement.value);
     }
   };
 
@@ -96,12 +103,11 @@ const UserData = (props: Props) => {
     setShowInstructions(true);
   };
 
-
   const handleDeleteAccount = () => {
-    if(session){
+    if (session) {
       setShowDeleteAccount(false);
-      deleteAccount(session.token)
-      signOut({callbackUrl: '/'})
+      deleteAccount(session.token);
+      signOut({ callbackUrl: '/' });
     }
   };
 
@@ -115,7 +121,7 @@ const UserData = (props: Props) => {
         }}
       >
         {({ isValid }) => (
-          <Form onChange={handleInputChange}>
+          <Form onChange={e => handleInputChange(e)}>
             <div className="mx-4 md:mx-12 my-8 flex justify-between">
               <div className="flex gap-6">
                 <div className="w-[54px] h-[54px] bg-[#B1B1B1] rounded-full relative">
@@ -128,11 +134,12 @@ const UserData = (props: Props) => {
                     {isInputShow ? (
                       <>
                         <Field
-                          value={inputValue}
                           className="mb-3 text-base border border-[#B6BBC4] rounded h-8 p-2 outline-0"
                           type="text"
                           name="name"
-                          placeholder={currentUser.firstName}
+                          placeholder="First Name"
+                          value={inputValue}
+                          required
                         />
                         <ErrorMessage
                           className="self-start -mt-2.5 mb-2 text-[8px] text-[#D63F3F] font-medium pl-2"
@@ -172,7 +179,13 @@ const UserData = (props: Props) => {
                     >
                       Forgot the password
                     </button>
-                    <button type="button" className="text-[#D63F3F]" onClick={()=>{setShowDeleteAccount(true)}}>
+                    <button
+                      type="button"
+                      className="text-[#D63F3F]"
+                      onClick={() => {
+                        setShowDeleteAccount(true);
+                      }}
+                    >
                       Delete you account
                     </button>
                   </div>
@@ -184,7 +197,7 @@ const UserData = (props: Props) => {
                     disabled={!isValid}
                     type="submit"
                     className="text-xs text-blue-600 font-bold"
-                    onClick={handleChangeName}
+                    onClick={() => handleChangeName()}
                   >
                     Done
                   </button>

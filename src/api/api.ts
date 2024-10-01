@@ -597,6 +597,16 @@ export const getCurrentUser = async(token: string)=>{
         lastName
         email
         phone
+        address {
+            id
+            userId
+            country
+            district
+            city
+            street
+            house
+            postalCode
+        }
     }
 }
   `;
@@ -715,4 +725,29 @@ const requestHeaders = {
   } catch(error){
     console.log(error);
   }
+};
+
+export const changeAdress = async (
+  token: string,
+  updatedFirstName: string,
+  userId: number,
+  ) => {
+  const mutation = gql`
+    mutation UpdateUser ($updatedFirstName: String, $userId: Int) {
+      updateUser(user: { firstName: $updatedFirstName, id: $userId }) {
+        firstName
+        id
+        email
+    }
+  }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+
+  const data: any = await graphQLClient.request(
+    mutation, { updatedFirstName, userId }, requestHeaders
+  );  
+  return data.updateUser
 };
