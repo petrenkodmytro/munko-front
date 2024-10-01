@@ -53,7 +53,7 @@ const Shipment = (props: Props) => {
           <div className="flex gap-1 mb-[14px]">
             <p>{currentUser.address.city}</p>
             <p>{currentUser.address.district}</p>
-            <p>{currentUser.address.countryCode}</p>
+            <p>{currentUser.address.country}</p>
             <p>{currentUser.address.postalCode}</p>
           </div>
           <button
