@@ -12,10 +12,10 @@ type Props = {
 const EditForm = ({ setIsEdit, currentUser }: Props) => {
   const editSchema = Yup.object().shape({});
 
-const handleSubmit = async (values) => {
-  console.log(values);
+// const handleSubmit = async (values) => {
+//   console.log(values);
   
-}
+// }
 
   return (
     <Formik
@@ -34,7 +34,7 @@ const handleSubmit = async (values) => {
         console.log(values);
         actions.resetForm();
         setIsEdit(false);
-        handleSubmit(values);
+        // handleSubmit(values);
       }}
     >
       <Form className="relative pt-7 flex flex-col gap-[14px] w-[286px]">
