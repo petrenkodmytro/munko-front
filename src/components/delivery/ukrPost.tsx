@@ -49,10 +49,10 @@ const UkrPost: React.FC = () => {
   const fetchCities = async (countryCode: string) => {
     try {
       const response = await fetch(
-        `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${countryCode}/regions`,
+        `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${countryCode}/places`,
         {
           headers: {
-            'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY', // Replace with your RapidAPI key
+            'X-RapidAPI-Key': 'c6f33c9c2fmsh2edc655614ffba8p13c36ajsn44eaae4da2bb', // Replace with your RapidAPI key
             'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
           },
         }
@@ -69,7 +69,8 @@ const UkrPost: React.FC = () => {
 
   // Handle country selection and fetch cities
   const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const countryCode = event.target.value;
+    console.log(event.id)
+    const countryCode = event.id;
     setSelectedCountry(countryCode);
     fetchCities(countryCode);
   };
@@ -121,7 +122,7 @@ const UkrPost: React.FC = () => {
               id: country.cca2,
               value: country.name,
             }))}
-            onSelect={handleCountryChange}
+            onSelect={(e)=>handleCountryChange(e)}
             label="Select a country"
             showLabel={false}
           />
