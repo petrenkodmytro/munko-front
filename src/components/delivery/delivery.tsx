@@ -13,7 +13,7 @@ const Delivery = ({ deliveryMethod, setDeliveryMethod }: Props) => {
     setDeliveryMethod(e.target.value);
   };
   return (
-    <form>
+    <div>
       <RadioBtn
         label="Nova Poshta"
         id="nova-poshta"
@@ -38,7 +38,7 @@ const Delivery = ({ deliveryMethod, setDeliveryMethod }: Props) => {
         onChange={handleDeliveryChange}
       />
       {deliveryMethod === 'meest-express' && <MeestExpress />}
-    </form>
+    </div>
   );
 };
 

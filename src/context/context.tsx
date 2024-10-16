@@ -46,7 +46,7 @@ const ContextProvider = ({ children }: Props) => {
   const [favoriteItemsCtx, setFavoritItemsCtx] = useState<number[]>([]);
 
   useEffect(() => {
-    if (session === null) {
+    if (!session) {
       return;
     }
     async function fetchData() {

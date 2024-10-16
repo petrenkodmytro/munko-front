@@ -36,7 +36,7 @@ const CartPage = (props: Props) => {
   const [modalState, setModalState] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [orderStep, setOrderStep] = useState(stepsOrder.total);
-
+  console.log(session);
   useEffect(() => {
     if (session === null) {
       setNotifyCart(true);
