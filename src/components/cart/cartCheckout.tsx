@@ -71,12 +71,12 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
               <p>{user?.phone}</p>
               <p>{user?.address?.country}</p>
               <p>
-                {user?.address?.city}, {user?.address?.street}{' '}
+                {user?.address?.city} {user?.address?.street}{' '}
                 {user?.address?.house}
               </p>
               <p>
                 {' '}
-                <i>PostalCode:</i> {user?.address?.postalCode}
+                <i>PostalCode:</i> {user?.address?.postalCode ?? '---'}
               </p>
             </div>
             {/* <button

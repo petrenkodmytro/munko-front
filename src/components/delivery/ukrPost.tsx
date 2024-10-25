@@ -1,14 +1,12 @@
+import { Country } from '@/types/types';
 import React, { useState, useEffect } from 'react';
 import DatalistInput from 'react-datalist-input';
 
-interface Country {
-  name: string;
-  cca2: string;
-}
 
-interface City {
-  name: string;
-}
+
+// interface City {
+//   name: string;
+// }
 
 const UkrPost: React.FC = () => {
   const [countries, setCountries] = useState<Country[]>([]);
@@ -82,11 +80,11 @@ const UkrPost: React.FC = () => {
   // );
 
   return (
-    <form autoComplete='off' className="">
+    <form autoComplete="off" className="">
       {/* Country Search */}
       {/* <label className='mb-3' htmlFor="city">City:</label> */}
       <DatalistInput
-        className="w-full border-2 border-darkGreen rounded p-2 outline-none"
+        className="w-full my-2 border-2 border-darkGreen rounded p-1 outline-none"
         id="country"
         placeholder="Select a country"
         items={countries.map((country: { cca2: string; name: string }) => ({
@@ -100,7 +98,7 @@ const UkrPost: React.FC = () => {
         showLabel={false}
       />
 
-      <div className="mb-4">
+      <div className="mb-2">
         <label className="block text-gray-700">City:</label>
         <input
           autoComplete="off"
@@ -108,33 +106,37 @@ const UkrPost: React.FC = () => {
           type="text"
           value={city}
           onChange={e => setCity(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded"
+          className="w-full border-2 border-darkGreen rounded p-1 outline-none"
           placeholder="Set city"
         />
       </div>
-      <div className="flex mb-4">
-        <label className="block text-gray-700">Street:</label>
-        <input
-          autoComplete="off"
-          name="customStreetName"
-          type="text"
-          value={street}
-          onChange={e => setStreet(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded"
-          placeholder="Set street"
-        />
-        <label className="block text-gray-700">House:</label>
-        <input
-          autoComplete="off"
-          name="customHouseName"
-          type="text"
-          value={house}
-          onChange={e => setHouse(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded"
-          placeholder="Set house"
-        />
+      <div className="flex gap-4 mb-2">
+        <div>
+          <label className="block text-gray-700">Street:</label>
+          <input
+            autoComplete="off"
+            name="customStreetName"
+            type="text"
+            value={street}
+            onChange={e => setStreet(e.target.value)}
+            className="w-full border-2 border-darkGreen rounded p-1 outline-none"
+            placeholder="Set street"
+          />
+        </div>
+        <div>
+          <label className="block text-gray-700">House:</label>
+          <input
+            autoComplete="off"
+            name="customHouseName"
+            type="text"
+            value={house}
+            onChange={e => setHouse(e.target.value)}
+            className="w-full border-2 border-darkGreen rounded p-1 outline-none"
+            placeholder="Set house"
+          />
+        </div>
       </div>
-      <div className="mb-4">
+      <div className="mb-2">
         <label className="block text-gray-700">PostIndex:</label>
         <input
           autoComplete="off"
@@ -142,7 +144,7 @@ const UkrPost: React.FC = () => {
           type="text"
           value={postId}
           onChange={e => setPostId(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded"
+          className="w-full border-2 border-darkGreen rounded p-1 outline-none"
           placeholder="Set postId"
         />
       </div>

@@ -13,7 +13,7 @@ const Catalog = ({ width }: { width: number }) => {
   useEffect(() => {
     const getCardCatalog = async () => {
       const cardsCatalogGet = await getCatalog();
-      if (cardsCatalogGet.length) {
+      if (cardsCatalogGet) {
         setCardsCatalog(cardsCatalogGet);
       } else {
         console.log(cardsCatalogGet);
