@@ -2,7 +2,6 @@ import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 import { User } from 'next-auth';
-import { count } from 'console';
 
 type Props = {
   setIsEdit: (isEdit: boolean) => void;
@@ -37,7 +36,7 @@ const EditForm = ({ setIsEdit, currentUser }: Props) => {
         // handleSubmit(values);
       }}
     >
-      <Form className="relative pt-7 flex flex-col gap-[14px] w-[286px]">
+      <Form autoComplete='off' className="relative pt-7 flex flex-col gap-[14px] w-[286px]">
         <Field
           name='firstName'
           placeholder="First Name"
@@ -88,7 +87,7 @@ const EditForm = ({ setIsEdit, currentUser }: Props) => {
           className="w-full text-black pl-2 outline outline-1 outline-[#B6BBC4] rounded  focus:outline-[#B1B1B1]"
           id="zipcode"
           name="zipcode"
-          placeholder="ZIP code"
+          placeholder="postalCode"
           type="number"
         />
         <button className="absolute top-0 right-0 text-[#2271F2] text-xs font-bold">

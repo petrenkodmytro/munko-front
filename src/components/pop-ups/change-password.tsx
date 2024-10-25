@@ -141,7 +141,7 @@ export default function ChangePassword({
             <button
               type="submit"
               className={
-                'rounded self-center font-semibold text-sm text-white mb-2 w-[154px] py-2 duration-200 ease-linear bg-footer'
+                'rounded self-center font-semibold text-sm text-white mb-2 w-[154px] py-2 duration-200 ease-linear bg-darkGreen'
               }
             >
               SAVE

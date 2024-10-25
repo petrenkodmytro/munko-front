@@ -35,7 +35,7 @@ const Shipment = (props: Props) => {
   }, [session]);
 
   return currentUser && currentUser.address ? (
-    <div className="flex gap-4 p-11">
+    <div className="flex gap-4 p-4 md:p-11">
       <div className="flex justify-center items-center w-[54px] h-[54px] bg-[#B1B1B1] rounded-full">
         <AvatarCamera />
       </div>

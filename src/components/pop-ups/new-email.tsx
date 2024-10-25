@@ -76,7 +76,7 @@ export default function InputNewEmail({
               <button
                 type="submit"
                 className={
-                  'rounded self-center font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear bg-footer'
+                  'rounded self-center font-semibold text-sm text-white w-[154px] py-2 duration-200 ease-linear bg-darkGreen'
                 }
               >
                 {formik.isSubmitting ? 'Please wait...' : 'SEND'}

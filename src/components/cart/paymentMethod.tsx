@@ -2,6 +2,7 @@ import { useState } from 'react';
 import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
 import IconGooglePay from './../../../public/icons/googlePay.svg';
 import IconApplePay from './../../../public/icons/applePay.svg';
+import RadioBtn from '../ui-kit/radioBtn/RadioBtn';
 
 type Props = {};
 
@@ -74,6 +75,7 @@ const PaymentMethod = (props: Props) => {
             </div>
           </label>
         </div>
+        <RadioBtn/>
       </div>
     </div>
   );

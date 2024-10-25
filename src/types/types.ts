@@ -199,3 +199,8 @@ export interface IDataFavoriteItems {
 export interface IDataOrders {
   getUserOrders: IOrder[];
 }
+
+export interface Country {
+  name: string;
+  cca2: string;
+}
