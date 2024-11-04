@@ -12,6 +12,7 @@ import {
   IDataReviewById,
   IDataCartItems,
   IDataFavoriteItems,
+  CreditCard,
 } from '@/types/types';
 import { GraphQLClient, gql } from 'graphql-request';
 import { User } from 'next-auth';
@@ -738,56 +739,64 @@ export const deleteAccount = async (token: string) => {
   }
 };
 
-export const changeAdress = async (
-  token: string,
-  updatedFirstName: string,
-  userId: number
-) => {
-  const mutation = gql`
-    mutation UpdateUser($updatedFirstName: String, $userId: Int) {
-      updateUser(user: { firstName: $updatedFirstName, id: $userId }) {
-        firstName
-        id
-        email
-      }
-    }
-  `;
+// export const changeAdress = async (
+//   token: string,
+//   updatedFirstName: string,
+//   userId: number
+// ) => {
+//   const mutation = gql`
+//     mutation UpdateUser($updatedFirstName: String, $userId: Int) {
+//       updateUser(user: { firstName: $updatedFirstName, id: $userId }) {
+//         firstName
+//         id
+//         email
+//       }
+//     }
+//   `;
 
-  const requestHeaders = {
-    authorization: `Bearer ${token}`,
-  };
+//   const requestHeaders = {
+//     authorization: `Bearer ${token}`,
+//   };
 
-  const data: any = await graphQLClient.request(
-    mutation,
-    { updatedFirstName, userId },
-    requestHeaders
-  );
-  return data.updateUser;
-};
+//   const data: any = await graphQLClient.request(
+//     mutation,
+//     { updatedFirstName, userId },
+//     requestHeaders
+//   );
+//   return data.updateUser;
+// };
 
 export const updateUserData = async (
   token: string,
-  updatedFirstName: string,
+  updateUserData: User,
+  creditCard: CreditCard,
   userId: number
 ) => {
   const mutation = gql`
     mutation UpdateUser {
       updateUser(
         user: {
-          id: 207
-          firstName: null
-          lastName: null
-          email: null
-          phone: null
-          creditCard: null
+          id: ${userId},
+          firstName: ${updateUserData.firstName}
+          lastName: ${updateUserData.lastName}
+          email: ${updateUserData.email}
+          phone: ${updateUserData.phone}
+          creditCard: [
+      {
+        userId: ${userId}
+        cardNumber: ${creditCard?.cardNumber}
+        cardHolderName: ${creditCard?.cardHolderName}
+        expirationDate: ${creditCard?.expirationDate}
+      },
+    ];
           address: {
-            userId: 207
-            country: null
-            district: null
-            city: null
-            street: null
-            house: null
-            postalCode: null
+            userId: ${userId}
+            country: ${updateUserData.address?.country}
+            district: ${updateUserData.address?.district}
+            city: ${updateUserData.address?.city}
+            street: ${updateUserData.address?.street}
+            house: ${updateUserData.address?.house}
+            postalCode: ${updateUserData.address?.postalCode}
           }
         }
       ) {
@@ -823,9 +832,69 @@ export const updateUserData = async (
 
   const data: any = await graphQLClient.request(
     mutation,
-    { updatedFirstName, userId },
+    { updateUserData, userId },
     requestHeaders
   );
+  console.log(data);
+  return data.updateUser;
+};
+
+export const updateCreditCard = async (
+  token: string,
+  creditCard: CreditCard,
+  userId: number
+) => {
+  const mutation = gql`
+    mutation UpdateUser {
+      updateUser(
+        user: {
+          id: ${userId},
+          creditCard: [
+      {
+        userId: ${userId}
+        cardNumber: ${creditCard?.cardNumber}
+        cardHolderName: ${creditCard?.cardHolderName}
+        expirationDate: ${creditCard?.expirationDate}
+      },
+    ];
+        }
+      ) {
+        id
+        firstName
+        lastName
+        email
+        phone
+        address {
+          id
+          userId
+          country
+          district
+          city
+          street
+          house
+          postalCode
+        }
+        creditCard {
+          id
+          userId
+          cardNumber
+          cardHolderName
+          expirationDate
+        }
+      }
+    }
+  `;
+
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+
+  const data: any = await graphQLClient.request(
+    mutation,
+    { updateUserData, userId },
+    requestHeaders
+  );
+  console.log(data);
   return data.updateUser;
 };
 // {

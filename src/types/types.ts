@@ -204,3 +204,9 @@ export interface Country {
   name: string;
   cca2: string;
 }
+
+export interface CreditCard {
+  cardNumber?: string;
+  cardHolderName?: string;
+  expirationDate?: string;
+}

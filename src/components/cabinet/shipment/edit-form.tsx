@@ -12,8 +12,30 @@ const EditForm = ({ setIsEdit, currentUser }: Props) => {
   const editSchema = Yup.object().shape({});
 
 // const handleSubmit = async (values) => {
-//   console.log(values);
-  
+//   console.log(values);  
+// }
+
+// {
+//   "data": {
+//       "updateUser": {
+//           "id": 207,
+//           "firstName": "Bob",
+//           "lastName": "Mahoni",
+//           "email": "Bob@ukr.net",
+//           "phone": "+380994675845",
+//           "address": {
+//               "id": 603,
+//               "userId": 207,
+//               "country": "Ukraine",
+//               "district": null,
+//               "city": "Kharkiv",
+//               "street": null,
+//               "house": null,
+//               "postalCode": "63030"
+//           },
+//           "creditCard": []
+//       }
+//   }
 // }
 
   return (
