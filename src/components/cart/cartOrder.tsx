@@ -6,6 +6,7 @@ import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
 import { useState } from 'react';
 import Delivery from '../delivery/delivery';
 import RadioBtn from '../ui-kit/radioBtn/RadioBtn';
+import PaymentMethod from './paymentMethod';
 
 type Props = {
   orders: ICartCard[];
@@ -13,6 +14,7 @@ type Props = {
 };
 
 const CartOrder = ({ orders, setOrderStep }: Props) => {
+  const [setCreditCard, setSetCreditCard] = useState(false);
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [payMethod, setPayMethod] = useState('');
 
@@ -57,21 +59,33 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
           </p>
         )}
 
-        <RadioBtn
-          label=""
-          id="card"
-          name="paymentMethod"
-          value="card"
-          onChange={handlePayChange}
-        >
-          <div className="flex justify-center items-center gap-2">
-            {' '}
-            <div className="flex justify-center items-center w-[30px] h-[18px] bg-[#1E1E1E] rounded">
-              <IconCreditCard />
+        <div className="flex justify-between">
+          <RadioBtn
+            label=""
+            id="card"
+            name="paymentMethod"
+            value="card"
+            onChange={handlePayChange}
+          >
+            <div className="flex justify-center items-center gap-2">
+              {' '}
+              <div className="flex justify-center items-center w-[30px] h-[18px] bg-[#1E1E1E] rounded">
+                <IconCreditCard />
+              </div>
+              <p>5379 85****** 4784</p>
             </div>
-            <p>5379 85****** 4784</p>
-          </div>
-        </RadioBtn>
+          </RadioBtn>
+          <button
+            onClick={() => {
+              setSetCreditCard(!setCreditCard);
+            }}
+            type="button"
+            className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
+          >
+            <IconBack />
+          </button>
+        </div>
+        {setCreditCard && <PaymentMethod />}
       </form>
 
       <div className="w-full h-[1px] bg-black my-5"></div>
@@ -94,7 +108,7 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
           </span>
         </p>
       )}
-
+      
       {/* button */}
       <div className="mt-9 flex items-center justify-between md:flex-row-reverse xl:flex-col xl:mt-14 xl:gap-6">
         <button
