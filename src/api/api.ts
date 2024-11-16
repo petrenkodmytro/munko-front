@@ -766,10 +766,9 @@ export const deleteAccount = async (token: string) => {
 //   return data.updateUser;
 // };
 
-export const updateUserData = async (
+export const updateUserDataShipment = async (
   token: string,
   updateUserData: User,
-  creditCard: CreditCard,
   userId: number
 ) => {
   const mutation = gql`
@@ -779,16 +778,7 @@ export const updateUserData = async (
           id: ${userId},
           firstName: ${updateUserData.firstName}
           lastName: ${updateUserData.lastName}
-          email: ${updateUserData.email}
           phone: ${updateUserData.phone}
-          creditCard: [
-      {
-        userId: ${userId}
-        cardNumber: ${creditCard?.cardNumber}
-        cardHolderName: ${creditCard?.cardHolderName}
-        expirationDate: ${creditCard?.expirationDate}
-      },
-    ];
           address: {
             userId: ${userId}
             country: ${updateUserData.address?.country}
@@ -891,7 +881,7 @@ export const updateCreditCard = async (
 
   const data: any = await graphQLClient.request(
     mutation,
-    { updateUserData, userId },
+    { creditCard, userId },
     requestHeaders
   );
   console.log(data);

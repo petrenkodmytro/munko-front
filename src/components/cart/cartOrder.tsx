@@ -75,15 +75,17 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
               <p>5379 85****** 4784</p>
             </div>
           </RadioBtn>
-          <button
-            onClick={() => {
-              setSetCreditCard(!setCreditCard);
-            }}
-            type="button"
-            className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
-          >
-            <IconBack />
-          </button>
+          {payMethod === 'card' && (
+            <button
+              onClick={() => {
+                setSetCreditCard(!setCreditCard);
+              }}
+              type="button"
+              className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
+            >
+              <IconBack />
+            </button>
+          )}
         </div>
         {setCreditCard && <PaymentMethod />}
       </form>
@@ -108,7 +110,7 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
           </span>
         </p>
       )}
-      
+
       {/* button */}
       <div className="mt-9 flex items-center justify-between md:flex-row-reverse xl:flex-col xl:mt-14 xl:gap-6">
         <button
