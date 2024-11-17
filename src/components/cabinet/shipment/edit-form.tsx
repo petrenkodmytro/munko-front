@@ -2,18 +2,58 @@ import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 import { User } from 'next-auth';
+import { updateUserDataShipment } from '@/api/api';
+import { IUserDataShipment } from '@/types/types';
 
 type Props = {
   setIsEdit: (isEdit: boolean) => void;
   currentUser: User;
+  token: string | undefined;
 };
 
-const EditForm = ({ setIsEdit, currentUser }: Props) => {
+type FormValue = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  country: string;
+  district: string;
+  city: string;
+  street: string;
+  house: string;
+  postalCode: string;
+};
+const EditForm = ({ setIsEdit, currentUser, token }: Props) => {
   const editSchema = Yup.object().shape({});
 
-  const handleSubmit = async (values) => {
-    console.log(values);
-  }
+  console.log(currentUser);
+
+  const handleSubmit = async (values: FormValue) => {
+    // console.log(values);
+    const userDataShipment: IUserDataShipment = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phone: values.phone,
+      address: {
+        country: values.country,
+        district: values.district,
+        city: values.city,
+        street: values.street,
+        house: values.house,
+        postalCode: values.postalCode,
+      },
+    };
+    try {
+      await updateUserDataShipment(
+        token,
+        userDataShipment,
+        Number(currentUser.id)
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsEdit(false);
+    }
+  };
 
   // {
   //   "data": {
@@ -53,9 +93,7 @@ const EditForm = ({ setIsEdit, currentUser }: Props) => {
       }}
       validationSchema={editSchema}
       onSubmit={(values, actions) => {
-        // console.log(values);
         actions.resetForm();
-        setIsEdit(false);
         handleSubmit(values);
       }}
     >
@@ -88,7 +126,7 @@ const EditForm = ({ setIsEdit, currentUser }: Props) => {
           placeholder="Street"
           type="text"
         />
-         <Field
+        <Field
           className="w-full text-black pl-2 outline outline-1 outline-[#B6BBC4] rounded  focus:outline-[#B1B1B1]"
           id="house"
           name="house"
@@ -121,7 +159,7 @@ const EditForm = ({ setIsEdit, currentUser }: Props) => {
           id="postalCode"
           name="postalCode"
           placeholder="postalCode"
-          type="number"
+          type="text"
         />
         <button className="absolute top-0 right-0 text-[#2271F2] text-xs font-bold">
           Done

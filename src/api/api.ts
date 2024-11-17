@@ -12,7 +12,8 @@ import {
   IDataReviewById,
   IDataCartItems,
   IDataFavoriteItems,
-  CreditCard,
+  ICreditCard,
+  IUserDataShipment,
 } from '@/types/types';
 import { GraphQLClient, gql } from 'graphql-request';
 import { User } from 'next-auth';
@@ -609,6 +610,13 @@ export const getCurrentUser = async (token: string) => {
           house
           postalCode
         }
+        creditCard {
+          id
+          userId
+          cardNumber
+          cardHolderName
+          expirationDate
+        }
       }
     }
   `;
@@ -648,6 +656,7 @@ export const changeName = async (
     { updatedFirstName, userId },
     requestHeaders
   );
+  console.log(data);
   return data.updateUser;
 };
 
@@ -767,26 +776,37 @@ export const deleteAccount = async (token: string) => {
 // };
 
 export const updateUserDataShipment = async (
-  token: string,
-  updateUserData: User,
+  token: string | undefined,
+  updateUserData: IUserDataShipment,
   userId: number
 ) => {
   const mutation = gql`
-    mutation UpdateUser {
+    mutation UpdateUser(
+      $userId: Int!
+      $firstName: String!
+      $lastName: String!
+      $phone: String!
+      $country: String!
+      $district: String!
+      $city: String!
+      $street: String
+      $house: String!
+      $postalCode: String!
+    ) {
       updateUser(
         user: {
-          id: ${userId},
-          firstName: ${updateUserData.firstName}
-          lastName: ${updateUserData.lastName}
-          phone: ${updateUserData.phone}
+          id: $userId
+          firstName: $firstName
+          lastName: $lastName
+          phone: $phone
           address: {
-            userId: ${userId}
-            country: ${updateUserData.address?.country}
-            district: ${updateUserData.address?.district}
-            city: ${updateUserData.address?.city}
-            street: ${updateUserData.address?.street}
-            house: ${updateUserData.address?.house}
-            postalCode: ${updateUserData.address?.postalCode}
+            userId: $userId
+            country: $country
+            district: $district
+            city: $city
+            street: $street
+            house: $house
+            postalCode: $postalCode
           }
         }
       ) {
@@ -816,37 +836,68 @@ export const updateUserDataShipment = async (
     }
   `;
 
+  // Деструктуризация данных из updateUserData
+  const {
+    firstName,
+    lastName,
+    phone,
+    address: { country, district, city, street, house, postalCode },
+  } = updateUserData;
+
+  const variables = {
+    userId,
+    firstName,
+    lastName,
+    phone,
+    country,
+    district,
+    city,
+    street,
+    house,
+    postalCode,
+  };
+
   const requestHeaders = {
     authorization: `Bearer ${token}`,
   };
 
-  const data: any = await graphQLClient.request(
-    mutation,
-    { updateUserData, userId },
-    requestHeaders
-  );
-  console.log(data);
-  return data.updateUser;
+  try {
+    const data: any = await graphQLClient.request(
+      mutation,
+      variables,
+      requestHeaders
+    );
+    console.log(data);
+    return data.updateUser;
+  } catch (error) {
+    console.error('Error updating user data:', error);
+    throw error;
+  }
 };
 
 export const updateCreditCard = async (
   token: string,
-  creditCard: CreditCard,
+  creditCard: ICreditCard,
   userId: number
 ) => {
   const mutation = gql`
-    mutation UpdateUser {
+    mutation UpdateUser(
+      $userId: Int!
+      $cardNumber: String!
+      $cardHolderName: String!
+      $expirationDate: String!
+    ) {
       updateUser(
         user: {
-          id: ${userId},
+          id: $userId
           creditCard: [
-      {
-        userId: ${userId}
-        cardNumber: ${creditCard?.cardNumber}
-        cardHolderName: ${creditCard?.cardHolderName}
-        expirationDate: ${creditCard?.expirationDate}
-      },
-    ];
+            {
+              userId: $userId
+              cardNumber: $cardNumber
+              cardHolderName: $cardHolderName
+              expirationDate: $expirationDate
+            }
+          ]
         }
       ) {
         id
@@ -875,37 +926,39 @@ export const updateCreditCard = async (
     }
   `;
 
+  // Разделяем данные на переменные
+  const { cardNumber, cardHolderName, expirationDate } = creditCard;
+
+  const variables = {
+    userId,
+    cardNumber,
+    cardHolderName,
+    expirationDate,
+  };
+
   const requestHeaders = {
     authorization: `Bearer ${token}`,
   };
 
-  const data: any = await graphQLClient.request(
-    mutation,
-    { creditCard, userId },
-    requestHeaders
-  );
-  console.log(data);
-  return data.updateUser;
+  try {
+    const data: any = await graphQLClient.request(
+      mutation,
+      variables,
+      requestHeaders
+    );
+    console.log(data);
+    return data.updateUser;
+  } catch (error) {
+    console.error('Error updating credit card:', error);
+    throw error;
+  }
 };
-// {
-//   "data": {
-//       "updateUser": {
-//           "id": 207,
-//           "firstName": "Bob",
-//           "lastName": "Mahoni",
-//           "email": "Bob@ukr.net",
-//           "phone": "+380994675845",
-//           "address": {
-//               "id": 603,
-//               "userId": 207,
-//               "country": "Ukraine",
-//               "district": null,
-//               "city": "Kharkiv",
-//               "street": null,
-//               "house": null,
-//               "postalCode": "63030"
-//           },
-//           "creditCard": []
-//       }
+
+// creditCard: [
+//   {
+//       userId: 1354
+//       cardNumber: "12312312"
+//       cardHolderName: "John Doe"
+//       expirationDate: "12/24"
 //   }
-// }
+// ]

@@ -10,16 +10,15 @@ import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import PaymentMethod from './paymentMethod';
+import { User } from 'next-auth';
 
 type Props = {
   orders: ICartCard[];
   setOrderStep: (status: string) => void;
+  user: User | undefined;
 };
 
-const CartCheckout = ({ orders, setOrderStep }: Props) => {
-  const { data: session } = useSession();
-  const user = session?.user;
-  console.log(session?.user);
+const CartCheckout = ({ orders, setOrderStep, user }: Props) => {
   const [checkoutStep, setCheckoutStep] = useState(stepsCheckout.start);
 
   return (

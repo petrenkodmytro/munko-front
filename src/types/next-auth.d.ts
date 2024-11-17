@@ -12,7 +12,7 @@ declare module 'next-auth' {
     firstName: string;
     lastName?: string | null;
     email: string;
-    phone?: number | null;
+    phone?: string | null;
     password: string;
     address?: {
       id: number;
@@ -26,10 +26,10 @@ declare module 'next-auth' {
     } | null;
     creditCard?: [
       {
-        userId: number;
-        cardNumber: string;
-        cardHolderName: string;
-        expirationDate: string;
+        userId?: number;
+        cardNumber?: string;
+        cardHolderName?: string;
+        expirationDate?: string;
       },
     ];
   }

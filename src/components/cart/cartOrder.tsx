@@ -7,13 +7,15 @@ import { useState } from 'react';
 import Delivery from '../delivery/delivery';
 import RadioBtn from '../ui-kit/radioBtn/RadioBtn';
 import PaymentMethod from './paymentMethod';
+import { User } from 'next-auth';
 
 type Props = {
   orders: ICartCard[];
   setOrderStep: (status: string) => void;
+  user: User | undefined;
 };
 
-const CartOrder = ({ orders, setOrderStep }: Props) => {
+const CartOrder = ({ orders, setOrderStep, user }: Props) => {
   const [setCreditCard, setSetCreditCard] = useState(false);
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [payMethod, setPayMethod] = useState('');
@@ -68,11 +70,20 @@ const CartOrder = ({ orders, setOrderStep }: Props) => {
             onChange={handlePayChange}
           >
             <div className="flex justify-center items-center gap-2">
-              {' '}
-              <div className="flex justify-center items-center w-[30px] h-[18px] bg-[#1E1E1E] rounded">
-                <IconCreditCard />
-              </div>
-              <p>5379 85****** 4784</p>
+              {Array.isArray(user?.creditCard) &&
+              user?.creditCard[0]?.cardNumber ? (
+                <>
+                  <div className="flex justify-center items-center w-[30px] h-[18px] bg-[#1E1E1E] rounded">
+                    <IconCreditCard />
+                  </div>
+                  <p>
+                    {user.creditCard[0].cardNumber.slice(0, 4)} **** ****
+                    {user.creditCard[0].cardNumber.slice(-4)}
+                  </p>
+                </>
+              ) : (
+                <p>No credit card available</p>
+              )}
             </div>
           </RadioBtn>
           {payMethod === 'card' && (
