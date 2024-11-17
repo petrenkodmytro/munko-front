@@ -17,21 +17,28 @@ const PaymentMethod = (props: Props) => {
 
   return (
     <div>
-      <h4 className="uppercase text-2xl font-semibold md:text-3xl">
+      {/* <h4 className="uppercase text-2xl font-semibold md:text-3xl">
         PAYMENT METHOD
-      </h4>
+      </h4> */}
 
-      <p className="font-semibold py-8">Choose a way to pay</p>
+      {/* <p className="font-semibold py-8">Choose a way to pay</p> */}
 
       <button
         type="button"
-        className="w-full h-[86px] border rounded shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
+        className="w-full h-10 mt-4 border rounded shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
+        // className="w-full h-[86px] border rounded shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
       >
         Add new card
       </button>
 
       <div className="flex justify-center gap-2 mt-5">
-        <div className="flex justify-center items-center rounded border  w-[65px] h-[38px] shadow-[0px_0px_2px_0px_rgb(0,0,0,0.45)]">
+        <div
+          className={`flex justify-center items-center rounded border w-[65px] h-[38px] shadow-[0px_0px_2px_0px_rgb(0,0,0,0.45)] ${
+            selectedPaymentMethod === 'PrivatBank'
+              ? 'border-2 border-darkGreen'
+              : ''
+          }`}
+        >
           <label>
             <input
               className="absolute invisible"
@@ -45,7 +52,11 @@ const PaymentMethod = (props: Props) => {
             </div>
           </label>
         </div>
-        <div className="flex justify-center items-center rounded border  w-[65px] h-[38px] shadow-[0px_0px_2px_0px_rgb(0,0,0,0.45)]">
+        <div
+          className={`flex justify-center items-center rounded border w-[65px] h-[38px] shadow-[0px_0px_2px_0px_rgb(0,0,0,0.45)] ${
+            selectedPaymentMethod === 'gPay' ? 'border-2 border-darkGreen' : ''
+          }`}
+        >
           <label>
             <input
               className="absolute invisible"
@@ -60,7 +71,13 @@ const PaymentMethod = (props: Props) => {
             </div>
           </label>
         </div>
-        <div className="flex justify-center items-center rounded border  w-[65px] h-[38px] shadow-[0px_0px_2px_0px_rgb(0,0,0,0.45)]">
+        <div
+          className={`flex justify-center items-center rounded border w-[65px] h-[38px] shadow-[0px_0px_2px_0px_rgb(0,0,0,0.45)] ${
+            selectedPaymentMethod === 'ApplePay'
+              ? 'border-2 border-darkGreen'
+              : ''
+          }`}
+        >
           <label>
             <input
               className="absolute invisible"
@@ -75,7 +92,7 @@ const PaymentMethod = (props: Props) => {
             </div>
           </label>
         </div>
-        <RadioBtn/>
+        {/* <RadioBtn/> */}
       </div>
     </div>
   );

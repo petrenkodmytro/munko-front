@@ -1,17 +1,15 @@
-import { Country } from '@/types/types';
+import { ICountry } from '@/types/types';
 import React, { useState, useEffect } from 'react';
 import DatalistInput from 'react-datalist-input';
-
-
 
 // interface City {
 //   name: string;
 // }
 
 const UkrPost: React.FC = () => {
-  const [countries, setCountries] = useState<Country[]>([]);
+  const [countries, setCountries] = useState<ICountry[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string>('');
-  const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
+  const [filteredCountries, setFilteredCountries] = useState<ICountry[]>([]);
   const [countrySearch, setCountrySearch] = useState<string>('');
   const [city, setCity] = useState<string>('');
   const [street, setStreet] = useState<string>('');

@@ -43,6 +43,13 @@ const authOptions: NextAuthOptions = {
                           house
                           postalCode
                           }
+                        creditCard {
+                          id
+                          userId
+                          cardNumber
+                          cardHolderName
+                          expirationDate
+                          }  
                       }
                     }
                 }
@@ -72,7 +79,7 @@ const authOptions: NextAuthOptions = {
         }
       },
     }),
-    
+
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',

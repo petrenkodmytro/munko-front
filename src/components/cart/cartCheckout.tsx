@@ -10,16 +10,15 @@ import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import PaymentMethod from './paymentMethod';
+import { User } from 'next-auth';
 
 type Props = {
   orders: ICartCard[];
   setOrderStep: (status: string) => void;
+  user: User | undefined;
 };
 
-const CartCheckout = ({ orders, setOrderStep }: Props) => {
-  const { data: session } = useSession();
-  const user = session?.user;
-  console.log(session?.user);
+const CartCheckout = ({ orders, setOrderStep, user }: Props) => {
   const [checkoutStep, setCheckoutStep] = useState(stepsCheckout.start);
 
   return (
@@ -60,7 +59,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
               Please checked your orders
             </p>
           )}
-          <div className="w-full h-[1px] bg-black my-3"></div>
+          {/* <div className="w-full h-[1px] bg-black my-3"></div>
           <div className="flex justify-between">
             <div>
               <h6 className="font-bold">Data for shipment</h6>
@@ -79,7 +78,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
                 <i>PostalCode:</i> {user?.address?.postalCode ?? '---'}
               </p>
             </div>
-            {/* <button
+            <button
           onClick={() => {
             setCheckoutStep(stepsCheckout.shipment);
           }}
@@ -87,10 +86,10 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
           className="rotate-180 flex justify-center items-center px-2 bg-lightGrey lg:enabled:hover:bg-grayBG duration-200 ease-linear"
         >
           <IconBack />
-        </button> */}
-          </div>
+        </button>
+          </div> */}
 
-          <div className="w-full h-[1px] bg-black my-3"></div>
+          {/* <div className="w-full h-[1px] bg-black my-3"></div>
           <div className="flex justify-between">
             <div>
               {' '}
@@ -112,7 +111,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
             >
               <IconBack />
             </button>
-          </div>
+          </div> */}
 
           <div className="w-full h-[1px] bg-black my-3"></div>
           <div className="flex justify-between">
@@ -153,7 +152,7 @@ const CartCheckout = ({ orders, setOrderStep }: Props) => {
           )}
         </div>
       )}
-      {checkoutStep === stepsCheckout.payment && <PaymentMethod />}
+      {/* {checkoutStep === stepsCheckout.payment && <PaymentMethod />} */}
 
       {/* button */}
       <div className="mt-9 flex items-center justify-between md:flex-row-reverse xl:flex-col xl:mt-14 xl:gap-6">
