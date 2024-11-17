@@ -1,13 +1,13 @@
-import { Country } from '@/types/types';
+import { ICountry } from '@/types/types';
 import React, { useEffect, useState } from 'react';
 import DatalistInput from 'react-datalist-input';
 
 type Props = {};
 
 const MeestExpress = (props: Props) => {
-  const [countries, setCountries] = useState<Country[]>([]);
+  const [countries, setCountries] = useState<ICountry[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string>('');
-  const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
+  const [filteredCountries, setFilteredCountries] = useState<ICountry[]>([]);
   const [countrySearch, setCountrySearch] = useState<string>('');
   const [city, setCity] = useState<string>('');
   const [street, setStreet] = useState<string>('');
@@ -64,7 +64,7 @@ const MeestExpress = (props: Props) => {
         showLabel={false}
       />
 
-      <div className='flex gap-4'>
+      <div className="flex gap-4">
         <div className="mb-2">
           <label className="block text-gray-700">City:</label>
           <input
