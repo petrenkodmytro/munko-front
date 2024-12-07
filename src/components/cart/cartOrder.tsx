@@ -1,8 +1,7 @@
 import { delivery, discount, stepsOrder } from '@/constant/constant';
 import { ICartCard } from '@/types/types';
 import IconBack from './../../../public/icons/icon-back-cart-chevron-left.svg';
-
-import IconCreditCard from './../../../public/icons/icon-credit-card.svg';
+import IconCreditCard from './../../../public/icons/mastercard 1.svg';
 import { useState } from 'react';
 import Delivery from '../delivery/delivery';
 import RadioBtn from '../ui-kit/radioBtn/RadioBtn';
@@ -98,7 +97,7 @@ const CartOrder = ({ orders, setOrderStep, user }: Props) => {
             </button>
           )}
         </div>
-        {setCreditCard && <PaymentMethod />}
+        {setCreditCard && <PaymentMethod user={user} />}
       </form>
 
       <div className="w-full h-[1px] bg-black my-5"></div>
