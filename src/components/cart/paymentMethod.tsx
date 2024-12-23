@@ -5,6 +5,7 @@ import IconGooglePay from './../../../public/icons/googlePay.svg';
 import IconApplePay from './../../../public/icons/applePay.svg';
 import RadioBtn from '../ui-kit/radioBtn/RadioBtn';
 import { User } from 'next-auth';
+import NewCard from '../pop-ups/add-new-card';
 
 type Props = {
   user: User | undefined;
@@ -23,6 +24,8 @@ const PaymentMethod = ({ user }: Props) => {
   };
 
   console.log(selectedPaymentMethod);
+  console.log(isModal);
+
 
   return (
     <div>
@@ -67,7 +70,7 @@ const PaymentMethod = ({ user }: Props) => {
         )}
       </div>
 
-      <div className="flex justify-center gap-2 mt-5">
+      <div className="flex justify-center gap-2 mt-5 text-xs">
         <button
           onClick={openModal}
           type="button"
@@ -138,6 +141,7 @@ const PaymentMethod = ({ user }: Props) => {
         </div>
         {/* <RadioBtn/> */}
       </div>
+      <NewCard isModal={isModal} setIsModal={setIsModal} user={user}/>
     </div>
   );
 };
