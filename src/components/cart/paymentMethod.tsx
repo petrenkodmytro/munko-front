@@ -6,6 +6,9 @@ import IconApplePay from './../../../public/icons/applePay.svg';
 import RadioBtn from '../ui-kit/radioBtn/RadioBtn';
 import { User } from 'next-auth';
 import NewCard from '../pop-ups/add-new-card';
+import { updateCreditCard } from '@/api/api';
+import { notifyRemoveCreditCard } from '../notification-modal/toast-notify';
+import { ICreditCard } from '@/types/types';
 
 type Props = {
   user: User | undefined;
@@ -14,8 +17,9 @@ type Props = {
 const PaymentMethod = ({ user }: Props) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [isModal, setIsModal] = useState(false);
+  const [arrCards, setArrCards] = useState(user?.creditCard);
 
-  const handleChange = (event: { target: { value: any } }) => {
+  const handleChangePaymentMethod = (event: { target: { value: any } }) => {
     setSelectedPaymentMethod(event.target.value);
   };
 
@@ -23,16 +27,25 @@ const PaymentMethod = ({ user }: Props) => {
     setIsModal(!isModal);
   };
 
-  console.log(selectedPaymentMethod);
-  console.log(isModal);
-
+  const deleteCreditCard = async (cardNumber: string | undefined) => {
+    try {
+      let newCards = arrCards?.filter(card => card.cardNumber !== cardNumber);
+      await updateCreditCard(user?.token, newCards, Number(user?.id));
+      setArrCards(newCards);
+      notifyRemoveCreditCard();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // console.log(selectedPaymentMethod);
+  // console.log(isModal);
 
   return (
     <div>
       <div>
-        {user?.creditCard && user?.creditCard?.length > 0 && (
+        {arrCards && arrCards?.length > 0 && (
           <ul className="flex gap-4 py-2">
-            {user.creditCard.map(card => (
+            {arrCards.map(card => (
               <li
                 key={card.cardNumber}
                 className={`relative flex p-1 text-xs rounded border w-[125px] h-[60px] shadow-[0px_0px_2px_0px_rgb(0,0,0,0.45)] ${
@@ -47,7 +60,7 @@ const PaymentMethod = ({ user }: Props) => {
                     type="radio"
                     value={card.cardNumber}
                     checked={selectedPaymentMethod === card.cardNumber}
-                    onChange={handleChange}
+                    onChange={handleChangePaymentMethod}
                   />
                   <div className="flex flex-col">
                     <p>{card.cardHolderName}</p>
@@ -61,6 +74,7 @@ const PaymentMethod = ({ user }: Props) => {
                 <button
                   className="absolute bottom-1 right-1 text-red-600"
                   type="button"
+                  onClick={() => deleteCreditCard(card.cardNumber)}
                 >
                   Remove
                 </button>
@@ -92,7 +106,7 @@ const PaymentMethod = ({ user }: Props) => {
               type="radio"
               value="PrivatBank"
               checked={selectedPaymentMethod === 'PrivatBank'}
-              onChange={handleChange}
+              onChange={handleChangePaymentMethod}
             />
             <div className="flex justify-center items-center w-[30px] h-[18px] bg-[#1E1E1E] rounded">
               <IconPrivat />
@@ -110,7 +124,7 @@ const PaymentMethod = ({ user }: Props) => {
               type="radio"
               value="gPay"
               checked={selectedPaymentMethod === 'gPay'}
-              onChange={handleChange}
+              onChange={handleChangePaymentMethod}
             />
 
             <div className="flex justify-center items-center w-full h-[18px]  rounded">
@@ -131,7 +145,7 @@ const PaymentMethod = ({ user }: Props) => {
               type="radio"
               value="ApplePay"
               checked={selectedPaymentMethod === 'ApplePay'}
-              onChange={handleChange}
+              onChange={handleChangePaymentMethod}
             />
 
             <div className="flex justify-center items-center w-full h-[18px]  rounded">
@@ -141,7 +155,7 @@ const PaymentMethod = ({ user }: Props) => {
         </div>
         {/* <RadioBtn/> */}
       </div>
-      <NewCard isModal={isModal} setIsModal={setIsModal} user={user}/>
+      <NewCard isModal={isModal} setIsModal={setIsModal} user={user} />
     </div>
   );
 };

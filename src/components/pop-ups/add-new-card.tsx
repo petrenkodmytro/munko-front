@@ -2,7 +2,7 @@ import Notification from '../notification-modal/notification';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
-import { emailConfirm } from '@/api/api';
+import { emailConfirm, updateCreditCard } from '@/api/api';
 import { User } from 'next-auth';
 
 type Props = {
@@ -11,35 +11,49 @@ type Props = {
   user: User | undefined;
 };
 export default function NewCard({ isModal, setIsModal, user }: Props) {
-  const [inputValue, setInputValue] = useState('');
+  // const [inputValue, setInputValue] = useState('');
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
+    number: Yup.string()
+      .min(16, 'Must be exactly 16 digits')
+      .max(16, 'Must be exactly 16 digits')
+      .required('Required'),
+    name: Yup.string()
       .min(3, 'Too Short! min 3')
-      .max(45, 'Too Long! max 45')
-      //   .matches(
-      //     /^\w+([.-]?\w+)*@\w+([.-]?\w+)*\.\w{2,3}$/,
-      //     'Must be a valid email'
-      //   )
+      .max(20, 'Too Long! max 20')
+      .required('Required'),
+    date: Yup.string()
+      .min(5, 'Example 01/24')
+      .max(5, 'Example 01/24')
+      .required('Required'),
+    cvv: Yup.string()
+      .min(3, 'Must be exactly 3 digits')
+      .max(3, 'Must be exactly 3 digits')
       .required('Required'),
   });
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    if (event.target.name === 'email') {
-      setInputValue(event.target.value);
-    }
-  };
+  // const handleInputChange = (event: React.ChangeEvent<HTMLFormElement>) => {
+  //   if (event.target.name === 'number') {
+  //     setInputValue(event.target.value);
+  //   }
+  //   if (event.target.name === 'name') {
+  //     setInputValue(event.target.value);
+  //   }
+  //   if (event.target.name === 'date') {
+  //     setInputValue(event.target.value);
+  //   }
+  //   if (event.target.name === 'cvv') {
+  //     setInputValue(event.target.value);
+  //   }
+  // };
 
-  //   const handleSubmit = async () => {
-  //     if (userId) {
-  //       const response = await emailConfirm(Number(userId), inputValue);
-  //       if (response) {
-  //         handleOpenPopUp ? handleOpenPopUp() : null;
-  //       } else {
-  //         console.log('Error: something went wrong.');
-  //       }
-  //     }
-  //   };
+  const handleSubmit = async values => {
+    try {
+      if (user) {
+        const res = await updateCreditCard(user?.token, newCards, user?.id);
+      }
+    } catch (error) {}
+  };
 
   return (
     <Notification notify={isModal} setNotify={setIsModal}>
@@ -48,24 +62,27 @@ export default function NewCard({ isModal, setIsModal, user }: Props) {
         <h3 className="text-lg font-bold self-center">NEW CARD</h3>
         <Formik
           initialValues={{
-            name: '',
             number: '',
+            name: '',
+            date: '',
+            cvv: '',
           }}
           validationSchema={validationSchema}
           onSubmit={async (values, actions) => {
-            // await handleSubmit();
+            console.log(values);
+            // await handleSubmit(values);
             actions.setSubmitting(false);
             actions.resetForm();
           }}
         >
           {formik => (
             <Form className="w-full flex flex-col" onChange={handleInputChange}>
-              <div className="relative overflow-hidden mb-5">
+              <div className="relative overflow-hidden mb-2">
                 <Field
                   className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
                   id="number"
                   name="number"
-                  type="number"
+                  type="text"
                   placeholder="Credit card"
                 />
                 <ErrorMessage
@@ -74,7 +91,7 @@ export default function NewCard({ isModal, setIsModal, user }: Props) {
                   name="number"
                 />
               </div>
-              <div className="relative overflow-hidden mb-5">
+              <div className="relative overflow-hidden mb-2">
                 <Field
                   className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
                   id="name"
@@ -88,13 +105,13 @@ export default function NewCard({ isModal, setIsModal, user }: Props) {
                   name="name"
                 />
               </div>
-              <div className="relative overflow-hidden mb-5">
+              <div className="relative overflow-hidden mb-2">
                 <Field
                   className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
                   id="date"
                   name="date"
                   type="text"
-                  placeholder="Expiration date"
+                  placeholder="Expiration date (01/24)"
                 />
                 <ErrorMessage
                   className="self-start text-[8px] text-[#D63F3F] font-medium pl-2"
@@ -102,12 +119,12 @@ export default function NewCard({ isModal, setIsModal, user }: Props) {
                   name="date"
                 />
               </div>
-              <div className="relative overflow-hidden mb-5">
+              <div className="relative overflow-hidden mb-2">
                 <Field
                   className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"
                   id="cvv"
                   name="cvv"
-                  type="number"
+                  type="text"
                   placeholder="CVV"
                 />
                 <ErrorMessage

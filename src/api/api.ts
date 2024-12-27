@@ -876,7 +876,7 @@ export const updateUserDataShipment = async (
 };
 
 export const updateCreditCard = async (
-  token: string,
+  token: string | undefined,
   creditCard: ICreditCard,
   userId: number
 ) => {

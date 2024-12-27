@@ -61,3 +61,19 @@ export const notifyRemoveFromFavorite = () =>
       border: '2px, solid, #161629',
     },
   });
+
+export const notifyRemoveCreditCard = () =>
+  toast.success(`Credit Card deleted from your account!`, {
+    position: 'top-center',
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    theme: 'colored',
+    style: {
+      backgroundColor: '#B6BBC4',
+      color: '#161629',
+      border: '2px, solid, #161629',
+    },
+  });
