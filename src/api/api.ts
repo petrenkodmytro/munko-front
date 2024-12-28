@@ -875,46 +875,24 @@ export const updateUserDataShipment = async (
   }
 };
 
+// creditCard: [
+//   {
+//       userId: 1354
+//       cardNumber: "12312312"
+//       cardHolderName: "John Doe"
+//       expirationDate: "12/24"
+//   }
+// ]
+
 export const updateCreditCard = async (
   token: string | undefined,
-  creditCard: ICreditCard,
-  userId: number
+  creditCard: ICreditCard[] | undefined,
+  id: number
 ) => {
+  console.log(creditCard);
   const mutation = gql`
-    mutation UpdateUser(
-      $userId: Int!
-      $cardNumber: String!
-      $cardHolderName: String!
-      $expirationDate: String!
-    ) {
-      updateUser(
-        user: {
-          id: $userId
-          creditCard: [
-            {
-              userId: $userId
-              cardNumber: $cardNumber
-              cardHolderName: $cardHolderName
-              expirationDate: $expirationDate
-            }
-          ]
-        }
-      ) {
-        id
-        firstName
-        lastName
-        email
-        phone
-        address {
-          id
-          userId
-          country
-          district
-          city
-          street
-          house
-          postalCode
-        }
+    mutation UpdateUser($id: Int!, $creditCard: [CreditCardInput!]!) {
+      updateUser(user: { id: $id, creditCard: $creditCard }) {
         creditCard {
           id
           userId
@@ -926,16 +904,11 @@ export const updateCreditCard = async (
     }
   `;
 
-  // Разделяем данные на переменные
-  const { cardNumber, cardHolderName, expirationDate } = creditCard;
-
   const variables = {
-    userId,
-    cardNumber,
-    cardHolderName,
-    expirationDate,
+    id,
+    creditCard,
   };
-
+  console.log(variables);
   const requestHeaders = {
     authorization: `Bearer ${token}`,
   };
@@ -948,17 +921,11 @@ export const updateCreditCard = async (
     );
     console.log(data);
     return data.updateUser;
-  } catch (error) {
-    console.error('Error updating credit card:', error);
+  } catch (error: any) {
+    console.error(
+      'Error updating credit card:',
+      error?.response?.errors || error
+    );
     throw error;
   }
 };
-
-// creditCard: [
-//   {
-//       userId: 1354
-//       cardNumber: "12312312"
-//       cardHolderName: "John Doe"
-//       expirationDate: "12/24"
-//   }
-// ]

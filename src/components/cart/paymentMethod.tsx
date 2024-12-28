@@ -28,10 +28,23 @@ const PaymentMethod = ({ user }: Props) => {
   };
 
   const deleteCreditCard = async (cardNumber: string | undefined) => {
+    console.log(cardNumber);
     try {
       let newCards = arrCards?.filter(card => card.cardNumber !== cardNumber);
-      await updateCreditCard(user?.token, newCards, Number(user?.id));
-      setArrCards(newCards);
+      const res = await updateCreditCard(
+        user?.token,
+        [
+          {
+            userId: 207,
+            cardNumber: '9999888855551111',
+            cardHolderName: 'Test',
+            expirationDate: '11/11',
+          },
+        ],
+        Number(user?.id)
+      );
+      console.log(res);
+      // setArrCards(newCards);
       notifyRemoveCreditCard();
     } catch (error) {
       console.error(error);
@@ -47,7 +60,7 @@ const PaymentMethod = ({ user }: Props) => {
           <ul className="flex gap-4 py-2">
             {arrCards.map(card => (
               <li
-                key={card.cardNumber}
+                key={card.id}
                 className={`relative flex p-1 text-xs rounded border w-[125px] h-[60px] shadow-[0px_0px_2px_0px_rgb(0,0,0,0.45)] ${
                   selectedPaymentMethod === card.cardNumber
                     ? 'border-2 border-darkGreen'

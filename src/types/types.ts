@@ -206,6 +206,7 @@ export interface ICountry {
 }
 
 export interface ICreditCard {
+  id?: number;
   userId?: number;
   cardNumber?: string;
   cardHolderName?: string;
