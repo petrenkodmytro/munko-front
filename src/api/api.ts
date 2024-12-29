@@ -889,9 +889,9 @@ export const updateCreditCard = async (
   creditCard: ICreditCard[] | undefined,
   id: number
 ) => {
-  console.log(creditCard);
-  console.log(token);
-  console.log(id);
+  // console.log(creditCard);
+  // console.log(token);
+  // console.log(id);
   const mutation = gql`
     mutation UpdateUser($id: Int!, $creditCard: [CreditCardInput!]!) {
       updateUser(user: { id: $id, creditCard: $creditCard }) {
