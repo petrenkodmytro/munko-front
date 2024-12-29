@@ -26,6 +26,7 @@ declare module 'next-auth' {
     } | null;
     creditCard?: [
       {
+        id?: number;
         userId?: number;
         cardNumber?: string;
         cardHolderName?: string;

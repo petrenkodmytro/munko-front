@@ -128,8 +128,8 @@ const Favorite = (props: Props) => {
                     </p>
                     <p className="text-xs font-semibold md:text-base">
                       {card.sale
-                        ? (card.price * discount).toFixed(2)
-                        : card.price}
+                        ? (card.price/100 * discount).toFixed(2)
+                        : card.price/100}
                       $
                     </p>
                     {card.amount > 0 ? (
