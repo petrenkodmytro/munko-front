@@ -97,7 +97,7 @@ const CartOrder = ({ orders, setOrderStep, user }: Props) => {
             </button>
           )}
         </div>
-        {setCreditCard && <PaymentMethod />}
+        {setCreditCard && <PaymentMethod isBtnAddNewCard={false} />}
       </form>
 
       <div className="w-full h-[1px] bg-black my-5"></div>
