@@ -35,7 +35,7 @@ const PaymentMethod = (props: Props) => {
           const data = await getCurrentUser(session.token);
           setCurrentUser(data);
           setArrCards(data?.creditCard);
-          // console.log(data);
+          // console.log(data?.creditCard);
         }
       } catch (error) {
         console.log(error);
@@ -54,17 +54,17 @@ const PaymentMethod = (props: Props) => {
     setIsModal(!isModal);
   };
 
-  const deleteCreditCard = async (cardNumber: string | undefined) => {
-    console.log(cardNumber);
+  const deleteCreditCard = async (id: number | undefined) => {
+    console.log(id);
     try {
-      let newCards = arrCards?.filter(card => card.cardNumber !== cardNumber);
+      let newCards = arrCards?.filter(card => card.id !== id);
       const newArrCreditCard = await updateCreditCard(
         session?.token,
         newCards,
         Number(currentUser?.id)
       );
-      // console.log(newArrCreditCard);
-      setArrCards(newArrCreditCard);
+      // console.log(newArrCreditCard.creditCard);
+      setArrCards(newArrCreditCard.creditCard);
       notifyRemoveCreditCard();
     } catch (error) {
       console.error(error);
@@ -113,7 +113,7 @@ const PaymentMethod = (props: Props) => {
                     <button
                       className="absolute bottom-1 right-1 text-red-600"
                       type="button"
-                      onClick={() => deleteCreditCard(card.cardNumber)}
+                      onClick={() => deleteCreditCard(card.id)}
                     >
                       Remove
                     </button>
