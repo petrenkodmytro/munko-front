@@ -77,3 +77,18 @@ export const notifyRemoveCreditCard = () =>
       border: '2px, solid, #161629',
     },
   });
+
+export const notifyAddedCreditCard = () =>
+  toast.success(`Credit Card added to your account!!`, {
+    position: 'top-center',
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    theme: 'colored',
+    style: {
+      backgroundColor: '#161629',
+      color: '#fff',
+    },
+  });

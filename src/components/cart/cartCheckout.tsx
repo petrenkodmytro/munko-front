@@ -43,8 +43,8 @@ const CartCheckout = ({ orders, setOrderStep, user }: Props) => {
                 )}
                 <p className="text-xs font-semibold md:text-sm">
                   {card.funkoPop.sale
-                    ? (card.funkoPop.price * discount).toFixed(2)
-                    : card.funkoPop.price}
+                    ? (card.funkoPop.price/100 * discount).toFixed(2)
+                    : card.funkoPop.price/100}
                   $
                 </p>
               </li>
@@ -140,9 +140,9 @@ const CartCheckout = ({ orders, setOrderStep, user }: Props) => {
                 {[...orders].reduce((total, order) => {
                   let price: number;
                   if (order.funkoPop.sale) {
-                    price = order.funkoPop.price * discount;
+                    price = order.funkoPop.price/100 * discount;
                   } else {
-                    price = order.funkoPop.price;
+                    price = order.funkoPop.price/100;
                   }
                   return Number((total + price * order.amount).toFixed(2));
                 }, delivery)}

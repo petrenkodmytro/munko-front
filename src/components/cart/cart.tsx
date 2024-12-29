@@ -207,8 +207,8 @@ const CartPage = (props: Props) => {
                       <div className="flex justify-between md:flex-row-reverse md:gap-6 md:justify-start md:items-center md:ml-auto">
                         <p className="text-xs font-semibold md:text-base">
                           {card.funkoPop.sale
-                            ? (card.funkoPop.price * discount).toFixed(2)
-                            : card.funkoPop.price}
+                            ? (card.funkoPop.price/100 * discount).toFixed(2)
+                            : card.funkoPop.price/100}
                           $
                         </p>
                         {card.amount > 0 && (

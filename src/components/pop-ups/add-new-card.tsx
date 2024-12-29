@@ -4,13 +4,15 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { emailConfirm, updateCreditCard } from '@/api/api';
 import { User } from 'next-auth';
+import { notifyAddedCreditCard } from '../notification-modal/toast-notify';
 
 type Props = {
   isModal: boolean;
   setIsModal: (modalState: boolean) => void;
   user: User | undefined;
+  token: string | undefined;
 };
-export default function NewCard({ isModal, setIsModal, user }: Props) {
+export default function NewCard({ isModal, setIsModal, user, token }: Props) {
   // const [inputValue, setInputValue] = useState('');
 
   const validationSchema = Yup.object().shape({
@@ -32,21 +34,21 @@ export default function NewCard({ isModal, setIsModal, user }: Props) {
     //   .required('Required'),
   });
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    console.log(event.target.name);
-    // if (event.target.name === 'cardNumber') {
-    //   setInputValue(event.target.value);
-    // }
-    // if (event.target.name === 'cardHolderName') {
-    //   setInputValue(event.target.value);
-    // }
-    // if (event.target.name === 'expirationDate') {
-    //   setInputValue(event.target.value);
-    // }
-    // if (event.target.name === 'cvv') {
-    //   setInputValue(event.target.value);
-    // }
-  };
+  // const handleInputChange = (event: React.ChangeEvent<HTMLFormElement>) => {
+  //   console.log(event.target.name);
+  //   // if (event.target.name === 'cardNumber') {
+  //   //   setInputValue(event.target.value);
+  //   // }
+  //   // if (event.target.name === 'cardHolderName') {
+  //   //   setInputValue(event.target.value);
+  //   // }
+  //   // if (event.target.name === 'expirationDate') {
+  //   //   setInputValue(event.target.value);
+  //   // }
+  //   // if (event.target.name === 'cvv') {
+  //   //   setInputValue(event.target.value);
+  //   // }
+  // };
 
   const handleSubmit = async (values: {
     cardNumber: string;
@@ -64,17 +66,21 @@ export default function NewCard({ isModal, setIsModal, user }: Props) {
     const newArrCards = user?.creditCard
       ? [...user.creditCard, newCard]
       : [newCard];
-    console.log('newArrCards', newArrCards);
+    // console.log('newArrCards', newArrCards);
     try {
       if (user) {
         const res = await updateCreditCard(
-          user?.token,
+          token,
           newArrCards,
           Number(user?.id)
         );
+        // console.log(res);
+        notifyAddedCreditCard();
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsModal(false);
     }
   };
 
@@ -94,12 +100,12 @@ export default function NewCard({ isModal, setIsModal, user }: Props) {
           onSubmit={async (values, actions) => {
             // console.log(values);
             await handleSubmit(values);
-            actions.setSubmitting(false);
+            // actions.setSubmitting(false);
             actions.resetForm();
           }}
         >
           {formik => (
-            <Form className="w-full flex flex-col" onChange={handleInputChange}>
+            <Form className="w-full flex flex-col">
               <div className="relative overflow-hidden mb-2">
                 <Field
                   className="w-full p-2 rounded border-grayBorder text-black/60 text-xs focus:outline-none border focus:placeholder:text-transparent"

@@ -97,7 +97,7 @@ const CartOrder = ({ orders, setOrderStep, user }: Props) => {
             </button>
           )}
         </div>
-        {setCreditCard && <PaymentMethod user={user} />}
+        {setCreditCard && <PaymentMethod />}
       </form>
 
       <div className="w-full h-[1px] bg-black my-5"></div>
@@ -110,9 +110,9 @@ const CartOrder = ({ orders, setOrderStep, user }: Props) => {
             {[...orders].reduce((total, order) => {
               let price: number;
               if (order.funkoPop.sale) {
-                price = order.funkoPop.price * discount;
+                price = (order.funkoPop.price / 100) * discount;
               } else {
-                price = order.funkoPop.price;
+                price = order.funkoPop.price / 100;
               }
               return Number((total + price * order.amount).toFixed(2));
             }, delivery)}
