@@ -34,6 +34,9 @@ export default function NewCard({ isModal, setIsModal, user, token }: Props) {
     //   .required('Required'),
   });
 
+  // console.log('user', user);
+  // console.log('token', token);
+
   // const handleInputChange = (event: React.ChangeEvent<HTMLFormElement>) => {
   //   console.log(event.target.name);
   //   // if (event.target.name === 'cardNumber') {
@@ -74,7 +77,7 @@ export default function NewCard({ isModal, setIsModal, user, token }: Props) {
           newArrCards,
           Number(user?.id)
         );
-        // console.log(res);
+        // console.log('res', res);
         notifyAddedCreditCard();
       }
     } catch (error) {

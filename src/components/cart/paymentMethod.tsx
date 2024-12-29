@@ -14,10 +14,11 @@ import { useSession } from 'next-auth/react';
 import Spinner from '../loading/loading';
 
 type Props = {
+  isBtnAddNewCard: boolean;
   // user: User | undefined;
 };
 
-const PaymentMethod = (props: Props) => {
+const PaymentMethod = ({ isBtnAddNewCard }: Props) => {
   const { data: session } = useSession();
   // const user = session?.user;
   const [currentUser, setCurrentUser] = useState<User>();
@@ -83,7 +84,7 @@ const PaymentMethod = (props: Props) => {
         <div>
           <div>
             {arrCards && arrCards?.length > 0 && (
-              <ul className="flex gap-4 py-2">
+              <ul className="flex flex-wrap gap-4 py-2">
                 {arrCards.map(card => (
                   <li
                     key={card.id}
@@ -124,14 +125,16 @@ const PaymentMethod = (props: Props) => {
           </div>
 
           <div className="flex justify-center gap-2 mt-5 text-xs">
-            <button
-              onClick={openModal}
-              type="button"
-              className="px-1 border rounded shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
-              // className="w-full h-[86px] border rounded shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
-            >
-              Add new card
-            </button>
+            {isBtnAddNewCard && (
+              <button
+                onClick={openModal}
+                type="button"
+                className="px-1 border rounded shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
+                // className="w-full h-[86px] border rounded shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]"
+              >
+                Add new card
+              </button>
+            )}
             <div
               className={`flex justify-center items-center rounded border w-[65px] h-[38px] shadow-[0px_0px_2px_0px_rgb(0,0,0,0.45)] ${
                 selectedPaymentMethod === 'PrivatBank'
@@ -196,12 +199,14 @@ const PaymentMethod = (props: Props) => {
             </div>
             {/* <RadioBtn/> */}
           </div>
-          <NewCard
-            isModal={isModal}
-            setIsModal={setIsModal}
-            user={currentUser}
-            token={session?.token}
-          />
+          {isModal && (
+            <NewCard
+              isModal={isModal}
+              setIsModal={setIsModal}
+              user={currentUser}
+              token={session?.token}
+            />
+          )}
         </div>
       )}
     </>
