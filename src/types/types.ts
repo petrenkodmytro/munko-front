@@ -199,3 +199,30 @@ export interface IDataFavoriteItems {
 export interface IDataOrders {
   getUserOrders: IOrder[];
 }
+
+export interface ICountry {
+  name: string;
+  cca2: string;
+}
+
+export interface ICreditCard {
+  id?: number;
+  userId?: number;
+  cardNumber?: string;
+  cardHolderName?: string;
+  expirationDate?: string;
+}
+
+export interface IUserDataShipment {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  address: {
+    country: string;
+    district: string;
+    city: string;
+    street: string;
+    house: string;
+    postalCode: string;
+  };
+}

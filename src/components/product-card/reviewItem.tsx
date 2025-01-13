@@ -47,12 +47,14 @@ const ReviewItem = ({ reviwe, userId, setIdRemoveReview }: Props) => {
         </div>
         <div className="">
           {!isShowMore && (
-            <p className="text-xs font-medium">
-              {reviwe.review.slice(0, 230)}...
+            <p className="text-xs font-medium break-all">
+              {reviwe.review.slice(0, 150)}...
             </p>
           )}
-          {isShowMore && <p className="text-xs font-medium">{reviwe.review}</p>}
-          {reviwe.review.length > 230 && (
+          {isShowMore && (
+            <p className="text-xs font-medium break-all">{reviwe.review}</p>
+          )}
+          {reviwe.review.length > 150 && (
             <button
               onClick={toggleReadMoreLess}
               className="underline text-xs font-semibold"

@@ -1,5 +1,5 @@
-import NextAuth from "next-auth"
-import { JWT } from "next-auth/jwt";
+import NextAuth from 'next-auth';
+import { JWT } from 'next-auth/jwt';
 
 declare module 'next-auth' {
   interface User {
@@ -12,7 +12,7 @@ declare module 'next-auth' {
     firstName: string;
     lastName?: string | null;
     email: string;
-    phone?: number | null;
+    phone?: string | null;
     password: string;
     address?: {
       id: number;
@@ -24,11 +24,16 @@ declare module 'next-auth' {
       house: string;
       postalCode: string;
     } | null;
-    creditCard?: {
-      id: number;
-      creditCard: string;
+    creditCard?: [
+      {
+        id?: number;
+        userId?: number;
+        cardNumber?: string;
+        cardHolderName?: string;
+        expirationDate?: string;
+      },
+    ];
   }
-  };
 
   interface Session {
     token: string;

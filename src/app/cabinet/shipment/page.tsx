@@ -29,19 +29,24 @@ const Shipment = (props: Props) => {
       if (session && session.token) {
         const data = await getCurrentUser(session.token);
         setCurrentUser(data);
+        // console.log(data);
       }
     };
     handleGetCurrentUser();
-  }, [session]);
+  }, [session, isEdit]);
 
   return currentUser && currentUser.address ? (
-    <div className="flex gap-4 p-11">
+    <div className="flex gap-4 p-4 md:p-11">
       <div className="flex justify-center items-center w-[54px] h-[54px] bg-[#B1B1B1] rounded-full">
         <AvatarCamera />
       </div>
 
       {isEdit ? (
-        <EditForm setIsEdit={setIsEdit} currentUser={currentUser} />
+        <EditForm
+          setIsEdit={setIsEdit}
+          currentUser={currentUser}
+          token={session?.token}
+        />
       ) : (
         <div className="relative overflow-hidden px-[38px] pt-6 pb-5 bg-[#F5F5F5] rounded shadow-[0px_0px_4px_0px_rgb(0,0,0,0.25)]">
           <ul className="absolute flex gap-1 top-1 left-1 ">{list}</ul>
@@ -52,6 +57,8 @@ const Shipment = (props: Props) => {
           <p>{currentUser?.address?.street}</p>
           <div className="flex gap-1 mb-[14px]">
             <p>{currentUser.address.city}</p>
+            <p>{currentUser.address.street}</p>
+            <p>{currentUser.address.house}</p>
             <p>{currentUser.address.district}</p>
             <p>{currentUser.address.country}</p>
             <p>{currentUser.address.postalCode}</p>

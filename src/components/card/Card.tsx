@@ -131,13 +131,13 @@ const Card = ({ card }: CardProps) => {
           <div className="relative mt-auto mb-5">
             {card.sale && (
               <p className="line-through text-[#656582] font-bold">
-                {card.price}$
+                {card.price/100}$
               </p>
             )}
             {card.sale ? (
-              <p className="font-bold">{(card.price * discount).toFixed(2)}$</p>
+              <p className="font-bold">{(card.price/100 * discount).toFixed(2)}$</p>
             ) : (
-              <p className="font-bold">{card.price}$</p>
+              <p className="font-bold">{card.price/100}$</p>
             )}
             {card.amount <= 0 && (
               <p className="uppercase text-xs font-normal"> Out of stock</p>

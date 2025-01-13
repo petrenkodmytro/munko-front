@@ -192,7 +192,7 @@ const BurgerMenu = () => {
       {isOpen ? <BackDrop handleMenu={handleMenu} /> : null}
       <div
         style={hideOrShow}
-        className="absolute md:rounded md:shadow-[5px_5px_20px_0px_rgb(124,157,150)] z-20 pt-24 md:pt-28 flex-col top-28 md:top-0 w-[390px] md:w-[353px] h-[616px] md:h-[461px] items-center -ml-4 md:-ml-5 bg-footer"
+        className="absolute md:rounded md:shadow-[5px_5px_20px_0px_rgb(124,157,150)] z-20 pt-24 md:pt-28 flex-col top-28 md:top-0 w-[390px] md:w-[353px] h-[616px] md:h-[461px] items-center -ml-4 md:-ml-5 bg-darkGreen"
       >
         <Navigation handleMenu={handleMenu} />
         <Formik
@@ -209,7 +209,7 @@ const BurgerMenu = () => {
             <Form className="relative font-semibold md:hidden text-xs self-center mt-14">
               <Field
                 placeholder="Find the item you need"
-                className="w-50 py-1 pl-2 pr-8 outline-none text-white bg-footer border-b placeholder:text-white placeholder:font-normal placeholder:opacity-60 focus:placeholder:text-transparent"
+                className="w-50 py-1 pl-2 pr-8 outline-none text-white bg-darkGreen border-b placeholder:text-white placeholder:font-normal placeholder:opacity-60 focus:placeholder:text-transparent"
                 id="search-burger"
                 name="search"
               ></Field>

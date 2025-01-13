@@ -12,6 +12,8 @@ import {
   IDataReviewById,
   IDataCartItems,
   IDataFavoriteItems,
+  ICreditCard,
+  IUserDataShipment,
 } from '@/types/types';
 import { GraphQLClient, gql } from 'graphql-request';
 import { User } from 'next-auth';
@@ -582,61 +584,67 @@ export const resetPassword = async (token: string, newPassword: string) => {
     }
   `;
 
-  const data: any = await graphQLClient.request(
-    mutation, { token, newPassword }
-  );  
-  return data.resetPassword
+  const data: any = await graphQLClient.request(mutation, {
+    token,
+    newPassword,
+  });
+  return data.resetPassword;
 };
 
-export const getCurrentUser = async(token: string)=>{
+export const getCurrentUser = async (token: string) => {
   const query = gql`
-  query GetCurrentUser {
-    getCurrentUser {
+    query GetCurrentUser {
+      getCurrentUser {
         id
         firstName
         lastName
         email
         phone
         address {
-            id
-            userId
-            country
-            district
-            city
-            street
-            house
-            postalCode
+          id
+          userId
+          country
+          district
+          city
+          street
+          house
+          postalCode
         }
+        creditCard {
+          id
+          userId
+          cardNumber
+          cardHolderName
+          expirationDate
+        }
+      }
     }
-}
   `;
-    const requestHeaders = {
-      authorization: `Bearer ${token}`,
-    };
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
   try {
     const data: any = await graphQLClient.request(query, {}, requestHeaders);
-    const currentUser: User = data.getCurrentUser
+    const currentUser: User = data.getCurrentUser;
     return currentUser;
-  }
-  catch(error) {
+  } catch (error) {
     console.log(error);
-  }; 
+  }
 };
-
 
 export const changeName = async (
   token: string,
   updatedFirstName: string,
-  userId: number,
-  ) => {
+  userId: number
+) => {
   const mutation = gql`
-    mutation UpdateUser ($updatedFirstName: String, $userId: Int) {
+    mutation UpdateUser($updatedFirstName: String, $userId: Int) {
       updateUser(user: { firstName: $updatedFirstName, id: $userId }) {
         firstName
         id
         email
+      }
     }
-  }
   `;
 
   const requestHeaders = {
@@ -644,21 +652,28 @@ export const changeName = async (
   };
 
   const data: any = await graphQLClient.request(
-    mutation, { updatedFirstName, userId }, requestHeaders
-  );  
-  return data.updateUser
+    mutation,
+    { updatedFirstName, userId },
+    requestHeaders
+  );
+  console.log(data);
+  return data.updateUser;
 };
 
-export const emailConfirm = async (userId: number, newEmail?: string)=> {
+export const emailConfirm = async (userId: number, newEmail?: string) => {
   const mutation = gql`
-    mutation EmailConfirmation ($userId: Int, $newEmail: String) {
+    mutation EmailConfirmation($userId: Int, $newEmail: String) {
       emailConfirmation(userId: $userId, email: $newEmail)
     }
   `;
-  return await graphQLClient.request(mutation, { userId, newEmail });  
-}
+  return await graphQLClient.request(mutation, { userId, newEmail });
+};
 
-export const emailChange = async (accessToken: string, token: string, newEmail: string)=> {
+export const emailChange = async (
+  accessToken: string,
+  token: string,
+  newEmail: string
+) => {
   const mutation = gql`
     mutation ChangeEmail($token: String, $newEmail: String) {
       changeEmail(token: $token, email: $newEmail)
@@ -669,31 +684,35 @@ export const emailChange = async (accessToken: string, token: string, newEmail: 
     authorization: `Bearer ${accessToken}`,
   };
 
- return await graphQLClient.request(mutation, { token, newEmail }, requestHeaders);  
-}
+  return await graphQLClient.request(
+    mutation,
+    { token, newEmail },
+    requestHeaders
+  );
+};
 
-export const enableAccount = async (email_confirm_token: string)=> {
+export const enableAccount = async (email_confirm_token: string) => {
   const mutation = gql`
     mutation EnableAccount($email_confirm_token: String) {
-        enableAccount(email_confirm_token: $email_confirm_token)
+      enableAccount(email_confirm_token: $email_confirm_token)
     }
   `;
-  await graphQLClient.request(mutation, { email_confirm_token });  
+  await graphQLClient.request(mutation, { email_confirm_token });
 };
 
 export const changePassword = async (
   token: string,
   newPassword: string,
   oldPassword: string
-  ) => {
-    const mutation = gql`
-      mutation ChangePassword($oldPassword: String, $newPassword: String) {
-        changePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
-          id
-          firstName
-          email
-        }
+) => {
+  const mutation = gql`
+    mutation ChangePassword($oldPassword: String, $newPassword: String) {
+      changePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
+        id
+        firstName
+        email
       }
+    }
   `;
 
   const requestHeaders = {
@@ -701,9 +720,11 @@ export const changePassword = async (
   };
 
   const data: any = await graphQLClient.request(
-    mutation, { oldPassword, newPassword }, requestHeaders
-  );  
-  return data.changePassword
+    mutation,
+    { oldPassword, newPassword },
+    requestHeaders
+  );
+  return data.changePassword;
 };
 
 export const deleteAccount = async (token: string) => {
@@ -713,41 +734,200 @@ export const deleteAccount = async (token: string) => {
     }
   `;
 
-const requestHeaders = {
-  authorization: `Bearer ${token}`,
-};
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
 
-  try{
-    const response = await graphQLClient.request(query, {}, requestHeaders);  
+  try {
+    const response = await graphQLClient.request(query, {}, requestHeaders);
     console.log(response);
-    
-    return response
-  } catch(error){
+
+    return response;
+  } catch (error) {
     console.log(error);
   }
 };
 
-export const changeAdress = async (
-  token: string,
-  updatedFirstName: string,
-  userId: number,
-  ) => {
+// export const changeAdress = async (
+//   token: string,
+//   updatedFirstName: string,
+//   userId: number
+// ) => {
+//   const mutation = gql`
+//     mutation UpdateUser($updatedFirstName: String, $userId: Int) {
+//       updateUser(user: { firstName: $updatedFirstName, id: $userId }) {
+//         firstName
+//         id
+//         email
+//       }
+//     }
+//   `;
+
+//   const requestHeaders = {
+//     authorization: `Bearer ${token}`,
+//   };
+
+//   const data: any = await graphQLClient.request(
+//     mutation,
+//     { updatedFirstName, userId },
+//     requestHeaders
+//   );
+//   return data.updateUser;
+// };
+
+export const updateUserDataShipment = async (
+  token: string | undefined,
+  updateUserData: IUserDataShipment,
+  userId: number
+) => {
   const mutation = gql`
-    mutation UpdateUser ($updatedFirstName: String, $userId: Int) {
-      updateUser(user: { firstName: $updatedFirstName, id: $userId }) {
-        firstName
+    mutation UpdateUser(
+      $userId: Int!
+      $firstName: String!
+      $lastName: String!
+      $phone: String!
+      $country: String!
+      $district: String!
+      $city: String!
+      $street: String
+      $house: String!
+      $postalCode: String!
+    ) {
+      updateUser(
+        user: {
+          id: $userId
+          firstName: $firstName
+          lastName: $lastName
+          phone: $phone
+          address: {
+            userId: $userId
+            country: $country
+            district: $district
+            city: $city
+            street: $street
+            house: $house
+            postalCode: $postalCode
+          }
+        }
+      ) {
         id
+        firstName
+        lastName
         email
+        phone
+        address {
+          id
+          userId
+          country
+          district
+          city
+          street
+          house
+          postalCode
+        }
+        creditCard {
+          id
+          userId
+          cardNumber
+          cardHolderName
+          expirationDate
+        }
+      }
     }
-  }
   `;
+
+  // Деструктуризация данных из updateUserData
+  const {
+    firstName,
+    lastName,
+    phone,
+    address: { country, district, city, street, house, postalCode },
+  } = updateUserData;
+
+  const variables = {
+    userId,
+    firstName,
+    lastName,
+    phone,
+    country,
+    district,
+    city,
+    street,
+    house,
+    postalCode,
+  };
 
   const requestHeaders = {
     authorization: `Bearer ${token}`,
   };
 
-  const data: any = await graphQLClient.request(
-    mutation, { updatedFirstName, userId }, requestHeaders
-  );  
-  return data.updateUser
+  try {
+    const data: any = await graphQLClient.request(
+      mutation,
+      variables,
+      requestHeaders
+    );
+    console.log(data);
+    return data.updateUser;
+  } catch (error) {
+    console.error('Error updating user data:', error);
+    throw error;
+  }
+};
+
+// creditCard: [
+//   {
+//       userId: 1354
+//       cardNumber: "12312312"
+//       cardHolderName: "John Doe"
+//       expirationDate: "12/24"
+//   }
+// ]
+
+export const updateCreditCard = async (
+  token: string | undefined,
+  creditCard: ICreditCard[] | undefined,
+  id: number
+) => {
+  // console.log(creditCard);
+  // console.log(token);
+  // console.log(id);
+  const mutation = gql`
+    mutation UpdateUser($id: Int!, $creditCard: [CreditCardInput!]!) {
+      updateUser(user: { id: $id, creditCard: $creditCard }) {
+        creditCard {
+          id
+          userId
+          cardNumber
+          cardHolderName
+          expirationDate
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    id,
+    creditCard,
+  };
+  console.log(variables);
+  const requestHeaders = {
+    authorization: `Bearer ${token}`,
+  };
+
+  try {
+    const data: any = await graphQLClient.request(
+      mutation,
+      variables,
+      requestHeaders
+    );
+    // console.log('data', data);
+    return data.updateUser;
+  } catch (error: any) {
+    console.error(
+      'Error updating credit card:',
+      error?.response?.errors || error
+    );
+    throw error;
+  }
 };

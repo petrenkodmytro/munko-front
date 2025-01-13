@@ -1,12 +1,10 @@
 import { ICountry } from '@/types/types';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatalistInput from 'react-datalist-input';
 
-// interface City {
-//   name: string;
-// }
+type Props = {};
 
-const UkrPost: React.FC = () => {
+const MeestExpress = (props: Props) => {
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string>('');
   const [filteredCountries, setFilteredCountries] = useState<ICountry[]>([]);
@@ -41,29 +39,6 @@ const UkrPost: React.FC = () => {
     setFilteredCountries(filtered);
   }, [countrySearch, countries]);
 
-  // Fetch cities based on selected country from GeoDB Cities API
-  // const fetchCities = async (countryCode: string) => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${countryCode}/places`,
-  //       {
-  //         headers: {
-  //           'X-RapidAPI-Key':
-  //             'c6f33c9c2fmsh2edc655614ffba8p13c36ajsn44eaae4da2bb', // Replace with your RapidAPI key
-  //           'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
-  //         },
-  //       }
-  //     );
-  //     const data = await response.json();
-  //     const cityList = data.data.map((region: any) => ({
-  //       name: region.name,
-  //     }));
-  //     setCities(cityList);
-  //   } catch (error) {
-  //     console.error('Error fetching cities:', error);
-  //   }
-  // };
-
   // Handle country selection and fetch cities
   const handleCountryChange = (value: { id: string; value: string }) => {
     console.log(value.value);
@@ -72,15 +47,8 @@ const UkrPost: React.FC = () => {
     // fetchCities(countryCode);
   };
 
-  // Filter cities based on search input
-  // const filteredCities = cities.filter(city =>
-  //   city.name.toLowerCase().includes(citySearch.toLowerCase())
-  // );
-
   return (
     <form autoComplete="off" className="">
-      {/* Country Search */}
-      {/* <label className='mb-3' htmlFor="city">City:</label> */}
       <DatalistInput
         className="w-full my-2 border-2 border-darkGreen rounded p-1 outline-none"
         id="country"
@@ -96,58 +64,34 @@ const UkrPost: React.FC = () => {
         showLabel={false}
       />
 
-      <div className="mb-2">
-        <label className="block text-gray-700">City:</label>
-        <input
-          autoComplete="off"
-          name="customCityName"
-          type="text"
-          value={city}
-          onChange={e => setCity(e.target.value)}
-          className="w-full border-2 border-darkGreen rounded p-1 outline-none"
-          placeholder="Set city"
-        />
-      </div>
-      <div className="flex gap-4 mb-2">
-        <div>
-          <label className="block text-gray-700">Street:</label>
+      <div className="flex gap-4">
+        <div className="mb-2">
+          <label className="block text-gray-700">City:</label>
           <input
             autoComplete="off"
-            name="customStreetName"
+            name="customCityName"
             type="text"
-            value={street}
-            onChange={e => setStreet(e.target.value)}
+            value={city}
+            onChange={e => setCity(e.target.value)}
             className="w-full border-2 border-darkGreen rounded p-1 outline-none"
-            placeholder="Set street"
+            placeholder="Set city"
           />
         </div>
-        <div>
-          <label className="block text-gray-700">House:</label>
+        <div className="mb-2">
+          <label className="block text-gray-700">PostOffice:</label>
           <input
             autoComplete="off"
-            name="customHouseName"
+            name="customPostIdName"
             type="text"
-            value={house}
-            onChange={e => setHouse(e.target.value)}
+            value={postId}
+            onChange={e => setPostId(e.target.value)}
             className="w-full border-2 border-darkGreen rounded p-1 outline-none"
-            placeholder="Set house"
+            placeholder="Set PostOffice"
           />
         </div>
-      </div>
-      <div className="mb-2">
-        <label className="block text-gray-700">PostIndex:</label>
-        <input
-          autoComplete="off"
-          name="customPostIdName"
-          type="text"
-          value={postId}
-          onChange={e => setPostId(e.target.value)}
-          className="w-full border-2 border-darkGreen rounded p-1 outline-none"
-          placeholder="Set postId"
-        />
       </div>
     </form>
   );
 };
 
-export default UkrPost;
+export default MeestExpress;

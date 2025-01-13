@@ -23,7 +23,7 @@ import Link from 'next/link';
 import { BackDrop } from './back-drop';
 import { enableAccount, emailChange } from '@/api/api';
 import { Context } from '@/context/context';
-import { FavoriteIcon } from '../svgs/FavoriteIcon.svg';
+import { FavoriteIcon } from '../ui-kit/svgs/FavoriteIcon.svg';
 
 const UserShoppingCart = () => {
   const router = useRouter();
@@ -124,8 +124,8 @@ const UserShoppingCart = () => {
       {isMenuShow ? <BackDrop handleMenu={() => setIsMenuShow(false)} /> : null}
       {session ? (
         isMenuShow ? (
-          <div className="py-2.5 md:px-4 relative top-8 md:top-[19px] z-30 rounded md:bg-footer">
-            <div className="border-white border-2 flex flex-col rounded gap-3 items-cente bg-footer">
+          <div className="py-2.5 md:px-4 relative top-8 md:top-[19px] z-30 rounded md:bg-darkGreen">
+            <div className="border-white border-2 flex flex-col rounded gap-3 items-cente bg-darkGreen">
               <Link
                 href={'/cabinet'}
                 onClick={() => setIsMenuShow(false)}
@@ -144,7 +144,7 @@ const UserShoppingCart = () => {
                 <UserIconHover />
               </div>
               <button
-                className="pl-1 scale-[0.8] md:scale-100 bg-footer rounded"
+                className="pl-1 scale-[0.8] md:scale-100 bg-darkGreen rounded"
                 onClick={() => signOut({ callbackUrl: '/' })}
               >
                 <Logout />

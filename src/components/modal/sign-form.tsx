@@ -209,7 +209,7 @@ const SignForm: React.FC<SignForm> = ({ handleToogleChange, onDestroy }) => {
               type="submit"
               className={
                 isValidForm
-                  ? classList + ' bg-footer'
+                  ? classList + ' bg-darkGreen'
                   : classList + ' bg-grayBG'
               }
             >

@@ -25,7 +25,8 @@ type Props = {};
 
 const CartPage = (props: Props) => {
   const { data: session } = useSession();
-  console.log(session);
+  const user = session?.user;
+  console.log(session?.user);
 
   const { ordersCtx, removeItemFromCartCtx: removeItemCtx } =
     useContext(Context);
@@ -36,7 +37,7 @@ const CartPage = (props: Props) => {
   const [modalState, setModalState] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [orderStep, setOrderStep] = useState(stepsOrder.total);
-
+  // console.log(session);
   useEffect(() => {
     if (session === null) {
       setNotifyCart(true);
@@ -206,8 +207,8 @@ const CartPage = (props: Props) => {
                       <div className="flex justify-between md:flex-row-reverse md:gap-6 md:justify-start md:items-center md:ml-auto">
                         <p className="text-xs font-semibold md:text-base">
                           {card.funkoPop.sale
-                            ? (card.funkoPop.price * discount).toFixed(2)
-                            : card.funkoPop.price}
+                            ? (card.funkoPop.price/100 * discount).toFixed(2)
+                            : card.funkoPop.price/100}
                           $
                         </p>
                         {card.amount > 0 && (
@@ -274,11 +275,11 @@ const CartPage = (props: Props) => {
           )}
           {/* Checkout */}
           {orderStep === stepsOrder.checkout && (
-            <CartCheckout orders={orders} setOrderStep={setOrderStep} />
+            <CartCheckout orders={orders} setOrderStep={setOrderStep} user={user} />
           )}
           {/* Order */}
           {orderStep === stepsOrder.order && (
-            <CartOrder orders={orders} setOrderStep={setOrderStep} />
+            <CartOrder orders={orders} setOrderStep={setOrderStep} user={user}/>
           )}
         </div>
       ) : (
