@@ -92,3 +92,20 @@ export const notifyAddedCreditCard = () =>
       color: '#fff',
     },
   });
+
+  export const notifyCopiedOrderId = () =>
+    toast.success(`Order id copied!`, {
+      position: 'top-center',
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: 'colored',
+      style: {
+        textAlign: 'center',
+        backgroundColor: '#B6BBC4',
+        color: '#161629',
+        border: '2px, solid, #161629',
+      },
+    });
