@@ -23,9 +23,7 @@ type FormValue = {
   postalCode: string;
 };
 const EditForm = ({ setIsEdit, currentUser, token }: Props) => {
-  const editSchema = Yup.object().shape({});
-
-  console.log(currentUser);
+  const editSchema = Yup.object().shape({});  
 
   const handleSubmit = async (values: FormValue) => {
     // console.log(values);

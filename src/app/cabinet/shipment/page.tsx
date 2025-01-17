@@ -35,6 +35,8 @@ const Shipment = (props: Props) => {
     handleGetCurrentUser();
   }, [session, isEdit]);
 
+  console.log(currentUser);
+
   return currentUser && currentUser.address ? (
     <div className="flex gap-4 p-4 md:p-11">
       <div className="flex justify-center items-center w-[54px] h-[54px] bg-[#B1B1B1] rounded-full">
@@ -75,7 +77,18 @@ const Shipment = (props: Props) => {
         </div>
       )}
     </div>
-  ) : null;
+  ) : currentUser &&
+    ( <div className="flex gap-4 p-4 md:p-11">
+        <div className="flex justify-center items-center w-[54px] h-[54px] bg-[#B1B1B1] rounded-full">
+          <AvatarCamera />
+        </div>
+        <EditForm
+        setIsEdit={setIsEdit}
+        currentUser={currentUser}
+        token={session?.token}
+        />
+      </div>
+    );
 };
 
 export default Shipment;

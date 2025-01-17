@@ -8,8 +8,9 @@ type Props = {
 };
 
 const OrderItem = ({ order }: Props) => {
+  
   return (
-    <ul className="flex  gap-4">
+    <ul className="flex gap-2.5 flex-col md:flex-row md:gap-6">
       {order.map(ord => (
         <li key={ord.id} className="relative flex">
           <Link
